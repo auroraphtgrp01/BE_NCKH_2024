@@ -1,6 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  UNVERIFIED
+}
+
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
@@ -14,20 +20,162 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  name     String
-  password String
-  posts    Post[]
+  id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+  email               String      @unique
+  name                String
+  address             String
+  phoneNumber         String
+  indentifyNumber     String
+  addressWallet       String
+  emailVerifyToken    String?
+  forgotPasswordToken String?
+  refreshToken        String?
+  userStatus          UserStatus? @default(UNVERIFIED)
+  Role                Role?       @relation(fields: [roleId], references: [id])
+  roleId              String?     @db.ObjectId
+  createdAt           DateTime?   @default(now())
+  updatedAt           DateTime?   @updatedAt
+  createdBy           Json?
+  updatedBy           Json?
+  deletedAt           DateTime?
+  deletedBy           Json?
 }
 
-model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  content   String
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
+model Role {
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  isActive    Boolean?            @default(true)
+  Permission  IncludePermission[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  createdBy   Json?
+  updatedBy   Json?
+  deletedAt   DateTime?
+  deletedBy   Json?
+  User        User[]
+}
+
+model Permission {
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  path              String
+  method            String
+  description       String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  createdBy         Json?
+  updatedBy         Json?
+  deletedAt         DateTime?
+  deletedBy         Json?
+  IncludePermission IncludePermission?
+}
+
+model IncludePermission {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  Role         Role       @relation(fields: [roleId], references: [id])
+  roleId       String     @db.ObjectId
+  Permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String     @unique @db.ObjectId
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  createdBy    Json?
+  updatedBy    Json?
+  deletedAt    DateTime?
+  deletedBy    Json?
+}
+
+model Constract {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  contractAddress String
+  blockAddress    String
+  gasPrice        String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  createdBy       Json?
+  updatedBy       Json?
+  deletedAt       DateTime?
+  deletedBy       Json?
+}
+
+model ContractType {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  Parties     Parties[]
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  createdBy   Json?
+  updatedBy   Json?
+  deletedAt   DateTime?
+  deletedBy   Json?
+}
+
+model Parties {
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  parytyName         String
+  representativeName String
+  taxCode            String
+  position           String
+  email              String
+  indentifyNumber    String
+  phoneNumber        String
+  address            String
+  PaymentMethod      PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  description        String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  createdBy          Json?
+  updatedBy          Json?
+  deletedAt          DateTime?
+  deletedBy          Json?
+  ContractType       ContractType? @relation(fields: [contractTypeId], references: [id])
+  contractTypeId     String?       @db.ObjectId
+  paymentMethodId    String        @db.ObjectId
+}
+
+model PaymentMethod {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  Banking     Banking?  @relation(fields: [idBankId], references: [id])
+  idBankId    String?   @db.ObjectId
+  Crypto      Crypto?   @relation(fields: [idCryptoId], references: [id])
+  idCryptoId  String?   @db.ObjectId
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  createdBy   Json?
+  updatedBy   Json?
+  deletedAt   DateTime?
+  deletedBy   Json?
+  Parties     Parties[]
+}
+
+model Banking {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  accountName   String
+  accountNo     String
+  bankName      String
+  description   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  createdBy     Json?
+  updatedBy     Json?
+  deletedAt     DateTime?
+  deletedBy     Json?
+  PaymentMethod PaymentMethod[]
+}
+
+model Crypto {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  addressWallet String
+  chainName     String
+  description   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  createdBy     Json?
+  updatedBy     Json?
+  deletedAt     DateTime?
+  deletedBy     Json?
+  PaymentMethod PaymentMethod[]
 }

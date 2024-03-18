@@ -5,6 +5,7 @@ import { APP_FILTER, HttpAdapterHost } from '@nestjs/core';
 import { CustomPrismaModule, PrismaClientExceptionFilter } from 'nestjs-prisma';
 import { extendedPrismaClient } from './utils/prisma.extensions';
 import { UsersModule } from './users/users.module';
+import { SmartContractsModule } from './smart-contracts/smart-contracts.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
       isGlobal: true
     }),
     UsersModule,
+    SmartContractsModule,
   ],
   controllers: [AppController],
   providers: [

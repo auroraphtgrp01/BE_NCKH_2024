@@ -5,7 +5,6 @@ export const extendedPrismaClient = new PrismaClient().$extends(
     createSoftDeleteExtension({
         models: {
             User: true,
-            Post: true
         },
         defaultConfig: {
             field: 'deletedAt',
