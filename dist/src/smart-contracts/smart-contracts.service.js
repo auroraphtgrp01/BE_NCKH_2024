@@ -8,12 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmartContractsService = void 0;
 const common_1 = require("@nestjs/common");
+const readContract_utils_1 = require("../utils/readContract.utils");
 let SmartContractsService = class SmartContractsService {
     create(createSmartContractDto) {
         return 'This action adds a new smartContract';
     }
-    findAll() {
-        return `This action returns all smartContracts`;
+    getABI(contractName) {
+        const abi = (0, readContract_utils_1.readContract)(contractName.contractName).abi;
+        return {
+            abi
+        };
     }
     findOne(id) {
         return `This action returns a #${id} smartContract`;

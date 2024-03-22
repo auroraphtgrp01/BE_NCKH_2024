@@ -15,14 +15,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const nestjs_prisma_1 = require("nestjs-prisma");
+const responseMessage_1 = require("../constants/responseMessage");
 const readContract_utils_1 = require("../utils/readContract.utils");
 let UsersService = class UsersService {
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
     async create(createUserDto) {
-        const filePath = 'artifacts/contracts/ContractAs.sol/ContractA.json';
-        return (0, readContract_utils_1.readContract)(filePath).abi;
+        const isUserExist = await this.prismaService.client.user.findFirst({
+            where: {
+                OR: [
+                    { email: createUserDto.email },
+                    { addressWallet: createUserDto.addressWallet },
+                    { indentifyNumber: createUserDto.indentifyNumber }
+                ]
+            }
+        });
+        if (isUserExist) {
+            throw new common_1.HttpException({ message: responseMessage_1.RESPONSE_MESSAGES.USER_IS_EXIST }, 400);
+        }
+        return await this.prismaService.client.user.create({
+            data: {
+                ...createUserDto,
+            }
+        });
+    }
+    async updatePIN(updateUserPINDto, id) {
+        return await this.prismaService.client.user.update({
+            where: {
+                id
+            },
+            data: {
+                PIN: updateUserPINDto.PIN
+            }
+        });
     }
     findAll() {
         return `This action returns all users`;

@@ -24,6 +24,10 @@ let UsersController = class UsersController {
     async create(createUserDto) {
         return await this.usersService.create(createUserDto);
     }
+    async updatePIN(PIN, id) {
+        console.log(PIN, id);
+        return await this.usersService.updatePIN(PIN, id);
+    }
     findAll() {
         return this.usersService.findAll();
     }
@@ -45,6 +49,14 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)('pin/:id'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_user_dto_1.UpdateUserPINDto, String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "updatePIN", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

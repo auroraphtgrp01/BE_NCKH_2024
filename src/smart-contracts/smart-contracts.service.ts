@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSmartContractDto } from './dto/create-smart-contract.dto';
 import { UpdateSmartContractDto } from './dto/update-smart-contract.dto';
+import { readContract } from 'src/utils/readContract.utils';
 
 @Injectable()
 export class SmartContractsService {
@@ -8,8 +9,11 @@ export class SmartContractsService {
     return 'This action adds a new smartContract';
   }
 
-  findAll() {
-    return `This action returns all smartContracts`;
+  getABI(contractName: any) {
+    const abi = readContract(contractName.contractName).abi
+    return {
+      abi
+    }
   }
 
   findOne(id: number) {

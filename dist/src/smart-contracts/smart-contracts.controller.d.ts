@@ -5,7 +5,9 @@ export declare class SmartContractsController {
     private readonly smartContractsService;
     constructor(smartContractsService: SmartContractsService);
     create(createSmartContractDto: CreateSmartContractDto): string;
-    findAll(contractName: string): string;
+    getABI(contractName: object): {
+        abi: object[];
+    };
     findOne(id: string): string;
     update(id: string, updateSmartContractDto: UpdateSmartContractDto): string;
     remove(id: string): string;

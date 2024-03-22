@@ -1,18 +1,43 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CustomPrismaService } from 'nestjs-prisma';
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage';
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions';
-import { deployContractIgnition } from 'src/utils/execute.utils';
 import { readContract } from 'src/utils/readContract.utils';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) { }
   async create(createUserDto: CreateUserDto) {
-    // await deployContractIgnition('ContractA');
-    const filePath = 'artifacts/contracts/ContractAs.sol/ContractA.json'
-    return readContract(filePath).abi
+    const isUserExist = await this.prismaService.client.user.findFirst({
+      where: {
+        OR: [
+          { email: createUserDto.email },
+          { addressWallet: createUserDto.addressWallet },
+          { indentifyNumber: createUserDto.indentifyNumber }
+        ]
+      }
+    })
+    if (isUserExist) {
+      throw new HttpException({ message: RESPONSE_MESSAGES.USER_IS_EXIST }, 400)
+    }
+    return await this.prismaService.client.user.create({
+      data: {
+        ...createUserDto,
+      }
+    })
+  }
+
+  async updatePIN(updateUserPINDto: UpdateUserPINDto, id: string) {
+    return await this.prismaService.client.user.update({
+      where: {
+        id
+      },
+      data: {
+        PIN: updateUserPINDto.PIN
+      }
+    })
   }
 
   findAll() {
@@ -31,7 +56,7 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
-  getABI() { 
+  getABI() {
     const filePath = 'artifacts/contracts/ContractA.sol/ContractA.json'
     return readContract(filePath).abi
   }

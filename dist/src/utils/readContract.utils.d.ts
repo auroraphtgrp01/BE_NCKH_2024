@@ -1,4 +1,4 @@
-export declare const readContract: (filePath: string) => IContractJSON;
+export declare const readContract: (fileName: string) => IContractJSON;
 export interface IContractJSON {
     _format: string;
     contractName: string;

@@ -24,9 +24,9 @@ let SmartContractsController = class SmartContractsController {
     create(createSmartContractDto) {
         return this.smartContractsService.create(createSmartContractDto);
     }
-    findAll(contractName) {
+    getABI(contractName) {
         console.log(contractName);
-        return this.smartContractsService.findAll();
+        return this.smartContractsService.getABI(contractName);
     }
     findOne(id) {
         return this.smartContractsService.findOne(+id);
@@ -50,9 +50,9 @@ __decorate([
     (0, common_1.Get)('/abi'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], SmartContractsController.prototype, "findAll", null);
+], SmartContractsController.prototype, "getABI", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

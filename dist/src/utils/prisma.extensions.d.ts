@@ -1,4 +1,4 @@
-export declare const extendedPrismaClient: import("src/utils/prisma.extensions").ExtendedPrismaClient<import(".prisma/client").Prisma.TypeMap<import("@prisma/client/runtime/library").InternalArgs & {
+export declare const extendedPrismaClient: import("@prisma/client/runtime/library").DynamicClientExtensionThis<import(".prisma/client").Prisma.TypeMap<import("@prisma/client/runtime/library").InternalArgs & {
     result: {};
     model: {};
     query: {};

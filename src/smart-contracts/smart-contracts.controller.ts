@@ -13,10 +13,10 @@ export class SmartContractsController {
   }
 
   @Get('/abi')
-  findAll(@Query() contractName: string) {
+  getABI(@Query() contractName: object) {
     console.log(contractName);
 
-    return this.smartContractsService.findAll();
+    return this.smartContractsService.getABI(contractName);
   }
 
   @Get(':id')

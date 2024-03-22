@@ -15,24 +15,26 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                  String      @id @unique @default(uuid()) @db.Uuid
   email               String      @unique
   name                String
-  address             String
   phoneNumber         String
-  indentifyNumber     String
-  addressWallet       String
+  indentifyNumber     String      @unique
+  addressWallet       String      @unique
+  gender              String
+  dateOfBirth         DateTime
+  PIN                 String?
   emailVerifyToken    String?
   forgotPasswordToken String?
   refreshToken        String?
   userStatus          UserStatus? @default(UNVERIFIED)
   Role                Role?       @relation(fields: [roleId], references: [id])
-  roleId              String?     @db.ObjectId
+  roleId              String?     @unique @db.Uuid
   createdAt           DateTime?   @default(now())
   updatedAt           DateTime?   @updatedAt
   createdBy           Json?
@@ -42,7 +44,7 @@ model User {
 }
 
 model Role {
-  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  id          String              @id @unique @default(uuid()) @db.Uuid
   name        String
   description String?
   isActive    Boolean?            @default(true)
@@ -57,7 +59,7 @@ model Role {
 }
 
 model Permission {
-  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  id                String             @id @unique @default(uuid()) @db.Uuid
   name              String
   path              String
   method            String
@@ -72,11 +74,11 @@ model Permission {
 }
 
 model IncludePermission {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @unique @default(uuid()) @db.Uuid
   Role         Role       @relation(fields: [roleId], references: [id])
-  roleId       String     @db.ObjectId
+  roleId       String     @unique @db.Uuid
   Permission   Permission @relation(fields: [permissionId], references: [id])
-  permissionId String     @unique @db.ObjectId
+  permissionId String     @unique @db.Uuid
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   createdBy    Json?
@@ -86,7 +88,7 @@ model IncludePermission {
 }
 
 model Constract {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id              String    @id @unique @default(uuid()) @db.Uuid
   contractAddress String
   blockAddress    String
   gasPrice        String
@@ -99,7 +101,7 @@ model Constract {
 }
 
 model ContractType {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @unique @default(uuid()) @db.Uuid
   name        String
   Parties     Parties[]
   description String?
@@ -112,7 +114,7 @@ model ContractType {
 }
 
 model Parties {
-  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String        @id @unique @default(uuid()) @db.Uuid
   parytyName         String
   representativeName String
   taxCode            String
@@ -130,17 +132,17 @@ model Parties {
   deletedAt          DateTime?
   deletedBy          Json?
   ContractType       ContractType? @relation(fields: [contractTypeId], references: [id])
-  contractTypeId     String?       @db.ObjectId
-  paymentMethodId    String        @db.ObjectId
+  contractTypeId     String?       @unique @db.Uuid
+  paymentMethodId    String        @unique @db.Uuid
 }
 
 model PaymentMethod {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @unique @default(uuid()) @db.Uuid
   name        String
   Banking     Banking?  @relation(fields: [idBankId], references: [id])
-  idBankId    String?   @db.ObjectId
+  idBankId    String?   @unique @db.Uuid
   Crypto      Crypto?   @relation(fields: [idCryptoId], references: [id])
-  idCryptoId  String?   @db.ObjectId
+  idCryptoId  String?   @unique @db.Uuid
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -152,7 +154,7 @@ model PaymentMethod {
 }
 
 model Banking {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @unique @default(uuid()) @db.Uuid
   accountName   String
   accountNo     String
   bankName      String
@@ -167,7 +169,7 @@ model Banking {
 }
 
 model Crypto {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @unique @default(uuid()) @db.Uuid
   addressWallet String
   chainName     String
   description   String?

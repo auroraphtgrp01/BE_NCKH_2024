@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -11,6 +11,13 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);
   }
+
+  @Patch('pin/:id')
+  async updatePIN(@Body() PIN: UpdateUserPINDto, @Param('id') id: string) {
+    console.log(PIN, id);
+    return await this.usersService.updatePIN(PIN, id);
+  }
+
 
   @Get()
   findAll() {
