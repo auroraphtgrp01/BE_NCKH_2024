@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const nestjs_prisma_1 = require("nestjs-prisma");
 const responseMessage_1 = require("../constants/responseMessage");
 const readContract_utils_1 = require("../utils/readContract.utils");
+const hashPassword_1 = require("../utils/hashPassword");
 let UsersService = class UsersService {
     constructor(prismaService) {
         this.prismaService = prismaService;
@@ -41,12 +42,13 @@ let UsersService = class UsersService {
         });
     }
     async updatePIN(updateUserPINDto, id) {
+        const hashPIN = await (0, hashPassword_1.hashPassword)(updateUserPINDto.PIN);
         return await this.prismaService.client.user.update({
             where: {
                 id
             },
             data: {
-                PIN: updateUserPINDto.PIN
+                PIN: hashPIN
             }
         });
     }

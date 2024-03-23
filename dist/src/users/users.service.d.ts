@@ -7,15 +7,15 @@ export declare class UsersService {
     constructor(prismaService: CustomPrismaService<ExtendedPrismaClient>);
     create(createUserDto: CreateUserDto): Promise<{
         deletedAt: Date;
-        id: string;
-        email: string;
         name: string;
-        phoneNumber: string;
-        indentifyNumber: string;
         addressWallet: string;
+        email: string;
         gender: string;
         dateOfBirth: Date;
+        phoneNumber: string;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -29,15 +29,15 @@ export declare class UsersService {
     }>;
     updatePIN(updateUserPINDto: UpdateUserPINDto, id: string): Promise<{
         deletedAt: Date;
-        id: string;
-        email: string;
         name: string;
-        phoneNumber: string;
-        indentifyNumber: string;
         addressWallet: string;
+        email: string;
         gender: string;
         dateOfBirth: Date;
+        phoneNumber: string;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;

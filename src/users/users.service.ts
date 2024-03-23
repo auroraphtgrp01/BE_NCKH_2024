@@ -5,6 +5,7 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions';
 import { readContract } from 'src/utils/readContract.utils';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto';
+import { hashPassword } from 'src/utils/hashPassword';
 
 @Injectable()
 export class UsersService {
@@ -30,12 +31,13 @@ export class UsersService {
   }
 
   async updatePIN(updateUserPINDto: UpdateUserPINDto, id: string) {
+    const hashPIN = await hashPassword(updateUserPINDto.PIN)
     return await this.prismaService.client.user.update({
       where: {
         id
       },
       data: {
-        PIN: updateUserPINDto.PIN
+        PIN: hashPIN
       }
     })
   }
