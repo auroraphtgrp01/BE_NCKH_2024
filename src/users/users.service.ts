@@ -1,14 +1,14 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CustomPrismaService } from 'nestjs-prisma';
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage';
-import { ExtendedPrismaClient } from 'src/utils/prisma.extensions';
-import { readContract } from 'src/utils/readContract.utils';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto';
+import { HttpException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { CustomPrismaService } from 'nestjs-prisma'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
+import { readContract } from 'src/utils/readContract.utils'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) { }
+  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
   async create(createUserDto: CreateUserDto) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
@@ -24,7 +24,7 @@ export class UsersService {
     }
     return await this.prismaService.client.user.create({
       data: {
-        ...createUserDto,
+        ...createUserDto
       }
     })
   }
@@ -41,19 +41,26 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return `This action returns all users`
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return `This action returns a #${id} user`
+  }
+
+  async findOneByAddressWallet(addressWallet: string) {
+    const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } })
+    if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+
+    return user
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return `This action updates a #${id} user`
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return `This action removes a #${id} user`
   }
 
   getABI() {

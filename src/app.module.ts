@@ -1,11 +1,13 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { APP_FILTER, HttpAdapterHost } from '@nestjs/core';
-import { CustomPrismaModule, PrismaClientExceptionFilter } from 'nestjs-prisma';
-import { extendedPrismaClient } from './utils/prisma.extensions';
-import { UsersModule } from './users/users.module';
-import { SmartContractsModule } from './smart-contracts/smart-contracts.module';
+import { Module } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { APP_FILTER, HttpAdapterHost } from '@nestjs/core'
+import { CustomPrismaModule, PrismaClientExceptionFilter } from 'nestjs-prisma'
+import { extendedPrismaClient } from './utils/prisma.extensions'
+import { UsersModule } from './users/users.module'
+import { SmartContractsModule } from './smart-contracts/smart-contracts.module'
+import { AuthModule } from './auth/auth.module'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -16,8 +18,10 @@ import { SmartContractsModule } from './smart-contracts/smart-contracts.module';
       },
       isGlobal: true
     }),
+    ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     SmartContractsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
@@ -28,7 +32,7 @@ import { SmartContractsModule } from './smart-contracts/smart-contracts.module';
         return new PrismaClientExceptionFilter(httpAdapter)
       },
       inject: [HttpAdapterHost]
-    },
-  ],
+    }
+  ]
 })
-export class AppModule { }
+export class AppModule {}

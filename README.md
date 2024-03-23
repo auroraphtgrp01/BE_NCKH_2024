@@ -32,6 +32,12 @@
 $ yarn install
 ```
 
+## Generate prisma schema
+
+```bash
+$ npx prisma generate
+```
+
 ## Running the app
 
 ```bash
