@@ -37,7 +37,7 @@ let UsersService = class UsersService {
         }
         return await this.prismaService.client.user.create({
             data: {
-                ...createUserDto,
+                ...createUserDto
             }
         });
     }
@@ -57,6 +57,12 @@ let UsersService = class UsersService {
     }
     findOne(id) {
         return `This action returns a #${id} user`;
+    }
+    async findOneByAddressWallet(addressWallet) {
+        const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } });
+        if (!user)
+            throw new common_1.NotFoundException({ message: responseMessage_1.RESPONSE_MESSAGES.USER_NOT_FOUND });
+        return user;
     }
     update(id, updateUserDto) {
         return `This action updates a #${id} user`;

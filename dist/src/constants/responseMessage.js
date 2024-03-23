@@ -12,5 +12,8 @@ exports.RESPONSE_MESSAGES = {
     USER_IS_EXIST: 'User is exist',
     PIN_LENGTH_IS_6_DIGIT: 'PIN must be 6 digits long',
     PIN_IS_NUMBER: 'PIN must be a number',
+    USER_NOT_FOUND: 'User not found',
+    TOKEN_IS_INVALID_OR_NOT_FOUND: 'Token is invalid or not found',
+    ADDRESS_WALLET_OR_PIN_IS_INVALID: 'Address wallet or pin is invalid'
 };
 //# sourceMappingURL=responseMessage.js.map

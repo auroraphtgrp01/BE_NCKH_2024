@@ -25,7 +25,6 @@ let UsersController = class UsersController {
         return await this.usersService.create(createUserDto);
     }
     async updatePIN(PIN, id) {
-        console.log(PIN, id);
         return await this.usersService.updatePIN(PIN, id);
     }
     findAll() {

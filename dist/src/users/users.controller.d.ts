@@ -7,14 +7,14 @@ export declare class UsersController {
     create(createUserDto: CreateUserDto): Promise<{
         deletedAt: Date;
         name: string;
-        addressWallet: string;
+        id: string;
         email: string;
-        gender: string;
-        dateOfBirth: Date;
         phoneNumber: string;
         indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
         PIN: string;
-        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -29,14 +29,14 @@ export declare class UsersController {
     updatePIN(PIN: UpdateUserPINDto, id: string): Promise<{
         deletedAt: Date;
         name: string;
-        addressWallet: string;
+        id: string;
         email: string;
-        gender: string;
-        dateOfBirth: Date;
         phoneNumber: string;
         indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
         PIN: string;
-        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;

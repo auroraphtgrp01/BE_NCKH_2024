@@ -8,14 +8,14 @@ export declare class UsersService {
     create(createUserDto: CreateUserDto): Promise<{
         deletedAt: Date;
         name: string;
-        addressWallet: string;
+        id: string;
         email: string;
-        gender: string;
-        dateOfBirth: Date;
         phoneNumber: string;
         indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
         PIN: string;
-        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -30,14 +30,14 @@ export declare class UsersService {
     updatePIN(updateUserPINDto: UpdateUserPINDto, id: string): Promise<{
         deletedAt: Date;
         name: string;
-        addressWallet: string;
+        id: string;
         email: string;
-        gender: string;
-        dateOfBirth: Date;
         phoneNumber: string;
         indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
         PIN: string;
-        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -51,6 +51,28 @@ export declare class UsersService {
     }>;
     findAll(): string;
     findOne(id: number): string;
+    findOneByAddressWallet(addressWallet: string): Promise<{
+        deletedAt: Date;
+        name: string;
+        id: string;
+        email: string;
+        phoneNumber: string;
+        indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
+        PIN: string;
+        emailVerifyToken: string;
+        forgotPasswordToken: string;
+        refreshToken: string;
+        userStatus: import(".prisma/client").$Enums.UserStatus;
+        roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: import(".prisma/client").Prisma.JsonValue;
+        updatedBy: import(".prisma/client").Prisma.JsonValue;
+        deletedBy: import(".prisma/client").Prisma.JsonValue;
+    }>;
     update(id: number, updateUserDto: UpdateUserDto): string;
     remove(id: number): string;
     getABI(): object[];

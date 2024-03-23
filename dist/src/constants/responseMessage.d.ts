@@ -9,4 +9,7 @@ export declare const RESPONSE_MESSAGES: {
     USER_IS_EXIST: string;
     PIN_LENGTH_IS_6_DIGIT: string;
     PIN_IS_NUMBER: string;
+    USER_NOT_FOUND: string;
+    TOKEN_IS_INVALID_OR_NOT_FOUND: string;
+    ADDRESS_WALLET_OR_PIN_IS_INVALID: string;
 };
