@@ -20,8 +20,8 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         super({ usernameField: 'addressWallet', passwordField: 'PIN' });
         this.authService = authService;
     }
-    async validate(username, password) {
-        const user = await this.authService.validateUser(username, password);
+    async validate(addressWallet, PIN) {
+        const user = await this.authService.validateUser(addressWallet, PIN);
         if (!user) {
             throw new common_1.UnauthorizedException(responseMessage_1.RESPONSE_MESSAGES.ADDRESS_WALLET_OR_PIN_IS_INVALID);
         }

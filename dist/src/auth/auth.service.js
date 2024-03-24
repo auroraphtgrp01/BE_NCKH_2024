@@ -37,8 +37,8 @@ let AuthService = class AuthService {
             data: { refreshToken: refresh_token }
         });
         return {
-            refresh_token,
             access_token: this.createAccessToken(user),
+            refresh_token,
             id: user.id,
             name: user.name,
             addressWallet: user.addressWallet,
@@ -52,7 +52,7 @@ let AuthService = class AuthService {
             id: user.id,
             addressWallet: user.addressWallet,
             email: user.email,
-            nam: user.name
+            name: user.name
         };
         return this.jwtService.sign(payload);
     }
@@ -63,15 +63,15 @@ let AuthService = class AuthService {
             id: user.id,
             addressWallet: user.addressWallet,
             email: user.email,
-            nam: user.name
+            name: user.name
         };
         return this.jwtService.sign(payload, {
             secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET_KEY'),
             expiresIn: this.configService.get('JWT_REFRESH_EXPIRE_IN')
         });
     }
-    async validateUser(username, password) {
-        const user = await this.usersService.findOneByAddressWallet(username);
+    async validateUser(addressWallet, password) {
+        const user = await this.usersService.findOneByAddressWallet(addressWallet);
         if (user && user.PIN === password) {
             const { PIN, ...result } = user;
             return result;

@@ -14,5 +14,5 @@ export declare class AuthService {
     login(user: IUser, res: Response): Promise<any>;
     createAccessToken(user: IUser): string;
     createRefreshToken(user: IUser): string;
-    validateUser(username: string, password: string): Promise<any>;
+    validateUser(addressWallet: string, password: string): Promise<any>;
 }
