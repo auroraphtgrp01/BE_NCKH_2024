@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const nestjs_prisma_1 = require("nestjs-prisma");
 const responseMessage_1 = require("../constants/responseMessage");
 const readContract_utils_1 = require("../utils/readContract.utils");
+const hashPassword_1 = require("../utils/hashPassword");
 let UsersService = class UsersService {
     constructor(prismaService) {
         this.prismaService = prismaService;
@@ -41,32 +42,18 @@ let UsersService = class UsersService {
         });
     }
     async updatePIN(updateUserPINDto, id) {
+        const hashPIN = await (0, hashPassword_1.hashPassword)(updateUserPINDto.PIN);
         return await this.prismaService.client.user.update({
             where: {
                 id
             },
             data: {
-                PIN: updateUserPINDto.PIN
+                PIN: hashPIN
             }
         });
     }
-    async findAll(page, limit, order) {
-        const totalItems = await this.prismaService.client.user.count();
-        const totalPages = Math.ceil(totalItems / limit);
-        const users = await this.prismaService.client.user.findMany({
-            skip: (page - 1) * limit,
-            take: limit * 1,
-            orderBy: {
-                id: order
-            }
-        });
-        return {
-            users,
-            totalItems,
-            totalPages,
-            currentPage: page,
-            limit
-        };
+    findAll() {
+        return `This action returns all users`;
     }
     findOne(id) {
         return `This action returns a #${id} user`;

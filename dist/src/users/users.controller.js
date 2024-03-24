@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
-const responseMessage_1 = require("../constants/responseMessage");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -28,10 +27,8 @@ let UsersController = class UsersController {
     async updatePIN(PIN, id) {
         return await this.usersService.updatePIN(PIN, id);
     }
-    async findAll(page, limit, order) {
-        if (!page || !limit)
-            throw new common_1.BadRequestException({ message: responseMessage_1.RESPONSE_MESSAGES.PAGE_OR_LIMIT_NOT_PROVIDED });
-        return await this.usersService.findAll(+page, +limit, order);
+    findAll() {
+        return this.usersService.findAll();
     }
     findOne(id) {
         return this.usersService.findOne(+id);
@@ -61,12 +58,9 @@ __decorate([
 ], UsersController.prototype, "updatePIN", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('page')),
-    __param(1, (0, common_1.Query)('limit')),
-    __param(2, (0, common_1.Query)('order')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),

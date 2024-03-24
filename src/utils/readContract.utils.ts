@@ -25,4 +25,5 @@ export interface IContractJSON {
     deployedBytecode: string
     linkReferences: string
     deployedLinkReferences: string
+
 }
