@@ -1,15 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-enum UserStatus {
-  ACTIVE
-  BLOCKED
-  UNVERIFIED
-}
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,6 +5,12 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  UNVERIFIED
 }
 
 model User {
@@ -33,7 +27,7 @@ model User {
   forgotPasswordToken String?
   refreshToken        String?
   userStatus          UserStatus? @default(UNVERIFIED)
-  Role                Role?       @relation(fields: [roleId], references: [id])
+  // Role                Role?       @relation(fields: [roleId], references: [id])
   roleId              String?     @unique @db.Uuid
   createdAt           DateTime?   @default(now())
   updatedAt           DateTime?   @updatedAt
@@ -41,6 +35,93 @@ model User {
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
+  Parties             Parties[]
+  Role                Role?       @relation(fields: [roleId], references: [id])
+}
+
+model Contract {
+  id                     String                  @id @unique @default(uuid()) @db.Uuid
+  contractAddress        String
+  blockAddress           String
+  gasPrice               String?
+  Parties                Parties[]
+  ContractAttributeValue ContractAttributeValue?
+  startDate              DateTime
+  endDate                DateTime?
+  executeDate            DateTime?
+  status                 contractStatus          @default(PENDING)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  createdBy              Json?
+  updatedBy              Json?
+  deletedAt              DateTime?
+  deletedBy              Json?
+}
+
+enum contractStatus {
+  PENDING // chờ chấp nhận lời mời
+  DEPLOYED // đã chấp nhận lời mời, đã deploy
+  PROCESSING // đã gọi hàm ký, bắt đầu trong quá trình thực hiện hợp đồng
+  CANCELED // thất bại ( 1 trong 2 bên huỷ hợp đồng )
+  COMPLETED // hoàn thành hợp đồng
+  LATED // hợp đồng quá hạn
+  VIOLATED // hợp đồng bị vi phạm
+}
+
+model ContractAttribute {
+  id                     String                  @id @unique @default(uuid()) @db.Uuid
+  name                   String
+  description            String?
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  createdBy              Json?
+  updatedBy              Json?
+  deletedAt              DateTime?
+  deletedBy              Json?
+  ContractAttributeValue ContractAttributeValue?
+}
+
+model ContractAttributeValue {
+  id                  String            @id @unique @default(uuid()) @db.Uuid
+  contractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
+  contractAttributeId String            @unique @db.Uuid
+  contract            Contract          @relation(fields: [contractId], references: [id])
+  contractId          String            @unique @db.Uuid
+  value               String
+  description         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  createdBy           Json?
+  updatedBy           Json?
+  deletedAt           DateTime?
+  deletedBy           Json?
+}
+
+model Parties {
+  id                 String         @id @unique @default(uuid()) @db.Uuid
+  parytyName         String
+  representativeName String
+  userId             String         @db.Uuid
+  User               User           @relation(fields: [userId], references: [id])
+  taxCode            String
+  position           String
+  email              String
+  indentifyNumber    String
+  phoneNumber        String
+  address            String
+  description        String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  createdBy          Json?
+  updatedBy          Json?
+  deletedAt          DateTime?
+  deletedBy          Json?
+  // PaymentMethod      PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  // paymentMethodId    String    @unique @db.Uuid
+  Contract           Contract?      @relation(fields: [contractId], references: [id])
+  contractId         String?        @db.Uuid
+  PaymentMethod      PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId    String?        @db.Uuid
 }
 
 model Role {
@@ -85,55 +166,6 @@ model IncludePermission {
   updatedBy    Json?
   deletedAt    DateTime?
   deletedBy    Json?
-}
-
-model Constract {
-  id              String    @id @unique @default(uuid()) @db.Uuid
-  contractAddress String
-  blockAddress    String
-  gasPrice        String
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  createdBy       Json?
-  updatedBy       Json?
-  deletedAt       DateTime?
-  deletedBy       Json?
-}
-
-model ContractType {
-  id          String    @id @unique @default(uuid()) @db.Uuid
-  name        String
-  Parties     Parties[]
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  createdBy   Json?
-  updatedBy   Json?
-  deletedAt   DateTime?
-  deletedBy   Json?
-}
-
-model Parties {
-  id                 String        @id @unique @default(uuid()) @db.Uuid
-  parytyName         String
-  representativeName String
-  taxCode            String
-  position           String
-  email              String
-  indentifyNumber    String
-  phoneNumber        String
-  address            String
-  PaymentMethod      PaymentMethod @relation(fields: [paymentMethodId], references: [id])
-  description        String?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  createdBy          Json?
-  updatedBy          Json?
-  deletedAt          DateTime?
-  deletedBy          Json?
-  ContractType       ContractType? @relation(fields: [contractTypeId], references: [id])
-  contractTypeId     String?       @unique @db.Uuid
-  paymentMethodId    String        @unique @db.Uuid
 }
 
 model PaymentMethod {

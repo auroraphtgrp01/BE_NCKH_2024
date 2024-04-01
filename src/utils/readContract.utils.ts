@@ -25,5 +25,11 @@ export interface IContractJSON {
     deployedBytecode: string
     linkReferences: string
     deployedLinkReferences: string
+}
 
+const respone = {
+    name: 'Tuan',
+    phone: '0123456789',
+    address: 'Hanoi',
+    addressWallet: '0x1234567890'
 }

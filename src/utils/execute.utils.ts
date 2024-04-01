@@ -14,17 +14,17 @@ export const deployContractIgnition = (contractName: string): Promise<string> =>
         });
 
         childProcess.on('close', (code) => {
-            console.log(`Quá trình đã kết thúc với mã trạng thái ${code}`);
+            console.log(`Quá trình đã kết thúc với mã trạng thái ${code}`)
             if (code === 0) {
-                resolve(outputData); // Trả về đầu ra khi quá trình thành công
+                resolve(outputData)
             } else {
-                reject(new Error(`Quá trình kết thúc với mã trạng thái ${code}`)); // Trả về lỗi khi quá trình kết thúc với mã lỗi
+                reject(new Error(`Quá trình kết thúc với mã trạng thái ${code}`))
             }
         });
 
         childProcess.on('error', (error) => {
             console.error('Lỗi khi thực thi lệnh:', error);
-            reject(error); // Trả về lỗi khi có lỗi xảy ra trong quá trình thực thi lệnh
+            reject(error)
         });
     });
 };

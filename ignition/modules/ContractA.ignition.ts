@@ -6,7 +6,6 @@ const ContractA = buildModule("ContractA", (m) => {
   const nameC = m.getParameter("nameC", "defaultValueC");
 
   const contract = m.contract("ContractA", [nameA, nameB, nameC]);
-
   return { contract };
 });
 
