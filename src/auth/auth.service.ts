@@ -47,7 +47,7 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      nam: user.name
+      name: user.name
     }
 
     return this.jwtService.sign(payload)
@@ -60,7 +60,7 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      nam: user.name
+      name: user.name
     }
 
     return this.jwtService.sign(payload, {
@@ -69,8 +69,8 @@ export class AuthService {
     })
   }
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.usersService.findOneByAddressWallet(username)
+  async validateUser(addressWallet: string, password: string): Promise<any> {
+    const user = await this.usersService.findOneByAddressWallet(addressWallet)
     if (user && user.PIN === password) {
       const { PIN, ...result } = user
       return result

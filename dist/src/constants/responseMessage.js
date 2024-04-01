@@ -14,6 +14,11 @@ exports.RESPONSE_MESSAGES = {
     PIN_IS_NUMBER: 'PIN must be a number',
     USER_NOT_FOUND: 'User not found',
     TOKEN_IS_INVALID_OR_NOT_FOUND: 'Token is invalid or not found',
-    ADDRESS_WALLET_OR_PIN_IS_INVALID: 'Address wallet or pin is invalid'
+    ADDRESS_WALLET_OR_PIN_IS_INVALID: 'Address wallet or pin is invalid',
+    DESCRIPTION_MUST_BE_A_STRING: 'Description must be a string',
+    DESCRIPTION_LENGTH: 'Description must be less than or equal to 100 characters',
+    NAME_IS_REQUIRED: 'Name is required',
+    PAGE_OR_LIMIT_NOT_PROVIDED: 'Page or limit not provided',
+    CONTRACT_TYPE_NOT_FOUND_OR_DELETED: 'Contract type not found or deleted'
 };
 //# sourceMappingURL=responseMessage.js.map
