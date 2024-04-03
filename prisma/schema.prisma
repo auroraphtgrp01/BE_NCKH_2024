@@ -13,6 +13,12 @@ enum UserStatus {
   UNVERIFIED
 }
 
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id                  String      @id @unique @default(uuid()) @db.Uuid
   email               String      @unique
@@ -40,22 +46,40 @@ model User {
 }
 
 model Contract {
-  id                     String                  @id @unique @default(uuid()) @db.Uuid
+  id                     String                   @id @unique @default(uuid()) @db.Uuid
   contractAddress        String
   blockAddress           String
-  gasPrice               String?
+  gasPrice               String
   Parties                Parties[]
-  ContractAttributeValue ContractAttributeValue?
+  ContractAttributeValue ContractAttributeValue[]
   startDate              DateTime
   endDate                DateTime?
   executeDate            DateTime?
-  status                 contractStatus          @default(PENDING)
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
+  agreement              String
+  status                 contractStatus           @default(PENDING)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deletedAt              DateTime?
   deletedBy              Json?
+  Invitation             Invitation[]
+}
+
+model Invitation {
+  id            String           @id @unique @default(uuid()) @db.Uuid
+  idPartySender String
+  email         String
+  message       String
+  status        InvitationStatus @default(PENDING)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  createdBy     Json?
+  updatedBy     Json?
+  deletedAt     DateTime?
+  deletedBy     Json?
+  Contract      Contract?        @relation(fields: [contractId], references: [id])
+  contractId    String?          @db.Uuid
 }
 
 enum contractStatus {
@@ -69,16 +93,16 @@ enum contractStatus {
 }
 
 model ContractAttribute {
-  id                     String                  @id @unique @default(uuid()) @db.Uuid
+  id                     String                   @id @unique @default(uuid()) @db.Uuid
   name                   String
   description            String?
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deletedAt              DateTime?
   deletedBy              Json?
-  ContractAttributeValue ContractAttributeValue?
+  ContractAttributeValue ContractAttributeValue[]
 }
 
 model ContractAttributeValue {
@@ -140,18 +164,18 @@ model Role {
 }
 
 model Permission {
-  id                String             @id @unique @default(uuid()) @db.Uuid
+  id                String              @id @unique @default(uuid()) @db.Uuid
   name              String
   path              String
   method            String
   description       String?
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   createdBy         Json?
   updatedBy         Json?
   deletedAt         DateTime?
   deletedBy         Json?
-  IncludePermission IncludePermission?
+  IncludePermission IncludePermission[]
 }
 
 model IncludePermission {

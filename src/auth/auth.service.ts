@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { UsersService } from '../users/users.service'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
@@ -7,6 +7,7 @@ import { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { convertMany } from 'convert'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 @Injectable()
 export class AuthService {
@@ -71,6 +72,7 @@ export class AuthService {
 
   async validateUser(addressWallet: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByAddressWallet(addressWallet)
+    if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     if (user && user.PIN === password) {
       const { PIN, ...result } = user
       return result

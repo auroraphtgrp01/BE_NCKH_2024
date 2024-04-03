@@ -19,6 +19,11 @@ exports.RESPONSE_MESSAGES = {
     DESCRIPTION_LENGTH: 'Description must be less than or equal to 100 characters',
     NAME_IS_REQUIRED: 'Name is required',
     PAGE_OR_LIMIT_NOT_PROVIDED: 'Page or limit not provided',
-    CONTRACT_TYPE_NOT_FOUND_OR_DELETED: 'Contract type not found or deleted'
+    CONTRACT_TYPE_NOT_FOUND_OR_DELETED: 'Contract type not found or deleted',
+    PARTY_SENDER_HAS_TO_BE_INDENTIFIED: 'Party sender has to be indentified',
+    MESSAGE_MUST_BE_A_STRING: 'Message must be a string',
+    MESSAGE_TOO_SHORT: 'Message too short',
+    INVALID_ID_PARTY_SENDER: 'Invalid ID party sender',
+    ID_PARTY_SENDER_MUST_BE_A_STRING: 'ID party sender must be a string'
 };
 //# sourceMappingURL=responseMessage.js.map

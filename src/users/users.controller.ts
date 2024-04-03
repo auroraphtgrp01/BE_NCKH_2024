@@ -3,6 +3,7 @@ import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { Public } from 'src/decorators/is-public.decorator'
 
 @Controller('users')
 export class UsersController {
@@ -38,5 +39,12 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id)
+  }
+
+  @Get('address-wallet-exists/:addressWallet')
+  @Public()
+  async handleAccountExists(@Param('addressWallet') addressWallet: string) {
+    if (await this.usersService.findOneByAddressWallet(addressWallet)) return { exists: true }
+    return { exists: false }
   }
 }

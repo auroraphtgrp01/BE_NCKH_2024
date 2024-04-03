@@ -17,7 +17,8 @@ const users_module_1 = require("./users/users.module");
 const smart_contracts_module_1 = require("./smart-contracts/smart-contracts.module");
 const auth_module_1 = require("./auth/auth.module");
 const config_1 = require("@nestjs/config");
-const contract_types_module_1 = require("./contract_types/contract_types.module");
+const contracts_module_1 = require("./contracts/contracts.module");
+const invitations_module_1 = require("./invitations/invitations.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,7 +36,8 @@ exports.AppModule = AppModule = __decorate([
             users_module_1.UsersModule,
             smart_contracts_module_1.SmartContractsModule,
             auth_module_1.AuthModule,
-            contract_types_module_1.ContractTypesModule,
+            contracts_module_1.ContractsModule,
+            invitations_module_1.InvitationsModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [

@@ -52,16 +52,29 @@ let UsersService = class UsersService {
             }
         });
     }
-    findAll() {
-        return `This action returns all users`;
+    async findAll(page, limit, order) {
+        const totalItems = await this.prismaService.client.user.count();
+        const totalPages = Math.ceil(totalItems / limit);
+        const users = await this.prismaService.client.user.findMany({
+            skip: (page - 1) * limit,
+            take: limit * 1,
+            orderBy: {
+                id: order
+            }
+        });
+        return {
+            users,
+            totalItems,
+            totalPages,
+            currentPage: page,
+            limit
+        };
     }
     findOne(id) {
         return `This action returns a #${id} user`;
     }
     async findOneByAddressWallet(addressWallet) {
         const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } });
-        if (!user)
-            throw new common_1.NotFoundException({ message: responseMessage_1.RESPONSE_MESSAGES.USER_NOT_FOUND });
         return user;
     }
     update(id, updateUserDto) {
