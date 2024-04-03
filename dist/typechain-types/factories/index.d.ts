@@ -1,2 +1,2 @@
-export * as contractBSol from "./ContractB.sol";
-export { ContractA__factory } from "./ContractA__factory";
+export { ContractB__factory } from "./ContractB__factory";
+export { SupplyChain__factory } from "./SupplyChain__factory";

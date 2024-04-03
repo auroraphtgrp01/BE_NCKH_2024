@@ -1,7 +1,5 @@
-import type * as contractBSol from "./ContractB.sol";
-export type { contractBSol };
-export type { ContractA } from "./ContractA";
+export type { ContractB } from "./ContractB";
+export type { SupplyChain } from "./SupplyChain";
 export * as factories from "./factories";
-export { ContractA__factory } from "./factories/ContractA__factory";
-export type { ContractB } from "./ContractB.sol/ContractB";
-export { ContractB__factory } from "./factories/ContractB.sol/ContractB__factory";
+export { ContractB__factory } from "./factories/ContractB__factory";
+export { SupplyChain__factory } from "./factories/SupplyChain__factory";

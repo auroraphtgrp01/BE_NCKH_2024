@@ -7,28 +7,8 @@ export declare class UsersController {
     create(createUserDto: CreateUserDto): Promise<{
         deletedAt: Date;
         id: string;
-        name: string;
-        emailVerifyToken: string;
-        forgotPasswordToken: string;
-        refreshToken: string;
-        userStatus: import(".prisma/client").$Enums.UserStatus;
-        roleId: string;
-    }>;
-    updatePIN(PIN: UpdateUserPINDto, id: string): Promise<{
-        deletedAt: Date;
-        id: string;
-        name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        createdBy: import(".prisma/client").Prisma.JsonValue;
-        updatedBy: import(".prisma/client").Prisma.JsonValue;
-        deletedBy: import(".prisma/client").Prisma.JsonValue;
-    }>;
-    updatePIN(PIN: UpdateUserPINDto, id: string): Promise<{
-        deletedAt: Date;
-        name: string;
-        id: string;
         email: string;
+        name: string;
         phoneNumber: string;
         indentifyNumber: string;
         addressWallet: string;
@@ -40,29 +20,56 @@ export declare class UsersController {
         refreshToken: string;
         userStatus: import(".prisma/client").$Enums.UserStatus;
         roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: import(".prisma/client").Prisma.JsonValue;
+        updatedBy: import(".prisma/client").Prisma.JsonValue;
+        deletedBy: import(".prisma/client").Prisma.JsonValue;
+    }>;
+    updatePIN(PIN: UpdateUserPINDto, id: string): Promise<{
+        deletedAt: Date;
+        id: string;
+        email: string;
+        name: string;
+        phoneNumber: string;
+        indentifyNumber: string;
+        addressWallet: string;
+        gender: string;
+        dateOfBirth: Date;
+        PIN: string;
+        emailVerifyToken: string;
+        forgotPasswordToken: string;
+        refreshToken: string;
+        userStatus: import(".prisma/client").$Enums.UserStatus;
+        roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: import(".prisma/client").Prisma.JsonValue;
+        updatedBy: import(".prisma/client").Prisma.JsonValue;
+        deletedBy: import(".prisma/client").Prisma.JsonValue;
     }>;
     findAll(page: string, limit: string, order: 'asc' | 'desc'): Promise<{
         users: {
             deletedAt: Date;
             id: string;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            createdBy: import(".prisma/client").Prisma.JsonValue;
-            updatedBy: import(".prisma/client").Prisma.JsonValue;
-            deletedBy: import(".prisma/client").Prisma.JsonValue;
             email: string;
-            indentifyNumber: string;
+            name: string;
             phoneNumber: string;
+            indentifyNumber: string;
             addressWallet: string;
-            PIN: string;
             gender: string;
             dateOfBirth: Date;
+            PIN: string;
             emailVerifyToken: string;
             forgotPasswordToken: string;
             refreshToken: string;
             userStatus: import(".prisma/client").$Enums.UserStatus;
             roleId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            createdBy: import(".prisma/client").Prisma.JsonValue;
+            updatedBy: import(".prisma/client").Prisma.JsonValue;
+            deletedBy: import(".prisma/client").Prisma.JsonValue;
         }[];
         totalItems: number;
         totalPages: number;
@@ -72,4 +79,7 @@ export declare class UsersController {
     findOne(id: string): string;
     update(id: string, updateUserDto: UpdateUserDto): string;
     remove(id: string): string;
+    handleAccountExists(addressWallet: string): Promise<{
+        exists: boolean;
+    }>;
 }

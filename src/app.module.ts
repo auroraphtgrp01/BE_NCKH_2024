@@ -8,7 +8,8 @@ import { UsersModule } from './users/users.module'
 import { SmartContractsModule } from './smart-contracts/smart-contracts.module'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
-import { ContractTypesModule } from './contract_types/contract_types.module';
+import { ContractsModule } from './contracts/contracts.module'
+import { InvitationsModule } from './invitations/invitations.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ContractTypesModule } from './contract_types/contract_types.module';
     UsersModule,
     SmartContractsModule,
     AuthModule,
-    ContractTypesModule,
+    ContractsModule,
+    InvitationsModule
   ],
   controllers: [AppController],
   providers: [

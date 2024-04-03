@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const responseMessage_1 = require("../constants/responseMessage");
+const is_public_decorator_1 = require("../decorators/is-public.decorator");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -27,8 +29,10 @@ let UsersController = class UsersController {
     async updatePIN(PIN, id) {
         return await this.usersService.updatePIN(PIN, id);
     }
-    findAll() {
-        return this.usersService.findAll();
+    async findAll(page, limit, order) {
+        if (!page || !limit)
+            throw new common_1.BadRequestException({ message: responseMessage_1.RESPONSE_MESSAGES.PAGE_OR_LIMIT_NOT_PROVIDED });
+        return await this.usersService.findAll(+page, +limit, order);
     }
     findOne(id) {
         return this.usersService.findOne(+id);
@@ -38,6 +42,11 @@ let UsersController = class UsersController {
     }
     remove(id) {
         return this.usersService.remove(+id);
+    }
+    async handleAccountExists(addressWallet) {
+        if (await this.usersService.findOneByAddressWallet(addressWallet))
+            return { exists: true };
+        return { exists: false };
     }
 };
 exports.UsersController = UsersController;
@@ -58,9 +67,12 @@ __decorate([
 ], UsersController.prototype, "updatePIN", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('order')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
@@ -84,6 +96,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('address-wallet-exists/:addressWallet'),
+    (0, is_public_decorator_1.Public)(),
+    __param(0, (0, common_1.Param)('addressWallet')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "handleAccountExists", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

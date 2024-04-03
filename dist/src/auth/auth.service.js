@@ -19,6 +19,7 @@ const nestjs_prisma_1 = require("nestjs-prisma");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
 const convert_1 = require("convert");
+const responseMessage_1 = require("../constants/responseMessage");
 let AuthService = class AuthService {
     constructor(prismaService, usersService, jwtService, configService) {
         this.prismaService = prismaService;
@@ -72,6 +73,8 @@ let AuthService = class AuthService {
     }
     async validateUser(addressWallet, password) {
         const user = await this.usersService.findOneByAddressWallet(addressWallet);
+        if (!user)
+            throw new common_1.NotFoundException({ message: responseMessage_1.RESPONSE_MESSAGES.USER_NOT_FOUND });
         if (user && user.PIN === password) {
             const { PIN, ...result } = user;
             return result;

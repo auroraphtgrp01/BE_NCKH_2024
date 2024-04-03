@@ -8,9 +8,8 @@ export declare class UsersService {
     create(createUserDto: CreateUserDto): Promise<{
         deletedAt: Date;
         id: string;
-        name: string;
-        id: string;
         email: string;
+        name: string;
         phoneNumber: string;
         indentifyNumber: string;
         addressWallet: string;
@@ -22,11 +21,6 @@ export declare class UsersService {
         refreshToken: string;
         userStatus: import(".prisma/client").$Enums.UserStatus;
         roleId: string;
-    }>;
-    updatePIN(updateUserPINDto: UpdateUserPINDto, id: string): Promise<{
-        deletedAt: Date;
-        id: string;
-        name: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: import(".prisma/client").Prisma.JsonValue;
@@ -35,9 +29,9 @@ export declare class UsersService {
     }>;
     updatePIN(updateUserPINDto: UpdateUserPINDto, id: string): Promise<{
         deletedAt: Date;
-        name: string;
         id: string;
         email: string;
+        name: string;
         phoneNumber: string;
         indentifyNumber: string;
         addressWallet: string;
@@ -49,29 +43,34 @@ export declare class UsersService {
         refreshToken: string;
         userStatus: import(".prisma/client").$Enums.UserStatus;
         roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: import(".prisma/client").Prisma.JsonValue;
+        updatedBy: import(".prisma/client").Prisma.JsonValue;
+        deletedBy: import(".prisma/client").Prisma.JsonValue;
     }>;
     findAll(page: number, limit: number, order: 'asc' | 'desc'): Promise<{
         users: {
             deletedAt: Date;
             id: string;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            createdBy: import(".prisma/client").Prisma.JsonValue;
-            updatedBy: import(".prisma/client").Prisma.JsonValue;
-            deletedBy: import(".prisma/client").Prisma.JsonValue;
             email: string;
-            indentifyNumber: string;
+            name: string;
             phoneNumber: string;
+            indentifyNumber: string;
             addressWallet: string;
-            PIN: string;
             gender: string;
             dateOfBirth: Date;
+            PIN: string;
             emailVerifyToken: string;
             forgotPasswordToken: string;
             refreshToken: string;
             userStatus: import(".prisma/client").$Enums.UserStatus;
             roleId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            createdBy: import(".prisma/client").Prisma.JsonValue;
+            updatedBy: import(".prisma/client").Prisma.JsonValue;
+            deletedBy: import(".prisma/client").Prisma.JsonValue;
         }[];
         totalItems: number;
         totalPages: number;
@@ -82,9 +81,8 @@ export declare class UsersService {
     findOneByAddressWallet(addressWallet: string): Promise<{
         deletedAt: Date;
         id: string;
-        name: string;
-        id: string;
         email: string;
+        name: string;
         phoneNumber: string;
         indentifyNumber: string;
         addressWallet: string;
@@ -96,6 +94,11 @@ export declare class UsersService {
         refreshToken: string;
         userStatus: import(".prisma/client").$Enums.UserStatus;
         roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: import(".prisma/client").Prisma.JsonValue;
+        updatedBy: import(".prisma/client").Prisma.JsonValue;
+        deletedBy: import(".prisma/client").Prisma.JsonValue;
     }>;
     update(id: number, updateUserDto: UpdateUserDto): string;
     remove(id: number): string;
