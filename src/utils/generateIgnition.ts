@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { deployContractIgnition } from 'src/utils/execute.utils';
 
-async function createIgnition(_keys: string[], _values: string[], _supplier: string, contractId: string): Promise<void> {
+async function deployContract(_keys: string[], _values: string[], _supplier: string, contractId: string): Promise<void> {
     const ignition = `import {buildModule} from "@nomicfoundation/hardhat-ignition/modules";
     const SupplyChain = buildModule("SupplyChain", (m) => {
     const keys = ${JSON.stringify(_keys)}
@@ -62,4 +62,4 @@ async function refactorArtifacts(contractId: string): Promise<void> {
     await fs.remove(artifactsPathNew);
 }
 
-export { createIgnition };
+export { deployContract };

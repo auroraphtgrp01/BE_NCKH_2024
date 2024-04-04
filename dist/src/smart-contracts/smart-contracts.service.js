@@ -18,7 +18,7 @@ let SmartContractsService = class SmartContractsService {
         const _values = ["Le Minh Tuan", "Tran Nguyen Duy Khanh", "Nguyen Quang Huy", "0x69eD52e5C637a9393E0a0F575d5c8F5aeDa045Ea", "minhtuanledng@gmail.com", '0123123123'];
         const _supplier = "0x69eD52e5C637a9393E0a0F575d5c8F5aeDa045Ea";
         const contractId = 'aebb9401-e61d-4e47-9ea2-ebc810608d9s';
-        await (0, generateIgnition_1.createIgnition)(_keys, _values, _supplier, contractId);
+        await (0, generateIgnition_1.deployContract)(_keys, _values, _supplier, contractId);
     }
     findOne(id) {
         return `This action returns a #${id} smartContract`;
