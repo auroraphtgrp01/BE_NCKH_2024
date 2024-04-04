@@ -14,7 +14,7 @@ node_modules
 /coverage.json
 
 node_modules
-.env
+# .env
 
 # Hardhat files
 /cache
