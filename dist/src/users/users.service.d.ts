@@ -6,16 +6,16 @@ export declare class UsersService {
     private readonly prismaService;
     constructor(prismaService: CustomPrismaService<ExtendedPrismaClient>);
     create(createUserDto: CreateUserDto): Promise<{
-        deletedAt: Date;
-        id: string;
         email: string;
-        name: string;
         phoneNumber: string;
-        indentifyNumber: string;
+        deletedAt: Date;
+        name: string;
         addressWallet: string;
         gender: string;
         dateOfBirth: Date;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -28,16 +28,16 @@ export declare class UsersService {
         deletedBy: import(".prisma/client").Prisma.JsonValue;
     }>;
     updatePIN(updateUserPINDto: UpdateUserPINDto, id: string): Promise<{
-        deletedAt: Date;
-        id: string;
         email: string;
-        name: string;
         phoneNumber: string;
-        indentifyNumber: string;
+        deletedAt: Date;
+        name: string;
         addressWallet: string;
         gender: string;
         dateOfBirth: Date;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -51,16 +51,16 @@ export declare class UsersService {
     }>;
     findAll(page: number, limit: number, order: 'asc' | 'desc'): Promise<{
         users: {
-            deletedAt: Date;
-            id: string;
             email: string;
-            name: string;
             phoneNumber: string;
-            indentifyNumber: string;
+            deletedAt: Date;
+            name: string;
             addressWallet: string;
             gender: string;
             dateOfBirth: Date;
+            indentifyNumber: string;
             PIN: string;
+            id: string;
             emailVerifyToken: string;
             forgotPasswordToken: string;
             refreshToken: string;
@@ -79,16 +79,16 @@ export declare class UsersService {
     }>;
     findOne(id: number): string;
     findOneByAddressWallet(addressWallet: string): Promise<{
-        deletedAt: Date;
-        id: string;
         email: string;
-        name: string;
         phoneNumber: string;
-        indentifyNumber: string;
+        deletedAt: Date;
+        name: string;
         addressWallet: string;
         gender: string;
         dateOfBirth: Date;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;

@@ -1,1 +1,1 @@
-export declare const deployContractIgnition: (contractName: string) => Promise<string>;
+export declare const deployContractIgnition: () => Promise<string>;

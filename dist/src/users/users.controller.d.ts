@@ -5,16 +5,16 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     create(createUserDto: CreateUserDto): Promise<{
-        deletedAt: Date;
-        id: string;
         email: string;
-        name: string;
         phoneNumber: string;
-        indentifyNumber: string;
+        deletedAt: Date;
+        name: string;
         addressWallet: string;
         gender: string;
         dateOfBirth: Date;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -27,16 +27,16 @@ export declare class UsersController {
         deletedBy: import(".prisma/client").Prisma.JsonValue;
     }>;
     updatePIN(PIN: UpdateUserPINDto, id: string): Promise<{
-        deletedAt: Date;
-        id: string;
         email: string;
-        name: string;
         phoneNumber: string;
-        indentifyNumber: string;
+        deletedAt: Date;
+        name: string;
         addressWallet: string;
         gender: string;
         dateOfBirth: Date;
+        indentifyNumber: string;
         PIN: string;
+        id: string;
         emailVerifyToken: string;
         forgotPasswordToken: string;
         refreshToken: string;
@@ -50,16 +50,16 @@ export declare class UsersController {
     }>;
     findAll(page: string, limit: string, order: 'asc' | 'desc'): Promise<{
         users: {
-            deletedAt: Date;
-            id: string;
             email: string;
-            name: string;
             phoneNumber: string;
-            indentifyNumber: string;
+            deletedAt: Date;
+            name: string;
             addressWallet: string;
             gender: string;
             dateOfBirth: Date;
+            indentifyNumber: string;
             PIN: string;
+            id: string;
             emailVerifyToken: string;
             forgotPasswordToken: string;
             refreshToken: string;

@@ -3,12 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition-ethers");
 const config = {
-    solidity: "0.8.24",
+    solidity: {
+        version: "0.8.19",
+    },
     networks: {
         localganache: {
             url: 'HTTP://127.0.0.1:7545',
-            accounts: ["0x2e0fa3c320e9518ac5c2ef28aaf7565363bca327aac30f760bdfd380810a7594"],
+            accounts: ["0xe12c03915e004c21df36642dd196f17faaf428fcc6338ab76d6ce3243c14403a"],
         },
+    },
+    typechain: {
+        tsNocheck: true,
+        dontOverrideCompile: true,
+        outDir: "typechain",
     },
 };
 exports.default = config;

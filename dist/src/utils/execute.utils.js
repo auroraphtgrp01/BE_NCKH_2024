@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deployContractIgnition = void 0;
 const child_process_1 = require("child_process");
-const deployContractIgnition = (contractName) => {
+const deployContractIgnition = () => {
     return new Promise((resolve, reject) => {
-        const command = `npx hardhat ignition deploy ./ignition/modules/${contractName}.ignition.ts --network localganache`;
+        const command = `npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache`;
         const childProcess = (0, child_process_1.exec)(command);
         let outputData = '';
         childProcess.stdout.on('data', (data) => {

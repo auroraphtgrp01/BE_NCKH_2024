@@ -25,7 +25,6 @@ let SmartContractsController = class SmartContractsController {
         return this.smartContractsService.create(createSmartContractDto);
     }
     getABI(contractName) {
-        console.log(contractName);
         return this.smartContractsService.getABI(contractName);
     }
     findOne(id) {

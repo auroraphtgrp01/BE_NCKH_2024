@@ -18,10 +18,4 @@ const readContract = (fileName) => {
     }
 };
 exports.readContract = readContract;
-const respone = {
-    name: 'Tuan',
-    phone: '0123456789',
-    address: 'Hanoi',
-    addressWallet: '0x1234567890'
-};
 //# sourceMappingURL=readContract.utils.js.map

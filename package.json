@@ -30,6 +30,7 @@
     "@prisma/client": "^5.10.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/date-unit-ms": "^1.1.2",
+    "@types/fs-extra": "^11.0.4",
     "@types/ms": "^0.7.34",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -38,6 +39,7 @@
     "cookie-parser": "^1.4.6",
     "ethers": "^6.11.1",
     "expect": "^29.7.0",
+    "fs-extra": "^11.2.0",
     "hardhat-deploy": "^0.12.2",
     "ms": "^2.1.3",
     "nestjs-prisma": "^0.23.0",
@@ -46,6 +48,7 @@
     "passport-local": "^1.0.0",
     "prisma-extension-soft-delete": "^1.0.1",
     "reflect-metadata": "^0.2.0",
+    "rimraf": "^5.0.5",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {

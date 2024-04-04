@@ -14,8 +14,6 @@ export class SmartContractsController {
 
   @Get('/abi')
   getABI(@Query() contractName: object) {
-    console.log(contractName);
-
     return this.smartContractsService.getABI(contractName);
   }
 

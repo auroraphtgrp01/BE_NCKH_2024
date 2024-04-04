@@ -1,8 +1,8 @@
 import { exec } from "child_process";
 
-export const deployContractIgnition = (contractName: string): Promise<string> => {
+export const deployContractIgnition = (): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const command = `npx hardhat ignition deploy ./ignition/modules/${contractName}.ignition.ts --network localganache`;
+        const command = `npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache`;
         const childProcess = exec(command);
         let outputData = '';
 
