@@ -237,3 +237,24 @@ model Crypto {
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
 }
+
+model DeployStatus {
+  id          String          @id @unique @default(uuid()) @db.Uuid
+  status      DeployingStatus
+  description String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  createdBy   Json?
+  updatedBy   Json?
+  deletedAt   DateTime?
+  deletedBy   Json?
+}
+
+enum DeployingStatus {
+  PENDING
+  DEPLOYED
+  PROCESSING
+  FAILED
+}
+
+

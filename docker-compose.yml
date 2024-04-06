@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+
+  postgres:
+    image: postgres
+    container_name: postgress-be
+    volumes:
+      - ./databases:/var/lib/posgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "3001:5432"
+
+  redis-be:
+    container_name: redis-be
+    image: redis:alpine
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+
+  redis_commander:
+    container_name: redis_commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=localhost:6379
+    ports:
+      - '8088:8081'
+    depends_on:
+      - redis-be
+
+volumes:
+  postgres-data:
+  redis-data:

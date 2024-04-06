@@ -12,6 +12,11 @@ export class SmartContractsController {
     return this.smartContractsService.create(createSmartContractDto);
   }
 
+  @Post('/deploy-contract')
+  async deployContract() {
+    return this.smartContractsService.deployContract();
+  }
+
   @Get('/abi')
   getABI(@Query() contractName: object) {
     return this.smartContractsService.getABI(contractName);

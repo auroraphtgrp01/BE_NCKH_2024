@@ -1,11 +1,29 @@
 import { NestFactory, Reflector } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
-import { JwtAuthGuard } from './auth/jwt-auth.guard'
 import * as cookieParser from 'cookie-parser'
+import { ExpressAdapter } from '@bull-board/express'
+import { createBullBoard } from '@bull-board/api'
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
+import { Queue } from 'bullmq'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  const serverAdapter = new ExpressAdapter();
+  serverAdapter.setBasePath('/bull-admin');
+  const aQueue = app.get<Queue>(
+    `BullQueue_deployContract`
+  )
+  createBullBoard({
+    queues: [
+      new BullMQAdapter(aQueue)
+    ],
+    serverAdapter,
+  })
+  app.use(
+    '/bull-admin',
+    serverAdapter.getRouter()
+  );
   app.enableCors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -18,3 +36,4 @@ async function bootstrap() {
   await app.listen(3000)
 }
 bootstrap()
+

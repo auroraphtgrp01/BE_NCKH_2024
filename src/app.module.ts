@@ -7,9 +7,11 @@ import { extendedPrismaClient } from './utils/prisma.extensions'
 import { UsersModule } from './users/users.module'
 import { SmartContractsModule } from './smart-contracts/smart-contracts.module'
 import { AuthModule } from './auth/auth.module'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ContractsModule } from './contracts/contracts.module'
 import { InvitationsModule } from './invitations/invitations.module';
+import { BullModule } from '@nestjs/bullmq'
+import { QueueRedisModule } from './queues/queue-redis.module';
 
 @Module({
   imports: [
@@ -20,12 +22,22 @@ import { InvitationsModule } from './invitations/invitations.module';
       },
       isGlobal: true
     }),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        connection: {
+          host: configService.get('REDIS_HOST'),
+          port: configService.get('REDIS_PORT')
+        }
+      })
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     SmartContractsModule,
     AuthModule,
     ContractsModule,
-    InvitationsModule
+    InvitationsModule,
+    QueueRedisModule
   ],
   controllers: [AppController],
   providers: [
@@ -36,7 +48,8 @@ import { InvitationsModule } from './invitations/invitations.module';
         return new PrismaClientExceptionFilter(httpAdapter)
       },
       inject: [HttpAdapterHost]
-    }
+    },
+    // ContractDeployConsumerService
   ]
 })
-export class AppModule {}
+export class AppModule { }

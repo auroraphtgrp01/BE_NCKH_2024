@@ -1,8 +1,37 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { deployContractIgnition } from 'src/utils/execute.utils';
+import { exec } from "child_process";
 
-async function deployContract(_keys: string[], _values: string[], _supplier: string, contractId: string): Promise<void> {
+export const deployContractIgnition = (): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const command = `npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache`;
+        const childProcess = exec(command);
+        let outputData = '';
+
+        childProcess.stdout.on('data', (data) => {
+            const output = data.toString();
+            console.log(output);
+            outputData += output;
+            childProcess.stdin.write('y\n');
+        });
+
+        childProcess.on('close', (code) => {
+            console.log(`Quá trình đã kết thúc với mã trạng thái ${code}`)
+            if (code === 0) {
+                resolve(outputData)
+            } else {
+                reject(new Error(`Quá trình kết thúc với mã trạng thái ${code}`))
+            }
+        });
+        childProcess.on('error', (error) => {
+            console.error('Lỗi khi thực thi lệnh:', error);
+            reject(error)
+        });
+    });
+};
+
+
+async function deployContract(_keys: string[], _values: string[], _supplier: string, contractId: string): Promise<any> {
     const ignition = `import {buildModule} from "@nomicfoundation/hardhat-ignition/modules";
     const SupplyChain = buildModule("SupplyChain", (m) => {
     const keys = ${JSON.stringify(_keys)}
@@ -16,11 +45,16 @@ return {
 }})
 export default SupplyChain`;
 
-    const ignitionPath = path.join(process.cwd(), '/ignition/modules', 'SupplyChain.ignition.ts');
-    fs.writeFileSync(ignitionPath, ignition);
+    try {
+        const ignitionPath = path.join(process.cwd(), '/ignition/modules', 'SupplyChain.ignition.ts');
+        fs.writeFileSync(ignitionPath, ignition);
+        await manageDirectoryAndDeploy();
+        await refactorArtifacts(contractId);
+        return Promise.resolve(true);
+    } catch (error) {
+        return Promise.reject(error);
+    }
 
-    await manageDirectoryAndDeploy();
-    await refactorArtifacts(contractId);
 }
 
 async function manageDirectoryAndDeploy(): Promise<void> {
@@ -44,22 +78,23 @@ async function refactorArtifacts(contractId: string): Promise<void> {
     if (await fs.pathExists(artifactsPath)) {
         await fs.rename(artifactsPath, artifactsPathNew);
     }
-
     const filesToRename = [
         { oldPath: `SupplyChain.dbg.json`, newPath: `${contractId}.dbg.json` },
         { oldPath: `SupplyChain.json`, newPath: `${contractId}.json` }
     ];
     for (const file of filesToRename) {
-        const oldFilePath = path.join(artifactsDir, contractId, file.oldPath);
-        const newFilePath = path.join(artifactsDir, contractId, file.newPath);
+        const oldFilePath = path.resolve(artifactsPathNew, file.oldPath);
+        const newFilePath = path.resolve(artifactsPathNew, file.newPath);
         if (await fs.pathExists(oldFilePath)) {
             await fs.rename(oldFilePath, newFilePath);
         }
+    }
+    if (!await fs.pathExists(path.resolve(process.cwd(), 'artifacts-storage'))) {
+        await fs.mkdir(path.resolve(process.cwd(), 'artifacts-storage'));
     }
 
     const destinationDir = path.resolve(process.cwd(), `artifacts-storage/${contractId}.sol`);
     await fs.copy(artifactsPathNew, destinationDir);
     await fs.remove(artifactsPathNew);
 }
-
 export { deployContract };
