@@ -1,7 +1,7 @@
 export const RESPONSE_MESSAGES = {
   NAME_MUST_BE_A_STRING: 'Name must be a string',
   ADDRESS_WALLET_MUST_BE_A_STRING: 'Address wallet must be a string',
-  ADDRESS_WALLET_LENGTH: 'Address wallet must be 40 characters long',
+  ADDRESS_WALLET_LENGTH: 'Address wallet must be 42 characters long',
   EMAIL_MUST_BE_A_STRING: 'Email must be a string',
   EMAIL_IS_INVALID: 'Email is invalid',
   FIELD_IS_REQUIRED: 'Field is required',
@@ -21,5 +21,19 @@ export const RESPONSE_MESSAGES = {
   MESSAGE_MUST_BE_A_STRING: 'Message must be a string',
   MESSAGE_TOO_SHORT: 'Message too short',
   INVALID_ID_PARTY_SENDER: 'Invalid ID party sender',
-  ID_PARTY_SENDER_MUST_BE_A_STRING: 'ID party sender must be a string'
+  ID_PARTY_SENDER_MUST_BE_A_STRING: 'ID party sender must be a string',
+  CONTRACT_ADDRESS_MUST_BE_STRING: 'Contract address must be a string',
+  CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS: 'Contract address length must be 42 characters',
+  BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS: 'Block address length must be 66 characters',
+  CONTRACT_IS_NOT_FOUND: 'Contract is not found',
+  CONTRACT_TITLE_LENGTH: 'Contract title length must be less than or equal to 100 characters',
+  START_DATE_MUST_BE_A_VALID_DATE: 'Start date must be a valid date',
+  END_DATE_MUST_BE_A_VALID_DATE: 'End date must be a valid date',
+  EXECUTE_DATE_MUST_BE_A_VALID_DATE: 'Execute date must be a valid date',
+  REPRESENTATIVE_NAME_LENGTH: 'Representative name length must be less than 2 characters',
+  TAX_CODE_LENGTH: 'Tax code length must be equal to 10 characters',
+  INDENTIFY_NUMBER_LENGTH: 'Indentify number length must be equal to 12 characters',
+  PHONE_NUMBER_LENGTH: 'Phone number length must be equal to 10 characters',
+  THE_ADDRESS_MUST_BE_PROVIDED_IN_FULL_AND_CLEARLY: 'The address must be provided in full and clearly',
+  THE_DATE_IS_INVALID: 'The date must be greater than or equal to the current date.'
 }

@@ -1,11 +1,10 @@
-import { InjectQueue } from '@nestjs/bullmq';
-import { Injectable } from '@nestjs/common';
-import { Queue } from 'bullmq';
+import { InjectQueue } from '@nestjs/bullmq'
+import { Injectable } from '@nestjs/common'
+import { Queue } from 'bullmq'
 
 @Injectable()
 export class QueueRedisService {
-
-  constructor(@InjectQueue('deployContract') private readonly deployContractQueue: Queue) { }
+  constructor(@InjectQueue('deployContract') private readonly deployContractQueue: Queue) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
     this.deployContractQueue.add('deployContract', job)

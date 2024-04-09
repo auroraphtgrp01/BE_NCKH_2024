@@ -1,17 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
 import { CreateContractDto } from './dto/create-contract.dto'
-import { UpdateContractDto } from './dto/update-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
+import { UpdateContractDto } from './dto/update-contract.dto'
 
 @Controller('contracts')
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
-
-  @Post('create-empty')
-  async createEmptyContract() {
-    return await this.contractsService.createEmptyContract()
-  }
 
   @Post('send-invitation')
   async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto) {
@@ -19,8 +14,8 @@ export class ContractsController {
   }
 
   @Post()
-  create(@Body() createContractDto: CreateContractDto) {
-    return this.contractsService.create(createContractDto)
+  async create(@Body('contractData') contractData: CreateContractDto, @Body('templateId') templateId?: string) {
+    return await this.contractsService.create(contractData, templateId)
   }
 
   @Get()
@@ -30,12 +25,12 @@ export class ContractsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.contractsService.findOne(+id)
+    return this.contractsService.findOne(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContractDto: UpdateContractDto) {
-    return this.contractsService.update(+id, updateContractDto)
+  @Patch()
+  update(@Body() updateContractDto: UpdateContractDto) {
+    return this.contractsService.update(updateContractDto)
   }
 
   @Delete(':id')

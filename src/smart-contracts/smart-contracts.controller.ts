@@ -1,39 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { SmartContractsService } from './smart-contracts.service';
-import { CreateSmartContractDto } from './dto/create-smart-contract.dto';
-import { UpdateSmartContractDto } from './dto/update-smart-contract.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common'
+import { SmartContractsService } from './smart-contracts.service'
+import { CreateSmartContractDto } from './dto/create-smart-contract.dto'
+import { UpdateSmartContractDto } from './dto/update-smart-contract.dto'
 
 @Controller('smart-contracts')
 export class SmartContractsController {
-  constructor(private readonly smartContractsService: SmartContractsService) { }
+  constructor(private readonly smartContractsService: SmartContractsService) {}
 
   @Post()
   create(@Body() createSmartContractDto: CreateSmartContractDto) {
-    return this.smartContractsService.create(createSmartContractDto);
+    return this.smartContractsService.create(createSmartContractDto)
   }
 
   @Post('/deploy-contract')
-  async deployContract() {
-    return this.smartContractsService.deployContract();
+  async deployContract(
+    @Body() payload: any,
+    @Body('contractId') contractId: string,
+    @Body('supplier') supplier: string
+  ) {
+    return this.smartContractsService.deployContract(payload, contractId, supplier)
   }
 
   @Get('/abi')
   getABI(@Query() contractName: object) {
-    return this.smartContractsService.getABI(contractName);
+    return this.smartContractsService.getABI(contractName)
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.smartContractsService.findOne(+id);
+    return this.smartContractsService.findOne(+id)
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSmartContractDto: UpdateSmartContractDto) {
-    return this.smartContractsService.update(+id, updateSmartContractDto);
+    return this.smartContractsService.update(+id, updateSmartContractDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.smartContractsService.remove(+id);
+    return this.smartContractsService.remove(+id)
   }
 }
