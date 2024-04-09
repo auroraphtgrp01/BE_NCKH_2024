@@ -33,7 +33,7 @@ model User {
   forgotPasswordToken String?
   refreshToken        String?
   userStatus          UserStatus? @default(UNVERIFIED)
-  // Role                Role?       @relation(fields: [roleId], references: [id])
+  Role                Role?       @relation(fields: [roleId], references: [id])
   roleId              String?     @unique @db.Uuid
   createdAt           DateTime?   @default(now())
   updatedAt           DateTime?   @updatedAt
@@ -41,21 +41,22 @@ model User {
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
-  Parties             Parties[]
-  Role                Role?       @relation(fields: [roleId], references: [id])
+  PartyInfo           PartyInfo[]
 }
 
 model Contract {
   id                     String                   @id @unique @default(uuid()) @db.Uuid
+  contractTitle          String
+  addressWallet          String
   contractAddress        String
   blockAddress           String
-  gasPrice               String
-  Parties                Parties[]
+  gasPrices              Json[]                   @db.Json
+  parties                Json[]                   @db.Json
   ContractAttributeValue ContractAttributeValue[]
   startDate              DateTime
   endDate                DateTime?
   executeDate            DateTime?
-  agreement              String
+  agreements             String[]
   status                 contractStatus           @default(PENDING)
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
@@ -64,22 +65,24 @@ model Contract {
   deletedAt              DateTime?
   deletedBy              Json?
   Invitation             Invitation[]
+  contractAttribute      ContractAttribute[]
+  PartyInfo              PartyInfo[]
 }
 
 model Invitation {
-  id            String           @id @unique @default(uuid()) @db.Uuid
-  idPartySender String
-  email         String
-  message       String
-  status        InvitationStatus @default(PENDING)
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  createdBy     Json?
-  updatedBy     Json?
-  deletedAt     DateTime?
-  deletedBy     Json?
-  Contract      Contract?        @relation(fields: [contractId], references: [id])
-  contractId    String?          @db.Uuid
+  id           String           @id @unique @default(uuid()) @db.Uuid
+  idUserSender String           @db.Uuid
+  email        String
+  message      String
+  status       InvitationStatus @default(PENDING)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  createdBy    Json?
+  updatedBy    Json?
+  deletedAt    DateTime?
+  deletedBy    Json?
+  Contract     Contract?        @relation(fields: [contractId], references: [id])
+  contractId   String?          @db.Uuid
 }
 
 enum contractStatus {
@@ -103,6 +106,8 @@ model ContractAttribute {
   deletedAt              DateTime?
   deletedBy              Json?
   ContractAttributeValue ContractAttributeValue[]
+  Contract               Contract?                @relation(fields: [contractId], references: [id])
+  contractId             String?                  @db.Uuid
 }
 
 model ContractAttributeValue {
@@ -122,30 +127,42 @@ model ContractAttributeValue {
 }
 
 model Parties {
-  id                 String         @id @unique @default(uuid()) @db.Uuid
-  parytyName         String
+  id              String         @id @unique @default(uuid()) @db.Uuid
+  partyName       String         @unique
+  taxCode         String         @unique
+  email           String         @unique
+  phoneNumber     String         @unique
+  address         String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  createdBy       Json?
+  updatedBy       Json?
+  deletedAt       DateTime?
+  deletedBy       Json?
+  PaymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId String?        @db.Uuid
+  PartyInfo       PartyInfo[]
+}
+
+model PartyInfo {
+  id                 String    @id @unique @default(uuid()) @db.Uuid
   representativeName String
-  userId             String         @db.Uuid
-  User               User           @relation(fields: [userId], references: [id])
-  taxCode            String
   position           String
-  email              String
-  indentifyNumber    String
-  phoneNumber        String
+  userId             String    @db.Uuid
+  User               User      @relation(fields: [userId], references: [id])
+  phoneNumber        String    @unique
   address            String
   description        String?
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
   createdBy          Json?
   updatedBy          Json?
   deletedAt          DateTime?
   deletedBy          Json?
-  // PaymentMethod      PaymentMethod @relation(fields: [paymentMethodId], references: [id])
-  // paymentMethodId    String    @unique @db.Uuid
-  Contract           Contract?      @relation(fields: [contractId], references: [id])
-  contractId         String?        @db.Uuid
-  PaymentMethod      PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
-  paymentMethodId    String?        @db.Uuid
+  contract           Contract? @relation(fields: [contractId], references: [id])
+  contractId         String?   @db.Uuid
+  Parties            Parties   @relation(fields: [partiesId], references: [id])
+  partiesId          String    @unique @db.Uuid
 }
 
 model Role {
@@ -256,5 +273,3 @@ enum DeployingStatus {
   PROCESSING
   FAILED
 }
-
-
