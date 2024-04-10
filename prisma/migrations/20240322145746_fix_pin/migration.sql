@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "PIN" DROP NOT NULL;

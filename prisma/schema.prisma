@@ -36,9 +36,10 @@ model User {
   Role                Role?       @relation(fields: [roleId], references: [id])
   roleId              String?     @unique @db.Uuid
   createdAt           DateTime?   @default(now())
-  updatedAt           DateTime?   @updatedAt
+  updatedAt           DateTime?   @default(dbgenerated("NULL")) @updatedAt
   createdBy           Json?
   updatedBy           Json?
+  deleted             Boolean?    @default(false)
   deletedAt           DateTime?
   deletedBy           Json?
   PartyInfo           PartyInfo[]
@@ -59,9 +60,10 @@ model Contract {
   agreements             String[]
   status                 contractStatus           @default(PENDING)
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
+  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   Invitation             Invitation[]
@@ -76,9 +78,10 @@ model Invitation {
   message      String
   status       InvitationStatus @default(PENDING)
   createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  updatedAt    DateTime         @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
+  deleted      Boolean?         @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
   Contract     Contract?        @relation(fields: [contractId], references: [id])
@@ -100,9 +103,10 @@ model ContractAttribute {
   name                   String
   description            String?
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
+  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   ContractAttributeValue ContractAttributeValue[]
@@ -119,9 +123,10 @@ model ContractAttributeValue {
   value               String
   description         String?
   createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
+  updatedAt           DateTime          @default(dbgenerated("NULL")) @updatedAt
   createdBy           Json?
   updatedBy           Json?
+  deleted             Boolean?          @default(false)
   deletedAt           DateTime?
   deletedBy           Json?
 }
@@ -134,9 +139,10 @@ model Parties {
   phoneNumber     String         @unique
   address         String
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime       @default(dbgenerated("NULL")) @updatedAt
   createdBy       Json?
   updatedBy       Json?
+  deleted         Boolean?       @default(false)
   deletedAt       DateTime?
   deletedBy       Json?
   PaymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
@@ -154,9 +160,10 @@ model PartyInfo {
   address            String
   description        String?
   createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  updatedAt          DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy          Json?
   updatedBy          Json?
+  deleted            Boolean?  @default(false)
   deletedAt          DateTime?
   deletedBy          Json?
   contract           Contract? @relation(fields: [contractId], references: [id])
@@ -172,9 +179,10 @@ model Role {
   isActive    Boolean?            @default(true)
   Permission  IncludePermission[]
   createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  updatedAt   DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?            @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   User        User[]
@@ -187,9 +195,10 @@ model Permission {
   method            String
   description       String?
   createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  updatedAt         DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy         Json?
   updatedBy         Json?
+  deleted           Boolean?            @default(false)
   deletedAt         DateTime?
   deletedBy         Json?
   IncludePermission IncludePermission[]
@@ -202,9 +211,10 @@ model IncludePermission {
   Permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String     @unique @db.Uuid
   createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  updatedAt    DateTime   @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
+  deleted      Boolean?   @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
 }
@@ -218,9 +228,10 @@ model PaymentMethod {
   idCryptoId  String?   @unique @db.Uuid
   description String?
   createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  updatedAt   DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?  @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   Parties     Parties[]
@@ -233,9 +244,10 @@ model Banking {
   bankName      String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
+  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -247,9 +259,10 @@ model Crypto {
   chainName     String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
+  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -260,9 +273,10 @@ model DeployStatus {
   status      DeployingStatus
   description String?
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  updatedAt   DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?        @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
 }
