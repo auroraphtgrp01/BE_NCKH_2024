@@ -20,8 +20,7 @@ export const RESPONSE_MESSAGES = {
   PARTY_SENDER_HAS_TO_BE_INDENTIFIED: 'Party sender has to be indentified',
   MESSAGE_MUST_BE_A_STRING: 'Message must be a string',
   MESSAGE_TOO_SHORT: 'Message too short',
-  INVALID_ID_PARTY_SENDER: 'Invalid ID party sender',
-  ID_PARTY_SENDER_MUST_BE_A_STRING: 'ID party sender must be a string',
+  INVALID_ID: 'Invalid ID',
   CONTRACT_ADDRESS_MUST_BE_STRING: 'Contract address must be a string',
   CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS: 'Contract address length must be 42 characters',
   BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS: 'Block address length must be 66 characters',
@@ -36,5 +35,6 @@ export const RESPONSE_MESSAGES = {
   PHONE_NUMBER_LENGTH: 'Phone number length must be equal to 10 characters',
   THE_ADDRESS_MUST_BE_PROVIDED_IN_FULL_AND_CLEARLY: 'The address must be provided in full and clearly',
   THE_DATE_IS_INVALID: 'The date must be greater than or equal to the current date.',
-  PIN_NOT_SET: 'PIN not set'
+  PIN_NOT_SET: 'PIN not set',
+  ID_MUST_BE_A_STRING: 'ID must be a string'
 }
