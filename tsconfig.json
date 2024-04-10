@@ -19,8 +19,5 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "exclude": [
-    "ignition",
-    "typechain-types"
-  ]
+  "exclude": ["ignition", "typechain-types"]
 }

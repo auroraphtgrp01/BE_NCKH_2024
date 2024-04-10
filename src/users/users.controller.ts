@@ -15,6 +15,7 @@ export class UsersController {
   }
 
   @Patch('pin/:id')
+  @Public()
   async updatePIN(@Body() PIN: UpdateUserPINDto, @Param('id') id: string) {
     return await this.usersService.updatePIN(PIN, id)
   }
@@ -26,9 +27,14 @@ export class UsersController {
     return await this.usersService.findAll(+page, +limit, order)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id)
+  @Get('/find-one-by-id/:id')
+  async findOneById(@Param('id') id: string) {
+    return await this.usersService.findOneById(id)
+  }
+
+  @Get(':payload')
+  async findOne(@Param('payload') payload: string) {
+    return await this.usersService.findOne(payload)
   }
 
   @Patch(':id')
@@ -38,7 +44,7 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id)
+    return this.usersService.remove(id)
   }
 
   @Get('address-wallet-exists/:addressWallet')
