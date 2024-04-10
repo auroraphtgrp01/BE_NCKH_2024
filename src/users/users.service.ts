@@ -61,13 +61,22 @@ export class UsersService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  async findOneById(id: string) {
+    const user = await this.prismaService.client.user.findUnique({ where: { id } })
+    return user
+  }
+
+  async findOne(payload: string) {
+    const user = await await this.prismaService.client.user.findFirst({
+      where: {
+        OR: [{ email: payload }, { addressWallet: payload }, { indentifyNumber: payload }]
+      }
+    })
+    return user
   }
 
   async findOneByAddressWallet(addressWallet: string) {
     const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } })
-
     return user
   }
 
@@ -75,8 +84,9 @@ export class UsersService {
     return `This action updates a #${id} user`
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  async remove(id: string) {
+    const user = await this.prismaService.client.user.delete({ where: { id } })
+    return user
   }
 
   getABI() {

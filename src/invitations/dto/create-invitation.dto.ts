@@ -5,7 +5,7 @@ export class CreateInvitationDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.PARTY_SENDER_HAS_TO_BE_INDENTIFIED })
   @IsString({ message: RESPONSE_MESSAGES.ID_PARTY_SENDER_MUST_BE_A_STRING })
   @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID_PARTY_SENDER })
-  idPartySender: string
+  idUserSender: string
 
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })

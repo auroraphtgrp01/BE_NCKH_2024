@@ -39,6 +39,7 @@ model User {
   updatedAt           DateTime?   @updatedAt
   createdBy           Json?
   updatedBy           Json?
+  deleted             Boolean?    @default(false)
   deletedAt           DateTime?
   deletedBy           Json?
   PartyInfo           PartyInfo[]
@@ -62,6 +63,7 @@ model Contract {
   updatedAt              DateTime                 @updatedAt
   createdBy              Json?
   updatedBy              Json?
+  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   Invitation             Invitation[]
@@ -79,6 +81,7 @@ model Invitation {
   updatedAt    DateTime         @updatedAt
   createdBy    Json?
   updatedBy    Json?
+  deleted      Boolean?         @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
   Contract     Contract?        @relation(fields: [contractId], references: [id])
@@ -103,6 +106,7 @@ model ContractAttribute {
   updatedAt              DateTime                 @updatedAt
   createdBy              Json?
   updatedBy              Json?
+  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   ContractAttributeValue ContractAttributeValue[]
@@ -122,6 +126,7 @@ model ContractAttributeValue {
   updatedAt           DateTime          @updatedAt
   createdBy           Json?
   updatedBy           Json?
+  deleted             Boolean?          @default(false)
   deletedAt           DateTime?
   deletedBy           Json?
 }
@@ -137,6 +142,7 @@ model Parties {
   updatedAt       DateTime       @updatedAt
   createdBy       Json?
   updatedBy       Json?
+  deleted         Boolean?       @default(false)
   deletedAt       DateTime?
   deletedBy       Json?
   PaymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
@@ -157,6 +163,7 @@ model PartyInfo {
   updatedAt          DateTime  @updatedAt
   createdBy          Json?
   updatedBy          Json?
+  deleted            Boolean?  @default(false)
   deletedAt          DateTime?
   deletedBy          Json?
   contract           Contract? @relation(fields: [contractId], references: [id])
@@ -175,6 +182,7 @@ model Role {
   updatedAt   DateTime            @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?            @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   User        User[]
@@ -190,6 +198,7 @@ model Permission {
   updatedAt         DateTime            @updatedAt
   createdBy         Json?
   updatedBy         Json?
+  deleted           Boolean?            @default(false)
   deletedAt         DateTime?
   deletedBy         Json?
   IncludePermission IncludePermission[]
@@ -205,6 +214,7 @@ model IncludePermission {
   updatedAt    DateTime   @updatedAt
   createdBy    Json?
   updatedBy    Json?
+  deleted      Boolean?   @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
 }
@@ -221,6 +231,7 @@ model PaymentMethod {
   updatedAt   DateTime  @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?  @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   Parties     Parties[]
@@ -236,6 +247,7 @@ model Banking {
   updatedAt     DateTime        @updatedAt
   createdBy     Json?
   updatedBy     Json?
+  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -250,6 +262,7 @@ model Crypto {
   updatedAt     DateTime        @updatedAt
   createdBy     Json?
   updatedBy     Json?
+  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -263,6 +276,7 @@ model DeployStatus {
   updatedAt   DateTime        @updatedAt
   createdBy   Json?
   updatedBy   Json?
+  deleted     Boolean?        @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
 }

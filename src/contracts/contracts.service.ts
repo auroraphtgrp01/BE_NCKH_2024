@@ -2,12 +2,11 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
-import { Prisma, PrismaClient, contractStatus } from '@prisma/client'
+import { contractStatus } from '@prisma/client'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { InvitationsService } from 'src/invitations/invitations.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { UpdateContractDto } from './dto/update-contract.dto'
-import { IParty } from 'src/interfaces/contract.interface'
 
 @Injectable()
 export class ContractsService {
