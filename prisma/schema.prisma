@@ -36,7 +36,7 @@ model User {
   Role                Role?       @relation(fields: [roleId], references: [id])
   roleId              String?     @unique @db.Uuid
   createdAt           DateTime?   @default(now())
-  updatedAt           DateTime?   @updatedAt
+  updatedAt           DateTime?   @default(dbgenerated("NULL")) @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deleted             Boolean?    @default(false)
@@ -60,7 +60,7 @@ model Contract {
   agreements             String[]
   status                 contractStatus           @default(PENDING)
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deleted                Boolean?                 @default(false)
@@ -78,7 +78,7 @@ model Invitation {
   message      String
   status       InvitationStatus @default(PENDING)
   createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  updatedAt    DateTime         @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
   deleted      Boolean?         @default(false)
@@ -103,7 +103,7 @@ model ContractAttribute {
   name                   String
   description            String?
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deleted                Boolean?                 @default(false)
@@ -123,7 +123,7 @@ model ContractAttributeValue {
   value               String
   description         String?
   createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
+  updatedAt           DateTime          @default(dbgenerated("NULL")) @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deleted             Boolean?          @default(false)
@@ -139,7 +139,7 @@ model Parties {
   phoneNumber     String         @unique
   address         String
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime       @default(dbgenerated("NULL")) @updatedAt
   createdBy       Json?
   updatedBy       Json?
   deleted         Boolean?       @default(false)
@@ -160,7 +160,7 @@ model PartyInfo {
   address            String
   description        String?
   createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  updatedAt          DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy          Json?
   updatedBy          Json?
   deleted            Boolean?  @default(false)
@@ -179,7 +179,7 @@ model Role {
   isActive    Boolean?            @default(true)
   Permission  IncludePermission[]
   createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  updatedAt   DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deleted     Boolean?            @default(false)
@@ -195,7 +195,7 @@ model Permission {
   method            String
   description       String?
   createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  updatedAt         DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy         Json?
   updatedBy         Json?
   deleted           Boolean?            @default(false)
@@ -211,7 +211,7 @@ model IncludePermission {
   Permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String     @unique @db.Uuid
   createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  updatedAt    DateTime   @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
   deleted      Boolean?   @default(false)
@@ -228,7 +228,7 @@ model PaymentMethod {
   idCryptoId  String?   @unique @db.Uuid
   description String?
   createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  updatedAt   DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deleted     Boolean?  @default(false)
@@ -244,7 +244,7 @@ model Banking {
   bankName      String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
   deleted       Boolean?        @default(false)
@@ -259,7 +259,7 @@ model Crypto {
   chainName     String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
   deleted       Boolean?        @default(false)
@@ -273,7 +273,7 @@ model DeployStatus {
   status      DeployingStatus
   description String?
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  updatedAt   DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deleted     Boolean?        @default(false)

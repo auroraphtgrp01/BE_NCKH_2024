@@ -1,17 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException, Req } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { Public } from 'src/decorators/is-public.decorator'
+import { Request } from 'express'
+import { IUser } from './interfaces/IUser.interface'
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.create(createUserDto)
+  async create(@Body() createUserDto: CreateUserDto, @Req() req: Request & { user: IUser }) {
+    return await this.usersService.create(createUserDto, req.user)
   }
 
   @Patch('pin/:id')
@@ -43,8 +45,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id)
+  remove(@Param('id') id: string, @Req() req: Request & { user: IUser }) {
+    return this.usersService.remove(id, req.user)
   }
 
   @Get('address-wallet-exists/:addressWallet')

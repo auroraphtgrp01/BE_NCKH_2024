@@ -35,5 +35,6 @@ export const RESPONSE_MESSAGES = {
   INDENTIFY_NUMBER_LENGTH: 'Indentify number length must be equal to 12 characters',
   PHONE_NUMBER_LENGTH: 'Phone number length must be equal to 10 characters',
   THE_ADDRESS_MUST_BE_PROVIDED_IN_FULL_AND_CLEARLY: 'The address must be provided in full and clearly',
-  THE_DATE_IS_INVALID: 'The date must be greater than or equal to the current date.'
+  THE_DATE_IS_INVALID: 'The date must be greater than or equal to the current date.',
+  PIN_NOT_SET: 'PIN not set'
 }

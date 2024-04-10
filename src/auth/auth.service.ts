@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { UsersService } from '../users/users.service'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
@@ -75,6 +75,7 @@ export class AuthService {
     const user = await this.usersService.findOneByAddressWallet(addressWallet)
 
     if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+    if (user.PIN === null) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_NOT_SET })
     if (user && (await compare(PIN, user.PIN)) === true) {
       const { PIN, ...result } = user
       return result

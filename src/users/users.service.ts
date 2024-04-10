@@ -6,11 +6,13 @@ import { readContract } from 'src/utils/readContract.utils'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { hashPassword } from 'src/utils/hashPassword'
+import { IExecutor } from 'src/interfaces/executor.interface'
+import { IUser } from './interfaces/IUser.interface'
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto, user: IUser) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [
@@ -23,9 +25,11 @@ export class UsersService {
     if (isUserExist) {
       throw new HttpException({ message: RESPONSE_MESSAGES.USER_IS_EXIST }, 400)
     }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     return await this.prismaService.client.user.create({
       data: {
-        ...createUserDto
+        ...createUserDto,
+        createdBy
       }
     })
   }
@@ -84,7 +88,9 @@ export class UsersService {
     return `This action updates a #${id} user`
   }
 
-  async remove(id: string) {
+  async remove(id: string, _user: IUser) {
+    const deletedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+    await this.prismaService.client.user.update({ where: { id }, data: { deletedBy } })
     const user = await this.prismaService.client.user.delete({ where: { id } })
     return user
   }
