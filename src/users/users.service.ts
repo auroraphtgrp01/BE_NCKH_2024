@@ -84,8 +84,13 @@ export class UsersService {
     return user
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`
+  async update(updateUserDto: UpdateUserDto, _user: IUser) {
+    const updatedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+    const user = await this.prismaService.client.user.update({
+      where: { id: updateUserDto.id },
+      data: { ...updateUserDto, updatedBy }
+    })
+    return user
   }
 
   async remove(id: string, _user: IUser) {

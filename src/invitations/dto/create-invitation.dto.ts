@@ -3,8 +3,8 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 export class CreateInvitationDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.PARTY_SENDER_HAS_TO_BE_INDENTIFIED })
-  @IsString({ message: RESPONSE_MESSAGES.ID_PARTY_SENDER_MUST_BE_A_STRING })
-  @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID_PARTY_SENDER })
+  @IsString({ message: RESPONSE_MESSAGES.ID_MUST_BE_A_STRING })
+  @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID })
   idUserSender: string
 
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })

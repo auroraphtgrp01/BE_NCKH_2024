@@ -19,6 +19,12 @@ enum InvitationStatus {
   REJECTED
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model User {
   id                  String      @id @unique @default(uuid()) @db.Uuid
   email               String      @unique
@@ -26,7 +32,7 @@ model User {
   phoneNumber         String
   indentifyNumber     String      @unique
   addressWallet       String      @unique
-  gender              String
+  gender              Gender
   dateOfBirth         DateTime
   PIN                 String?
   emailVerifyToken    String?
@@ -63,7 +69,6 @@ model Contract {
   updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
-  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   Invitation             Invitation[]
@@ -81,7 +86,6 @@ model Invitation {
   updatedAt    DateTime         @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
-  deleted      Boolean?         @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
   Contract     Contract?        @relation(fields: [contractId], references: [id])
@@ -106,7 +110,6 @@ model ContractAttribute {
   updatedAt              DateTime                 @default(dbgenerated("NULL")) @updatedAt
   createdBy              Json?
   updatedBy              Json?
-  deleted                Boolean?                 @default(false)
   deletedAt              DateTime?
   deletedBy              Json?
   ContractAttributeValue ContractAttributeValue[]
@@ -126,7 +129,6 @@ model ContractAttributeValue {
   updatedAt           DateTime          @default(dbgenerated("NULL")) @updatedAt
   createdBy           Json?
   updatedBy           Json?
-  deleted             Boolean?          @default(false)
   deletedAt           DateTime?
   deletedBy           Json?
 }
@@ -142,7 +144,6 @@ model Parties {
   updatedAt       DateTime       @default(dbgenerated("NULL")) @updatedAt
   createdBy       Json?
   updatedBy       Json?
-  deleted         Boolean?       @default(false)
   deletedAt       DateTime?
   deletedBy       Json?
   PaymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
@@ -163,7 +164,6 @@ model PartyInfo {
   updatedAt          DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy          Json?
   updatedBy          Json?
-  deleted            Boolean?  @default(false)
   deletedAt          DateTime?
   deletedBy          Json?
   contract           Contract? @relation(fields: [contractId], references: [id])
@@ -182,7 +182,6 @@ model Role {
   updatedAt   DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
-  deleted     Boolean?            @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   User        User[]
@@ -198,7 +197,6 @@ model Permission {
   updatedAt         DateTime            @default(dbgenerated("NULL")) @updatedAt
   createdBy         Json?
   updatedBy         Json?
-  deleted           Boolean?            @default(false)
   deletedAt         DateTime?
   deletedBy         Json?
   IncludePermission IncludePermission[]
@@ -214,7 +212,6 @@ model IncludePermission {
   updatedAt    DateTime   @default(dbgenerated("NULL")) @updatedAt
   createdBy    Json?
   updatedBy    Json?
-  deleted      Boolean?   @default(false)
   deletedAt    DateTime?
   deletedBy    Json?
 }
@@ -231,7 +228,6 @@ model PaymentMethod {
   updatedAt   DateTime  @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
-  deleted     Boolean?  @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
   Parties     Parties[]
@@ -247,7 +243,6 @@ model Banking {
   updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
-  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -262,7 +257,6 @@ model Crypto {
   updatedAt     DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy     Json?
   updatedBy     Json?
-  deleted       Boolean?        @default(false)
   deletedAt     DateTime?
   deletedBy     Json?
   PaymentMethod PaymentMethod[]
@@ -276,7 +270,6 @@ model DeployStatus {
   updatedAt   DateTime        @default(dbgenerated("NULL")) @updatedAt
   createdBy   Json?
   updatedBy   Json?
-  deleted     Boolean?        @default(false)
   deletedAt   DateTime?
   deletedBy   Json?
 }

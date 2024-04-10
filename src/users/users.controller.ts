@@ -39,9 +39,9 @@ export class UsersController {
     return await this.usersService.findOne(payload)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto)
+  @Patch()
+  update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request & { user: IUser }) {
+    return this.usersService.update(updateUserDto, req.user)
   }
 
   @Delete(':id')
