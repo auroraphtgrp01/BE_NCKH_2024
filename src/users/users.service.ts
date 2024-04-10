@@ -8,10 +8,12 @@ import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { hashPassword } from 'src/utils/hashPassword'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { IUser } from './interfaces/IUser.interface'
+import { Exact } from '@prisma/client/runtime/library'
+import { Gender } from '@prisma/client'
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
+  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) { }
   async create(createUserDto: CreateUserDto, user: IUser) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
@@ -29,6 +31,7 @@ export class UsersService {
     return await this.prismaService.client.user.create({
       data: {
         ...createUserDto,
+        gender: createUserDto.gender as Exact<Gender, Gender>,
         createdBy
       }
     })
@@ -88,7 +91,11 @@ export class UsersService {
     const updatedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
     const user = await this.prismaService.client.user.update({
       where: { id: updateUserDto.id },
-      data: { ...updateUserDto, updatedBy }
+      data: {
+        ...updateUserDto,
+        gender: updateUserDto.gender as Exact<Gender, Gender>
+        , updatedBy
+      }
     })
     return user
   }
