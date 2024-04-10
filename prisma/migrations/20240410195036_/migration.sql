@@ -5,6 +5,9 @@ CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BLOCKED', 'UNVERIFIED');
 CREATE TYPE "InvitationStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
 
 -- CreateEnum
+CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
+
+-- CreateEnum
 CREATE TYPE "contractStatus" AS ENUM ('PENDING', 'DEPLOYED', 'PROCESSING', 'CANCELED', 'COMPLETED', 'LATED', 'VIOLATED');
 
 -- CreateEnum
@@ -18,7 +21,7 @@ CREATE TABLE "User" (
     "phoneNumber" TEXT NOT NULL,
     "indentifyNumber" TEXT NOT NULL,
     "addressWallet" TEXT NOT NULL,
-    "gender" TEXT NOT NULL,
+    "gender" "Gender" NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
     "PIN" TEXT,
     "emailVerifyToken" TEXT,
@@ -30,7 +33,6 @@ CREATE TABLE "User" (
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -55,7 +57,6 @@ CREATE TABLE "Contract" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -73,7 +74,6 @@ CREATE TABLE "Invitation" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "contractId" UUID,
@@ -90,7 +90,6 @@ CREATE TABLE "ContractAttribute" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "contractId" UUID,
@@ -109,7 +108,6 @@ CREATE TABLE "ContractAttributeValue" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -128,7 +126,6 @@ CREATE TABLE "Parties" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "paymentMethodId" UUID,
@@ -149,7 +146,6 @@ CREATE TABLE "PartyInfo" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "contractId" UUID,
@@ -168,7 +164,6 @@ CREATE TABLE "Role" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -186,7 +181,6 @@ CREATE TABLE "Permission" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -202,7 +196,6 @@ CREATE TABLE "IncludePermission" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -220,7 +213,6 @@ CREATE TABLE "PaymentMethod" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -238,7 +230,6 @@ CREATE TABLE "Banking" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -255,7 +246,6 @@ CREATE TABLE "Crypto" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
@@ -271,7 +261,6 @@ CREATE TABLE "DeployStatus" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdBy" JSONB,
     "updatedBy" JSONB,
-    "deleted" BOOLEAN DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 

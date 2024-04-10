@@ -12,6 +12,8 @@ import { ContractsModule } from './contracts/contracts.module'
 import { InvitationsModule } from './invitations/invitations.module';
 import { BullModule } from '@nestjs/bullmq'
 import { QueueRedisModule } from './queues/queue-redis.module';
+import { PartiesModule } from './parties/parties.module';
+import { PartyInfosModule } from './party-infos/party-infos.module';
 
 @Module({
   imports: [
@@ -37,7 +39,9 @@ import { QueueRedisModule } from './queues/queue-redis.module';
     AuthModule,
     ContractsModule,
     InvitationsModule,
-    QueueRedisModule
+    QueueRedisModule,
+    PartiesModule,
+    PartyInfosModule,
   ],
   controllers: [AppController],
   providers: [

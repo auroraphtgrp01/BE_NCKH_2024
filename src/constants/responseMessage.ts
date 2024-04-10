@@ -36,5 +36,7 @@ export const RESPONSE_MESSAGES = {
   THE_ADDRESS_MUST_BE_PROVIDED_IN_FULL_AND_CLEARLY: 'The address must be provided in full and clearly',
   THE_DATE_IS_INVALID: 'The date must be greater than or equal to the current date.',
   PIN_NOT_SET: 'PIN not set',
-  ID_MUST_BE_A_STRING: 'ID must be a string'
+  ID_MUST_BE_A_STRING: 'ID must be a string',
+  PARTY_NAME_LENGTH: 'Party name length must be between 3 and 50 characters',
+  PARTY_IS_EXIST: 'Party is exist'
 }
