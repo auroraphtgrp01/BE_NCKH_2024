@@ -23,7 +23,9 @@ export class PartiesService {
     })
     if (isPartyExist) throw new NotFoundException(RESPONSE_MESSAGES.PARTY_IS_EXIST)
     const createdBy: IExecutor = { email: _user.email, id: _user.id, name: _user.name }
-    const party = await this.prismaService.client.parties.create({ data: { ...createPartyDto, createdBy } })
+    const party = await this.prismaService.client.parties.create({
+      data: { ...createPartyDto, createdBy, updatedAt: null }
+    })
     return party
   }
 
@@ -31,8 +33,19 @@ export class PartiesService {
     return `This action returns all parties`
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} party`
+  async findOne(payload: string) {
+    const party = await this.prismaService.client.parties.findFirst({
+      where: {
+        partyName: payload,
+        OR: [{ taxCode: payload }, { email: payload }, { phoneNumber: payload }]
+      }
+    })
+    return party
+  }
+
+  async findOneById(id: string) {
+    const party = await this.prismaService.client.parties.findUnique({ where: { id } })
+    return party
   }
 
   update(id: number, updatePartyDto: UpdatePartyDto) {

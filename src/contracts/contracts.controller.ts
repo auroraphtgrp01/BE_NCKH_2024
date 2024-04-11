@@ -1,16 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
 import { CreateContractDto } from './dto/create-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
+import { IUser } from 'src/users/interfaces/IUser.interface'
 
 @Controller('contracts')
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 
   @Post('send-invitation')
-  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto) {
-    return await this.contractsService.sendInvitation(sendInvitationDto)
+  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @Req() req: Request & { user: IUser }) {
+    return await this.contractsService.sendInvitation(sendInvitationDto, req.user)
   }
 
   @Post()

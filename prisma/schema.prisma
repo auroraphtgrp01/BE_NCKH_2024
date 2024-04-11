@@ -65,7 +65,7 @@ model Contract {
   agreements             String[]
   status                 contractStatus           @default(PENDING)
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime?                @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deletedAt              DateTime?
@@ -82,7 +82,7 @@ model Invitation {
   message      String
   status       InvitationStatus @default(PENDING)
   createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  updatedAt    DateTime?        @updatedAt
   createdBy    Json?
   updatedBy    Json?
   deletedAt    DateTime?
@@ -106,7 +106,7 @@ model ContractAttribute {
   name                   String
   description            String?
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  updatedAt              DateTime?                @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deletedAt              DateTime?
@@ -125,7 +125,7 @@ model ContractAttributeValue {
   value               String
   description         String?
   createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
+  updatedAt           DateTime?         @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deletedAt           DateTime?
@@ -140,7 +140,7 @@ model Parties {
   phoneNumber     String         @unique
   address         String
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime?      @updatedAt
   createdBy       Json?
   updatedBy       Json?
   deletedAt       DateTime?
@@ -160,7 +160,7 @@ model PartyInfo {
   address            String
   description        String?
   createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  updatedAt          DateTime? @updatedAt
   createdBy          Json?
   updatedBy          Json?
   deletedAt          DateTime?
@@ -178,7 +178,7 @@ model Role {
   isActive    Boolean?            @default(true)
   Permission  IncludePermission[]
   createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  updatedAt   DateTime?           @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deletedAt   DateTime?
@@ -193,7 +193,7 @@ model Permission {
   method            String
   description       String?
   createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  updatedAt         DateTime?           @updatedAt
   createdBy         Json?
   updatedBy         Json?
   deletedAt         DateTime?
@@ -208,7 +208,7 @@ model IncludePermission {
   Permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String     @unique @db.Uuid
   createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  updatedAt    DateTime?  @updatedAt
   createdBy    Json?
   updatedBy    Json?
   deletedAt    DateTime?
@@ -224,7 +224,7 @@ model PaymentMethod {
   idCryptoId  String?   @unique @db.Uuid
   description String?
   createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  updatedAt   DateTime? @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deletedAt   DateTime?
@@ -239,7 +239,7 @@ model Banking {
   bankName      String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime?       @updatedAt
   createdBy     Json?
   updatedBy     Json?
   deletedAt     DateTime?
@@ -253,7 +253,7 @@ model Crypto {
   chainName     String
   description   String?
   createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  updatedAt     DateTime?       @updatedAt
   createdBy     Json?
   updatedBy     Json?
   deletedAt     DateTime?
@@ -266,7 +266,7 @@ model DeployStatus {
   status      DeployingStatus
   description String?
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  updatedAt   DateTime?       @updatedAt
   createdBy   Json?
   updatedBy   Json?
   deletedAt   DateTime?

@@ -7,6 +7,7 @@ import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { InvitationsService } from 'src/invitations/invitations.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { UpdateContractDto } from './dto/update-contract.dto'
+import { IUser } from 'src/users/interfaces/IUser.interface'
 
 @Injectable()
 export class ContractsService {
@@ -83,10 +84,10 @@ export class ContractsService {
     return `This action removes a #${id} contract`
   }
 
-  async sendInvitation(sendInvitationDto: CreateInvitationDto) {
+  async sendInvitation(sendInvitationDto: CreateInvitationDto, user: IUser) {
     // const party = await this.prismaService.client.party.findUnique({ where: { id: sendInvitationDto.idPartySender } })
     // if (!party) throw new NotFoundException({ message: RESPONSE_MESSAGES.PARTY_NOT_FOUND })
-    const invitation = await this.invitationService.create(sendInvitationDto)
+    const invitation = await this.invitationService.create(sendInvitationDto, user)
 
     // send email
     return {

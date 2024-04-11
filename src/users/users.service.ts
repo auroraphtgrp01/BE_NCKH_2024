@@ -32,6 +32,7 @@ export class UsersService {
       data: {
         ...createUserDto,
         gender: createUserDto.gender as Exact<Gender, Gender>,
+        updatedAt: null,
         createdBy
       }
     })

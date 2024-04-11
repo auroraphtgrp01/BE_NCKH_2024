@@ -19,9 +19,14 @@ export class PartiesController {
     return this.partiesService.findAll()
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.partiesService.findOne(+id)
+  @Get(':payload')
+  findOne(@Param('payload') payload: string) {
+    return this.partiesService.findOne(payload)
+  }
+
+  @Get('/find-one-by-id/:id')
+  findOneById(@Param('id') id: string) {
+    return this.partiesService.findOneById(id)
   }
 
   @Patch(':id')
