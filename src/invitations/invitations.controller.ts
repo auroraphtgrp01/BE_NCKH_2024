@@ -1,34 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { InvitationsService } from './invitations.service';
-import { CreateInvitationDto } from './dto/create-invitation.dto';
-import { UpdateInvitationDto } from './dto/update-invitation.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
+import { InvitationsService } from './invitations.service'
+import { CreateInvitationDto } from './dto/create-invitation.dto'
+import { UpdateInvitationDto } from './dto/update-invitation.dto'
+import { Request } from 'express'
+import { IUser } from 'src/users/interfaces/IUser.interface'
 
 @Controller('invitations')
 export class InvitationsController {
   constructor(private readonly invitationsService: InvitationsService) {}
 
   @Post()
-  create(@Body() createInvitationDto: CreateInvitationDto) {
-    return this.invitationsService.create(createInvitationDto);
+  create(@Body() createInvitationDto: CreateInvitationDto, @Req() req: Request & { user: IUser }) {
+    return this.invitationsService.create(createInvitationDto, req.user)
   }
 
   @Get()
   findAll() {
-    return this.invitationsService.findAll();
+    return this.invitationsService.findAll()
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.invitationsService.findOne(+id);
+    return this.invitationsService.findOne(+id)
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInvitationDto: UpdateInvitationDto) {
-    return this.invitationsService.update(+id, updateInvitationDto);
+    return this.invitationsService.update(+id, updateInvitationDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.invitationsService.remove(+id);
+    return this.invitationsService.remove(+id)
   }
 }

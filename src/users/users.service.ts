@@ -13,7 +13,7 @@ import { Gender } from '@prisma/client'
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) { }
+  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
   async create(createUserDto: CreateUserDto, user: IUser) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
@@ -32,6 +32,7 @@ export class UsersService {
       data: {
         ...createUserDto,
         gender: createUserDto.gender as Exact<Gender, Gender>,
+        updatedAt: null,
         createdBy
       }
     })
@@ -93,8 +94,8 @@ export class UsersService {
       where: { id: updateUserDto.id },
       data: {
         ...updateUserDto,
-        gender: updateUserDto.gender as Exact<Gender, Gender>
-        , updatedBy
+        gender: updateUserDto.gender as Exact<Gender, Gender>,
+        updatedBy
       }
     })
     return user

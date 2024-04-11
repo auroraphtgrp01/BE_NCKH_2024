@@ -9,7 +9,6 @@ export const extendedPrismaClient = new PrismaClient().$extends(
     defaultConfig: {
       field: 'deletedAt',
       createValue: (deleted) => {
-        console.log(deleted)
         if (deleted) return new Date()
         return null
       }
