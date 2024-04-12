@@ -6,6 +6,7 @@ import { PartiesModule } from 'src/parties/parties.module'
 @Module({
   imports: [PartiesModule],
   controllers: [PartyInfosController],
-  providers: [PartyInfosService]
+  providers: [PartyInfosService],
+  exports: [PartyInfosService]
 })
 export class PartyInfosModule {}
