@@ -29,7 +29,7 @@ export const RESPONSE_MESSAGES = {
   START_DATE_MUST_BE_A_VALID_DATE: 'Start date must be a valid date',
   END_DATE_MUST_BE_A_VALID_DATE: 'End date must be a valid date',
   EXECUTE_DATE_MUST_BE_A_VALID_DATE: 'Execute date must be a valid date',
-  REPRESENTATIVE_NAME_LENGTH: 'Representative name length must be less than 2 characters',
+  REPRESENTATIVE_NAME_LENGTH: 'The length of the representative name must be at least 2 characters',
   TAX_CODE_LENGTH: 'Tax code length must be equal to 10 characters',
   INDENTIFY_NUMBER_LENGTH: 'Indentify number length must be equal to 12 characters',
   PHONE_NUMBER_LENGTH: 'Phone number length must be equal to 10 characters',

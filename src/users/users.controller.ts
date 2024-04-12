@@ -12,7 +12,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @Public()
   async create(@Body() createUserDto: CreateUserDto, @Req() req: Request & { user: IUser }) {
     return await this.usersService.create(createUserDto, req.user)
   }
