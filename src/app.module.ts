@@ -14,6 +14,7 @@ import { BullModule } from '@nestjs/bullmq'
 import { QueueRedisModule } from './queues/queue-redis.module';
 import { PartiesModule } from './parties/parties.module';
 import { PartyInfosModule } from './party-infos/party-infos.module';
+import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { PartyInfosModule } from './party-infos/party-infos.module';
     QueueRedisModule,
     PartiesModule,
     PartyInfosModule,
+    ContractPartyInfosModule,
   ],
   controllers: [AppController],
   providers: [

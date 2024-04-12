@@ -38,5 +38,6 @@ export const RESPONSE_MESSAGES = {
   PIN_NOT_SET: 'PIN not set',
   ID_MUST_BE_A_STRING: 'ID must be a string',
   PARTY_NAME_LENGTH: 'Party name length must be between 3 and 50 characters',
-  PARTY_IS_EXIST: 'Party is exist'
+  PARTY_IS_EXIST: 'Party is exist',
+  PARTY_INFO_NOT_FOUND: 'Party info not found'
 }
