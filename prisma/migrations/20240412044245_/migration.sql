@@ -148,10 +148,24 @@ CREATE TABLE "PartyInfo" (
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
-    "contractId" UUID,
     "partiesId" UUID NOT NULL,
 
     CONSTRAINT "PartyInfo_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ContractPartyInfo" (
+    "id" UUID NOT NULL,
+    "contractId" UUID NOT NULL,
+    "partyInfoId" UUID NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "createdBy" JSONB,
+    "updatedBy" JSONB,
+    "deletedAt" TIMESTAMP(3),
+    "deletedBy" JSONB,
+
+    CONSTRAINT "ContractPartyInfo_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -319,10 +333,7 @@ CREATE UNIQUE INDEX "Parties_phoneNumber_key" ON "Parties"("phoneNumber");
 CREATE UNIQUE INDEX "PartyInfo_id_key" ON "PartyInfo"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PartyInfo_phoneNumber_key" ON "PartyInfo"("phoneNumber");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PartyInfo_partiesId_key" ON "PartyInfo"("partiesId");
+CREATE UNIQUE INDEX "ContractPartyInfo_id_key" ON "ContractPartyInfo"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Role_id_key" ON "Role"("id");
@@ -379,10 +390,13 @@ ALTER TABLE "Parties" ADD CONSTRAINT "Parties_paymentMethodId_fkey" FOREIGN KEY 
 ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_partiesId_fkey" FOREIGN KEY ("partiesId") REFERENCES "Parties"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_partiesId_fkey" FOREIGN KEY ("partiesId") REFERENCES "Parties"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ContractPartyInfo" ADD CONSTRAINT "ContractPartyInfo_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ContractPartyInfo" ADD CONSTRAINT "ContractPartyInfo_partyInfoId_fkey" FOREIGN KEY ("partyInfoId") REFERENCES "PartyInfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
