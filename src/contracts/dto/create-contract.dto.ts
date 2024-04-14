@@ -1,10 +1,10 @@
 import { Transform, Type } from 'class-transformer'
 import {
-  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
   IsDate,
   IsEmail,
+  IsNotEmpty,
   IsNumberString,
   IsOptional,
   IsString,
@@ -15,6 +15,7 @@ import {
   ValidateNested
 } from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { CreatePartyInfoDto } from 'src/party-infos/dto/create-party-info.dto'
 
 export class GasPriceDto {
   @IsNumberString()
@@ -26,41 +27,6 @@ export class GasPriceDto {
 
   @IsString()
   reason: string
-}
-
-export class PartyDto {
-  @IsString()
-  partyName: string
-
-  @IsString()
-  @MinLength(2, { message: RESPONSE_MESSAGES.REPRESENTATIVE_NAME_LENGTH })
-  representativeName: string
-
-  @IsString()
-  userId: string
-
-  @IsNumberString()
-  @Length(10, 10, { message: RESPONSE_MESSAGES.TAX_CODE_LENGTH })
-  taxCode: string
-
-  @IsString()
-  position: string
-
-  @IsString()
-  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
-  email: string
-
-  @IsNumberString()
-  @Length(12, 12, { message: RESPONSE_MESSAGES.INDENTIFY_NUMBER_LENGTH })
-  indentifyNumber: string
-
-  @IsNumberString()
-  @Length(10, 10, { message: RESPONSE_MESSAGES.PHONE_NUMBER_LENGTH })
-  phoneNumber: string
-
-  @IsString()
-  @MinLength(10, { message: RESPONSE_MESSAGES.THE_ADDRESS_MUST_BE_PROVIDED_IN_FULL_AND_CLEARLY })
-  address: string
 }
 
 export class CreateContractDto {
@@ -95,29 +61,24 @@ export class CreateContractDto {
   gasPrices: GasPriceDto[]
 
   @IsOptional()
-  @IsArray()
-  @ArrayMinSize(2)
-  @ArrayMaxSize(2)
-  @ValidateNested({ each: true })
-  @Type(() => PartyDto)
-  parties: PartyDto[]
-
-  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
+  @Type(() => Date)
   startDate: Date
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
+  @Type(() => Date)
   endDate: Date
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
+  @Type(() => Date)
   executeDate: Date
 
   @IsOptional()

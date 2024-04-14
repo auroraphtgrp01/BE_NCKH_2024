@@ -103,7 +103,7 @@ enum contractStatus {
 
 model ContractAttribute {
   id                     String                   @id @unique @default(uuid()) @db.Uuid
-  name                   String
+  name                   String                   @unique
   description            String?
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime?                @updatedAt
@@ -121,7 +121,7 @@ model ContractAttributeValue {
   contractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String            @unique @db.Uuid
   contract            Contract          @relation(fields: [contractId], references: [id])
-  contractId          String            @unique @db.Uuid
+  contractId          String            @db.Uuid
   value               String
   description         String?
   createdAt           DateTime          @default(now())
@@ -156,7 +156,7 @@ model PartyInfo {
   position           String
   userId             String              @db.Uuid
   User               User                @relation(fields: [userId], references: [id])
-  phoneNumber        String              
+  phoneNumber        String
   address            String
   description        String?
   createdAt          DateTime            @default(now())

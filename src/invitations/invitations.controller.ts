@@ -4,14 +4,15 @@ import { CreateInvitationDto } from './dto/create-invitation.dto'
 import { UpdateInvitationDto } from './dto/update-invitation.dto'
 import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('invitations')
 export class InvitationsController {
   constructor(private readonly invitationsService: InvitationsService) {}
 
   @Post()
-  create(@Body() createInvitationDto: CreateInvitationDto, @Req() req: Request & { user: IUser }) {
-    return this.invitationsService.create(createInvitationDto, req.user)
+  create(@Body() createInvitationDto: CreateInvitationDto, @User() user: IUser) {
+    return this.invitationsService.create(createInvitationDto, user)
   }
 
   @Get()

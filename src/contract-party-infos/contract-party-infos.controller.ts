@@ -4,14 +4,15 @@ import { CreateContractPartyInfoDto } from './dto/create-contract-party-info.dto
 import { UpdateContractPartyInfoDto } from './dto/update-contract-party-info.dto'
 import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('contract-party-infos')
 export class ContractPartyInfosController {
   constructor(private readonly contractPartyInfosService: ContractPartyInfosService) {}
 
   @Post()
-  create(@Body() createContractPartyInfoDto: CreateContractPartyInfoDto, @Req() req: Request & { user: IUser }) {
-    return this.contractPartyInfosService.create(createContractPartyInfoDto, req.user)
+  create(@Body() createContractPartyInfoDto: CreateContractPartyInfoDto, @User() user: IUser) {
+    return this.contractPartyInfosService.create(createContractPartyInfoDto, user)
   }
 
   @Get()

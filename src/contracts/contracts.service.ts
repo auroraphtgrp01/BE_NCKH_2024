@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { CreateContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
@@ -8,76 +8,98 @@ import { InvitationsService } from 'src/invitations/invitations.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { ContractPartyInfosService } from 'src/contract-party-infos/contract-party-infos.service'
+import { IContractAttributeValue } from 'src/interfaces/contract.interface'
+import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
+import { CommonService } from 'src/common.service'
 
 @Injectable()
 export class ContractsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private invitationService: InvitationsService
+    private invitationService: InvitationsService,
+    private contractPartyInfoService: ContractPartyInfosService,
+    private contractAttributeValueService: ContractAttributeValuesService,
+    private commonService: CommonService
   ) {}
 
-  async create(contractData: CreateContractDto, templateId?: string) {
-    if (!contractData.id) {
-      const contract = await this.prismaService.client.contract.create({
-        data: {
-          contractTitle: '',
-          addressWallet: '',
-          contractAddress: '',
-          blockAddress: '',
-          status: contractStatus.PENDING,
-          startDate: new Date()
-        }
-      })
-      if (templateId) {
-        const contractAttributeValues = await this.prismaService.client.contractAttributeValue.findMany({
-          where: { contractId: templateId }
-        })
-
-        await Promise.all(
-          contractAttributeValues.map((contractAttributeValue) => {
-            this.prismaService.client.contractAttributeValue.create({
-              data: {
-                contractId: contract.id,
-                contractAttributeId: contractAttributeValue.contractAttributeId,
-                value: null
-              }
-            })
-          })
-        )
+  async createEmptyContract(contractData: CreateContractDto) {
+    const contract = await this.prismaService.client.contract.create({
+      data: {
+        contractTitle: contractData.contractTitle ? contractData.contractTitle : '',
+        addressWallet: contractData.addressWallet ? contractData.addressWallet : '',
+        contractAddress: contractData.contractAddress ? contractData.contractAddress : '',
+        blockAddress: contractData.blockAddress ? contractData.blockAddress : '',
+        status: contractStatus.PENDING,
+        startDate: new Date()
       }
+    })
 
-      return contract
-    } else {
-      if (!(await this.findOne(contractData.id)))
+    return contract
+  }
+
+  async create(contractData: CreateContractDto, user: IUser, templateId?: string, partyInfoIds?: string[]) {
+    if (contractData.id) {
+      if (!(await this.commonService.findOneContractById(contractData.id)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+      if (!partyInfoIds || partyInfoIds.length > 2)
+        throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
       const contract = await this.update(contractData)
+      await Promise.all([
+        partyInfoIds.map((partyInfoId) => {
+          this.contractPartyInfoService.create({ partyInfoId, contractId: contractData.id }, user)
+        })
+      ])
+
       return contract
     }
+    const contract = await this.createEmptyContract(contractData)
+    if (templateId) {
+      const findcontractAttributeValues = await this.prismaService.client.contractAttributeValue.findMany({
+        where: { contractId: templateId }
+      })
+
+      const contractAttributeValues: IContractAttributeValue[] = await Promise.all(
+        findcontractAttributeValues.map(async (contractAttributeValue) => {
+          const newContractAttributeValue = await this.contractAttributeValueService.create(
+            {
+              contractId: contract.id,
+              contractAttributeId: contractAttributeValue.contractAttributeId,
+              value: ''
+            },
+            user,
+            true
+          )
+          return {
+            id: newContractAttributeValue.id,
+            value: newContractAttributeValue.value
+          }
+        })
+      )
+      return { contract, contractAttributeValues }
+    }
+
+    return contract
   }
 
   findAll() {
     return `This action returns all contracts`
   }
 
-  async findOne(id: string) {
-    const contract = await this.prismaService.client.contract.findUnique({ where: { id } })
-    return contract
-  }
-
   async update(updateContractDto: UpdateContractDto) {
-    const { id, ...rest } = updateContractDto
-    const _contract = await this.prismaService.client.contract.findUnique({ where: { id } })
-    const parties = updateContractDto.parties.map((party) => ({ ...party }))
-    const gasPrices = updateContractDto.gasPrices.map((gasPrice) => ({ ...gasPrice }))
-    const contract = await this.prismaService.client.contract.update({
-      where: { id: updateContractDto.id },
-      data: {
-        ...rest,
-        parties: { set: [..._contract.parties, parties] },
-        gasPrices: { set: [..._contract.gasPrices, gasPrices] }
-      }
-    })
-    return contract
+    // const { id, ...rest } = updateContractDto
+    // const _contract = await this.prismaService.client.contract.findUnique({ where: { id } })
+    // const parties = updateContractDto.parties.map((party) => ({ ...party }))
+    // const gasPrices = updateContractDto.gasPrices.map((gasPrice) => ({ ...gasPrice }))
+    // const contract = await this.prismaService.client.contract.update({
+    //   where: { id: updateContractDto.id },
+    //   data: {
+    //     ...rest,
+    //     parties: { set: [..._contract.parties, parties] },
+    //     gasPrices: { set: [..._contract.gasPrices, gasPrices] }
+    //   }
+    // })
+    // return contract
   }
 
   remove(id: number) {

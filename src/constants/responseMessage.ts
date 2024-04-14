@@ -39,5 +39,9 @@ export const RESPONSE_MESSAGES = {
   ID_MUST_BE_A_STRING: 'ID must be a string',
   PARTY_NAME_LENGTH: 'Party name length must be between 3 and 50 characters',
   PARTY_IS_EXIST: 'Party is exist',
-  PARTY_INFO_NOT_FOUND: 'Party info not found'
+  PARTY_INFO_NOT_FOUND: 'Party info not found',
+  PARTY_INFO_IS_NOT_PROVIDED: 'Party info is not provided or incomplete',
+  CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED: 'Contract attribute values is not provided or incomplete',
+  VALUE_IS_REQUIRED: 'Value is required',
+  CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'Contract attribute is not found'
 }

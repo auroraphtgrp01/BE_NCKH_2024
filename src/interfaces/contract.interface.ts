@@ -16,3 +16,8 @@ export interface IGasPrice {
   reason: string
   createdAt: Date
 }
+
+export interface IContractAttributeValue {
+  id: string
+  value: string
+}

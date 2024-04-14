@@ -4,19 +4,29 @@ import { CreateContractDto } from './dto/create-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
+import { CommonService } from 'src/common.service'
 
 @Controller('contracts')
 export class ContractsController {
-  constructor(private readonly contractsService: ContractsService) {}
+  constructor(
+    private readonly contractsService: ContractsService,
+    private readonly commonService: CommonService
+  ) {}
 
   @Post('send-invitation')
-  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @Req() req: Request & { user: IUser }) {
-    return await this.contractsService.sendInvitation(sendInvitationDto, req.user)
+  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @User() user: IUser) {
+    return await this.contractsService.sendInvitation(sendInvitationDto, user)
   }
 
   @Post()
-  async create(@Body('contractData') contractData: CreateContractDto, @Body('templateId') templateId?: string) {
-    return await this.contractsService.create(contractData, templateId)
+  async create(
+    @Body('contractData') contractData: CreateContractDto,
+    @User() user: IUser,
+    @Body('templateId') templateId?: string,
+    @Body('partyInfoIds') partyInfoIds?: string[]
+  ) {
+    return await this.contractsService.create(contractData, user, templateId, partyInfoIds)
   }
 
   @Get()
@@ -26,7 +36,7 @@ export class ContractsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.contractsService.findOne(id)
+    return this.commonService.findOneContractById(id)
   }
 
   @Patch()

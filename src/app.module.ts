@@ -9,12 +9,14 @@ import { SmartContractsModule } from './smart-contracts/smart-contracts.module'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ContractsModule } from './contracts/contracts.module'
-import { InvitationsModule } from './invitations/invitations.module';
+import { InvitationsModule } from './invitations/invitations.module'
 import { BullModule } from '@nestjs/bullmq'
-import { QueueRedisModule } from './queues/queue-redis.module';
-import { PartiesModule } from './parties/parties.module';
-import { PartyInfosModule } from './party-infos/party-infos.module';
-import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module';
+import { QueueRedisModule } from './queues/queue-redis.module'
+import { PartiesModule } from './parties/parties.module'
+import { PartyInfosModule } from './party-infos/party-infos.module'
+import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module'
+import { ContractAttributesModule } from './contract-attributes/contract-attributes.module';
+import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module';
 
 @Module({
   imports: [
@@ -44,6 +46,8 @@ import { ContractPartyInfosModule } from './contract-party-infos/contract-party-
     PartiesModule,
     PartyInfosModule,
     ContractPartyInfosModule,
+    ContractAttributesModule,
+    ContractAttributeValuesModule
   ],
   controllers: [AppController],
   providers: [
@@ -54,8 +58,8 @@ import { ContractPartyInfosModule } from './contract-party-infos/contract-party-
         return new PrismaClientExceptionFilter(httpAdapter)
       },
       inject: [HttpAdapterHost]
-    },
+    }
     // ContractDeployConsumerService
   ]
 })
-export class AppModule { }
+export class AppModule {}

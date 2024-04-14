@@ -4,14 +4,15 @@ import { CreatePartyInfoDto } from './dto/create-party-info.dto'
 import { UpdatePartyInfoDto } from './dto/update-party-info.dto'
 import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('party-infos')
 export class PartyInfosController {
   constructor(private readonly partyInfosService: PartyInfosService) {}
 
   @Post()
-  async create(@Body() createPartyInfoDto: CreatePartyInfoDto, @Req() req: Request & { user: IUser }) {
-    return await this.partyInfosService.create(createPartyInfoDto, req.user)
+  async create(@Body() createPartyInfoDto: CreatePartyInfoDto, @User() user: IUser) {
+    return await this.partyInfosService.create(createPartyInfoDto, user)
   }
 
   @Get()
