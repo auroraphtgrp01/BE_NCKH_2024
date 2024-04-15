@@ -44,12 +44,16 @@ export class ContractsService {
         throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
       if (!partyInfoIds || partyInfoIds.length > 2)
         throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
-      const contract = await this.update(contractData)
-      await Promise.all([
-        partyInfoIds.map((partyInfoId) => {
-          this.contractPartyInfoService.create({ partyInfoId, contractId: contractData.id }, user)
+      const newPartyInfoIds: string[] = await Promise.all(
+        partyInfoIds.map(async (partyInfoId) => {
+          const newPartyInfoId = await this.contractPartyInfoService.create(
+            { partyInfoId, contractId: contractData.id },
+            user
+          )
+          return newPartyInfoId.id
         })
-      ])
+      )
+      const contract = await this.update(contractData, newPartyInfoIds)
 
       return contract
     }
@@ -86,20 +90,22 @@ export class ContractsService {
     return `This action returns all contracts`
   }
 
-  async update(updateContractDto: UpdateContractDto) {
-    // const { id, ...rest } = updateContractDto
-    // const _contract = await this.prismaService.client.contract.findUnique({ where: { id } })
-    // const parties = updateContractDto.parties.map((party) => ({ ...party }))
-    // const gasPrices = updateContractDto.gasPrices.map((gasPrice) => ({ ...gasPrice }))
-    // const contract = await this.prismaService.client.contract.update({
-    //   where: { id: updateContractDto.id },
-    //   data: {
-    //     ...rest,
-    //     parties: { set: [..._contract.parties, parties] },
-    //     gasPrices: { set: [..._contract.gasPrices, gasPrices] }
-    //   }
-    // })
-    // return contract
+  async update(updateContractDto: UpdateContractDto, partyInfoIds?: string[]) {
+    const { id, ...rest } = updateContractDto
+    const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
+    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    if (partyInfoIds && partyInfoIds.length < 2)
+      throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
+    const contract = await this.prismaService.client.contract.update({
+      where: { id: updateContractDto.id },
+      data: {
+        ...rest,
+        parties: [],
+
+        gasPrices: { set: [...isContractExist.gasPrices, gasPrices] }
+      }
+    })
+    return contract
   }
 
   remove(id: number) {
