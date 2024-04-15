@@ -43,5 +43,8 @@ export const RESPONSE_MESSAGES = {
   PARTY_INFO_IS_NOT_PROVIDED: 'Party info is not provided or incomplete',
   CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED: 'Contract attribute values is not provided or incomplete',
   VALUE_IS_REQUIRED: 'Value is required',
-  CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'Contract attribute is not found'
+  CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'Contract attribute is not found',
+  CONTRACT_TEMPLATE_IS_NOT_FOUND: 'Contract template is not found',
+  PARTY_INFO_IS_NOT_FOUND: 'Party info is not found',
+  ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND: 'One of the party info is not found'
 }

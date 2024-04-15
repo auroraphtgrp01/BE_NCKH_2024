@@ -118,7 +118,7 @@ model ContractAttribute {
 model ContractAttributeValue {
   id                  String            @id @unique @default(uuid()) @db.Uuid
   contractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
-  contractAttributeId String            @unique @db.Uuid
+  contractAttributeId String            @db.Uuid
   contract            Contract          @relation(fields: [contractId], references: [id])
   contractId          String            @db.Uuid
   value               String

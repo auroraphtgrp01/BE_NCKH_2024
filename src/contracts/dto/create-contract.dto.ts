@@ -11,11 +11,10 @@ import {
   Length,
   MaxLength,
   MinDate,
-  MinLength,
+  ValidateIf,
   ValidateNested
 } from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
-import { CreatePartyInfoDto } from 'src/party-infos/dto/create-party-info.dto'
 
 export class GasPriceDto {
   @IsNumberString()
@@ -34,54 +33,54 @@ export class CreateContractDto {
   @IsString()
   id: string
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   addressWallet: string
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   contractTitle: string
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS })
   contractAddress: string
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
   blockAddress: string
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => GasPriceDto)
   gasPrices: GasPriceDto[]
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
   @Type(() => Date)
   startDate: Date
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
   @Type(() => Date)
   endDate: Date
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
   @Type(() => Date)
   executeDate: Date
 
-  @IsOptional()
+  @ValidateIf((object) => object.id !== undefined)
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)

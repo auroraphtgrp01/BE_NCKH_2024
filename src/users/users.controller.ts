@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { Public } from 'src/decorators/is-public.decorator'
-import { Request } from 'express'
 import { IUser } from './interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
 
@@ -13,7 +12,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @Public()
   async create(@Body() createUserDto: CreateUserDto, @User() user: IUser) {
     return await this.usersService.create(createUserDto, user)
   }

@@ -311,9 +311,6 @@ CREATE UNIQUE INDEX "ContractAttribute_name_key" ON "ContractAttribute"("name");
 CREATE UNIQUE INDEX "ContractAttributeValue_id_key" ON "ContractAttributeValue"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ContractAttributeValue_contractAttributeId_key" ON "ContractAttributeValue"("contractAttributeId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Parties_id_key" ON "Parties"("id");
 
 -- CreateIndex

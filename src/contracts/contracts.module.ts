@@ -6,9 +6,16 @@ import { ContractPartyInfosModule } from 'src/contract-party-infos/contract-part
 import { ContractAttributesModule } from 'src/contract-attributes/contract-attributes.module'
 import { ContractAttributeValuesModule } from 'src/contract-attribute-values/contract-attribute-values.module'
 import { CommonService } from 'src/common.service'
+import { PartyInfosModule } from 'src/party-infos/party-infos.module'
 
 @Module({
-  imports: [InvitationsModule, ContractPartyInfosModule, ContractAttributesModule, ContractAttributeValuesModule],
+  imports: [
+    InvitationsModule,
+    ContractPartyInfosModule,
+    ContractAttributesModule,
+    ContractAttributeValuesModule,
+    PartyInfosModule
+  ],
   controllers: [ContractsController],
   providers: [ContractsService, CommonService],
   exports: [ContractsService, CommonService]

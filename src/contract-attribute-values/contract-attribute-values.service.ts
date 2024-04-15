@@ -22,17 +22,19 @@ export class ContractAttributeValuesService {
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
     if ((await this.commonService.findOneContractById(contractId)) === null)
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
-    if (isEmpty && (value === null || value === undefined || value === ''))
+    if (!isEmpty && (value === null || value === undefined || value === ''))
       throw new HttpException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED, 400)
+
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+
     return await this.prismaService.client.contractAttributeValue.create({
       data: {
-        contractId,
-        contractAttributeId,
-        value: value === '' ? null : value,
+        value: value,
         description: description ? description : null,
         createdBy,
-        updatedAt: null
+        updatedAt: null,
+        contractAttribute: { connect: { id: contractAttributeId } },
+        contract: { connect: { id: contractId } }
       }
     })
   }

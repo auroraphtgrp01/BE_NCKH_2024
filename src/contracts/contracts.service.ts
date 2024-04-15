@@ -12,6 +12,8 @@ import { ContractPartyInfosService } from 'src/contract-party-infos/contract-par
 import { IContractAttributeValue } from 'src/interfaces/contract.interface'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { CommonService } from 'src/common.service'
+import { IExecutor } from 'src/interfaces/executor.interface'
+import { PartyInfosService } from 'src/party-infos/party-infos.service'
 
 @Injectable()
 export class ContractsService {
@@ -20,10 +22,12 @@ export class ContractsService {
     private invitationService: InvitationsService,
     private contractPartyInfoService: ContractPartyInfosService,
     private contractAttributeValueService: ContractAttributeValuesService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private partyInfosService: PartyInfosService
   ) {}
 
-  async createEmptyContract(contractData: CreateContractDto) {
+  async createEmptyContract(contractData: CreateContractDto, user: IUser) {
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     const contract = await this.prismaService.client.contract.create({
       data: {
         contractTitle: contractData.contractTitle ? contractData.contractTitle : '',
@@ -31,7 +35,9 @@ export class ContractsService {
         contractAddress: contractData.contractAddress ? contractData.contractAddress : '',
         blockAddress: contractData.blockAddress ? contractData.blockAddress : '',
         status: contractStatus.PENDING,
-        startDate: new Date()
+        startDate: new Date(),
+        createdBy,
+        updatedAt: null
       }
     })
 
@@ -42,8 +48,14 @@ export class ContractsService {
     if (contractData.id) {
       if (!(await this.commonService.findOneContractById(contractData.id)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-      if (!partyInfoIds || partyInfoIds.length > 2)
+      if (!partyInfoIds || partyInfoIds.length < 2)
         throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
+      const handlePartyInfoIds = await Promise.all(
+        partyInfoIds.map(async (partyInfoId) => await this.partyInfosService.findOneById(partyInfoId))
+      )
+      if (handlePartyInfoIds.includes(null))
+        throw new NotFoundException({ message: RESPONSE_MESSAGES.ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND })
+
       const newPartyInfoIds: string[] = await Promise.all(
         partyInfoIds.map(async (partyInfoId) => {
           const newPartyInfoId = await this.contractPartyInfoService.create(
@@ -53,12 +65,15 @@ export class ContractsService {
           return newPartyInfoId.id
         })
       )
+
       const contract = await this.update(contractData, newPartyInfoIds)
 
       return contract
     }
-    const contract = await this.createEmptyContract(contractData)
+    const contract = await this.createEmptyContract(contractData, user)
     if (templateId) {
+      if (!(await this.commonService.findOneContractById(templateId)))
+        throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_TEMPLATE_IS_NOT_FOUND })
       const findcontractAttributeValues = await this.prismaService.client.contractAttributeValue.findMany({
         where: { contractId: templateId }
       })
@@ -80,6 +95,7 @@ export class ContractsService {
           }
         })
       )
+
       return { contract, contractAttributeValues }
     }
 
