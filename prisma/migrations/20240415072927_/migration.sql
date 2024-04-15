@@ -47,7 +47,6 @@ CREATE TABLE "Contract" (
     "contractAddress" TEXT NOT NULL,
     "blockAddress" TEXT NOT NULL,
     "gasPrices" JSON[],
-    "parties" JSON[],
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3),
     "executeDate" TIMESTAMP(3),

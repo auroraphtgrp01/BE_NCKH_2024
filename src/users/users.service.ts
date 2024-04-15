@@ -27,13 +27,13 @@ export class UsersService {
     if (isUserExist) {
       throw new HttpException({ message: RESPONSE_MESSAGES.USER_IS_EXIST }, 400)
     }
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    // const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     return await this.prismaService.client.user.create({
       data: {
         ...createUserDto,
         gender: createUserDto.gender as Exact<Gender, Gender>,
-        updatedAt: null,
-        createdBy
+        updatedAt: null
+        // createdBy
       }
     })
   }

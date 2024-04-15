@@ -94,15 +94,16 @@ export class ContractsService {
     const { id, ...rest } = updateContractDto
     const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const gasPrice = await updateContractDto.gasPrices.map((gasPrice) => {
+      return { ...gasPrice }
+    })
     if (partyInfoIds && partyInfoIds.length < 2)
       throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
     const contract = await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
       data: {
         ...rest,
-        parties: [],
-
-        gasPrices: { set: [...isContractExist.gasPrices, gasPrices] }
+        gasPrices: { set: [...isContractExist.gasPrices, gasPrice] }
       }
     })
     return contract

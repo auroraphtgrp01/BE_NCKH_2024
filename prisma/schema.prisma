@@ -57,7 +57,6 @@ model Contract {
   contractAddress        String
   blockAddress           String
   gasPrices              Json[]                   @db.Json
-  parties                Json[]                   @db.Json
   ContractAttributeValue ContractAttributeValue[]
   startDate              DateTime
   endDate                DateTime?
