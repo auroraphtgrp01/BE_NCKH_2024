@@ -12,7 +12,8 @@ import {
 } from 'class-validator'
 import { Transform, Type } from 'class-transformer'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
-import { GasPriceDto, PartyDto } from './create-contract.dto'
+import { GasPriceDto } from './create-contract.dto'
+import { CreatePartyInfoDto } from 'src/party-infos/dto/create-party-info.dto'
 
 export class UpdateContractDto {
   @IsOptional()
@@ -44,14 +45,6 @@ export class UpdateContractDto {
   @ValidateNested({ each: true })
   @Type(() => GasPriceDto)
   gasPrices: GasPriceDto[]
-
-  @IsOptional()
-  @IsArray()
-  @ArrayMinSize(2)
-  @ArrayMaxSize(2)
-  @ValidateNested({ each: true })
-  @Type(() => PartyDto)
-  parties: PartyDto[]
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))

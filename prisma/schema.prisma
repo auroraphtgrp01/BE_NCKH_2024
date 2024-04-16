@@ -57,7 +57,6 @@ model Contract {
   contractAddress        String
   blockAddress           String
   gasPrices              Json[]                   @db.Json
-  parties                Json[]                   @db.Json
   ContractAttributeValue ContractAttributeValue[]
   startDate              DateTime
   endDate                DateTime?
@@ -103,7 +102,7 @@ enum contractStatus {
 
 model ContractAttribute {
   id                     String                   @id @unique @default(uuid()) @db.Uuid
-  name                   String
+  name                   String                   @unique
   description            String?
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime?                @updatedAt
@@ -119,9 +118,9 @@ model ContractAttribute {
 model ContractAttributeValue {
   id                  String            @id @unique @default(uuid()) @db.Uuid
   contractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
-  contractAttributeId String            @unique @db.Uuid
+  contractAttributeId String            @db.Uuid
   contract            Contract          @relation(fields: [contractId], references: [id])
-  contractId          String            @unique @db.Uuid
+  contractId          String            @db.Uuid
   value               String
   description         String?
   createdAt           DateTime          @default(now())
@@ -156,7 +155,7 @@ model PartyInfo {
   position           String
   userId             String              @db.Uuid
   User               User                @relation(fields: [userId], references: [id])
-  phoneNumber        String              
+  phoneNumber        String
   address            String
   description        String?
   createdAt          DateTime            @default(now())

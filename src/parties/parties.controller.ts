@@ -2,16 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/
 import { PartiesService } from './parties.service'
 import { CreatePartyDto } from './dto/create-party.dto'
 import { UpdatePartyDto } from './dto/update-party.dto'
-import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('parties')
 export class PartiesController {
   constructor(private readonly partiesService: PartiesService) {}
 
   @Post()
-  async create(@Body() createPartyDto: CreatePartyDto, @Req() req: Request & { user: IUser }) {
-    return this.partiesService.create(createPartyDto, req.user)
+  async create(@Body() createPartyDto: CreatePartyDto, @User() user: IUser) {
+    return this.partiesService.create(createPartyDto, user)
   }
 
   @Get()

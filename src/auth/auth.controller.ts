@@ -4,6 +4,7 @@ import { LocalAuthGuard } from './local-auth.guard'
 import { Request, Response } from 'express'
 import { Public } from 'src/decorators/is-public.decorator'
 import { IUser } from 'src/users/interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +13,7 @@ export class AuthController {
   @Post('login')
   @Public()
   @UseGuards(LocalAuthGuard)
-  async login(@Req() req: Request & { user: IUser }, @Res({ passthrough: true }) res: Response) {
-    return await this.authService.login(req.user, res)
+  async login(@User() user: IUser, @Res({ passthrough: true }) res: Response) {
+    return await this.authService.login(user, res)
   }
 }

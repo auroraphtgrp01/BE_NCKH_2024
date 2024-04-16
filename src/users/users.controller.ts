@@ -4,16 +4,16 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto, UpdateUserPINDto } from './dto/update-user.dto'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { Public } from 'src/decorators/is-public.decorator'
-import { Request } from 'express'
 import { IUser } from './interfaces/IUser.interface'
+import { User } from 'src/decorators/user.decorator'
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Req() req: Request & { user: IUser }) {
-    return await this.usersService.create(createUserDto, req.user)
+  async create(@Body() createUserDto: CreateUserDto, @User() user: IUser) {
+    return await this.usersService.create(createUserDto, user)
   }
 
   @Patch('pin/:id')
@@ -40,13 +40,13 @@ export class UsersController {
   }
 
   @Patch()
-  update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request & { user: IUser }) {
-    return this.usersService.update(updateUserDto, req.user)
+  update(@Body() updateUserDto: UpdateUserDto, @User() user: IUser) {
+    return this.usersService.update(updateUserDto, user)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: Request & { user: IUser }) {
-    return this.usersService.remove(id, req.user)
+  remove(@Param('id') id: string, @User() user: IUser) {
+    return this.usersService.remove(id, user)
   }
 
   @Get('address-wallet-exists/:addressWallet')
