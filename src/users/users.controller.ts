@@ -12,7 +12,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @User() user: IUser) {
+  async create(@Body() createUserDto: any, @User() user: IUser) {
     return await this.usersService.create(createUserDto, user)
   }
 

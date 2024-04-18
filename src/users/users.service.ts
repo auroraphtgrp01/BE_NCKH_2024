@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
@@ -10,11 +10,12 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { IUser } from './interfaces/IUser.interface'
 import { Exact } from '@prisma/client/runtime/library'
 import { Gender } from '@prisma/client'
+import { isNumeric } from 'src/decorators/is-nummeric.decorator'
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
-  async create(createUserDto: CreateUserDto, user: IUser) {
+  async create(createUserDto: any, user?: IUser) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [
@@ -25,13 +26,21 @@ export class UsersService {
       }
     })
     if (isUserExist) {
-      throw new HttpException({ message: RESPONSE_MESSAGES.USER_IS_EXIST }, 400)
+      throw new NotFoundException(RESPONSE_MESSAGES.USER_IS_EXIST)
     }
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    let createdBy: IExecutor = null
+
+    if (user) {
+      createdBy = { id: user.id, name: user.name, email: user.email }
+      if (!createUserDto.PIN) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_IS_REQUIRED })
+      if (createUserDto.PIN.length !== 6) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_LENGTH_IS_6_DIGIT)
+      if (!isNumeric(createUserDto.PIN)) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_MUST_BE_A_NUMBER)
+    }
     return await this.prismaService.client.user.create({
       data: {
         ...createUserDto,
         gender: createUserDto.gender as Exact<Gender, Gender>,
+        PIN: createUserDto.PIN ? await hashPassword(createUserDto.PIN) : null,
         updatedAt: null,
         createdBy
       }

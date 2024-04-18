@@ -42,6 +42,8 @@ export class AuthService {
     }
   }
 
+  async register(user: IUser): Promise<any> {}
+
   createAccessToken(user: IUser) {
     const payload = {
       sub: 'Access Token',
