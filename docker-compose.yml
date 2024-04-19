@@ -6,9 +6,10 @@ services:
     volumes:
       - ./databases:/var/lib/posgresql/data
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: admin001
+      POSTGRES_USER: admin
     ports:
-      - '3001:5432'
+      - '5432:5432'
 
   redis-be:
     container_name: redis-be
