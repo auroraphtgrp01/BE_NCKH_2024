@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContractAttributeValueDto } from './dto/create-contract-attribute-value.dto'
 import { UpdateContractAttributeValueDto } from './dto/update-contract-attribute-value.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -23,7 +23,7 @@ export class ContractAttributeValuesService {
     if ((await this.commonService.findOneContractById(contractId)) === null)
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
     if (!isEmpty && (value === null || value === undefined || value === ''))
-      throw new HttpException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED, 400)
+      throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
 
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
 
