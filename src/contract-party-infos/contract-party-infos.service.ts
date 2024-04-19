@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContractPartyInfoDto } from './dto/create-contract-party-info.dto'
 import { UpdateContractPartyInfoDto } from './dto/update-contract-party-info.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'

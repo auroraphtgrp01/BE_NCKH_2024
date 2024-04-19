@@ -46,5 +46,10 @@ export const RESPONSE_MESSAGES = {
   CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'Contract attribute is not found',
   CONTRACT_TEMPLATE_IS_NOT_FOUND: 'Contract template is not found',
   PARTY_INFO_IS_NOT_FOUND: 'Party info is not found',
-  ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND: 'One of the party info is not found'
+  ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND: 'One of the party info is not found',
+  PIN_MUST_BE_A_NUMBER: 'PIN must be a number',
+  PIN_IS_REQUIRED: 'PIN is required',
+  PIN_IS_INVALID: 'PIN is invalid',
+  PARTY_IS_NOT_FOUND: 'Party is not found',
+  PARTY_INFO_IS_EXIST: 'Party info is exist'
 }

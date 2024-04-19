@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreatePartyInfoDto } from './dto/create-party-info.dto'
 import { UpdatePartyInfoDto } from './dto/update-party-info.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -6,6 +6,7 @@ import { CustomPrismaModule, CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { PartiesService } from 'src/parties/parties.service'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 @Injectable()
 export class PartyInfosService {
@@ -15,12 +16,12 @@ export class PartyInfosService {
   ) {}
   async create(createPartyInfoDto: CreatePartyInfoDto, user: IUser) {
     if ((await this.partiesService.findOneById(createPartyInfoDto.partiesId)) === null)
-      throw new HttpException({ message: 'Party not found' }, 404)
+      throw new NotFoundException(RESPONSE_MESSAGES.PARTY_IS_NOT_FOUND)
 
     const isPartyInfoExist = await this.prismaService.client.partyInfo.findFirst({
       where: { userId: user.id, partiesId: createPartyInfoDto.partiesId }
     })
-    if (isPartyInfoExist) throw new HttpException({ message: 'Party info is exist' }, 400)
+    if (isPartyInfoExist) throw new BadRequestException(RESPONSE_MESSAGES.PARTY_INFO_IS_EXIST)
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     const { partiesId, ...rest } = createPartyInfoDto
     const partyInfo = await this.prismaService.client.partyInfo.create({
