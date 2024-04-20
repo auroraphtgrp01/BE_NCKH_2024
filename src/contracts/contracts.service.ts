@@ -98,7 +98,9 @@ export class ContractsService {
           }
         })
       )
-
+      // Tao invitation tai dat
+      // this.invitationService.sendInvitation(payload)
+      // payload la 1 mang invitation, nho truyen theo array
       return { contract, contractAttributeValues }
     }
 
