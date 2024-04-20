@@ -32,6 +32,13 @@
 $ yarn install
 ```
 
+## Documentation
+
+```bash
+$ npx @compodoc/compodoc -p tsconfig.json -s
+```
+
+
 ## Generate prisma schema
 
 ```bash

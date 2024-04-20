@@ -31,6 +31,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.10.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/date-unit-ms": "^1.1.2",
@@ -60,6 +61,7 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.23",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
