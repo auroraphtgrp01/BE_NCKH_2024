@@ -24,7 +24,7 @@ export class ContractsService {
     private contractAttributeValueService: ContractAttributeValuesService,
     private commonService: CommonService,
     private partyInfosService: PartyInfosService
-  ) {}
+  ) { }
 
   async createEmptyContract(contractData: CreateContractDto, user: IUser) {
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
@@ -95,7 +95,11 @@ export class ContractsService {
           }
         })
       )
-
+      const invitation = await this.invitationService.create({
+        idUserSender: user.id,
+        email: user.email,
+        message: 'Contract created from template'
+      }, user)
       return { contract, contractAttributeValues }
     }
 

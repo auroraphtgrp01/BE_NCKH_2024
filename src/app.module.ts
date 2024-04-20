@@ -17,7 +17,7 @@ import { PartyInfosModule } from './party-infos/party-infos.module'
 import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module'
 import { ContractAttributesModule } from './contract-attributes/contract-attributes.module';
 import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module';
-import { MailerModule } from './mailer/mailer.module';
+import { MailModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
@@ -49,7 +49,7 @@ import { MailerModule } from './mailer/mailer.module';
     ContractPartyInfosModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
-    MailerModule
+    MailModule
   ],
   controllers: [AppController],
   providers: [
