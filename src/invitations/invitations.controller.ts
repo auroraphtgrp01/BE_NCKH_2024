@@ -12,7 +12,7 @@ export class InvitationsController {
 
   @Post()
   create(@Body() createInvitationDto: CreateInvitationDto[], @User() user: IUser) {
-    return this.invitationsService.create(createInvitationDto, user)
+    // return this.invitationsService.create(createInvitationDto, user)
   }
 
   @Get()

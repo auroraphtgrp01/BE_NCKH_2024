@@ -18,16 +18,16 @@ export class InvitationsService {
     private queueService: QueueRedisService
   ) { }
 
-  // async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
-  //   const user = await this.prismaService.client.user.findUnique({ where: { id: createInvitationDto.idUserSender } })
-  //   if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-  //   const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
-  //   const invitation = await this.prismaService.client.invitation.create({
-  //     data: { ...createInvitationDto, updatedAt: null, createdBy }
-  //   })
-  // }
+  async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
+    const user = await this.prismaService.client.user.findUnique({ where: { id: createInvitationDto.idUserSender } })
+    if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+    const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+    const invitation = await this.prismaService.client.invitation.create({
+      data: { ...createInvitationDto, updatedAt: null, createdBy }
+    })
+  }
 
-  async create(createInvitationDto: CreateInvitationDto[], _user: IUser) {
+  async sendInvitation(createInvitationDto: CreateInvitationDto[], _user: IUser) {
     createInvitationDto.map(async (invitation: CreateInvitationDto) => {
       const user = await this.prismaService.client.user.findUnique({ where: { id: invitation.idUserSender } })
       if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
