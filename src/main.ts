@@ -13,8 +13,9 @@ async function bootstrap() {
   const serverAdapter = new ExpressAdapter()
   serverAdapter.setBasePath('/bull-admin')
   const aQueue = app.get<Queue>(`BullQueue_deployContract`)
+  const bQueue =app.get<Queue>(`BullQueue_sendInvitation`)
   createBullBoard({
-    queues: [new BullMQAdapter(aQueue)],
+    queues: [new BullMQAdapter(aQueue), new BullMQAdapter(bQueue)],
     serverAdapter
   })
   app.use('/bull-admin', serverAdapter.getRouter())

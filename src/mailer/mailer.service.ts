@@ -7,12 +7,11 @@ import { MailPayload } from 'src/mailer/mail-payload.i';
 export class MailService {
     constructor(private readonly mailerService: MailerService) { }
     async sendMail(payload: MailPayload) {
-        console.log('Sending mail...');
         await this.mailerService.sendMail({
             to: payload.to,
             from: payload.from,
             subject: 'Invitation to enter into an electronic contract',
-            template: 'invition',
+            template: 'invitation',
             context: {
                 receiver: payload.receiver,
                 contractName: payload.contractName,
@@ -21,7 +20,6 @@ export class MailService {
                 link: payload.link,
             }
         })
-        console.log('Mail sent successfully!');
         return true
     }
 }
