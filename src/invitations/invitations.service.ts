@@ -8,50 +8,44 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { MailPayload } from 'src/mailer/mail-payload.i'
 import { MailService } from 'src/mailer/mailer.service'
+import { QueueRedisModule } from 'src/queues/queue-redis.module'
+import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
 
 @Injectable()
 export class InvitationsService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>, private mailService: MailService) { }
+  constructor(
+    @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
+    private queueService: QueueRedisService
+  ) { }
 
-  async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
-    const user = await this.prismaService.client.user.findUnique({ where: { id: createInvitationDto.idUserSender } })
-    if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-    const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
-    const invitation = await this.prismaService.client.invitation.create({
-      data: { ...createInvitationDto, updatedAt: null, createdBy }
-    })
-    const payload: MailPayload = {
-      to: createInvitationDto.email,
-      from: _user.email,
-      messages: createInvitationDto.message,
-      link: `http://localhost:3000/invitation/${invitation.id}`,
-      receiver: createInvitationDto.email,
-      addressWalletSender: '0x1234567890',
-      contractName: 'Contract Name',
-    }
-    await this.mailService.sendMail(payload)
-    return invitation
-  }
+  // async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
+  //   const user = await this.prismaService.client.user.findUnique({ where: { id: createInvitationDto.idUserSender } })
+  //   if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+  //   const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+  //   const invitation = await this.prismaService.client.invitation.create({
+  //     data: { ...createInvitationDto, updatedAt: null, createdBy }
+  //   })
+  // }
 
-  async sendInvitation(createInvitationDto: CreateInvitationDto[], _user: IUser) {
-    createInvitationDto.map(async (invition: CreateInvitationDto) => {
-      const user = await this.prismaService.client.user.findUnique({ where: { id: invition.idUserSender } })
+  async create(createInvitationDto: CreateInvitationDto[], _user: IUser) {
+    createInvitationDto.map(async (invitation: CreateInvitationDto) => {
+      const user = await this.prismaService.client.user.findUnique({ where: { id: invitation.idUserSender } })
       if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
       const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
-      const invitation = await this.prismaService.client.invitation.create({
-        data: { ...invition, updatedAt: null, createdBy }
+      const invitationRecord = await this.prismaService.client.invitation.create({
+        data: { ...invitation, updatedAt: null, createdBy }
       })
-      const payload: MailPayload = {
-        to: invition.email,
+      const payload: IQueuePayloadSendInvitation = {
+        to: invitation.email,
         from: _user.email,
-        messages: invition.message,
+        messages: invitation.message,
         link: 'O day se la duong dan den contract',
-        receiver: invition.email,
+        receiver: invitation.email,
         addressWalletSender: '0x1234567890',
         contractName: 'Contract Name',
+        idInvitation: invitationRecord.id
       }
-      await this.mailService.sendMail(payload)
-      return invitation
+      this.queueService.enqueueSendInvitation(payload)
     })
   }
 

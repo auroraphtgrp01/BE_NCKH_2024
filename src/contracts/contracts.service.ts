@@ -132,7 +132,7 @@ export class ContractsService {
     return `This action removes a #${id} contract`
   }
 
-  async sendInvitation(sendInvitationDto: CreateInvitationDto, user: IUser) {
-    const invitation = await this.invitationService.create(sendInvitationDto, user)
-  }
+  // async sendInvitation(sendInvitationDto: CreateInvitationDto, user: IUser) {
+  //   const invitation = await this.invitationService.create(sendInvitationDto, user)
+  // }
 }
