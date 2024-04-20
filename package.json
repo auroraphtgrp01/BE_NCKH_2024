@@ -31,6 +31,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.10.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/date-unit-ms": "^1.1.2",
