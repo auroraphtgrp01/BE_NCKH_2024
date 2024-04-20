@@ -14,6 +14,8 @@ import { ContractAttributeValuesService } from 'src/contract-attribute-values/co
 import { CommonService } from 'src/common.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { PartyInfosService } from 'src/party-infos/party-infos.service'
+import { MailService } from 'src/mailer/mailer.service'
+import { MailPayload } from 'src/mailer/mail-payload.i'
 
 @Injectable()
 export class ContractsService {
@@ -23,8 +25,9 @@ export class ContractsService {
     private contractPartyInfoService: ContractPartyInfosService,
     private contractAttributeValueService: ContractAttributeValuesService,
     private commonService: CommonService,
-    private partyInfosService: PartyInfosService
-  ) {}
+    private partyInfosService: PartyInfosService,
+
+  ) { }
 
   async createEmptyContract(contractData: CreateContractDto, user: IUser) {
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
@@ -130,14 +133,6 @@ export class ContractsService {
   }
 
   async sendInvitation(sendInvitationDto: CreateInvitationDto, user: IUser) {
-    // const party = await this.prismaService.client.party.findUnique({ where: { id: sendInvitationDto.idPartySender } })
-    // if (!party) throw new NotFoundException({ message: RESPONSE_MESSAGES.PARTY_NOT_FOUND })
     const invitation = await this.invitationService.create(sendInvitationDto, user)
-
-    // send email
-    return {
-      message: 'Invitation sent successfully',
-      invitation
-    }
   }
 }
