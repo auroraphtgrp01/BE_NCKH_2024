@@ -70,8 +70,19 @@ model Contract {
   deletedAt              DateTime?
   deletedBy              Json?
   Invitation             Invitation[]
-  contractAttribute      ContractAttribute[]
   ContractPartyInfo      ContractPartyInfo[]
+}
+
+model TemplateContract {
+  id                     String                   @id @unique @default(uuid()) @db.Uuid
+  contractTitle          String
+  ContractAttributeValue ContractAttributeValue[]
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime?                @updatedAt
+  createdBy              Json?
+  updatedBy              Json?
+  deletedAt              DateTime?
+  deletedBy              Json?
 }
 
 model Invitation {
@@ -111,16 +122,14 @@ model ContractAttribute {
   deletedAt              DateTime?
   deletedBy              Json?
   ContractAttributeValue ContractAttributeValue[]
-  Contract               Contract?                @relation(fields: [contractId], references: [id])
-  contractId             String?                  @db.Uuid
 }
 
 model ContractAttributeValue {
   id                  String            @id @unique @default(uuid()) @db.Uuid
-  contractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
+  ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String            @db.Uuid
-  contract            Contract          @relation(fields: [contractId], references: [id])
-  contractId          String            @db.Uuid
+  Contract            Contract?         @relation(fields: [contractId], references: [id])
+  contractId          String?           @db.Uuid
   value               String
   description         String?
   createdAt           DateTime          @default(now())
@@ -129,6 +138,8 @@ model ContractAttributeValue {
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
+  TemplateContract    TemplateContract? @relation(fields: [templateContractId], references: [id])
+  templateContractId  String?           @db.Uuid
 }
 
 model Parties {

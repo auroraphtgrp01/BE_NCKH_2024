@@ -1,12 +1,21 @@
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsNotEmpty, IsOptional, IsString, IsUUID, ValidateIf } from 'class-validator'
 
 export class CreateContractAttributeValueDto {
-  @IsUUID()
+  @ValidateIf((object) => object.templateContractId === undefined)
+  @IsString()
   @IsNotEmpty()
-  contractId: string
+  @IsUUID()
+  contractId?: string
 
-  @IsUUID()
+  @ValidateIf((object) => object.contractId === undefined)
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
+  templateContractId?: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
   contractAttributeId: string
 
   @IsOptional()

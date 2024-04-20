@@ -9,4 +9,10 @@ export class CommonService {
     const contract = await this.prismaService.client.contract.findUnique({ where: { id } })
     return contract
   }
+
+  async findOneTemplateContractById(id: string) {
+    return await this.prismaService.client.templateContract.findUnique({
+      where: { id }
+    })
+  }
 }

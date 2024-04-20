@@ -15,8 +15,6 @@ export class ContractAttributesService {
     private commonService: CommonService
   ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
-    if (!(await this.commonService.findOneContractById(createContractAttributeDto.contractId)))
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
     const isContractAttributeExist = await this.findOne(createContractAttributeDto.name)
     if (isContractAttributeExist) return isContractAttributeExist
 

@@ -2,8 +2,9 @@ import { IsNotEmpty, IsNumberString, IsOptional, IsString, IsUUID, Length, MinLe
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 export class UpdatePartyInfoDto {
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   readonly id: string
 
   @IsString()
@@ -27,7 +28,8 @@ export class UpdatePartyInfoDto {
   @IsString()
   readonly description: string
 
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   readonly partiesId: string
 }

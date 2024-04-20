@@ -9,7 +9,7 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { ContractPartyInfosService } from 'src/contract-party-infos/contract-party-infos.service'
-import { IContractAttributeValue } from 'src/interfaces/contract.interface'
+import { IContractAttributeValueResponse } from 'src/interfaces/contract.interface'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { CommonService } from 'src/common.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
@@ -25,9 +25,8 @@ export class ContractsService {
     private contractPartyInfoService: ContractPartyInfosService,
     private contractAttributeValueService: ContractAttributeValuesService,
     private commonService: CommonService,
-    private partyInfosService: PartyInfosService,
-
-  ) { }
+    private partyInfosService: PartyInfosService
+  ) {}
 
   async createEmptyContract(contractData: CreateContractDto, user: IUser) {
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
@@ -81,7 +80,7 @@ export class ContractsService {
         where: { contractId: templateId }
       })
 
-      const contractAttributeValues: IContractAttributeValue[] = await Promise.all(
+      const contractAttributeValues: IContractAttributeValueResponse[] = await Promise.all(
         findcontractAttributeValues.map(async (contractAttributeValue) => {
           const newContractAttributeValue = await this.contractAttributeValueService.create(
             {

@@ -63,6 +63,20 @@ CREATE TABLE "Contract" (
 );
 
 -- CreateTable
+CREATE TABLE "TemplateContract" (
+    "id" UUID NOT NULL,
+    "contractTitle" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "createdBy" JSONB,
+    "updatedBy" JSONB,
+    "deletedAt" TIMESTAMP(3),
+    "deletedBy" JSONB,
+
+    CONSTRAINT "TemplateContract_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Invitation" (
     "id" UUID NOT NULL,
     "idUserSender" UUID NOT NULL,
@@ -91,7 +105,6 @@ CREATE TABLE "ContractAttribute" (
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
-    "contractId" UUID,
 
     CONSTRAINT "ContractAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -100,7 +113,7 @@ CREATE TABLE "ContractAttribute" (
 CREATE TABLE "ContractAttributeValue" (
     "id" UUID NOT NULL,
     "contractAttributeId" UUID NOT NULL,
-    "contractId" UUID NOT NULL,
+    "contractId" UUID,
     "value" TEXT NOT NULL,
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -109,6 +122,7 @@ CREATE TABLE "ContractAttributeValue" (
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "templateContractId" UUID,
 
     CONSTRAINT "ContractAttributeValue_pkey" PRIMARY KEY ("id")
 );
@@ -299,6 +313,9 @@ CREATE UNIQUE INDEX "User_roleId_key" ON "User"("roleId");
 CREATE UNIQUE INDEX "Contract_id_key" ON "Contract"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "TemplateContract_id_key" ON "TemplateContract"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Invitation_id_key" ON "Invitation"("id");
 
 -- CreateIndex
@@ -371,13 +388,13 @@ ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFE
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_templateContractId_fkey" FOREIGN KEY ("templateContractId") REFERENCES "TemplateContract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Parties" ADD CONSTRAINT "Parties_paymentMethodId_fkey" FOREIGN KEY ("paymentMethodId") REFERENCES "PaymentMethod"("id") ON DELETE SET NULL ON UPDATE CASCADE;

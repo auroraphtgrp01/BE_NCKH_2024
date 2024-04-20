@@ -23,7 +23,8 @@ export class CreatePartyInfoDto {
   @IsString()
   readonly description: string
 
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   readonly partiesId: string
 }

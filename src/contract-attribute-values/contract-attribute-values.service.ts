@@ -8,6 +8,7 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { CommonService } from 'src/common.service'
+import { ICreateContractAttributeValue } from 'src/interfaces/contract-attribute-value.interface'
 
 @Injectable()
 export class ContractAttributeValuesService {
@@ -17,24 +18,33 @@ export class ContractAttributeValuesService {
     private commonService: CommonService
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser, isEmpty?: boolean) {
-    const { contractId, contractAttributeId, value, description } = createContractAttributeValueDto
+    const { contractId, templateContractId, contractAttributeId, value, description } = createContractAttributeValueDto
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const data: ICreateContractAttributeValue = {
+      value: value,
+      description: description ? description : null,
+      createdBy,
+      ContractAttribute: { connect: { id: contractAttributeId } }
+    }
+
     if ((await this.contractAttributesService.findOneById(contractAttributeId)) === null)
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
-    if ((await this.commonService.findOneContractById(contractId)) === null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
+    if (contractId) {
+      if ((await this.commonService.findOneContractById(contractId)) === null)
+        throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
+      data.Contract = { connect: { id: contractAttributeId } }
+    } else {
+      if ((await this.commonService.findOneTemplateContractById(templateContractId)) === null)
+        throw new NotFoundException(RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND)
+      data.TemplateContract = { connect: { id: templateContractId } }
+    }
     if (!isEmpty && (value === null || value === undefined || value === ''))
       throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
 
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-
     return await this.prismaService.client.contractAttributeValue.create({
       data: {
-        value: value,
-        description: description ? description : null,
-        createdBy,
-        updatedAt: null,
-        contractAttribute: { connect: { id: contractAttributeId } },
-        contract: { connect: { id: contractId } }
+        ...data,
+        updatedAt: null
       }
     })
   }

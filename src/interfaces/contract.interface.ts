@@ -5,7 +5,7 @@ export interface IGasPrice {
   createdAt: Date
 }
 
-export interface IContractAttributeValue {
+export interface IContractAttributeValueResponse {
   id: string
   value: string
 }

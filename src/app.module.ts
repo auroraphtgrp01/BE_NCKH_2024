@@ -15,9 +15,9 @@ import { QueueRedisModule } from './queues/queue-redis.module'
 import { PartiesModule } from './parties/parties.module'
 import { PartyInfosModule } from './party-infos/party-infos.module'
 import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module'
-import { ContractAttributesModule } from './contract-attributes/contract-attributes.module';
-import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module';
-import { MailModule } from './mailer/mailer.module';
+import { ContractAttributesModule } from './contract-attributes/contract-attributes.module'
+import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module'
+import { TemplateContractsModule } from './template-contracts/template-contracts.module'
 
 @Module({
   imports: [
@@ -49,7 +49,7 @@ import { MailModule } from './mailer/mailer.module';
     ContractPartyInfosModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
-    MailModule
+    TemplateContractsModule
   ],
   controllers: [AppController],
   providers: [

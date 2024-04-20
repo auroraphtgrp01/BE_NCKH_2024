@@ -1,11 +1,13 @@
-import { IsNotEmpty, IsUUID } from 'class-validator'
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator'
 
 export class CreateContractPartyInfoDto {
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   readonly partyInfoId: string
 
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   readonly contractId: string
 }

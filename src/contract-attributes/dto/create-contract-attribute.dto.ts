@@ -9,8 +9,4 @@ export class CreateContractAttributeDto {
   @IsString()
   @IsNotEmpty()
   readonly description: string
-
-  @IsUUID()
-  @IsNotEmpty()
-  readonly contractId: string
 }
