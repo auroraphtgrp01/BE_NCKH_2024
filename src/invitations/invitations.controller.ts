@@ -11,8 +11,8 @@ export class InvitationsController {
   constructor(private readonly invitationsService: InvitationsService) {}
 
   @Post()
-  create(@Body() createInvitationDto: CreateInvitationDto, @User() user: IUser) {
-    return this.invitationsService.create(createInvitationDto, user)
+  create(@Body() createInvitationDto: CreateInvitationDto[], @User() user: IUser) {
+    // return this.invitationsService.create(createInvitationDto, user)
   }
 
   @Get()
