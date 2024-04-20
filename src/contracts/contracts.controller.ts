@@ -16,7 +16,7 @@ export class ContractsController {
 
   @Post('send-invitation')
   async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @User() user: IUser) {
-    return await this.contractsService.sendInvitation(sendInvitationDto, user)
+    // return await this.contractsService.sendInvitation(sendInvitationDto, user)
   }
 
   @Post()
