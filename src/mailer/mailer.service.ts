@@ -1,11 +1,13 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { log } from 'console';
 import { MailPayload } from 'src/mailer/mail-payload.i';
 
 @Injectable()
 export class MailService {
     constructor(private readonly mailerService: MailerService) { }
     async sendMail(payload: MailPayload) {
+        console.log('Sending mail...');
         await this.mailerService.sendMail({
             to: payload.to,
             from: payload.from,
@@ -19,6 +21,7 @@ export class MailService {
                 link: payload.link,
             }
         })
+        console.log('Mail sent successfully!');
         return true
     }
 }
