@@ -24,23 +24,23 @@
 <title>cluster_QueueRedisModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 551,-268 551,-70 8,-70"/>
 </g>
+<g id="clust6" class="cluster">
+<title>cluster_QueueRedisModule_providers</title>
+<polygon fill="none" stroke="black" points="230,-78 230,-130 420,-130 420,-78 230,-78"/>
+</g>
 <g id="clust3" class="cluster">
 <title>cluster_QueueRedisModule_imports</title>
-<polygon fill="none" stroke="black" points="283,-78 283,-130 385,-130 385,-78 283,-78"/>
+<polygon fill="none" stroke="black" points="120,-78 120,-130 222,-130 222,-78 120,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_QueueRedisModule_exports</title>
 <polygon fill="none" stroke="black" points="16,-208 16,-260 543,-260 543,-208 16,-208"/>
 </g>
-<g id="clust6" class="cluster">
-<title>cluster_QueueRedisModule_providers</title>
-<polygon fill="none" stroke="black" points="85,-78 85,-130 275,-130 275,-78 85,-78"/>
-</g>
 <!-- MailModule -->
 <g id="node1" class="node">
 <title>MailModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="376.99,-122 373.99,-126 352.99,-126 349.99,-122 291.01,-122 291.01,-86 376.99,-86 376.99,-122"/>
-<text text-anchor="middle" x="334" y="-99.8" font-family="Times,serif" font-size="14.00">MailModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="213.99,-122 210.99,-126 189.99,-126 186.99,-122 128.01,-122 128.01,-86 213.99,-86 213.99,-122"/>
+<text text-anchor="middle" x="171" y="-99.8" font-family="Times,serif" font-size="14.00">MailModule</text>
 </g>
 <!-- QueueRedisModule -->
 <g id="node2" class="node">
@@ -51,8 +51,8 @@
 <!-- MailModule&#45;&gt;QueueRedisModule -->
 <g id="edge1" class="edge">
 <title>MailModule&#45;&gt;QueueRedisModule</title>
-<path fill="none" stroke="black" d="M301.5,-122.11C301.5,-122.11 301.5,-140.99 301.5,-140.99"/>
-<polygon fill="black" stroke="black" points="298,-140.99 301.5,-150.99 305,-140.99 298,-140.99"/>
+<path fill="none" stroke="black" d="M199,-122.11C199,-122.11 199,-140.99 199,-140.99"/>
+<polygon fill="black" stroke="black" points="195.5,-140.99 199,-150.99 202.5,-140.99 195.5,-140.99"/>
 </g>
 <!-- QueueProcessorSendInvitation  -->
 <g id="node3" class="node">
@@ -63,8 +63,8 @@
 <!-- QueueRedisModule&#45;&gt;QueueProcessorSendInvitation  -->
 <g id="edge2" class="edge">
 <title>QueueRedisModule&#45;&gt;QueueProcessorSendInvitation </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M312.05,-169C337.02,-169 359.77,-169 359.77,-169 359.77,-169 359.77,-205.89 359.77,-205.89"/>
-<polygon fill="black" stroke="black" points="356.27,-205.89 359.77,-215.89 363.27,-205.89 356.27,-205.89"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M312.31,-169C344.78,-169 377.37,-169 377.37,-169 377.37,-169 377.37,-205.89 377.37,-205.89"/>
+<polygon fill="black" stroke="black" points="373.87,-205.89 377.37,-215.89 380.87,-205.89 373.87,-205.89"/>
 </g>
 <!-- QueueProcessorService  -->
 <g id="node4" class="node">
@@ -87,20 +87,20 @@
 <!-- QueueRedisModule&#45;&gt;QueueRedisService  -->
 <g id="edge4" class="edge">
 <title>QueueRedisModule&#45;&gt;QueueRedisService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M183.87,-169C153.33,-169 123.38,-169 123.38,-169 123.38,-169 123.38,-205.89 123.38,-205.89"/>
-<polygon fill="black" stroke="black" points="119.88,-205.89 123.38,-215.89 126.88,-205.89 119.88,-205.89"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M183.89,-169C161.1,-169 140.98,-169 140.98,-169 140.98,-169 140.98,-205.89 140.98,-205.89"/>
+<polygon fill="black" stroke="black" points="137.48,-205.89 140.98,-215.89 144.48,-205.89 137.48,-205.89"/>
 </g>
 <!-- QueueRedisService -->
 <g id="node6" class="node">
 <title>QueueRedisService</title>
-<ellipse fill="#fdb462" stroke="black" cx="180" cy="-104" rx="87.38" ry="18"/>
-<text text-anchor="middle" x="180" y="-99.8" font-family="Times,serif" font-size="14.00">QueueRedisService</text>
+<ellipse fill="#fdb462" stroke="black" cx="325" cy="-104" rx="87.38" ry="18"/>
+<text text-anchor="middle" x="325" y="-99.8" font-family="Times,serif" font-size="14.00">QueueRedisService</text>
 </g>
 <!-- QueueRedisService&#45;&gt;QueueRedisModule -->
 <g id="edge5" class="edge">
 <title>QueueRedisService&#45;&gt;QueueRedisModule</title>
-<path fill="none" stroke="black" d="M225.6,-119.4C225.6,-119.4 225.6,-140.94 225.6,-140.94"/>
-<polygon fill="black" stroke="black" points="222.1,-140.94 225.6,-150.94 229.1,-140.94 222.1,-140.94"/>
+<path fill="none" stroke="black" d="M274.9,-118.75C274.9,-118.75 274.9,-140.59 274.9,-140.59"/>
+<polygon fill="black" stroke="black" points="271.4,-140.59 274.9,-150.59 278.4,-140.59 271.4,-140.59"/>
 </g>
 </g>
 </svg>

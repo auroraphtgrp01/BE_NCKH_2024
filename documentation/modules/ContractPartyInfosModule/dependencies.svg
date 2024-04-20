@@ -24,59 +24,59 @@
 <title>cluster_ContractPartyInfosModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="48,-70 48,-268 448,-268 448,-70 48,-70"/>
 </g>
-<g id="clust3" class="cluster">
-<title>cluster_ContractPartyInfosModule_imports</title>
-<polygon fill="none" stroke="black" points="306,-78 306,-130 440,-130 440,-78 306,-78"/>
-</g>
 <g id="clust6" class="cluster">
 <title>cluster_ContractPartyInfosModule_providers</title>
-<polygon fill="none" stroke="black" points="56,-78 56,-130 298,-130 298,-78 56,-78"/>
+<polygon fill="none" stroke="black" points="198,-78 198,-130 440,-130 440,-78 198,-78"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_ContractPartyInfosModule_imports</title>
+<polygon fill="none" stroke="black" points="56,-78 56,-130 190,-130 190,-78 56,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_ContractPartyInfosModule_exports</title>
-<polygon fill="none" stroke="black" points="170,-208 170,-260 354,-260 354,-208 170,-208"/>
+<polygon fill="none" stroke="black" points="141,-208 141,-260 325,-260 325,-208 141,-208"/>
 </g>
 <!-- PartyInfosModule -->
 <g id="node1" class="node">
 <title>PartyInfosModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="431.86,-122 428.86,-126 407.86,-126 404.86,-122 314.14,-122 314.14,-86 431.86,-86 431.86,-122"/>
-<text text-anchor="middle" x="373" y="-99.8" font-family="Times,serif" font-size="14.00">PartyInfosModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="181.86,-122 178.86,-126 157.86,-126 154.86,-122 64.14,-122 64.14,-86 181.86,-86 181.86,-122"/>
+<text text-anchor="middle" x="123" y="-99.8" font-family="Times,serif" font-size="14.00">PartyInfosModule</text>
 </g>
 <!-- ContractPartyInfosModule -->
 <g id="node2" class="node">
 <title>ContractPartyInfosModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="345.07,-187 342.07,-191 321.07,-191 318.07,-187 178.93,-187 178.93,-151 345.07,-151 345.07,-187"/>
-<text text-anchor="middle" x="262" y="-164.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="316.07,-187 313.07,-191 292.07,-191 289.07,-187 149.93,-187 149.93,-151 316.07,-151 316.07,-187"/>
+<text text-anchor="middle" x="233" y="-164.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosModule</text>
 </g>
 <!-- PartyInfosModule&#45;&gt;ContractPartyInfosModule -->
 <g id="edge1" class="edge">
 <title>PartyInfosModule&#45;&gt;ContractPartyInfosModule</title>
-<path fill="none" stroke="black" d="M329.55,-122.11C329.55,-122.11 329.55,-140.99 329.55,-140.99"/>
-<polygon fill="black" stroke="black" points="326.05,-140.99 329.55,-150.99 333.05,-140.99 326.05,-140.99"/>
+<path fill="none" stroke="black" d="M165.95,-122.11C165.95,-122.11 165.95,-140.99 165.95,-140.99"/>
+<polygon fill="black" stroke="black" points="162.45,-140.99 165.95,-150.99 169.45,-140.99 162.45,-140.99"/>
 </g>
 <!-- ContractPartyInfosService  -->
 <g id="node3" class="node">
 <title>ContractPartyInfosService </title>
-<polygon fill="#fb8072" stroke="black" points="346,-252 178,-252 178,-216 346,-216 346,-252"/>
-<text text-anchor="middle" x="262" y="-229.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosService </text>
+<polygon fill="#fb8072" stroke="black" points="317,-252 149,-252 149,-216 317,-216 317,-252"/>
+<text text-anchor="middle" x="233" y="-229.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosService </text>
 </g>
 <!-- ContractPartyInfosModule&#45;&gt;ContractPartyInfosService  -->
 <g id="edge2" class="edge">
 <title>ContractPartyInfosModule&#45;&gt;ContractPartyInfosService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M262,-187.11C262,-187.11 262,-205.99 262,-205.99"/>
-<polygon fill="black" stroke="black" points="258.5,-205.99 262,-215.99 265.5,-205.99 258.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M233,-187.11C233,-187.11 233,-205.99 233,-205.99"/>
+<polygon fill="black" stroke="black" points="229.5,-205.99 233,-215.99 236.5,-205.99 229.5,-205.99"/>
 </g>
 <!-- ContractPartyInfosService -->
 <g id="node4" class="node">
 <title>ContractPartyInfosService</title>
-<ellipse fill="#fdb462" stroke="black" cx="177" cy="-104" rx="113.44" ry="18"/>
-<text text-anchor="middle" x="177" y="-99.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosService</text>
+<ellipse fill="#fdb462" stroke="black" cx="319" cy="-104" rx="113.44" ry="18"/>
+<text text-anchor="middle" x="319" y="-99.8" font-family="Times,serif" font-size="14.00">ContractPartyInfosService</text>
 </g>
 <!-- ContractPartyInfosService&#45;&gt;ContractPartyInfosModule -->
 <g id="edge3" class="edge">
 <title>ContractPartyInfosService&#45;&gt;ContractPartyInfosModule</title>
-<path fill="none" stroke="black" d="M234.72,-119.73C234.72,-119.73 234.72,-140.65 234.72,-140.65"/>
-<polygon fill="black" stroke="black" points="231.22,-140.65 234.72,-150.65 238.22,-140.65 231.22,-140.65"/>
+<path fill="none" stroke="black" d="M260.78,-119.73C260.78,-119.73 260.78,-140.65 260.78,-140.65"/>
+<polygon fill="black" stroke="black" points="257.28,-140.65 260.78,-150.65 264.28,-140.65 257.28,-140.65"/>
 </g>
 </g>
 </svg>

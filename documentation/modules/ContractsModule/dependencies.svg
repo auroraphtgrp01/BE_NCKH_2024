@@ -28,13 +28,13 @@
 <title>cluster_ContractsModule_providers</title>
 <polygon fill="none" stroke="black" points="981,-78 981,-130 1321,-130 1321,-78 981,-78"/>
 </g>
-<g id="clust3" class="cluster">
-<title>cluster_ContractsModule_imports</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 973,-130 973,-78 16,-78"/>
-</g>
 <g id="clust4" class="cluster">
 <title>cluster_ContractsModule_exports</title>
 <polygon fill="none" stroke="black" points="444,-208 444,-260 707,-260 707,-208 444,-208"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_ContractsModule_imports</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 973,-130 973,-78 16,-78"/>
 </g>
 <!-- ContractAttributeValuesModule -->
 <g id="node1" class="node">
