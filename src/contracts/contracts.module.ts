@@ -7,6 +7,7 @@ import { ContractAttributesModule } from 'src/contract-attributes/contract-attri
 import { ContractAttributeValuesModule } from 'src/contract-attribute-values/contract-attribute-values.module'
 import { CommonService } from 'src/common.service'
 import { PartyInfosModule } from 'src/party-infos/party-infos.module'
+import { MailModule } from 'src/mailer/mailer.module'
 
 @Module({
   imports: [
@@ -14,10 +15,11 @@ import { PartyInfosModule } from 'src/party-infos/party-infos.module'
     ContractPartyInfosModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
-    PartyInfosModule
+    PartyInfosModule,
+    MailModule
   ],
   controllers: [ContractsController],
   providers: [ContractsService, CommonService],
   exports: [ContractsService, CommonService]
 })
-export class ContractsModule {}
+export class ContractsModule { }
