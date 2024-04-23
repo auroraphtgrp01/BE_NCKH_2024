@@ -1,3 +1,5 @@
+import { Contract } from '@prisma/client'
+
 export interface IGasPrice {
   addressWallet: string
   price: string
@@ -8,4 +10,9 @@ export interface IGasPrice {
 export interface IContractAttributeValueResponse {
   id: string
   value: string
+}
+
+export interface IContractResponse {
+  contract: Contract
+  contractAttributeValues?: IContractAttributeValueResponse[]
 }

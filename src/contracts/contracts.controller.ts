@@ -1,12 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
-import { CreateContractDto } from './dto/create-contract.dto'
+import { AnotherDto, ContractAttributeValuesDto, CreateContractDto } from './dto/create-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
 import { CommonService } from 'src/common.service'
-
 @Controller('contracts')
 export class ContractsController {
   constructor(
@@ -23,10 +22,11 @@ export class ContractsController {
   async create(
     @Body('contractData') contractData: CreateContractDto,
     @User() user: IUser,
+    @Body('another') another: AnotherDto,
     @Body('templateId') templateId?: string,
     @Body('partyInfoIds') partyInfoIds?: string[]
   ) {
-    return await this.contractsService.create(contractData, user, templateId, partyInfoIds)
+    return await this.contractsService.create(contractData, user, another, templateId, partyInfoIds)
   }
 
   @Get()

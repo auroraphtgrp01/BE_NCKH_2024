@@ -10,10 +10,7 @@ import { CommonService } from 'src/common.service'
 
 @Injectable()
 export class ContractAttributesService {
-  constructor(
-    @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private commonService: CommonService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
     const isContractAttributeExist = await this.findOne(createContractAttributeDto.name)
     if (isContractAttributeExist) return isContractAttributeExist

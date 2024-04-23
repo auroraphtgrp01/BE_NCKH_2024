@@ -3,6 +3,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsDate,
+  IsNotEmpty,
   IsOptional,
   IsString,
   Length,
@@ -14,6 +15,9 @@ import { Transform, Type } from 'class-transformer'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { GasPriceDto } from './create-contract.dto'
 import { CreatePartyInfoDto } from 'src/party-infos/dto/create-party-info.dto'
+import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
+import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
+import { contractStatus } from '@prisma/client'
 
 export class UpdateContractDto {
   @IsOptional()
@@ -46,27 +50,32 @@ export class UpdateContractDto {
   @Type(() => GasPriceDto)
   gasPrices: GasPriceDto[]
 
-  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
+  @Type(() => Date)
   startDate: Date
 
-  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  endDate: Date
-
-  @IsOptional()
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
+  @IsAfterDate('startDate')
+  @IsBeforeDate('endDate')
+  @Type(() => Date)
   executeDate: Date
+
+  @Transform(({ value }) => new Date(value))
+  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
+  @IsAfterDate('executeDate')
+  @Type(() => Date)
+  endDate: Date
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
   agreements: string[]
+
+  @IsOptional()
+  @IsNotEmpty()
+  status?: contractStatus
 }

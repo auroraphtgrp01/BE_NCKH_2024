@@ -32,7 +32,7 @@ export class ContractAttributeValuesService {
     if (contractId) {
       if ((await this.commonService.findOneContractById(contractId)) === null)
         throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
-      data.Contract = { connect: { id: contractAttributeId } }
+      data.Contract = { connect: { id: contractId } }
     } else {
       if ((await this.commonService.findOneTemplateContractById(templateContractId)) === null)
         throw new NotFoundException(RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND)
@@ -40,25 +40,48 @@ export class ContractAttributeValuesService {
     }
     if (!isEmpty && (value === null || value === undefined || value === ''))
       throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
-
-    return await this.prismaService.client.contractAttributeValue.create({
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
       data: {
         ...data,
+        createdBy,
         updatedAt: null
       }
     })
+
+    return contractAttributeValue
   }
 
   findAll() {
     return `This action returns all contractAttributeValues`
   }
 
+  async findOneById(id: string) {
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.findUnique({
+      where: { id: id },
+      include: {
+        ContractAttribute: true,
+        Contract: true,
+        TemplateContract: true
+      }
+    })
+    return contractAttributeValue
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} contractAttributeValue`
   }
 
-  update(id: number, updateContractAttributeValueDto: UpdateContractAttributeValueDto) {
-    return `This action updates a #${id} contractAttributeValue`
+  async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user) {
+    const { id, ...data } = updateContractAttributeValueDto
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.update({
+      where: { id },
+      data: {
+        ...data,
+        updatedBy
+      }
+    })
+    return contractAttributeValue
   }
 
   remove(id: number) {

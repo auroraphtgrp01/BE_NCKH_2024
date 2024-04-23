@@ -44,7 +44,7 @@ export const RESPONSE_MESSAGES = {
   CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED: 'Contract attribute values is not provided or incomplete',
   VALUE_IS_REQUIRED: 'Value is required',
   CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'Contract attribute is not found',
-  CONTRACT_TEMPLATE_IS_NOT_FOUND: 'Contract template is not found',
+  TEMPLATE_CONTRACT_IS_NOT_FOUND: 'Template contract is not found',
   PARTY_INFO_IS_NOT_FOUND: 'Party info is not found',
   ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND: 'One of the party info is not found',
   ONE_OF_THE_CONTRACT_ATTRIBUTE_IS_NOT_FOUND: 'One of the contract attribute is not found',
@@ -55,6 +55,8 @@ export const RESPONSE_MESSAGES = {
   PARTY_INFO_IS_EXIST: 'Party info is exist',
   CONTRACT_ATTRIBUTE_VALUES_MUST_BE_PROVIDED: 'Contract attribute values must be provided',
   VALUE_MUST_BE_STRING: 'Value must be a string',
-  TEMPLATE_CONTRACT_IS_NOT_FOUND: 'Template contract is not found',
-  CONTRACT_TITLE_MUST_BE_STRING: 'Contract title must be a string'
+  CONTRACT_TITLE_MUST_BE_STRING: 'Contract title must be a string',
+  EMAIL_TO_MUST_BE_A_STRING: 'Email to must be a string',
+  EMAIL_TO_IS_INVALID: 'Email to is invalid',
+  ONE_OF_THE_EMAILS_SENT_TO_DID_NOT_HAVE_AN_ACCOUNT: 'One of the emails sent did not have an account'
 }

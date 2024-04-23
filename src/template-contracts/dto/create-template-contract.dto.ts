@@ -12,7 +12,6 @@ import {
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 export class ContractAttributeValuesDto {
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
   value: string

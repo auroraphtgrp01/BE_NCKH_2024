@@ -47,15 +47,14 @@ model User {
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
-  PartyInfo           PartyInfo[]
 }
 
 model Contract {
   id                     String                   @id @unique @default(uuid()) @db.Uuid
   contractTitle          String
   addressWallet          String
-  contractAddress        String
-  blockAddress           String
+  contractAddress        String?
+  blockAddress           String?
   gasPrices              Json[]                   @db.Json
   ContractAttributeValue ContractAttributeValue[]
   startDate              DateTime
@@ -69,8 +68,6 @@ model Contract {
   updatedBy              Json?
   deletedAt              DateTime?
   deletedBy              Json?
-  Invitation             Invitation[]
-  ContractPartyInfo      ContractPartyInfo[]
 }
 
 model TemplateContract {
@@ -86,19 +83,21 @@ model TemplateContract {
 }
 
 model Invitation {
-  id           String           @id @unique @default(uuid()) @db.Uuid
-  idUserSender String           @db.Uuid
-  email        String
-  message      String
-  status       InvitationStatus @default(PENDING)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime?        @updatedAt
-  createdBy    Json?
-  updatedBy    Json?
-  deletedAt    DateTime?
-  deletedBy    Json?
-  Contract     Contract?        @relation(fields: [contractId], references: [id])
-  contractId   String?          @db.Uuid
+  id                  String           @id @unique @default(uuid()) @db.Uuid
+  addressWalletSender String
+  to                  String
+  from                String
+  messages            String?
+  status              InvitationStatus @default(PENDING)
+  contractName        String
+  link                String
+  receiver            String
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime?        @updatedAt
+  createdBy           Json?
+  updatedBy           Json?
+  deletedAt           DateTime?
+  deletedBy           Json?
 }
 
 enum contractStatus {
@@ -131,7 +130,8 @@ model ContractAttributeValue {
   Contract            Contract?         @relation(fields: [contractId], references: [id])
   contractId          String?           @db.Uuid
   value               String
-  description         String?
+  idArea              String
+  type                String
   createdAt           DateTime          @default(now())
   updatedAt           DateTime?         @updatedAt
   createdBy           Json?
@@ -140,58 +140,6 @@ model ContractAttributeValue {
   deletedBy           Json?
   TemplateContract    TemplateContract? @relation(fields: [templateContractId], references: [id])
   templateContractId  String?           @db.Uuid
-}
-
-model Parties {
-  id              String         @id @unique @default(uuid()) @db.Uuid
-  partyName       String         @unique
-  taxCode         String         @unique
-  email           String         @unique
-  phoneNumber     String         @unique
-  address         String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime?      @updatedAt
-  createdBy       Json?
-  updatedBy       Json?
-  deletedAt       DateTime?
-  deletedBy       Json?
-  PaymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
-  paymentMethodId String?        @db.Uuid
-  PartyInfo       PartyInfo[]
-}
-
-model PartyInfo {
-  id                 String              @id @unique @default(uuid()) @db.Uuid
-  representativeName String
-  position           String
-  userId             String              @db.Uuid
-  User               User                @relation(fields: [userId], references: [id])
-  phoneNumber        String
-  address            String
-  description        String?
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime?           @updatedAt
-  createdBy          Json?
-  updatedBy          Json?
-  deletedAt          DateTime?
-  deletedBy          Json?
-  Parties            Parties             @relation(fields: [partiesId], references: [id])
-  partiesId          String              @db.Uuid
-  ContractPartyInfo  ContractPartyInfo[]
-}
-
-model ContractPartyInfo {
-  id          String    @id @unique @default(uuid()) @db.Uuid
-  Contract    Contract  @relation(fields: [contractId], references: [id])
-  contractId  String    @db.Uuid
-  PartyInfo   PartyInfo @relation(fields: [partyInfoId], references: [id])
-  partyInfoId String    @db.Uuid
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  createdBy   Json?
-  updatedBy   Json?
-  deletedAt   DateTime?
-  deletedBy   Json?
 }
 
 model Role {
@@ -252,7 +200,6 @@ model PaymentMethod {
   updatedBy   Json?
   deletedAt   DateTime?
   deletedBy   Json?
-  Parties     Parties[]
 }
 
 model Banking {

@@ -44,8 +44,8 @@ CREATE TABLE "Contract" (
     "id" UUID NOT NULL,
     "contractTitle" TEXT NOT NULL,
     "addressWallet" TEXT NOT NULL,
-    "contractAddress" TEXT NOT NULL,
-    "blockAddress" TEXT NOT NULL,
+    "contractAddress" TEXT,
+    "blockAddress" TEXT,
     "gasPrices" JSON[],
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3),
@@ -79,17 +79,20 @@ CREATE TABLE "TemplateContract" (
 -- CreateTable
 CREATE TABLE "Invitation" (
     "id" UUID NOT NULL,
-    "idUserSender" UUID NOT NULL,
-    "email" TEXT NOT NULL,
-    "message" TEXT NOT NULL,
+    "addressWalletSender" UUID NOT NULL,
+    "to" TEXT NOT NULL,
+    "from" TEXT NOT NULL,
+    "messages" TEXT,
     "status" "InvitationStatus" NOT NULL DEFAULT 'PENDING',
+    "contractName" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
+    "receiver" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
-    "contractId" UUID,
 
     CONSTRAINT "Invitation_pkey" PRIMARY KEY ("id")
 );
@@ -383,9 +386,6 @@ CREATE UNIQUE INDEX "DeployStatus_id_key" ON "DeployStatus"("id");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

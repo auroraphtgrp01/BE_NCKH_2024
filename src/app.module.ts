@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { APP_FILTER, HttpAdapterHost } from '@nestjs/core'
@@ -18,6 +18,7 @@ import { ContractPartyInfosModule } from './contract-party-infos/contract-party-
 import { ContractAttributesModule } from './contract-attributes/contract-attributes.module'
 import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module'
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
+import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor'
 
 @Module({
   imports: [

@@ -49,7 +49,12 @@ export class TemplateContractsService {
         )
       })
     )
-    return 'This action adds a new templateContract'
+    return templateContract
+  }
+
+  async findOneById(id: string) {
+    const templateContract = await this.prismaService.client.templateContract.findUnique({ where: { id } })
+    return templateContract
   }
 
   findAll() {

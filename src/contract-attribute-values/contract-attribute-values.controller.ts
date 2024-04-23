@@ -24,9 +24,9 @@ export class ContractAttributeValuesController {
     return this.contractAttributeValuesService.findOne(+id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContractAttributeValueDto: UpdateContractAttributeValueDto) {
-    return this.contractAttributeValuesService.update(+id, updateContractAttributeValueDto)
+  @Patch()
+  update(@Body() updateContractAttributeValueDto: UpdateContractAttributeValueDto, @User() user: IUser) {
+    return this.contractAttributeValuesService.update(updateContractAttributeValueDto, user)
   }
 
   @Delete(':id')

@@ -10,41 +10,59 @@ import { MailPayload } from 'src/mailer/mail-payload.i'
 import { MailService } from 'src/mailer/mailer.service'
 import { QueueRedisModule } from 'src/queues/queue-redis.module'
 import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
+import { UsersService } from 'src/users/users.service'
 
 @Injectable()
 export class InvitationsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private queueService: QueueRedisService
-  ) { }
+    private queueService: QueueRedisService,
+    private usersService: UsersService
+  ) {}
 
   async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
-    const user = await this.prismaService.client.user.findUnique({ where: { id: createInvitationDto.idUserSender } })
-    if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
-    const invitation = await this.prismaService.client.invitation.create({
-      data: { ...createInvitationDto, updatedAt: null, createdBy }
+    const invitationRecord = await this.prismaService.client.invitation.create({
+      data: {
+        ...createInvitationDto,
+        from: _user.email,
+        link: 'https://send-mail/123354',
+        receiver: _user.name,
+        updatedAt: null,
+        createdBy
+      }
     })
+
+    return invitationRecord
+  }
+
+  async testError() {
+    throw new NotFoundException({ message: 'Test error' })
   }
 
   async sendInvitation(createInvitationDto: CreateInvitationDto[], _user: IUser) {
+    this.testError()
     createInvitationDto.map(async (invitation: CreateInvitationDto) => {
-      const user = await this.prismaService.client.user.findUnique({ where: { id: invitation.idUserSender } })
+      const user = await this.usersService.findOne(invitation.addressWalletSender)
       if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-      const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
-      const invitationRecord = await this.prismaService.client.invitation.create({
-        data: { ...invitation, updatedAt: null, createdBy }
-      })
+      if (!(await this.usersService.findOne(invitation.to)))
+        throw new NotFoundException({ message: `Email ${invitation.to} did not have an account` })
+
+      const invitationRecord = await this.create(invitation, _user)
+
+      const { to, from, messages, link, receiver, addressWalletSender, contractName, id } = invitationRecord
       const payload: IQueuePayloadSendInvitation = {
-        to: invitation.email,
-        from: _user.email,
-        messages: invitation.message,
-        link: 'O day se la duong dan den contract',
-        receiver: invitation.email,
-        addressWalletSender: '0x1234567890',
-        contractName: 'Contract Name',
-        idInvitation: invitationRecord.id
+        to,
+        from,
+        messages,
+        link,
+        receiver,
+        addressWalletSender,
+        contractName,
+        idInvitation: id
       }
+      console.log(payload)
+
       this.queueService.enqueueSendInvitation(payload)
     })
   }
