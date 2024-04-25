@@ -14,40 +14,20 @@ import { ICreateContractAttributeValue } from 'src/interfaces/contract-attribute
 export class ContractAttributeValuesService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private contractAttributesService: ContractAttributesService,
     private commonService: CommonService
   ) {}
-  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser, isEmpty?: boolean) {
-    const { contractId, templateContractId, contractAttributeId, value, description } = createContractAttributeValueDto
+  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
+    const { contractAttributeId, value } = createContractAttributeValueDto
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-    const data: ICreateContractAttributeValue = {
-      value: value,
-      description: description ? description : null,
-      createdBy,
-      ContractAttribute: { connect: { id: contractAttributeId } }
-    }
-
-    if ((await this.contractAttributesService.findOneById(contractAttributeId)) === null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
-    if (contractId) {
-      if ((await this.commonService.findOneContractById(contractId)) === null)
-        throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
-      data.Contract = { connect: { id: contractId } }
-    } else {
-      if ((await this.commonService.findOneTemplateContractById(templateContractId)) === null)
-        throw new NotFoundException(RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND)
-      data.TemplateContract = { connect: { id: templateContractId } }
-    }
-    if (!isEmpty && (value === null || value === undefined || value === ''))
-      throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
+    if (!(await this.commonService.findOneContractAttributeById(contractAttributeId)))
+      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
       data: {
-        ...data,
-        createdBy,
-        updatedAt: null
+        value,
+        ContractAttribute: { connect: { id: contractAttributeId } },
+        createdBy
       }
     })
-
     return contractAttributeValue
   }
 
@@ -59,9 +39,7 @@ export class ContractAttributeValuesService {
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.findUnique({
       where: { id: id },
       include: {
-        ContractAttribute: true,
-        Contract: true,
-        TemplateContract: true
+        ContractAttribute: true
       }
     })
     return contractAttributeValue

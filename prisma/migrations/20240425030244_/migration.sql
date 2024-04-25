@@ -79,7 +79,7 @@ CREATE TABLE "TemplateContract" (
 -- CreateTable
 CREATE TABLE "Invitation" (
     "id" UUID NOT NULL,
-    "addressWalletSender" UUID NOT NULL,
+    "addressWalletSender" TEXT NOT NULL,
     "to" TEXT NOT NULL,
     "from" TEXT NOT NULL,
     "messages" TEXT,
@@ -101,13 +101,16 @@ CREATE TABLE "Invitation" (
 CREATE TABLE "ContractAttribute" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT,
+    "idArea" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "contractId" UUID,
+    "templateContractId" UUID,
 
     CONSTRAINT "ContractAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -115,73 +118,16 @@ CREATE TABLE "ContractAttribute" (
 -- CreateTable
 CREATE TABLE "ContractAttributeValue" (
     "id" UUID NOT NULL,
-    "contractAttributeId" UUID NOT NULL,
-    "contractId" UUID,
     "value" TEXT NOT NULL,
-    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
-    "templateContractId" UUID,
+    "contractAttributeId" UUID NOT NULL,
 
     CONSTRAINT "ContractAttributeValue_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Parties" (
-    "id" UUID NOT NULL,
-    "partyName" TEXT NOT NULL,
-    "taxCode" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "phoneNumber" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "createdBy" JSONB,
-    "updatedBy" JSONB,
-    "deletedAt" TIMESTAMP(3),
-    "deletedBy" JSONB,
-    "paymentMethodId" UUID,
-
-    CONSTRAINT "Parties_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "PartyInfo" (
-    "id" UUID NOT NULL,
-    "representativeName" TEXT NOT NULL,
-    "position" TEXT NOT NULL,
-    "userId" UUID NOT NULL,
-    "phoneNumber" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "description" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "createdBy" JSONB,
-    "updatedBy" JSONB,
-    "deletedAt" TIMESTAMP(3),
-    "deletedBy" JSONB,
-    "partiesId" UUID NOT NULL,
-
-    CONSTRAINT "PartyInfo_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ContractPartyInfo" (
-    "id" UUID NOT NULL,
-    "contractId" UUID NOT NULL,
-    "partyInfoId" UUID NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "createdBy" JSONB,
-    "updatedBy" JSONB,
-    "deletedAt" TIMESTAMP(3),
-    "deletedBy" JSONB,
-
-    CONSTRAINT "ContractPartyInfo_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -331,25 +277,7 @@ CREATE UNIQUE INDEX "ContractAttribute_name_key" ON "ContractAttribute"("name");
 CREATE UNIQUE INDEX "ContractAttributeValue_id_key" ON "ContractAttributeValue"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Parties_id_key" ON "Parties"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Parties_partyName_key" ON "Parties"("partyName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Parties_taxCode_key" ON "Parties"("taxCode");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Parties_email_key" ON "Parties"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Parties_phoneNumber_key" ON "Parties"("phoneNumber");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PartyInfo_id_key" ON "PartyInfo"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ContractPartyInfo_id_key" ON "ContractPartyInfo"("id");
+CREATE UNIQUE INDEX "ContractAttributeValue_contractAttributeId_key" ON "ContractAttributeValue"("contractAttributeId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Role_id_key" ON "Role"("id");
@@ -388,28 +316,13 @@ CREATE UNIQUE INDEX "DeployStatus_id_key" ON "DeployStatus"("id");
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_templateContractId_fkey" FOREIGN KEY ("templateContractId") REFERENCES "TemplateContract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_templateContractId_fkey" FOREIGN KEY ("templateContractId") REFERENCES "TemplateContract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Parties" ADD CONSTRAINT "Parties_paymentMethodId_fkey" FOREIGN KEY ("paymentMethodId") REFERENCES "PaymentMethod"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "PartyInfo" ADD CONSTRAINT "PartyInfo_partiesId_fkey" FOREIGN KEY ("partiesId") REFERENCES "Parties"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractPartyInfo" ADD CONSTRAINT "ContractPartyInfo_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractPartyInfo" ADD CONSTRAINT "ContractPartyInfo_partyInfoId_fkey" FOREIGN KEY ("partyInfoId") REFERENCES "PartyInfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

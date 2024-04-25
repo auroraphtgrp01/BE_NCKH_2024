@@ -15,4 +15,8 @@ export class CommonService {
       where: { id }
     })
   }
+
+  async findOneContractAttributeById(id: string) {
+    return await this.prismaService.client.contractAttribute.findUnique({ where: { id } })
+  }
 }

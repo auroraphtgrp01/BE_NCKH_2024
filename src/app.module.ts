@@ -12,13 +12,9 @@ import { ContractsModule } from './contracts/contracts.module'
 import { InvitationsModule } from './invitations/invitations.module'
 import { BullModule } from '@nestjs/bullmq'
 import { QueueRedisModule } from './queues/queue-redis.module'
-import { PartiesModule } from './parties/parties.module'
-import { PartyInfosModule } from './party-infos/party-infos.module'
-import { ContractPartyInfosModule } from './contract-party-infos/contract-party-infos.module'
 import { ContractAttributesModule } from './contract-attributes/contract-attributes.module'
 import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module'
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
-import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor'
 
 @Module({
   imports: [
@@ -45,9 +41,6 @@ import { ErrorHandlingInterceptor } from './interceptors/error-handling.intercep
     ContractsModule,
     InvitationsModule,
     QueueRedisModule,
-    PartiesModule,
-    PartyInfosModule,
-    ContractPartyInfosModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
     TemplateContractsModule

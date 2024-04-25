@@ -1,5 +1,4 @@
 import {
-  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
   IsDate,
@@ -14,7 +13,6 @@ import {
 import { Transform, Type } from 'class-transformer'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { GasPriceDto } from './create-contract.dto'
-import { CreatePartyInfoDto } from 'src/party-infos/dto/create-party-info.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
 import { contractStatus } from '@prisma/client'

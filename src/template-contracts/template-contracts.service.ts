@@ -7,49 +7,39 @@ import { IUser } from 'src/users/interfaces/IUser.interface'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { v4 as uuidv4 } from 'uuid'
+import { TypeContractAttributeValue } from 'src/constants/enum.constant'
 
 @Injectable()
 export class TemplateContractsService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private contractAttributeValuesService: ContractAttributeValuesService,
     private contractAttributeService: ContractAttributesService
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
-    const { contractTitle, contractAttributeValues } = createTemplateContractDto
+    const { contractTitle, contractAttributes } = createTemplateContractDto
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-
-    const handleContractAttributes = await Promise.all(
-      contractAttributeValues.map(async (contractAttributeValue) => {
-        return await this.contractAttributeService.findOneById(contractAttributeValue.contractAttributeId)
-      })
-    )
-
-    if (handleContractAttributes.includes(null))
-      throw new NotFoundException(RESPONSE_MESSAGES.ONE_OF_THE_CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
-
     const templateContract = await this.prismaService.client.templateContract.create({
       data: {
         contractTitle,
-        updatedAt: null,
-        createdBy
+        createdBy,
+        updatedAt: null
       }
     })
 
-    await Promise.all(
-      contractAttributeValues.map(async (contractAttributeValue) => {
-        await this.contractAttributeValuesService.create(
-          {
-            ...contractAttributeValue,
-            templateContractId: templateContract.id
-          },
-          user,
-          false
+    const resultContractAttributes = await Promise.all(
+      contractAttributes.map(async (contractAttribute) => {
+        if (contractAttribute.type === TypeContractAttributeValue.CONTRACT_TITLE && contractAttribute.valueAttribute)
+          throw new NotFoundException(
+            `Contract with name ${contractAttribute.name} is not allowed to have value attribute`
+          )
+        return await this.contractAttributeService.create(
+          { ...contractAttribute, templateContractId: templateContract.id },
+          user
         )
       })
     )
-    return templateContract
+    return { templateContract, contractAttributes: resultContractAttributes }
   }
 
   async findOneById(id: string) {

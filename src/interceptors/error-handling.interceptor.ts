@@ -9,6 +9,8 @@ export class ErrorHandlingInterceptor implements NestInterceptor {
         if (error instanceof HttpException) {
           return throwError(() => error)
         } else {
+          console.log(error)
+
           return throwError(() => new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR))
         }
       })

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
-import { AnotherDto, ContractAttributeValuesDto, CreateContractDto } from './dto/create-contract.dto'
+import { AnotherDto, CreateContractDto } from './dto/create-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -23,10 +23,9 @@ export class ContractsController {
     @Body('contractData') contractData: CreateContractDto,
     @User() user: IUser,
     @Body('another') another: AnotherDto,
-    @Body('templateId') templateId?: string,
-    @Body('partyInfoIds') partyInfoIds?: string[]
+    @Body('templateId') templateId?: string
   ) {
-    return await this.contractsService.create(contractData, user, another, templateId, partyInfoIds)
+    return await this.contractsService.create(contractData, user, another, templateId)
   }
 
   @Get()
@@ -40,8 +39,8 @@ export class ContractsController {
   }
 
   @Patch()
-  update(@Body() updateContractDto: UpdateContractDto) {
-    return this.contractsService.update(updateContractDto)
+  update(@Body() updateContractDto: UpdateContractDto, @User() user: IUser) {
+    return this.contractsService.update(updateContractDto, user)
   }
 
   @Delete(':id')

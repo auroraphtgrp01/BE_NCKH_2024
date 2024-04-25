@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer'
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDate,
   IsEmail,
   IsNotEmpty,
@@ -16,9 +17,12 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
+import { TypeContractAttributeValue } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { CreateContractAttributeDto } from 'src/contract-attributes/dto/create-contract-attribute.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
+import { DataCreateContractAttributeDto } from 'src/template-contracts/dto/create-template-contract.dto'
 
 export class GasPriceDto {
   @IsNumberString()
@@ -71,13 +75,41 @@ export class CreateContractDto {
   agreements: string[]
 }
 
+export class DataUpdateContractAttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly idArea: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+
+  @ValidateIf((object) => object.type === TypeContractAttributeValue.CONTRACT_ATTRIBUTE)
+  @IsString()
+  @IsNotEmpty()
+  readonly valueAttribute?: string
+
+  @IsBoolean()
+  readonly isCreated: boolean
+}
+
 export class AnotherDto {
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => ContractAttributeValuesDto)
-  contractAttributeValues?: ContractAttributeValuesDto[]
+  @Type(() => DataUpdateContractAttributeDto)
+  contractAttributes?: DataUpdateContractAttributeDto[]
 
   @IsOptional()
   @IsArray()
@@ -97,20 +129,4 @@ export class InvitationsDto {
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
   messages: string
-}
-
-export class ContractAttributeValuesDto {
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  id: string
-
-  @IsString()
-  @IsNotEmpty()
-  value: string
-
-  @IsOptional()
-  @IsString({ message: RESPONSE_MESSAGES.DESCRIPTION_MUST_BE_A_STRING })
-  @MaxLength(100, { message: RESPONSE_MESSAGES.DESCRIPTION_LENGTH })
-  description: string
 }

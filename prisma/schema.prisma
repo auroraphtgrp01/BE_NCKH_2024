@@ -50,36 +50,36 @@ model User {
 }
 
 model Contract {
-  id                     String                   @id @unique @default(uuid()) @db.Uuid
-  contractTitle          String
-  addressWallet          String
-  contractAddress        String?
-  blockAddress           String?
-  gasPrices              Json[]                   @db.Json
-  ContractAttributeValue ContractAttributeValue[]
-  startDate              DateTime
-  endDate                DateTime?
-  executeDate            DateTime?
-  agreements             String[]
-  status                 contractStatus           @default(PENDING)
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime?                @updatedAt
-  createdBy              Json?
-  updatedBy              Json?
-  deletedAt              DateTime?
-  deletedBy              Json?
+  id                String              @id @unique @default(uuid()) @db.Uuid
+  contractTitle     String
+  addressWallet     String
+  contractAddress   String?
+  blockAddress      String?
+  gasPrices         Json[]              @db.Json
+  startDate         DateTime
+  endDate           DateTime?
+  executeDate       DateTime?
+  agreements        String[]
+  status            contractStatus      @default(PENDING)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  createdBy         Json?
+  updatedBy         Json?
+  deletedAt         DateTime?
+  deletedBy         Json?
+  ContractAttribute ContractAttribute[]
 }
 
 model TemplateContract {
-  id                     String                   @id @unique @default(uuid()) @db.Uuid
-  contractTitle          String
-  ContractAttributeValue ContractAttributeValue[]
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime?                @updatedAt
-  createdBy              Json?
-  updatedBy              Json?
-  deletedAt              DateTime?
-  deletedBy              Json?
+  id                String              @id @unique @default(uuid()) @db.Uuid
+  contractTitle     String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  createdBy         Json?
+  updatedBy         Json?
+  deletedAt         DateTime?
+  deletedBy         Json?
+  ContractAttribute ContractAttribute[]
 }
 
 model Invitation {
@@ -111,35 +111,34 @@ enum contractStatus {
 }
 
 model ContractAttribute {
-  id                     String                   @id @unique @default(uuid()) @db.Uuid
-  name                   String                   @unique
-  description            String?
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime?                @updatedAt
+  id                     String                  @id @unique @default(uuid()) @db.Uuid
+  name                   String
+  idArea                 String
+  type                   String
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime?               @updatedAt
   createdBy              Json?
   updatedBy              Json?
   deletedAt              DateTime?
   deletedBy              Json?
-  ContractAttributeValue ContractAttributeValue[]
+  Contract               Contract?               @relation(fields: [contractId], references: [id])
+  contractId             String?                 @db.Uuid
+  TemplateContract       TemplateContract?       @relation(fields: [templateContractId], references: [id])
+  templateContractId     String?                 @db.Uuid
+  ContractAttributeValue ContractAttributeValue?
 }
 
 model ContractAttributeValue {
   id                  String            @id @unique @default(uuid()) @db.Uuid
-  ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
-  contractAttributeId String            @db.Uuid
-  Contract            Contract?         @relation(fields: [contractId], references: [id])
-  contractId          String?           @db.Uuid
   value               String
-  idArea              String
-  type                String
   createdAt           DateTime          @default(now())
   updatedAt           DateTime?         @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
-  TemplateContract    TemplateContract? @relation(fields: [templateContractId], references: [id])
-  templateContractId  String?           @db.Uuid
+  ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
+  contractAttributeId String            @unique @db.Uuid
 }
 
 model Role {

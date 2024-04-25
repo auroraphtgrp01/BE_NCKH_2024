@@ -58,5 +58,8 @@ export const RESPONSE_MESSAGES = {
   CONTRACT_TITLE_MUST_BE_STRING: 'Contract title must be a string',
   EMAIL_TO_MUST_BE_A_STRING: 'Email to must be a string',
   EMAIL_TO_IS_INVALID: 'Email to is invalid',
-  ONE_OF_THE_EMAILS_SENT_TO_DID_NOT_HAVE_AN_ACCOUNT: 'One of the emails sent did not have an account'
+  ONE_OF_THE_EMAILS_SENT_TO_DID_NOT_HAVE_AN_ACCOUNT: 'One of the emails sent did not have an account',
+  TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID: 'Type contract attribute is not valid',
+  CONTRACT_ATTRIBUTE_NOT_FOUND: 'Contract attribute not found',
+  CONTRACT_NOT_FOUND: 'Contract not found'
 }

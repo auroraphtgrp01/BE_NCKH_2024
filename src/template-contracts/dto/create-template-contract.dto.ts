@@ -7,24 +7,31 @@ import {
   IsString,
   IsUUID,
   MaxLength,
+  Validate,
+  ValidateIf,
   ValidateNested
 } from 'class-validator'
+import { TypeContractAttributeValue } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
-export class ContractAttributeValuesDto {
+export class DataCreateContractAttributeDto {
   @IsString()
   @IsNotEmpty()
-  value: string
+  readonly name: string
 
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  contractAttributeId: string
+  readonly idArea: string
 
-  @IsOptional()
-  @IsString({ message: RESPONSE_MESSAGES.DESCRIPTION_MUST_BE_A_STRING })
-  @MaxLength(100, { message: RESPONSE_MESSAGES.DESCRIPTION_LENGTH })
-  description: string
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+
+  @ValidateIf((object) => object.type === TypeContractAttributeValue.CONTRACT_ATTRIBUTE)
+  @IsString()
+  @IsNotEmpty()
+  readonly valueAttribute?: string
 }
 
 export class CreateTemplateContractDto {
@@ -36,6 +43,6 @@ export class CreateTemplateContractDto {
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => ContractAttributeValuesDto)
-  contractAttributeValues: ContractAttributeValuesDto[]
+  @Type(() => DataCreateContractAttributeDto)
+  contractAttributes: DataCreateContractAttributeDto[]
 }

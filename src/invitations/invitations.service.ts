@@ -36,12 +36,7 @@ export class InvitationsService {
     return invitationRecord
   }
 
-  async testError() {
-    throw new NotFoundException({ message: 'Test error' })
-  }
-
   async sendInvitation(createInvitationDto: CreateInvitationDto[], _user: IUser) {
-    this.testError()
     createInvitationDto.map(async (invitation: CreateInvitationDto) => {
       const user = await this.usersService.findOne(invitation.addressWalletSender)
       if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
