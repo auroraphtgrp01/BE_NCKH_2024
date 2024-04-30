@@ -5,6 +5,7 @@ import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
 import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
+import { CommonService } from 'src/commons/common.service'
 
 @Controller('contract-attributes')
 export class ContractAttributesController {

@@ -1,18 +1,62 @@
-import { IsEmail, IsNotEmpty, IsString, Length, MinLength } from 'class-validator'
+import { Type } from 'class-transformer'
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEmail,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsString,
+  Length,
+  MaxLength,
+  MinLength,
+  ValidateNested
+} from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { PermissionDto } from 'src/contracts/dto/create-contract.dto'
 
 export class CreateInvitationDto {
-  @IsNotEmpty({ message: RESPONSE_MESSAGES.PARTY_SENDER_HAS_TO_BE_INDENTIFIED })
-  @IsString({ message: RESPONSE_MESSAGES.ID_MUST_BE_A_STRING })
-  @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID })
-  idUserSender: string
-
-  @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
-  @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })
-  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
+  @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
+  @IsNotEmpty()
+  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
   email: string
 
+  @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  message: string
+  messages: string
+
+  @IsObject()
+  permission: PermissionDto
+
+  @IsString()
+  @IsNotEmpty()
+  contractName: string
+}
+
+export class InvitationDto {
+  @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
+  @IsNotEmpty()
+  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
+  email: string
+
+  @IsOptional()
+  @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
+  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
+  messages: string
+
+  @IsObject()
+  permission: PermissionDto
+}
+
+export class SendInvitationsDto {
+  @IsString()
+  @IsNotEmpty()
+  contractName: string
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => InvitationDto)
+  invitation: InvitationDto[]
 }

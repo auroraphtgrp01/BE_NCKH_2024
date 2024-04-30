@@ -15,7 +15,7 @@ import { isNumeric } from 'src/decorators/is-nummeric.decorator'
 @Injectable()
 export class UsersService {
   constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
-  async create(createUserDto: any, user?: IUser) {
+  async create(createUserDto: CreateUserDto, user?: IUser) {
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [

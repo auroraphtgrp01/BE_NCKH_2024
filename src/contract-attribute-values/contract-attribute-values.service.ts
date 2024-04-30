@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContractAttributeValueDto } from './dto/create-contract-attribute-value.dto'
 import { UpdateContractAttributeValueDto } from './dto/update-contract-attribute-value.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -7,48 +7,58 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
-import { CommonService } from 'src/common.service'
 
 @Injectable()
 export class ContractAttributeValuesService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private contractAttributesService: ContractAttributesService,
-    private commonService: CommonService
+    private contractAttributeService: ContractAttributesService
   ) {}
-  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser, isEmpty?: boolean) {
-    const { contractId, contractAttributeId, value, description } = createContractAttributeValueDto
-    if ((await this.contractAttributesService.findOneById(contractAttributeId)) === null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
-    if ((await this.commonService.findOneContractById(contractId)) === null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
-    if (!isEmpty && (value === null || value === undefined || value === ''))
-      throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
-
+  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
+    const { contractAttributeId, value } = createContractAttributeValueDto
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-
-    return await this.prismaService.client.contractAttributeValue.create({
+    if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
+      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
       data: {
-        value: value,
-        description: description ? description : null,
+        value,
+        ContractAttribute: { connect: { id: contractAttributeId } },
         createdBy,
-        updatedAt: null,
-        contractAttribute: { connect: { id: contractAttributeId } },
-        contract: { connect: { id: contractId } }
+        updatedAt: null
       }
     })
+    return contractAttributeValue
   }
 
   findAll() {
     return `This action returns all contractAttributeValues`
   }
 
+  async findOneById(id: string) {
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.findUnique({
+      where: { id: id },
+      include: {
+        ContractAttribute: true
+      }
+    })
+    return contractAttributeValue
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} contractAttributeValue`
   }
 
-  update(id: number, updateContractAttributeValueDto: UpdateContractAttributeValueDto) {
-    return `This action updates a #${id} contractAttributeValue`
+  async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user) {
+    const { id, ...data } = updateContractAttributeValueDto
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.update({
+      where: { id },
+      data: {
+        ...data,
+        updatedBy
+      }
+    })
+    return contractAttributeValue
   }
 
   remove(id: number) {
