@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { APP_FILTER, HttpAdapterHost } from '@nestjs/core'
@@ -15,6 +15,7 @@ import { QueueRedisModule } from './queues/queue-redis.module'
 import { ContractAttributesModule } from './contract-attributes/contract-attributes.module'
 import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module'
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
+import { CommonModule } from './commons/common.module'
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { TemplateContractsModule } from './template-contracts/template-contracts
     QueueRedisModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
-    TemplateContractsModule
+    TemplateContractsModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [

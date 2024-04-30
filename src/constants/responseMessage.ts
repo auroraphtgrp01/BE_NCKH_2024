@@ -61,5 +61,7 @@ export const RESPONSE_MESSAGES = {
   ONE_OF_THE_EMAILS_SENT_TO_DID_NOT_HAVE_AN_ACCOUNT: 'One of the emails sent did not have an account',
   TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID: 'Type contract attribute is not valid',
   CONTRACT_ATTRIBUTE_NOT_FOUND: 'Contract attribute not found',
-  CONTRACT_NOT_FOUND: 'Contract not found'
+  CONTRACT_NOT_FOUND: 'Contract not found',
+  THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED: 'The contract or contract template is undefined',
+  CONTRACT_ATTRIBUTE_DUPLICATE: 'The titles duplicate'
 }

@@ -1,31 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
-import { AnotherDto, CreateContractDto } from './dto/create-contract.dto'
+import { CreateContractDto } from './dto/create-contract.dto'
 import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
-import { CommonService } from 'src/common.service'
+import { CommonService } from 'src/commons/common.service'
 @Controller('contracts')
 export class ContractsController {
   constructor(
     private readonly contractsService: ContractsService,
-    private readonly commonService: CommonService
+    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService
   ) {}
 
-  @Post('send-invitation')
-  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @User() user: IUser) {
-    // return await this.contractsService.sendInvitation(sendInvitationDto, user)
-  }
-
   @Post()
-  async create(
-    @Body('contractData') contractData: CreateContractDto,
-    @User() user: IUser,
-    @Body('another') another: AnotherDto,
-    @Body('templateId') templateId?: string
-  ) {
-    return await this.contractsService.create(contractData, user, another, templateId)
+  async create(@Body('payload') createContractDto: CreateContractDto, @User() user: IUser) {
+    return await this.contractsService.create(createContractDto, user)
   }
 
   @Get()
@@ -35,7 +25,7 @@ export class ContractsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commonService.findOneContractById(id)
+    return this.contractsService.findOneById(id)
   }
 
   @Patch()

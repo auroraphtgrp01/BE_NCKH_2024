@@ -1,21 +1,25 @@
 import { IExecutor } from './executor.interface'
 
-export interface ICreateContractAttribute {
-  name: string
-  idArea: string
+export interface ICreateContractAttributeRecord {
+  value: string
   type: string
   Contract?: any
   TemplateContract?: any
-  createdBy: IExecutor
 }
 
 export interface IContractAttributeResponse {
-  property: string
-  value: {
-    id: string
-    idArea: string
-    valueAttribute: string
-    type: string
-  }
+  id: string
+  property?: string
+  value: string
+  type: string
   isCreated: boolean
+  createdBy: IExecutor
+  updatedBy?: IExecutor
+}
+
+export interface IDataContractAttribute {
+  value: string
+  type: string
+  contractId?: string
+  templateContractId?: string
 }

@@ -10,9 +10,6 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 -- CreateEnum
 CREATE TYPE "contractStatus" AS ENUM ('PENDING', 'DEPLOYED', 'PROCESSING', 'CANCELED', 'COMPLETED', 'LATED', 'VIOLATED');
 
--- CreateEnum
-CREATE TYPE "DeployingStatus" AS ENUM ('PENDING', 'DEPLOYED', 'PROCESSING', 'FAILED');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
@@ -28,7 +25,7 @@ CREATE TABLE "User" (
     "forgotPasswordToken" TEXT,
     "refreshToken" TEXT,
     "userStatus" "UserStatus" DEFAULT 'UNVERIFIED',
-    "roleId" UUID,
+    "roleId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -40,6 +37,21 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "Participant" (
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+    "permission" JSONB NOT NULL,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "createdBy" JSONB,
+    "updatedBy" JSONB,
+    "deletedAt" TIMESTAMP(3),
+    "deletedBy" JSONB,
+
+    CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Contract" (
     "id" UUID NOT NULL,
     "contractTitle" TEXT NOT NULL,
@@ -47,7 +59,7 @@ CREATE TABLE "Contract" (
     "contractAddress" TEXT,
     "blockAddress" TEXT,
     "gasPrices" JSON[],
-    "startDate" TIMESTAMP(3) NOT NULL,
+    "startDate" TIMESTAMP(3),
     "endDate" TIMESTAMP(3),
     "executeDate" TIMESTAMP(3),
     "agreements" TEXT[],
@@ -65,7 +77,8 @@ CREATE TABLE "Contract" (
 -- CreateTable
 CREATE TABLE "TemplateContract" (
     "id" UUID NOT NULL,
-    "contractTitle" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -87,6 +100,7 @@ CREATE TABLE "Invitation" (
     "contractName" TEXT NOT NULL,
     "link" TEXT NOT NULL,
     "receiver" TEXT NOT NULL,
+    "permission" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -100,8 +114,7 @@ CREATE TABLE "Invitation" (
 -- CreateTable
 CREATE TABLE "ContractAttribute" (
     "id" UUID NOT NULL,
-    "name" TEXT NOT NULL,
-    "idArea" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -179,29 +192,31 @@ CREATE TABLE "IncludePermission" (
 );
 
 -- CreateTable
-CREATE TABLE "PaymentMethod" (
+CREATE TABLE "Suppliers" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
-    "idBankId" UUID,
-    "idCryptoId" UUID,
-    "description" TEXT,
+    "taxCode" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "userId" UUID NOT NULL,
 
-    CONSTRAINT "PaymentMethod_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Suppliers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Banking" (
+CREATE TABLE "Products" (
     "id" UUID NOT NULL,
-    "accountName" TEXT NOT NULL,
-    "accountNo" TEXT NOT NULL,
-    "bankName" TEXT NOT NULL,
-    "description" TEXT,
+    "name" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "description" TEXT NOT NULL,
+    "suppliersId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -209,38 +224,23 @@ CREATE TABLE "Banking" (
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
-    CONSTRAINT "Banking_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Products_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Crypto" (
+CREATE TABLE "Images" (
     "id" UUID NOT NULL,
-    "addressWallet" TEXT NOT NULL,
-    "chainName" TEXT NOT NULL,
-    "description" TEXT,
+    "path" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "suppliersId" UUID,
+    "productsId" UUID,
 
-    CONSTRAINT "Crypto_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "DeployStatus" (
-    "id" UUID NOT NULL,
-    "status" "DeployingStatus" NOT NULL,
-    "description" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "createdBy" JSONB,
-    "updatedBy" JSONB,
-    "deletedAt" TIMESTAMP(3),
-    "deletedBy" JSONB,
-
-    CONSTRAINT "DeployStatus_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Images_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -259,6 +259,12 @@ CREATE UNIQUE INDEX "User_addressWallet_key" ON "User"("addressWallet");
 CREATE UNIQUE INDEX "User_roleId_key" ON "User"("roleId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Participant_id_key" ON "Participant"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Participant_userId_key" ON "Participant"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Contract_id_key" ON "Contract"("id");
 
 -- CreateIndex
@@ -269,9 +275,6 @@ CREATE UNIQUE INDEX "Invitation_id_key" ON "Invitation"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ContractAttribute_id_key" ON "ContractAttribute"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ContractAttribute_name_key" ON "ContractAttribute"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ContractAttributeValue_id_key" ON "ContractAttributeValue"("id");
@@ -295,25 +298,28 @@ CREATE UNIQUE INDEX "IncludePermission_roleId_key" ON "IncludePermission"("roleI
 CREATE UNIQUE INDEX "IncludePermission_permissionId_key" ON "IncludePermission"("permissionId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PaymentMethod_id_key" ON "PaymentMethod"("id");
+CREATE UNIQUE INDEX "Suppliers_id_key" ON "Suppliers"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PaymentMethod_idBankId_key" ON "PaymentMethod"("idBankId");
+CREATE UNIQUE INDEX "Suppliers_taxCode_key" ON "Suppliers"("taxCode");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PaymentMethod_idCryptoId_key" ON "PaymentMethod"("idCryptoId");
+CREATE UNIQUE INDEX "Suppliers_email_key" ON "Suppliers"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Banking_id_key" ON "Banking"("id");
+CREATE UNIQUE INDEX "Suppliers_phoneNumber_key" ON "Suppliers"("phoneNumber");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Crypto_id_key" ON "Crypto"("id");
+CREATE UNIQUE INDEX "Products_id_key" ON "Products"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "DeployStatus_id_key" ON "DeployStatus"("id");
+CREATE UNIQUE INDEX "Images_id_key" ON "Images"("id");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -331,7 +337,13 @@ ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_roleId_fkey" F
 ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PaymentMethod" ADD CONSTRAINT "PaymentMethod_idBankId_fkey" FOREIGN KEY ("idBankId") REFERENCES "Banking"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Suppliers" ADD CONSTRAINT "Suppliers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PaymentMethod" ADD CONSTRAINT "PaymentMethod_idCryptoId_fkey" FOREIGN KEY ("idCryptoId") REFERENCES "Crypto"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Products" ADD CONSTRAINT "Products_suppliersId_fkey" FOREIGN KEY ("suppliersId") REFERENCES "Suppliers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Images" ADD CONSTRAINT "Images_suppliersId_fkey" FOREIGN KEY ("suppliersId") REFERENCES "Suppliers"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Images" ADD CONSTRAINT "Images_productsId_fkey" FOREIGN KEY ("productsId") REFERENCES "Products"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -13,7 +13,7 @@ export interface IContractAttributeValueResponse {
   value: string
 }
 
-export interface IContractResponse {
+export interface ICreateContractResponse {
   contract: Contract
-  contractAttributes?: IContractAttributeResponse[]
+  contractAttributes: IContractAttributeResponse[]
 }

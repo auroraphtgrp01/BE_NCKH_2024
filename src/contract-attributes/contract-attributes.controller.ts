@@ -5,14 +5,11 @@ import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
 import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
-import { CommonService } from 'src/common.service'
+import { CommonService } from 'src/commons/common.service'
 
 @Controller('contract-attributes')
 export class ContractAttributesController {
-  constructor(
-    private readonly contractAttributesService: ContractAttributesService,
-    private readonly commonService: CommonService
-  ) {}
+  constructor(private readonly contractAttributesService: ContractAttributesService) {}
 
   @Post()
   create(@Body() createContractAttributeDto: CreateContractAttributeDto, @User() user: IUser) {
@@ -26,7 +23,7 @@ export class ContractAttributesController {
 
   @Get('/find-one-by-id/:id')
   findOneById(@Param('id') id: string) {
-    return this.commonService.findOneContractAttributeById(id)
+    return this.contractAttributesService.findOneById(id)
   }
 
   @Get(':payload')

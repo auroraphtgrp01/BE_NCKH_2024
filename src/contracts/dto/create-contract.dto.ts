@@ -7,6 +7,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumberString,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
@@ -17,12 +18,45 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { TypeContractAttributeValue } from 'src/constants/enum.constant'
+import { TypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
-import { CreateContractAttributeDto } from 'src/contract-attributes/dto/create-contract-attribute.dto'
-import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
-import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
-import { DataCreateContractAttributeDto } from 'src/template-contracts/dto/create-template-contract.dto'
+
+export class TemplateContractDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string
+
+  @IsString()
+  @IsNotEmpty()
+  img: string
+
+  @IsString()
+  @IsNotEmpty()
+  name: string
+}
+
+export class PermissionDto {
+  @IsNotEmpty()
+  @IsBoolean()
+  CHANGE_STATUS_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  EDIT_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  INVITE_PARTICIPANT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  READ_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  SET_OWNER_PARTY: boolean
+}
 
 export class GasPriceDto {
   @IsNumberString()
@@ -36,43 +70,43 @@ export class GasPriceDto {
   reason: string
 }
 
-export class CreateContractDto {
+export class CreateEmptyContractDto {
   @IsOptional()
   @IsString()
-  id: string
+  @IsNotEmpty()
+  @IsUUID()
+  id?: string
 
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   addressWallet: string
 
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
+  @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle: string
+  name: string
+}
 
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() => Date)
-  startDate: Date
+export class CreateContractDto {
+  @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  addressWallet: string
 
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @IsAfterDate('startDate')
-  @IsBeforeDate('endDate')
-  @Type(() => Date)
-  executeDate: Date
+  @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
+  @IsNotEmpty()
+  @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
+  name: string
 
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @IsAfterDate('executeDate')
-  @Type(() => Date)
-  endDate: Date
-
-  @ValidateIf((object) => object.id !== undefined)
   @IsArray()
-  @IsString({ each: true })
   @ArrayMinSize(1)
-  agreements: string[]
+  @ValidateNested({ each: true })
+  @Type(() => InvitationsDto)
+  invitation: InvitationsDto[]
+
+  @IsOptional()
+  @IsObject()
+  @Type(() => TemplateContractDto)
+  template: TemplateContractDto
 }
 
 export class DataUpdateContractAttributeDto {
@@ -94,7 +128,7 @@ export class DataUpdateContractAttributeDto {
   @IsNotEmpty()
   readonly type: string
 
-  @ValidateIf((object) => object.type === TypeContractAttributeValue.CONTRACT_ATTRIBUTE)
+  @ValidateIf((object) => object.type === TypeContractAttribute.CONTRACT_ATTRIBUTE)
   @IsString()
   @IsNotEmpty()
   readonly valueAttribute?: string
@@ -103,30 +137,19 @@ export class DataUpdateContractAttributeDto {
   readonly isCreated: boolean
 }
 
-export class AnotherDto {
-  @IsOptional()
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => DataUpdateContractAttributeDto)
-  contractAttributes?: DataUpdateContractAttributeDto[]
-
-  @IsOptional()
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => InvitationsDto)
-  invitations: InvitationsDto[]
-}
-
 export class InvitationsDto {
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
   @IsNotEmpty()
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
-  to: string
+  email: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
   messages: string
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PermissionDto)
+  permission: PermissionDto
 }

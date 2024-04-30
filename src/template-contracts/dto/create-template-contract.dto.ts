@@ -2,6 +2,7 @@ import { Type } from 'class-transformer'
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -11,38 +12,40 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { TypeContractAttributeValue } from 'src/constants/enum.constant'
+import { TypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
-export class DataCreateContractAttributeDto {
+export class CreateContractAttributeDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  readonly name: string
+  readonly property: string
 
   @IsString()
   @IsNotEmpty()
-  @IsUUID()
-  readonly idArea: string
+  readonly value: string
 
   @IsString()
   @IsNotEmpty()
   readonly type: string
 
-  @ValidateIf((object) => object.type === TypeContractAttributeValue.CONTRACT_ATTRIBUTE)
-  @IsString()
-  @IsNotEmpty()
-  readonly valueAttribute?: string
+  @IsOptional()
+  @IsBoolean()
+  readonly isCreate?: boolean
 }
 
 export class CreateTemplateContractDto {
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_TITLE_MUST_BE_STRING })
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle: string
+  name: string
+
+  @IsString()
+  @IsNotEmpty()
+  path: string
 
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => DataCreateContractAttributeDto)
-  contractAttributes: DataCreateContractAttributeDto[]
+  @Type(() => CreateContractAttributeDto)
+  contractAttributes: CreateContractAttributeDto[]
 }

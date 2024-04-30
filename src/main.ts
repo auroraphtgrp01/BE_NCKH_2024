@@ -29,7 +29,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalInterceptors(new ErrorHandlingInterceptor())
   const reflector = app.get(Reflector)
-  app.useGlobalGuards(new JwtAuthGuard(reflector))
+  // app.useGlobalGuards(new JwtAuthGuard(reflector))
   app.use(cookieParser())
   const config = new DocumentBuilder()
     .setTitle('NCKH_2024 APIs Documentation')

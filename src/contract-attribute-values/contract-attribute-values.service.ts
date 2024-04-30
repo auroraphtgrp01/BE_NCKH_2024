@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContractAttributeValueDto } from './dto/create-contract-attribute-value.dto'
 import { UpdateContractAttributeValueDto } from './dto/update-contract-attribute-value.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -7,25 +7,25 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
-import { CommonService } from 'src/common.service'
-import { ICreateContractAttributeValue } from 'src/interfaces/contract-attribute-value.interface'
 
 @Injectable()
 export class ContractAttributeValuesService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private commonService: CommonService
+    private contractAttributeService: ContractAttributesService
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
     const { contractAttributeId, value } = createContractAttributeValueDto
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-    if (!(await this.commonService.findOneContractAttributeById(contractAttributeId)))
+    // const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = null
+    if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
       data: {
         value,
         ContractAttribute: { connect: { id: contractAttributeId } },
-        createdBy
+        createdBy,
+        updatedAt: null
       }
     })
     return contractAttributeValue
