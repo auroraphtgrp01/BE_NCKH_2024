@@ -41,9 +41,6 @@ export class InvitationsService {
       (invitation) => invitation.email !== _user.email
     )
     invitations.map(async (invitation: InvitationDto) => {
-      if (!(await this.usersService.findOne(invitation.email)))
-        throw new NotFoundException({ message: `User with email ${invitation.email} does not exists` })
-
       const invitationRecord = await this.create(
         { ...invitation, contractName: createInvitationDto.contractName },
         _user
