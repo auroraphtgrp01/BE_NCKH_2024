@@ -47,7 +47,6 @@ export class ContractsService {
     const { invitation, template, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-    const contractId = this.commonService.uuidv4()
     let contractAttributes: any[] = []
 
     const [contractRecord] = await Promise.all([
@@ -85,7 +84,6 @@ export class ContractsService {
           })
           return newContractAttributes
         })
-      console.log(contractAttributes)
 
       const [contractAttributeRecords] = await Promise.all([
         this.commonService.createContractAttributes({ contractAttributes, contractId: contractRecord.id }, user)
