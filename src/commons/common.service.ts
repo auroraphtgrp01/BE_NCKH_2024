@@ -2,7 +2,6 @@ import { BadRequestException, Inject, Injectable, NotFoundException, forwardRef 
 import * as crypto from 'crypto'
 import { IUser } from '../users/interfaces/IUser.interface'
 import { ContractAttributesService } from '../contract-attributes/contract-attributes.service'
-import { TypeContractAttribute } from '../constants/enum.constant'
 import { RESPONSE_MESSAGES } from '../constants/responseMessage'
 import { ContractAttributeValuesService } from '../contract-attribute-values/contract-attribute-values.service'
 import {
@@ -14,6 +13,7 @@ import { CreateContractAttributeCommonDto } from './dto/create-contract-attribut
 import { ContractsService } from 'src/contracts/contracts.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 @Injectable()
 export class CommonService {
@@ -31,7 +31,7 @@ export class CommonService {
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
 
     for (const contractAttribute of contractAttributes) {
-      if (!Object.values(TypeContractAttribute).includes(contractAttribute.type as TypeContractAttribute)) {
+      if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
       }
 
@@ -53,14 +53,14 @@ export class CommonService {
       }
 
       if (
-        contractAttribute.type === TypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractAttribute.type === TypeContractAttribute.CONTRACT_SIGNATURE
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE
       ) {
         data.value = contractAttribute.property
         const hasHeading = contractAttributeRecords.some(
           (record) =>
-            record.type === TypeContractAttribute.CONTRACT_HEADING_1 ||
-            record.type === TypeContractAttribute.CONTRACT_HEADING_2
+            record.type === ETypeContractAttribute.CONTRACT_HEADING_1 ||
+            record.type === ETypeContractAttribute.CONTRACT_HEADING_2
         )
 
         if (!hasHeading) {
@@ -82,7 +82,6 @@ export class CommonService {
           property: contractAttributeRecord.value,
           value: contractAttributeValueRecord.value,
           type: contractAttributeRecord.type,
-          isCreated: true,
           createdBy
         }
 

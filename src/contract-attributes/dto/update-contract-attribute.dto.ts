@@ -1,4 +1,18 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateContractAttributeDto } from './create-contract-attribute.dto';
+import { PartialType } from '@nestjs/mapped-types'
+import { CreateContractAttributeDto } from './create-contract-attribute.dto'
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
 
-export class UpdateContractAttributeDto extends PartialType(CreateContractAttributeDto) {}
+export class UpdateContractAttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id: string
+
+  @IsOptional()
+  @IsString()
+  readonly value?: string
+
+  @IsOptional()
+  @IsString()
+  readonly type?: string
+}

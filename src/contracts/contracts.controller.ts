@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
 import { CreateContractDto } from './dto/create-contract.dto'
-import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
 import { UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
@@ -16,6 +15,11 @@ export class ContractsController {
   @Post()
   async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
     return await this.contractsService.create(createContractDto, user)
+  }
+
+  @Get('get-contract-details/:contractId')
+  async getContractDetailsById(@Param('contractId') contractId: string) {
+    return await this.contractsService.getContractDetailsById(contractId)
   }
 
   @Get()

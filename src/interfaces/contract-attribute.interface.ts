@@ -12,14 +12,15 @@ export interface IContractAttributeResponse {
   property?: string
   value: string
   type: string
-  isCreated: boolean
-  createdBy: IExecutor
-  updatedBy?: IExecutor
+  createdBy: any
+  updatedBy?: any
 }
 
 export interface IDataContractAttribute {
+  id?: string
   value: string
   type: string
+  property?: string
   contractId?: string
   templateContractId?: string
 }

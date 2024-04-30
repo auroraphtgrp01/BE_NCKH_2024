@@ -6,13 +6,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
   MaxLength,
-  Validate,
-  ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { TypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 export class CreateContractAttributeDto {
@@ -27,10 +23,6 @@ export class CreateContractAttributeDto {
   @IsString()
   @IsNotEmpty()
   readonly type: string
-
-  @IsOptional()
-  @IsBoolean()
-  readonly isCreate?: boolean
 }
 
 export class CreateTemplateContractDto {

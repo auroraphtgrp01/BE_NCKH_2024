@@ -10,7 +10,7 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { TypeContractAttribute } from 'src/constants/enum.constant'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 export class CreateContractAttributesDto {
   @IsString()
@@ -23,8 +23,8 @@ export class CreateContractAttributesDto {
 
   @ValidateIf(
     (object) =>
-      object.type === TypeContractAttribute.CONTRACT_ATTRIBUTE ||
-      object.type === TypeContractAttribute.CONTRACT_SIGNATURE
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+      object.type === ETypeContractAttribute.CONTRACT_SIGNATURE
   )
   @IsString()
   @IsNotEmpty()

@@ -2,7 +2,7 @@
 CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BLOCKED', 'UNVERIFIED');
 
 -- CreateEnum
-CREATE TYPE "InvitationStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
+CREATE TYPE "ParticipantStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REFUSED');
 
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
@@ -39,8 +39,11 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Participant" (
     "id" UUID NOT NULL,
-    "userId" UUID NOT NULL,
+    "userId" UUID,
+    "email" TEXT NOT NULL,
     "permission" JSONB NOT NULL,
+    "contractId" UUID NOT NULL,
+    "status" "ParticipantStatus" NOT NULL DEFAULT 'PENDING',
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -87,28 +90,6 @@ CREATE TABLE "TemplateContract" (
     "deletedBy" JSONB,
 
     CONSTRAINT "TemplateContract_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Invitation" (
-    "id" UUID NOT NULL,
-    "addressWalletSender" TEXT NOT NULL,
-    "to" TEXT NOT NULL,
-    "from" TEXT NOT NULL,
-    "messages" TEXT,
-    "status" "InvitationStatus" NOT NULL DEFAULT 'PENDING',
-    "contractName" TEXT NOT NULL,
-    "link" TEXT NOT NULL,
-    "receiver" TEXT NOT NULL,
-    "permission" JSONB NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "createdBy" JSONB,
-    "updatedBy" JSONB,
-    "deletedAt" TIMESTAMP(3),
-    "deletedBy" JSONB,
-
-    CONSTRAINT "Invitation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -271,9 +252,6 @@ CREATE UNIQUE INDEX "Contract_id_key" ON "Contract"("id");
 CREATE UNIQUE INDEX "TemplateContract_id_key" ON "TemplateContract"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Invitation_id_key" ON "Invitation"("id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "ContractAttribute_id_key" ON "ContractAttribute"("id");
 
 -- CreateIndex
@@ -319,7 +297,10 @@ CREATE UNIQUE INDEX "Images_id_key" ON "Images"("id");
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Participant" ADD CONSTRAINT "Participant_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;

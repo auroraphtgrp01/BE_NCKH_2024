@@ -8,51 +8,40 @@ import {
   IsOptional,
   IsString,
   IsUUID,
-  Length,
-  MaxLength,
   MinLength,
   ValidateNested
 } from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { PermissionDto } from 'src/contracts/dto/create-contract.dto'
 
-export class CreateInvitationDto {
+export class CreateParticipantDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
   readonly contractId: string
 
-  @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
-  @IsNotEmpty()
-  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
-  email: string
-
-  @IsOptional()
-  @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
-  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  messages: string
-
-  @IsObject()
-  permission: PermissionDto
-
   @IsString()
   @IsNotEmpty()
-  contractName: string
+  @IsEmail()
+  email: string
+
+  @IsObject()
+  readonly permission: PermissionDto
 }
 
 export class InvitationDto {
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
   @IsNotEmpty()
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
-  email: string
+  readonly email: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  messages: string
+  readonly messages: string
 
   @IsObject()
-  permission: PermissionDto
+  readonly permission: PermissionDto
 }
 
 export class SendInvitationsDto {
