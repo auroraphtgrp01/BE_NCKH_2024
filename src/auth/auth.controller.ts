@@ -30,7 +30,9 @@ export class AuthController {
 
   @Get(':addressWallet')
   @Public()
-  async handleAddressWallet(@Param('addressWallet') addressWallet: string): Promise<boolean> {
-    return await this.authService.handleAddressWallet(addressWallet)
+  async handleAddressWallet(@Param('addressWallet') addressWallet: string) {
+    return {
+      isExits: await this.authService.handleAddressWallet(addressWallet)
+    }
   }
 }
