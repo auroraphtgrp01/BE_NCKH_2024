@@ -7,6 +7,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinLength,
@@ -16,6 +17,11 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { PermissionDto } from 'src/contracts/dto/create-contract.dto'
 
 export class CreateInvitationDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly contractId: string
+
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
   @IsNotEmpty()
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
@@ -53,6 +59,11 @@ export class SendInvitationsDto {
   @IsString()
   @IsNotEmpty()
   contractName: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly contractId: string
 
   @IsArray()
   @ArrayMinSize(1)

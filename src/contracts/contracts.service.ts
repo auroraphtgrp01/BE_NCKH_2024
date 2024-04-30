@@ -44,24 +44,24 @@ export class ContractsService {
 
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, template, ...contractData } = createContractDto
+    const { invitation, templateId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     let contractAttributes: any[] = []
-
-    const [contractRecord] = await Promise.all([
-      this.createEmptyContract(contractData, user),
-      this.invitationService.sendInvitation({ invitation, contractName: contractData.name }, user)
-    ])
+    const contractRecord = await this.createEmptyContract({ ...contractData }, user)
+    await this.invitationService.sendInvitation(
+      { invitation, contractName: contractData.name, contractId: contractRecord.id },
+      user
+    )
     contractResponse.contract = contractRecord
 
-    if (template) {
-      if (!(await this.templateContractsService.findOneById(template.id)))
+    if (templateId) {
+      if (!(await this.templateContractsService.findOneById(templateId)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
       contractAttributes = await this.prismaService.client.contractAttribute
         .findMany({
           where: {
-            templateContractId: template.id
+            templateContractId: templateId
           }
         })
         .then((contractAttributes) => {
@@ -107,7 +107,7 @@ export class ContractsService {
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    const gasPrice = await updateContractDto.gasPrices.map((gasPrice) => {
+    const gasPrice = updateContractDto.gasPrices.map((gasPrice) => {
       return { ...gasPrice }
     })
     const updatedGasPrices = [...isContractExist.gasPrices, ...gasPrice]

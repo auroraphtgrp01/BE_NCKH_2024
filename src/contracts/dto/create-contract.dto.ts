@@ -104,9 +104,10 @@ export class CreateContractDto {
   invitation: InvitationsDto[]
 
   @IsOptional()
-  @IsObject()
-  @Type(() => TemplateContractDto)
-  template: TemplateContractDto
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly templateId?: string
 }
 
 export class DataUpdateContractAttributeDto {

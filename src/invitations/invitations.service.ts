@@ -8,17 +8,18 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
 import { UsersService } from 'src/users/users.service'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class InvitationsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
     private queueService: QueueRedisService,
-    private usersService: UsersService
+    private readonly configService: ConfigService
   ) {}
 
   async create(createInvitationDto: CreateInvitationDto, _user: IUser) {
-    const { email, ...rest } = createInvitationDto
+    const { email, contractId, ...rest } = createInvitationDto
     const createdBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
     const invitationRecord = await this.prismaService.client.invitation.create({
       data: {
@@ -26,7 +27,7 @@ export class InvitationsService {
         to: email,
         addressWalletSender: _user.addressWallet,
         from: _user.email,
-        link: 'https://send-mail/123354',
+        link: `${this.configService.get<string>('FRONTEND_HOST')}/contract/${contractId}`,
         receiver: _user.name,
         updatedAt: null,
         createdBy
@@ -42,7 +43,7 @@ export class InvitationsService {
     )
     invitations.map(async (invitation: InvitationDto) => {
       const invitationRecord = await this.create(
-        { ...invitation, contractName: createInvitationDto.contractName },
+        { ...invitation, contractName: createInvitationDto.contractName, contractId: createInvitationDto.contractId },
         _user
       )
 
