@@ -28,7 +28,7 @@ export class CommonService {
   async createContractAttributes(createContractAttributeCommonDto: CreateContractAttributeCommonDto, user: IUser) {
     const { templateContractId, contractId, contractAttributes } = createContractAttributeCommonDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
-    const createdBy: IExecutor = null
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
 
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(TypeContractAttribute).includes(contractAttribute.type as TypeContractAttribute)) {
@@ -72,12 +72,11 @@ export class CommonService {
         const contractAttributeRecord = await this.contractAttributeService.create(data, user)
         const contractAttributeValueRecord = await this.contractAttributeValueService.create(
           {
-            value: contractAttribute.value,
+            value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
             contractAttributeId: contractAttributeRecord.id
           },
           user
         )
-
         const result: IContractAttributeResponse = {
           id: contractAttributeRecord.id,
           property: contractAttributeRecord.value,

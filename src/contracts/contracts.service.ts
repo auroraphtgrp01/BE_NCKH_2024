@@ -13,6 +13,8 @@ import { TemplateContractsService } from 'src/template-contracts/template-contra
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse } from 'src/interfaces/contract.interface'
+import { IDataContractAttribute } from 'src/interfaces/contract-attribute.interface'
+import { TypeContractAttribute } from 'src/constants/enum.constant'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -40,36 +42,56 @@ export class ContractsService {
     return contract
   }
 
-  async create(createContractDto: CreateContractDto, user: IUser, templateId?: string) {
+  async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
     const { invitation, template, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const contractId = this.commonService.uuidv4()
-    let contractAttributes: ContractAttribute[] = []
+    let contractAttributes: any[] = []
+
+    const [contractRecord] = await Promise.all([
+      this.createEmptyContract(contractData, user),
+      this.invitationService.sendInvitation({ invitation, contractName: contractData.name }, user)
+    ])
+    contractResponse.contract = contractRecord
+
     if (template) {
       if (!(await this.templateContractsService.findOneById(template.id)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-      contractAttributes = await this.prismaService.client.contractAttribute.findMany({
-        where: {
-          templateContractId: templateId
-        }
-      })
-      await Promise.all([
-        this.createEmptyContract({ ...contractData, id: contractId }, user),
-        this.commonService.createContractAttributes(null, user),
-        this.invitationService.sendInvitation({ invitation, contractName: contractData.name }, user)
-      ]).then(([contract, contractAttributes]) => {
-        contractResponse.contract = contract
-        contractResponse.contractAttributes = contractAttributes
-      })
-    } else
-      await Promise.all([
-        this.createEmptyContract({ ...contractData, id: contractId }, user),
-        this.invitationService.sendInvitation({ invitation, contractName: contractData.name }, user)
-      ]).then(([contract]) => {
-        contractResponse.contract = contract
-      })
+      contractAttributes = await this.prismaService.client.contractAttribute
+        .findMany({
+          where: {
+            templateContractId: template.id
+          }
+        })
+        .then((contractAttributes) => {
+          const newContractAttributes: any[] = []
+          contractAttributes.forEach((contractAttribute) => {
+            if (
+              contractAttribute.type === TypeContractAttribute.CONTRACT_ATTRIBUTE ||
+              contractAttribute.type === TypeContractAttribute.CONTRACT_SIGNATURE
+            )
+              newContractAttributes.push({
+                property: contractAttribute.value,
+                value: 'Empty',
+                type: contractAttribute.type
+              })
+            else
+              newContractAttributes.push({
+                value: contractAttribute.value,
+                type: contractAttribute.type
+              })
+          })
+          return newContractAttributes
+        })
+      console.log(contractAttributes)
+
+      const [contractAttributeRecords] = await Promise.all([
+        this.commonService.createContractAttributes({ contractAttributes, contractId: contractRecord.id }, user)
+      ])
+      contractResponse.contractAttributes = contractAttributeRecords
+    }
     return contractResponse
   }
 

@@ -25,7 +25,7 @@ CREATE TABLE "User" (
     "forgotPasswordToken" TEXT,
     "refreshToken" TEXT,
     "userStatus" "UserStatus" DEFAULT 'UNVERIFIED',
-    "roleId" UUID NOT NULL,
+    "roleId" UUID,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -316,7 +316,7 @@ CREATE UNIQUE INDEX "Products_id_key" ON "Products"("id");
 CREATE UNIQUE INDEX "Images_id_key" ON "Images"("id");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

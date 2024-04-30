@@ -1,5 +1,15 @@
 import { Type } from 'class-transformer'
-import { ArrayMinSize, IsArray, IsNotEmpty, IsString, IsUUID, ValidateIf, ValidateNested } from 'class-validator'
+import {
+  ArrayMinSize,
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  ValidateIf,
+  ValidateNested
+} from 'class-validator'
 import { TypeContractAttribute } from 'src/constants/enum.constant'
 
 export class CreateContractAttributesDto {
@@ -18,7 +28,7 @@ export class CreateContractAttributesDto {
   )
   @IsString()
   @IsNotEmpty()
-  property?: string
+  readonly property?: string
 }
 
 export class CreateContractAttributeCommonDto {
