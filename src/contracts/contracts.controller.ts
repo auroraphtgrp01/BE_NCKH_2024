@@ -14,7 +14,7 @@ export class ContractsController {
   ) {}
 
   @Post()
-  async create(@Body('payload') createContractDto: CreateContractDto, @User() user: IUser) {
+  async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
     return await this.contractsService.create(createContractDto, user)
   }
 

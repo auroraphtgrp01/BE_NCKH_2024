@@ -84,4 +84,10 @@ export class AuthService {
     }
     return null
   }
+
+  async handleAddressWallet(addressWallet: string): Promise<boolean> {
+    const user = await this.usersService.findOneByAddressWallet(addressWallet)
+    if (!user) return false
+    return true
+  }
 }
