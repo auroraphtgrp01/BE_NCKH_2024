@@ -20,7 +20,9 @@ export class ContractsController {
     @User() user: IUser
   ) {
     const { contractId, templateContractId } = createContractAttributesDto
-    return await this.contractsService.createContractAttributes(contractId, templateContractId, user)
+    return {
+      contractAttributes: await this.contractsService.createContractAttributes(contractId, templateContractId, user)
+    }
   }
 
   @Get('get-contract-details/:contractId')
