@@ -48,11 +48,11 @@ export class ContractAttributeValuesService {
     return `This action returns a #${id} contractAttributeValue`
   }
 
-  async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user) {
-    const { id, ...data } = updateContractAttributeValueDto
+  async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user: IUser) {
+    const {  contractAttributeId, ...data } = updateContractAttributeValueDto
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.update({
-      where: { id },
+      where: { contractAttributeId },
       data: {
         ...data,
         updatedBy

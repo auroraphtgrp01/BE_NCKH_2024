@@ -9,13 +9,13 @@ import { SmartContractsModule } from './smart-contracts/smart-contracts.module'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ContractsModule } from './contracts/contracts.module'
-import { InvitationsModule } from './invitations/invitations.module'
 import { BullModule } from '@nestjs/bullmq'
 import { QueueRedisModule } from './queues/queue-redis.module'
 import { ContractAttributesModule } from './contract-attributes/contract-attributes.module'
 import { ContractAttributeValuesModule } from './contract-attribute-values/contract-attribute-values.module'
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
 import { CommonModule } from './commons/common.module'
+import { ParticipantsModule } from './participants/participants.module'
 
 @Module({
   imports: [
@@ -40,12 +40,12 @@ import { CommonModule } from './commons/common.module'
     SmartContractsModule,
     AuthModule,
     ContractsModule,
-    InvitationsModule,
     QueueRedisModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
     TemplateContractsModule,
-    CommonModule
+    CommonModule,
+    ParticipantsModule
   ],
   controllers: [AppController],
   providers: [

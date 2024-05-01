@@ -18,7 +18,7 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { TypeContractAttribute } from 'src/constants/enum.constant'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
 export class TemplateContractDto {
@@ -129,7 +129,7 @@ export class DataUpdateContractAttributeDto {
   @IsNotEmpty()
   readonly type: string
 
-  @ValidateIf((object) => object.type === TypeContractAttribute.CONTRACT_ATTRIBUTE)
+  @ValidateIf((object) => object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE)
   @IsString()
   @IsNotEmpty()
   readonly valueAttribute?: string

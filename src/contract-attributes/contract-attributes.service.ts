@@ -7,6 +7,7 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { IContractAttributeResponse, ICreateContractAttributeRecord } from 'src/interfaces/contract-attribute.interface'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 @Injectable()
 export class ContractAttributesService {
@@ -19,7 +20,6 @@ export class ContractAttributesService {
 
     if (contractId) data.Contract = { connect: { id: contractId } }
     else data.TemplateContract = { connect: { id: templateContractId } }
-    console.log(data)
 
     if (!data.Contract && !data.TemplateContract)
       throw new BadRequestException(RESPONSE_MESSAGES.THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED)
@@ -35,7 +35,6 @@ export class ContractAttributesService {
       id: contractAttribute.id,
       value: contractAttribute.value,
       type: contractAttribute.type,
-      isCreated: true,
       createdBy
     }
 
@@ -44,6 +43,47 @@ export class ContractAttributesService {
 
   findAll() {
     return `This action returns all contractAttributes`
+  }
+
+  async findAllByContractId(contractId: string) {
+    const contractAttributes = await this.prismaService.client.contractAttribute
+      .findMany({
+        where: { contractId },
+        include: { ContractAttributeValue: true },
+        orderBy: {
+          index: 'asc'
+        }
+      })
+      .then((contractAttributes) => {
+        const result: IContractAttributeResponse[] = []
+        for (const contractArribute of contractAttributes) {
+          if (
+            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+          ) {
+            result.push({
+              id: contractArribute.id,
+              property: contractArribute.value,
+              value: contractArribute.ContractAttributeValue.value,
+              type: contractArribute.type,
+              createdBy: contractArribute.createdBy,
+              updatedBy: contractArribute.updatedBy
+            })
+          } else {
+            result.push({
+              id: contractArribute.id,
+              value: contractArribute.value,
+              type: contractArribute.type,
+              createdBy: contractArribute.createdBy,
+              updatedBy: contractArribute.updatedBy
+            })
+          }
+        }
+        return result
+      })
+    return contractAttributes
   }
 
   async findOneById(id: string) {
@@ -57,8 +97,17 @@ export class ContractAttributesService {
     return contractAttribute
   }
 
-  update(id: number, updateContractAttributeDto: UpdateContractAttributeDto) {
-    return `This action updates a #${id} contractAttribute`
+  async update(updateContractAttributeDto: UpdateContractAttributeDto, user: IUser) {
+    const { id, ...data } = updateContractAttributeDto
+    if (id && !(await this.findOneById(id)))
+      throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const contractAttribute = await this.prismaService.client.contractAttribute.update({
+      where: { id },
+      data: { ...data, updatedBy }
+    })
+
+    return contractAttribute
   }
 
   remove(id: number) {

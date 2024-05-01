@@ -1,10 +1,12 @@
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinDate,
@@ -17,9 +19,30 @@ import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
 import { contractStatus } from '@prisma/client'
 
-export class UpdateContractDto {
+export class CreateContractAttributeDto {
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id: string
+
+  @IsOptional()
+  @IsString()
+  readonly property: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly value: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+}
+
+export class UpdateContractDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
   id: string
 
   @IsOptional()
@@ -73,7 +96,23 @@ export class UpdateContractDto {
   @ArrayMinSize(1)
   agreements: string[]
 
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => CreateContractAttributeDto)
+  contractAttributes: CreateContractAttributeDto[]
+
   @IsOptional()
   @IsNotEmpty()
   status?: contractStatus
+}
+
+export class UpdateContractAttributeDto {
+  @IsString()
+  id: string
+  @IsArray()
+  updatedAttributes: any[]
+  @IsOptional()
+  @IsArray()
+  deleteArray: any[]
 }

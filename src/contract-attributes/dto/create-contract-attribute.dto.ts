@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer'
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateIf } from 'class-validator'
-import { TypeContractAttribute } from 'src/constants/enum.constant'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 export class CreateContractAttributeDto {
   @IsString()
@@ -16,6 +16,9 @@ export class CreateContractAttributeDto {
   @IsNotEmpty()
   @IsUUID()
   readonly contractId?: string
+
+  @IsOptional()
+  index?: number
 
   @ValidateIf((object) => object.contractId === undefined)
   @IsString()

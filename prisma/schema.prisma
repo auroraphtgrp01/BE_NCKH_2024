@@ -13,10 +13,10 @@ enum UserStatus {
   UNVERIFIED
 }
 
-enum InvitationStatus {
+enum ParticipantStatus {
   PENDING
   ACCEPTED
-  REJECTED
+  REFUSED
 }
 
 enum Gender {
@@ -62,12 +62,16 @@ model User {
 }
 
 model Participant {
-  id         String    @id @unique @default(uuid()) @db.Uuid
-  User       User      @relation(fields: [userId], references: [id])
-  userId     String    @unique @db.Uuid
+  id         String            @id @unique @default(uuid()) @db.Uuid
+  User       User?             @relation(fields: [userId], references: [id])
+  userId     String?           @unique @db.Uuid
+  email      String
   permission Json
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
+  contractId String            @db.Uuid
+  Contract   Contract          @relation(fields: [contractId], references: [id])
+  status     ParticipantStatus @default(PENDING)
+  createdAt  DateTime?         @default(now())
+  updatedAt  DateTime?         @updatedAt
   createdBy  Json?
   updatedBy  Json?
   deletedAt  DateTime?
@@ -93,6 +97,7 @@ model Contract {
   deletedAt         DateTime?
   deletedBy         Json?
   ContractAttribute ContractAttribute[]
+  Participant       Participant[]
 }
 
 model TemplateContract {
@@ -108,28 +113,10 @@ model TemplateContract {
   ContractAttribute ContractAttribute[]
 }
 
-model Invitation {
-  id                  String           @id @unique @default(uuid()) @db.Uuid
-  addressWalletSender String
-  to                  String
-  from                String
-  messages            String?
-  status              InvitationStatus @default(PENDING)
-  contractName        String
-  link                String
-  receiver            String
-  permission          Json
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime?        @updatedAt
-  createdBy           Json?
-  updatedBy           Json?
-  deletedAt           DateTime?
-  deletedBy           Json?
-}
-
 model ContractAttribute {
   id                     String                  @id @unique @default(uuid()) @db.Uuid
   value                  String
+  index                  Int?
   type                   String
   createdAt              DateTime                @default(now())
   updatedAt              DateTime?               @updatedAt
