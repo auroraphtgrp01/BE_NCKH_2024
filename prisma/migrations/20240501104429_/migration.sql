@@ -8,7 +8,7 @@ CREATE TYPE "ParticipantStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REFUSED');
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 
 -- CreateEnum
-CREATE TYPE "contractStatus" AS ENUM ('PENDING', 'DEPLOYED', 'PROCESSING', 'CANCELED', 'COMPLETED', 'LATED', 'VIOLATED');
+CREATE TYPE "contractStatus" AS ENUM ('PENDING', 'PARTICIPATED', 'SIGNED', 'ENFORCE', 'COMPLETED', 'FAILED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -96,6 +96,7 @@ CREATE TABLE "TemplateContract" (
 CREATE TABLE "ContractAttribute" (
     "id" UUID NOT NULL,
     "value" TEXT NOT NULL,
+    "index" INTEGER,
     "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),

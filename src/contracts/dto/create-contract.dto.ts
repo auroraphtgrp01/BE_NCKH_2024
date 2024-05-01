@@ -21,6 +21,18 @@ import {
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 
+export class CreateContractAttributesDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  contractId: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  templateContractId: string
+}
+
 export class TemplateContractDto {
   @IsString()
   @IsNotEmpty()

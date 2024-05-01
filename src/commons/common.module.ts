@@ -8,7 +8,7 @@ import { TemplateContractsModule } from 'src/template-contracts/template-contrac
 @Module({
   imports: [
     forwardRef(() => ContractsModule),
-    ContractAttributesModule,
+    forwardRef(() => ContractAttributesModule),
     ContractAttributeValuesModule,
     forwardRef(() => TemplateContractsModule)
   ],
