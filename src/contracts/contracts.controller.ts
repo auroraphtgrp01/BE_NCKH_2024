@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
 import { CreateContractDto } from './dto/create-contract.dto'
-import { UpdateContractDto } from './dto/update-contract.dto'
+import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
 import { CommonService } from 'src/commons/common.service'
@@ -35,6 +35,11 @@ export class ContractsController {
   @Patch()
   update(@Body() updateContractDto: UpdateContractDto, @User() user: IUser) {
     return this.contractsService.update(updateContractDto, user)
+  }
+
+  @Patch('attribute') 
+  updateContractAttribute(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
+    return this.contractsService.updateContractAttribute(updateContractAttributeDto, user)
   }
 
   @Delete(':id')

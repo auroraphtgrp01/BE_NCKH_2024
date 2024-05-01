@@ -106,3 +106,13 @@ export class UpdateContractDto {
   @IsNotEmpty()
   status?: contractStatus
 }
+
+export class UpdateContractAttributeDto {
+  @IsString()
+  id: string
+  @IsArray()
+  updatedAttributes: any[]
+  @IsOptional()
+  @IsArray()
+  deleteArray: any[]
+}

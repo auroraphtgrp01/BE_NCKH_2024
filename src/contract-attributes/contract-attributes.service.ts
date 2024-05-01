@@ -49,7 +49,10 @@ export class ContractAttributesService {
     const contractAttributes = await this.prismaService.client.contractAttribute
       .findMany({
         where: { contractId },
-        include: { ContractAttributeValue: true }
+        include: { ContractAttributeValue: true },
+        orderBy: {
+          index: 'asc'
+        }
       })
       .then((contractAttributes) => {
         const result: IContractAttributeResponse[] = []

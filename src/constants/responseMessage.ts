@@ -69,5 +69,6 @@ export const RESPONSE_MESSAGES = {
   USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH: 'User email and invited email do not match',
   PARTICIPANT_RESPONDED: 'Participant responded',
   PARTICIPANT_NOT_FOUND: 'Participant not found',
-  CONTRACT_ATTRIBUTE_VALUE_NOT_FOUND: 'Contract attribute value not found'
+  CONTRACT_ATTRIBUTE_VALUE_NOT_FOUND: 'Contract attribute value not found',
+  UPDATE_CONTRACT_ATTRIBUTE_SUCCESS: 'Update contract attribute success',
 }

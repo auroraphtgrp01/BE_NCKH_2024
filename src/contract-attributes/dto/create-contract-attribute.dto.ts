@@ -17,6 +17,9 @@ export class CreateContractAttributeDto {
   @IsUUID()
   readonly contractId?: string
 
+  @IsOptional()
+  index?: number
+
   @ValidateIf((object) => object.contractId === undefined)
   @IsString()
   @IsNotEmpty()

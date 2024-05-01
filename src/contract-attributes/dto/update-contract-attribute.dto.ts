@@ -9,6 +9,9 @@ export class UpdateContractAttributeDto {
   readonly id: string
 
   @IsOptional()
+  index: number
+  
+  @IsOptional()
   @IsString()
   readonly value?: string
 

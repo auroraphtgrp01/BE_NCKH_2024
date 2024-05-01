@@ -4,7 +4,7 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { contractStatus } from '@prisma/client'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
-import { UpdateContractDto } from './dto/update-contract.dto'
+import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { CommonService } from 'src/commons/common.service'
@@ -28,7 +28,7 @@ export class ContractsService {
     private readonly usersService: UsersService,
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService
-  ) {}
+  ) { }
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, id } = contractData
@@ -125,120 +125,122 @@ export class ContractsService {
     // cập nhật lại contract
 
     const { id, ...rest } = updateContractDto
+    console.log('rest', rest);
+
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
-    const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
-    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    // const gasPrice = updateContractDto.gasPrices.map((gasPrice) => {
-    //   return { ...gasPrice }
+    // const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
+    // if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    // // const gasPrice = updateContractDto.gasPrices.map((gasPrice) => {
+    // //   return { ...gasPrice }
+    // // })
+    // // const updatedGasPrices = [...isContractExist.gasPrices, ...gasPrice]
+
+    // const countContractAttributes = await this.prismaService.client.contractAttribute.count({
+    //   where: { contractId: id }
     // })
-    // const updatedGasPrices = [...isContractExist.gasPrices, ...gasPrice]
 
-    const countContractAttributes = await this.prismaService.client.contractAttribute.count({
-      where: { contractId: id }
-    })
+    // const contractAttributesUpdate: IDataContractAttribute[] = []
+    // const contractAttributesCreate: IDataContractAttribute[] = []
+    // const contractAttributesResponse: IContractAttributeResponse[] = []
 
-    const contractAttributesUpdate: IDataContractAttribute[] = []
-    const contractAttributesCreate: IDataContractAttribute[] = []
-    const contractAttributesResponse: IContractAttributeResponse[] = []
+    // for (const contractAttribute of rest.contractAttributes) {
+    //   if (contractAttribute.id) contractAttributesUpdate.push(contractAttribute)
+    //   else contractAttributesCreate.push(contractAttribute)
+    // }
 
-    for (const contractAttribute of rest.contractAttributes) {
-      if (contractAttribute.id) contractAttributesUpdate.push(contractAttribute)
-      else contractAttributesCreate.push(contractAttribute)
-    }
+    // if (countContractAttributes > 0) {
+    //   if (!contractAttributesUpdate || contractAttributesUpdate.length !== countContractAttributes)
+    //     throw new UnauthorizedException({ message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED })
 
-    if (countContractAttributes > 0) {
-      if (!contractAttributesUpdate || contractAttributesUpdate.length !== countContractAttributes)
-        throw new UnauthorizedException({ message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED })
-
-      await Promise.all([
-        contractAttributesUpdate.map(async (contractAttribute) => {
-          if (
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-          ) {
-            const contractAttributeRecord = await this.contractAttributesService.update(
-              { id: contractAttribute.id, value: contractAttribute.property, type: contractAttribute.type },
-              user
-            )
-            const contractAttributeValueRecord = await this.contractAttributeValuesService.update(
-              { value: contractAttribute.value, contractAttributeId: contractAttribute.id },
-              user
-            )
-            const result: IContractAttributeResponse = {
-              id: contractAttributeRecord.id,
-              property: contractAttributeRecord.value,
-              value: contractAttributeValueRecord.value,
-              type: contractAttributeRecord.type,
-              createdBy: contractAttributeRecord.createdBy,
-              updatedBy: contractAttributeRecord.updatedBy
-            }
-            contractAttributesResponse.push(result)
-          } else {
-            const contractAttributeRecord = await this.contractAttributesService.update(
-              { id: contractAttribute.id, value: contractAttribute.value, type: contractAttribute.type },
-              user
-            )
-            const result: IContractAttributeResponse = {
-              id: contractAttributeRecord.id,
-              value: contractAttributeRecord.value,
-              type: contractAttributeRecord.type,
-              createdBy: contractAttributeRecord.createdBy,
-              updatedBy: contractAttributeRecord.updatedBy
-            }
-            contractAttributesResponse.push(result)
-          }
-        }),
-        contractAttributesCreate.map(async (contractAttribute) => {
-          if (
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-          ) {
-            const contractAttributeRecord = await this.contractAttributesService.create(
-              {
-                contractId: id,
-                value: contractAttribute.property,
-                type: contractAttribute.type
-              },
-              user
-            )
-            const contractAttributeValueRecord = await this.contractAttributeValuesService.create(
-              { value: contractAttribute.value, contractAttributeId: contractAttributeRecord.id },
-              user
-            )
-            const result: IContractAttributeResponse = {
-              id: contractAttributeRecord.id,
-              property: contractAttributeRecord.value,
-              value: contractAttributeValueRecord.value,
-              type: contractAttributeRecord.type,
-              createdBy: contractAttributeRecord.createdBy,
-              updatedBy: contractAttributeRecord.updatedBy
-            }
-            contractAttributesResponse.push(result)
-          } else {
-            const contractAttributeRecord = await this.contractAttributesService.create(
-              {
-                contractId: id,
-                value: contractAttribute.value,
-                type: contractAttribute.type
-              },
-              user
-            )
-            const result: IContractAttributeResponse = {
-              id: contractAttributeRecord.id,
-              value: contractAttributeRecord.value,
-              type: contractAttributeRecord.type,
-              createdBy: contractAttributeRecord.createdBy,
-              updatedBy: contractAttributeRecord.updatedBy
-            }
-            contractAttributesResponse.push(result)
-          }
-        })
-      ])
-    }
+    //   await Promise.all([
+    //     contractAttributesUpdate.map(async (contractAttribute) => {
+    //       if (
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+    //       ) {
+    //         const contractAttributeRecord = await this.contractAttributesService.update(
+    //           { id: contractAttribute.id, value: contractAttribute.property, type: contractAttribute.type },
+    //           user
+    //         )
+    //         const contractAttributeValueRecord = await this.contractAttributeValuesService.update(
+    //           { value: contractAttribute.value, contractAttributeId: contractAttribute.id },
+    //           user
+    //         )
+    //         const result: IContractAttributeResponse = {
+    //           id: contractAttributeRecord.id,
+    //           property: contractAttributeRecord.value,
+    //           value: contractAttributeValueRecord.value,
+    //           type: contractAttributeRecord.type,
+    //           createdBy: contractAttributeRecord.createdBy,
+    //           updatedBy: contractAttributeRecord.updatedBy
+    //         }
+    //         contractAttributesResponse.push(result)
+    //       } else {
+    //         const contractAttributeRecord = await this.contractAttributesService.update(
+    //           { id: contractAttribute.id, value: contractAttribute.value, type: contractAttribute.type },
+    //           user
+    //         )
+    //         const result: IContractAttributeResponse = {
+    //           id: contractAttributeRecord.id,
+    //           value: contractAttributeRecord.value,
+    //           type: contractAttributeRecord.type,
+    //           createdBy: contractAttributeRecord.createdBy,
+    //           updatedBy: contractAttributeRecord.updatedBy
+    //         }
+    //         contractAttributesResponse.push(result)
+    //       }
+    //     }),
+    //     contractAttributesCreate.map(async (contractAttribute) => {
+    //       if (
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+    //       ) {
+    //         const contractAttributeRecord = await this.contractAttributesService.create(
+    //           {
+    //             contractId: id,
+    //             value: contractAttribute.property,
+    //             type: contractAttribute.type
+    //           },
+    //           user
+    //         )
+    //         const contractAttributeValueRecord = await this.contractAttributeValuesService.create(
+    //           { value: contractAttribute.value, contractAttributeId: contractAttributeRecord.id },
+    //           user
+    //         )
+    //         const result: IContractAttributeResponse = {
+    //           id: contractAttributeRecord.id,
+    //           property: contractAttributeRecord.value,
+    //           value: contractAttributeValueRecord.value,
+    //           type: contractAttributeRecord.type,
+    //           createdBy: contractAttributeRecord.createdBy,
+    //           updatedBy: contractAttributeRecord.updatedBy
+    //         }
+    //         contractAttributesResponse.push(result)
+    //       } else {
+    //         const contractAttributeRecord = await this.contractAttributesService.create(
+    //           {
+    //             contractId: id,
+    //             value: contractAttribute.value,
+    //             type: contractAttribute.type
+    //           },
+    //           user
+    //         )
+    //         const result: IContractAttributeResponse = {
+    //           id: contractAttributeRecord.id,
+    //           value: contractAttributeRecord.value,
+    //           type: contractAttributeRecord.type,
+    //           createdBy: contractAttributeRecord.createdBy,
+    //           updatedBy: contractAttributeRecord.updatedBy
+    //         }
+    //         contractAttributesResponse.push(result)
+    //       }
+    //     })
+    //   ])
+    // }
     // // Gọi thực thi deploy contract tại đây
     // // ...
     // const gasPrices: IGasPrice[] = [
@@ -257,6 +259,100 @@ export class ContractsService {
     //   blockAddress: '0xd0cab3b7c79f849a9360b470729a584c7fb660f9ab26691efd57c364ad7542f6'
     // }
     // contractResponse.contract = await this.update(dataUpdate, user)
+  }
+
+  async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
+    const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id: updateContractAttribute.id } })
+    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    Promise.all([
+      updateContractAttribute.updatedAttributes.map(async (item, index) => {
+        if (item.statusAttribute === "Create") {
+          if (
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+          ) {
+            const contractAttribute = await this.contractAttributesService.create(
+              {
+                contractId: updateContractAttribute.id,
+                value: item.property,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.create({
+              value: item.value,
+              contractAttributeId: contractAttribute.id
+            }, user)
+          } else {
+            const contractAttribute = await this.contractAttributesService.create(
+              {
+                contractId: updateContractAttribute.id,
+                value: item.value,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.create({
+              value: item.value,
+              contractAttributeId: contractAttribute.id
+            }, user)
+          }
+
+        
+        }
+        if (item.statusAttribute === "Update") {
+          if (
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+          ) {
+            console.log('item', item);
+            
+            const contractAttribute = await this.contractAttributesService.update(
+              {
+                id: item.id,
+                value: item.property,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.update({
+              value: item.value,
+              contractAttributeId: contractAttribute.id
+            }, user)
+          } else {
+            const contractAttribute = await this.contractAttributesService.update(
+              {
+                id: item.id,
+                value: item.value,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.update({
+              value: item.value,
+              contractAttributeId: contractAttribute.id
+            }, user)
+          }
+        }
+      }),
+      Promise.all([
+        updateContractAttribute.deleteArray.map(async (item) => {
+          await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: item } })
+          await this.prismaService.client.contractAttribute.delete({ where: { id: item } })
+        })
+      ])
+    ])
+    return {
+      message: RESPONSE_MESSAGES.UPDATE_CONTRACT_ATTRIBUTE_SUCCESS
+    }
   }
 
   remove(id: number) {
