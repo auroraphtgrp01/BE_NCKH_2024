@@ -4,9 +4,10 @@ import { Queue } from 'bullmq'
 
 @Injectable()
 export class QueueRedisService {
-  constructor(@InjectQueue('deployContract') private readonly deployContractQueue: Queue,
-            @InjectQueue('sendInvitation') private readonly sendInvitationQueue: Queue
-) { }
+  constructor(
+    @InjectQueue('deployContract') private readonly deployContractQueue: Queue,
+    @InjectQueue('sendInvitation') private readonly sendInvitationQueue: Queue
+  ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
     this.deployContractQueue.add('deployContract', job)
@@ -24,15 +25,13 @@ export interface IQueuePayloadDeployContract {
   _supplier: string
 }
 
-
 export interface IQueuePayloadSendInvitation {
-  to: string;
-  from: string;
-  receiver: string;
-  contractName: string;
-  addressWalletSender: string;
-  messages: string;
-  link: string;
-  idInvitation: string
+  to: string
+  from: string
+  receiver: string
+  contractName: string
+  addressWalletSender: string
+  messages: string
+  link: string
+  idParticipant: string
 }
-

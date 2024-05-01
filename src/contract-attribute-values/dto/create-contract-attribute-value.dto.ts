@@ -1,21 +1,12 @@
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
-
+import { Type } from 'class-transformer'
+import { IsNotEmpty, IsObject, IsString, IsUUID, ValidateIf } from 'class-validator'
 export class CreateContractAttributeValueDto {
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
-  contractId: string
-
   @IsUUID()
-  @IsNotEmpty()
   contractAttributeId: string
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
   value: string
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  description?: string
 }

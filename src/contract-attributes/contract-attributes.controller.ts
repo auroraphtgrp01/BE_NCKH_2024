@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/
 import { ContractAttributesService } from './contract-attributes.service'
 import { CreateContractAttributeDto } from './dto/create-contract-attribute.dto'
 import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
-import { Request } from 'express'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
 
@@ -20,6 +19,11 @@ export class ContractAttributesController {
     return this.contractAttributesService.findAll()
   }
 
+  @Get(':contractId')
+  async findAllByContractId(@Param('contractId') contractId: string) {
+    return await this.contractAttributesService.findAllByContractId(contractId)
+  }
+
   @Get('/find-one-by-id/:id')
   findOneById(@Param('id') id: string) {
     return this.contractAttributesService.findOneById(id)
@@ -30,9 +34,9 @@ export class ContractAttributesController {
     return this.contractAttributesService.findOne(payload)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContractAttributeDto: UpdateContractAttributeDto) {
-    return this.contractAttributesService.update(+id, updateContractAttributeDto)
+  @Patch()
+  update(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
+    return this.contractAttributesService.update(updateContractAttributeDto, user)
   }
 
   @Delete(':id')

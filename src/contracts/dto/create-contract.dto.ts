@@ -2,19 +2,61 @@ import { Transform, Type } from 'class-transformer'
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDate,
   IsEmail,
   IsNotEmpty,
   IsNumberString,
+  IsObject,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinDate,
+  MinLength,
   ValidateIf,
   ValidateNested
 } from 'class-validator'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+
+export class TemplateContractDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string
+
+  @IsString()
+  @IsNotEmpty()
+  img: string
+
+  @IsString()
+  @IsNotEmpty()
+  name: string
+}
+
+export class PermissionDto {
+  @IsNotEmpty()
+  @IsBoolean()
+  CHANGE_STATUS_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  EDIT_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  INVITE_PARTICIPANT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  READ_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  SET_OWNER_PARTY: boolean
+}
 
 export class GasPriceDto {
   @IsNumberString()
@@ -28,61 +70,87 @@ export class GasPriceDto {
   reason: string
 }
 
-export class CreateContractDto {
+export class CreateEmptyContractDto {
   @IsOptional()
   @IsString()
-  id: string
+  @IsNotEmpty()
+  @IsUUID()
+  id?: string
 
-  @ValidateIf((object) => object.id !== undefined)
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   addressWallet: string
 
-  @ValidateIf((object) => object.id !== undefined)
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
+  @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle: string
+  name: string
+}
 
-  @ValidateIf((object) => object.id !== undefined)
+export class CreateContractDto {
+  @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  addressWallet: string
+
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
-  @Length(42, 42, { message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS })
-  contractAddress: string
+  @IsNotEmpty()
+  @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
+  name: string
 
-  @ValidateIf((object) => object.id !== undefined)
-  @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
-  blockAddress: string
-
-  @ValidateIf((object) => object.id !== undefined)
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => GasPriceDto)
-  gasPrices: GasPriceDto[]
+  @Type(() => InvitationsDto)
+  invitation: InvitationsDto[]
 
-  @ValidateIf((object) => object.id !== undefined)
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() => Date)
-  startDate: Date
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly templateId?: string
+}
 
-  @ValidateIf((object) => object.id !== undefined)
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() => Date)
-  endDate: Date
+export class DataUpdateContractAttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string
 
-  @ValidateIf((object) => object.id !== undefined)
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() => Date)
-  executeDate: Date
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string
 
-  @ValidateIf((object) => object.id !== undefined)
-  @IsArray()
-  @IsString({ each: true })
-  @ArrayMinSize(1)
-  agreements: string[]
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly idArea: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+
+  @ValidateIf((object) => object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE)
+  @IsString()
+  @IsNotEmpty()
+  readonly valueAttribute?: string
+
+  @IsBoolean()
+  readonly isCreated: boolean
+}
+
+export class InvitationsDto {
+  @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
+  @IsNotEmpty()
+  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
+  email: string
+
+  @IsOptional()
+  @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
+  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
+  messages: string
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PermissionDto)
+  permission: PermissionDto
 }

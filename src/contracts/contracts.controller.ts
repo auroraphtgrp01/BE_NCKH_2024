@@ -1,32 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
 import { CreateContractDto } from './dto/create-contract.dto'
-import { CreateInvitationDto } from 'src/invitations/dto/create-invitation.dto'
-import { UpdateContractDto } from './dto/update-contract.dto'
+import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
-import { CommonService } from 'src/common.service'
-
+import { CommonService } from 'src/commons/common.service'
 @Controller('contracts')
 export class ContractsController {
   constructor(
     private readonly contractsService: ContractsService,
-    private readonly commonService: CommonService
+    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService
   ) {}
 
-  @Post('send-invitation')
-  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @User() user: IUser) {
-    // return await this.contractsService.sendInvitation(sendInvitationDto, user)
+  @Post()
+  async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
+    return await this.contractsService.create(createContractDto, user)
   }
 
-  @Post()
-  async create(
-    @Body('contractData') contractData: CreateContractDto,
-    @User() user: IUser,
-    @Body('templateId') templateId?: string,
-    @Body('partyInfoIds') partyInfoIds?: string[]
-  ) {
-    return await this.contractsService.create(contractData, user, templateId, partyInfoIds)
+  @Get('get-contract-details/:contractId')
+  async getContractDetailsById(@Param('contractId') contractId: string) {
+    return await this.contractsService.getContractDetailsById(contractId)
   }
 
   @Get()
@@ -36,12 +29,17 @@ export class ContractsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commonService.findOneContractById(id)
+    return this.contractsService.findOneById(id)
   }
 
   @Patch()
-  update(@Body() updateContractDto: UpdateContractDto) {
-    return this.contractsService.update(updateContractDto)
+  update(@Body() updateContractDto: UpdateContractDto, @User() user: IUser) {
+    return this.contractsService.update(updateContractDto, user)
+  }
+
+  @Patch('attribute') 
+  updateContractAttribute(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
+    return this.contractsService.updateContractAttribute(updateContractAttributeDto, user)
   }
 
   @Delete(':id')

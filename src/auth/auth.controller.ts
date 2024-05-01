@@ -27,4 +27,12 @@ export class AuthController {
   async register(@Body() payload: CreateUserDto) {
     return await this.usersService.create(payload)
   }
+
+  @Get(':addressWallet')
+  @Public()
+  async handleAddressWallet(@Param('addressWallet') addressWallet: string) {
+    return {
+      isExits: await this.authService.handleAddressWallet(addressWallet)
+    }
+  }
 }
