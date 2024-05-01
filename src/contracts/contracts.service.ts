@@ -32,7 +32,7 @@ export class ContractsService {
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, id } = contractData
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract = await this.prismaService.client.contract.create({
       data: {
         id,
@@ -101,7 +101,7 @@ export class ContractsService {
     const { id, ...rest } = updateContractDto
     console.log('rest', rest)
 
-    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     // const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
     // if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     // // const gasPrice = updateContractDto.gasPrices.map((gasPrice) => {

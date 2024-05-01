@@ -34,7 +34,7 @@ export class ParticipantsService {
     if (!(await this.contractService.findOneById(createParticipantDto.contractId)))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
     const { contractId, permission, email } = createParticipantDto
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const participantRecord = await this.prismaService.client.participant.create({
       data: {
         email,

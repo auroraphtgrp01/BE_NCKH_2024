@@ -71,4 +71,7 @@ export const RESPONSE_MESSAGES = {
   PARTICIPANT_NOT_FOUND: 'Participant not found',
   CONTRACT_ATTRIBUTE_VALUE_NOT_FOUND: 'Contract attribute value not found',
   UPDATE_CONTRACT_ATTRIBUTE_SUCCESS: 'Update contract attribute success',
+  YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION: 'You are not allowed to perform this action',
+  ROLE_IS_EXIST: 'Role is exist',
+  ROLE_NOT_FOUND: 'Role not found'
 }

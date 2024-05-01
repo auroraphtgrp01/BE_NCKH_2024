@@ -16,7 +16,7 @@ export class ContractAttributeValuesService {
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
     const { contractAttributeId, value } = createContractAttributeValueDto
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
@@ -49,8 +49,8 @@ export class ContractAttributeValuesService {
   }
 
   async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user: IUser) {
-    const {  contractAttributeId, ...data } = updateContractAttributeValueDto
-    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const { contractAttributeId, ...data } = updateContractAttributeValueDto
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contractAttributeValue = await this.prismaService.client.contractAttributeValue.update({
       where: { contractAttributeId },
       data: {

@@ -11,3 +11,9 @@ export enum ETypeContractAttribute {
   CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET = 'Contract Attribute Party Address Wallet',
   CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE = 'Contract Attribute Address Wallet Receive'
 }
+
+export enum ERoles {
+  ADMIN = 'Admin',
+  USER = 'User',
+  SUPPLIER = 'Supplier'
+}

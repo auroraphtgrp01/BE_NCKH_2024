@@ -6,6 +6,7 @@ import {
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinLength
@@ -32,6 +33,12 @@ export class UpdateUserDto {
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
   readonly email: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly roleId: string
 
   @IsOptional()
   readonly gender: string
