@@ -14,6 +14,7 @@ import { ContractsService } from 'src/contracts/contracts.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
+import { ContractAttribute } from '@prisma/client'
 
 @Injectable()
 export class CommonService {
@@ -21,6 +22,7 @@ export class CommonService {
     @Inject(forwardRef(() => ContractsService)) private readonly contractService: ContractsService,
     @Inject(forwardRef(() => TemplateContractsService))
     private readonly templateContractService: TemplateContractsService,
+    @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributeService: ContractAttributesService,
     private readonly contractAttributeValueService: ContractAttributeValuesService
   ) {}
@@ -98,6 +100,36 @@ export class CommonService {
     }
 
     return contractAttributeRecords
+  }
+
+  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttributeResponse[] {
+    const result: IContractAttributeResponse[] = []
+    for (const contractArribute of contractAttributes) {
+      if (
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+      ) {
+        result.push({
+          id: contractArribute.id,
+          property: contractArribute.value,
+          value: (contractArribute as any).ContractAttributeValue.value,
+          type: contractArribute.type,
+          createdBy: contractArribute.createdBy,
+          updatedBy: contractArribute.updatedBy
+        })
+      } else {
+        result.push({
+          id: contractArribute.id,
+          value: contractArribute.value,
+          type: contractArribute.type,
+          createdBy: contractArribute.createdBy,
+          updatedBy: contractArribute.updatedBy
+        })
+      }
+    }
+    return result
   }
 
   uuidv4() {

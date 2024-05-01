@@ -24,6 +24,11 @@ export class TemplateContractsController {
     return this.templateContractsService.findOne(+id)
   }
 
+  @Get(':id/attributes')
+  async getTemplateContractAttributes(@Param('id') id: string) {
+    return { contractAttributes: await this.templateContractsService.getTemplateContractAttributes(id) }
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTemplateContractDto: UpdateTemplateContractDto) {
     return this.templateContractsService.update(+id, updateTemplateContractDto)

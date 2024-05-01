@@ -27,12 +27,11 @@ enum Gender {
 
 enum contractStatus {
   PENDING // chờ chấp nhận lời mời
-  DEPLOYED // đã chấp nhận lời mời, đã deploy
-  PROCESSING // đã gọi hàm ký, bắt đầu trong quá trình thực hiện hợp đồng
-  CANCELED // thất bại ( 1 trong 2 bên huỷ hợp đồng )
+  PARTICIPATED // đã chấp nhận lời mời đầy đủ
+  SIGNED // đã ký hợp đồng
+  ENFORCE // đã deploy
   COMPLETED // hoàn thành hợp đồng
-  LATED // hợp đồng quá hạn
-  VIOLATED // hợp đồng bị vi phạm
+  FAILED // thất bại ( không thể thực hiện hợp đồng )
 }
 
 model User {

@@ -28,7 +28,7 @@ export class ContractsService {
     private readonly usersService: UsersService,
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService
-  ) { }
+  ) {}
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, id } = contractData
@@ -52,7 +52,6 @@ export class ContractsService {
     const { invitation, templateId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-    let contractAttributes: any[] = []
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
     await this.participantService.sendInvitation(
       { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
@@ -63,37 +62,12 @@ export class ContractsService {
     if (templateId) {
       if (!(await this.templateContractsService.findOneById(templateId)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-      contractAttributes = await this.prismaService.client.contractAttribute
-        .findMany({
-          where: {
-            templateContractId: templateId
-          }
-        })
-        .then((contractAttributes) => {
-          const newContractAttributes: any[] = []
-          contractAttributes.forEach((contractAttribute) => {
-            if (
-              contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-              contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE
-            )
-              newContractAttributes.push({
-                property: contractAttribute.value,
-                value: 'Empty',
-                type: contractAttribute.type
-              })
-            else
-              newContractAttributes.push({
-                value: contractAttribute.value,
-                type: contractAttribute.type
-              })
-          })
-          return newContractAttributes
-        })
 
-      const [contractAttributeRecords] = await Promise.all([
-        this.commonService.createContractAttributes({ contractAttributes, contractId: contractRecord.id }, user)
-      ])
-      contractResponse.contractAttributes = contractAttributeRecords
+      contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+        contractRecord.id,
+        templateId,
+        user
+      )
     }
     return contractResponse
   }
@@ -125,7 +99,7 @@ export class ContractsService {
     // cập nhật lại contract
 
     const { id, ...rest } = updateContractDto
-    console.log('rest', rest);
+    console.log('rest', rest)
 
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
     // const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
@@ -262,11 +236,13 @@ export class ContractsService {
   }
 
   async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
-    const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id: updateContractAttribute.id } })
+    const isContractExist = await this.prismaService.client.contract.findUnique({
+      where: { id: updateContractAttribute.id }
+    })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     Promise.all([
       updateContractAttribute.updatedAttributes.map(async (item, index) => {
-        if (item.statusAttribute === "Create") {
+        if (item.statusAttribute === 'Create') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
             item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -282,10 +258,13 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.create({
-              value: item.value,
-              contractAttributeId: contractAttribute.id
-            }, user)
+            await this.contractAttributeValuesService.create(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
           } else {
             const contractAttribute = await this.contractAttributesService.create(
               {
@@ -296,23 +275,24 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.create({
-              value: item.value,
-              contractAttributeId: contractAttribute.id
-            }, user)
+            await this.contractAttributeValuesService.create(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
           }
-
-        
         }
-        if (item.statusAttribute === "Update") {
+        if (item.statusAttribute === 'Update') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
             item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
           ) {
-            console.log('item', item);
-            
+            console.log('item', item)
+
             const contractAttribute = await this.contractAttributesService.update(
               {
                 id: item.id,
@@ -322,10 +302,13 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.update({
-              value: item.value,
-              contractAttributeId: contractAttribute.id
-            }, user)
+            await this.contractAttributeValuesService.update(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
           } else {
             const contractAttribute = await this.contractAttributesService.update(
               {
@@ -336,10 +319,13 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.update({
-              value: item.value,
-              contractAttributeId: contractAttribute.id
-            }, user)
+            await this.contractAttributeValuesService.update(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
           }
         }
       }),
@@ -353,6 +339,87 @@ export class ContractsService {
     return {
       message: RESPONSE_MESSAGES.UPDATE_CONTRACT_ATTRIBUTE_SUCCESS
     }
+  }
+
+  async createContractAttributesByTemplateId(
+    contractId: string,
+    templateContractId: string,
+    user: IUser
+  ): Promise<IContractAttributeResponse[]> {
+    const contractAttributes = await this.prismaService.client.contractAttribute
+      .findMany({
+        where: {
+          templateContractId
+        }
+      })
+      .then((contractAttributes) => {
+        const newContractAttributes: any[] = []
+        contractAttributes.forEach((contractAttribute) => {
+          if (
+            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+          )
+            newContractAttributes.push({
+              property: contractAttribute.value,
+              value: 'Empty',
+              type: contractAttribute.type
+            })
+          else
+            newContractAttributes.push({
+              value: contractAttribute.value,
+              type: contractAttribute.type
+            })
+        })
+        return newContractAttributes
+      })
+
+    const [contractAttributeRecords] = await Promise.all([
+      this.commonService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
+    ])
+    return contractAttributeRecords
+  }
+
+  async removeContractAttributesByContractId(contractId: string) {
+    const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
+    const contractTypeTitles = contractAttributes.filter(
+      (item) =>
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE &&
+        item.type !== ETypeContractAttribute.CONTRACT_SIGNATURE &&
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE &&
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+    )
+    const contractTypeAttributes = contractAttributes.filter(
+      (item) =>
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+    )
+
+    await Promise.all([
+      contractTypeTitles.map(async (item) => {
+        await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
+      }),
+      contractTypeAttributes.map(async (item) => {
+        await this.prismaService.client.contractAttributeValue.deleteMany({ where: { contractAttributeId: item.id } })
+        await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
+      })
+    ])
+  }
+
+  async createContractAttributes(contractId: string, templateContractId: string, user: IUser) {
+    if (!(await this.findOneById(contractId)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    if (!(await this.templateContractsService.findOneById(templateContractId)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+
+    if ((await this.contractAttributesService.findAllByContractId(contractId)).length === 0) {
+      return await this.createContractAttributesByTemplateId(contractId, templateContractId, user)
+    }
+    await this.removeContractAttributesByContractId(contractId)
+    return await this.createContractAttributesByTemplateId(contractId, templateContractId, user)
   }
 
   remove(id: number) {

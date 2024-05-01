@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, forwardRef } from '@nestjs/common'
 import { CreateContractAttributeDto } from './dto/create-contract-attribute.dto'
 import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -7,11 +7,14 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { IContractAttributeResponse, ICreateContractAttributeRecord } from 'src/interfaces/contract-attribute.interface'
-import { ETypeContractAttribute } from 'src/constants/enum.constant'
+import { CommonService } from 'src/commons/common.service'
 
 @Injectable()
 export class ContractAttributesService {
-  constructor(@Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
+  constructor(
+    @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
+    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService
+  ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
     const { contractId, templateContractId, ...rest } = createContractAttributeDto
 
@@ -54,35 +57,21 @@ export class ContractAttributesService {
           index: 'asc'
         }
       })
-      .then((contractAttributes) => {
-        const result: IContractAttributeResponse[] = []
-        for (const contractArribute of contractAttributes) {
-          if (
-            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-          ) {
-            result.push({
-              id: contractArribute.id,
-              property: contractArribute.value,
-              value: contractArribute.ContractAttributeValue.value,
-              type: contractArribute.type,
-              createdBy: contractArribute.createdBy,
-              updatedBy: contractArribute.updatedBy
-            })
-          } else {
-            result.push({
-              id: contractArribute.id,
-              value: contractArribute.value,
-              type: contractArribute.type,
-              createdBy: contractArribute.createdBy,
-              updatedBy: contractArribute.updatedBy
-            })
-          }
+      .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+
+    return contractAttributes
+  }
+
+  async findAllByTemplateId(templateContractId: string) {
+    const contractAttributes = await this.prismaService.client.contractAttribute
+      .findMany({
+        where: { templateContractId },
+        include: { ContractAttributeValue: true },
+        orderBy: {
+          index: 'asc'
         }
-        return result
       })
+      .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
     return contractAttributes
   }
 
