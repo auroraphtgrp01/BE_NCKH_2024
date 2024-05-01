@@ -8,6 +8,7 @@ import {
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   Min,
@@ -19,6 +20,11 @@ export class CreateUserDto {
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })
   readonly name: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly roleId: string
 
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })

@@ -11,11 +11,17 @@ import { IUser } from './interfaces/IUser.interface'
 import { Exact } from '@prisma/client/runtime/library'
 import { Gender } from '@prisma/client'
 import { isNumeric } from 'src/decorators/is-nummeric.decorator'
+import { RolesService } from 'src/roles/roles.service'
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
+  constructor(
+    @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
+    private readonly rolesService: RolesService
+  ) {}
   async create(createUserDto: CreateUserDto, user?: IUser) {
+    if (!(await this.rolesService.findOneById(createUserDto.roleId)))
+      throw new NotFoundException(RESPONSE_MESSAGES.ROLE_NOT_FOUND)
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [
@@ -28,17 +34,20 @@ export class UsersService {
     if (isUserExist) {
       throw new NotFoundException(RESPONSE_MESSAGES.USER_IS_EXIST)
     }
+
     let createdBy: IExecutor = null
 
     if (user) {
-      createdBy = { id: user.id, name: user.name, email: user.email }
+      createdBy = { id: user.id, name: user.name, email: user.email, role: user.role }
       if (!createUserDto.PIN) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_IS_REQUIRED })
       if (createUserDto.PIN.length !== 6) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_LENGTH_IS_6_DIGIT)
       if (!isNumeric(createUserDto.PIN)) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_MUST_BE_A_NUMBER)
     }
+    const { roleId, ...data } = createUserDto
     return await this.prismaService.client.user.create({
       data: {
-        ...createUserDto,
+        ...data,
+        Role: { connect: { id: roleId } },
         gender: createUserDto.gender as Exact<Gender, Gender>,
         PIN: createUserDto.PIN ? await hashPassword(createUserDto.PIN) : null,
         updatedAt: null,
@@ -93,12 +102,12 @@ export class UsersService {
   }
 
   async findOneByAddressWallet(addressWallet: string) {
-    const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } })
+    const user = await this.prismaService.client.user.findUnique({ where: { addressWallet }, include: { Role: true } })
     return user
   }
 
   async update(updateUserDto: UpdateUserDto, _user: IUser) {
-    const updatedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+    const updatedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email, role: _user.role }
     const user = await this.prismaService.client.user.update({
       where: { id: updateUserDto.id },
       data: {
@@ -111,7 +120,7 @@ export class UsersService {
   }
 
   async remove(id: string, _user: IUser) {
-    const deletedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email }
+    const deletedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email, role: _user.role }
     await this.prismaService.client.user.update({ where: { id }, data: { deletedBy } })
     const user = await this.prismaService.client.user.delete({ where: { id } })
     return user

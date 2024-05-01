@@ -48,8 +48,8 @@ model User {
   forgotPasswordToken String?
   refreshToken        String?
   userStatus          UserStatus?  @default(UNVERIFIED)
-  Role                Role?        @relation(fields: [roleId], references: [id])
-  roleId              String?      @unique @db.Uuid
+  Role                Roles        @relation(fields: [roleId], references: [id])
+  roleId              String       @db.Uuid
   createdAt           DateTime?    @default(now())
   updatedAt           DateTime?    @updatedAt
   createdBy           Json?
@@ -58,6 +58,7 @@ model User {
   deletedBy           Json?
   Participant         Participant?
   Supplier            Suppliers[]
+  Orders              Orders[]
 }
 
 model Participant {
@@ -143,9 +144,9 @@ model ContractAttributeValue {
   contractAttributeId String            @unique @db.Uuid
 }
 
-model Role {
+model Roles {
   id          String              @id @unique @default(uuid()) @db.Uuid
-  name        String
+  name        String              @unique
   description String?
   isActive    Boolean?            @default(true)
   Permission  IncludePermission[]
@@ -175,7 +176,7 @@ model Permission {
 
 model IncludePermission {
   id           String     @id @unique @default(uuid()) @db.Uuid
-  Role         Role       @relation(fields: [roleId], references: [id])
+  Role         Roles      @relation(fields: [roleId], references: [id])
   roleId       String     @unique @db.Uuid
   Permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String     @unique @db.Uuid
@@ -204,6 +205,7 @@ model Suppliers {
   Products    Products[]
   User        User       @relation(fields: [userId], references: [id])
   userId      String     @db.Uuid
+  Orders      Orders[]
 }
 
 model Products {
@@ -235,4 +237,21 @@ model Images {
   suppliersId String?    @db.Uuid
   Products    Products?  @relation(fields: [productsId], references: [id])
   productsId  String?    @db.Uuid
+}
+
+model Orders {
+  id          String    @id @unique @default(uuid()) @db.Uuid
+  orderCode   String    @unique
+  status      String    @default("PENDING")
+  products    Json[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  createdBy   Json?
+  updatedBy   Json?
+  deletedAt   DateTime?
+  deletedBy   Json?
+  Suppliers   Suppliers @relation(fields: [suppliersId], references: [id])
+  suppliersId String    @db.Uuid
+  userId      String    @db.Uuid
+  User        User      @relation(fields: [userId], references: [id])
 }

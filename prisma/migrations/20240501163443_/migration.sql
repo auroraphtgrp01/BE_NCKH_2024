@@ -25,7 +25,7 @@ CREATE TABLE "User" (
     "forgotPasswordToken" TEXT,
     "refreshToken" TEXT,
     "userStatus" "UserStatus" DEFAULT 'UNVERIFIED',
-    "roleId" UUID,
+    "roleId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -126,7 +126,7 @@ CREATE TABLE "ContractAttributeValue" (
 );
 
 -- CreateTable
-CREATE TABLE "Role" (
+CREATE TABLE "Roles" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
@@ -138,7 +138,7 @@ CREATE TABLE "Role" (
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
 
-    CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Roles_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -225,6 +225,24 @@ CREATE TABLE "Images" (
     CONSTRAINT "Images_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Orders" (
+    "id" UUID NOT NULL,
+    "orderCode" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "products" JSONB[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "createdBy" JSONB,
+    "updatedBy" JSONB,
+    "deletedAt" TIMESTAMP(3),
+    "deletedBy" JSONB,
+    "suppliersId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+
+    CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
@@ -236,9 +254,6 @@ CREATE UNIQUE INDEX "User_indentifyNumber_key" ON "User"("indentifyNumber");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_addressWallet_key" ON "User"("addressWallet");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_roleId_key" ON "User"("roleId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Participant_id_key" ON "Participant"("id");
@@ -262,7 +277,10 @@ CREATE UNIQUE INDEX "ContractAttributeValue_id_key" ON "ContractAttributeValue"(
 CREATE UNIQUE INDEX "ContractAttributeValue_contractAttributeId_key" ON "ContractAttributeValue"("contractAttributeId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Role_id_key" ON "Role"("id");
+CREATE UNIQUE INDEX "Roles_id_key" ON "Roles"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Roles_name_key" ON "Roles"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Permission_id_key" ON "Permission"("id");
@@ -294,8 +312,14 @@ CREATE UNIQUE INDEX "Products_id_key" ON "Products"("id");
 -- CreateIndex
 CREATE UNIQUE INDEX "Images_id_key" ON "Images"("id");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Orders_id_key" ON "Orders"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Orders_orderCode_key" ON "Orders"("orderCode");
+
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -313,7 +337,7 @@ ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_templateContra
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "IncludePermission" ADD CONSTRAINT "IncludePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -329,3 +353,9 @@ ALTER TABLE "Images" ADD CONSTRAINT "Images_suppliersId_fkey" FOREIGN KEY ("supp
 
 -- AddForeignKey
 ALTER TABLE "Images" ADD CONSTRAINT "Images_productsId_fkey" FOREIGN KEY ("productsId") REFERENCES "Products"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Orders" ADD CONSTRAINT "Orders_suppliersId_fkey" FOREIGN KEY ("suppliersId") REFERENCES "Suppliers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Orders" ADD CONSTRAINT "Orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

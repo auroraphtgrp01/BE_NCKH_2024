@@ -16,6 +16,9 @@ import { ContractAttributeValuesModule } from './contract-attribute-values/contr
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
 import { CommonModule } from './commons/common.module'
 import { ParticipantsModule } from './participants/participants.module'
+import { ProductsModule } from './products/products.module';
+import { ImagesModule } from './images/images.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -45,7 +48,10 @@ import { ParticipantsModule } from './participants/participants.module'
     ContractAttributeValuesModule,
     TemplateContractsModule,
     CommonModule,
-    ParticipantsModule
+    ParticipantsModule,
+    ProductsModule,
+    ImagesModule,
+    RolesModule
   ],
   controllers: [AppController],
   providers: [

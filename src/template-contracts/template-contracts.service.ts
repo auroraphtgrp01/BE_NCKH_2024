@@ -16,7 +16,7 @@ export class TemplateContractsService {
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
     const { name, contractAttributes } = createTemplateContractDto
-    // const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    // const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const templateContract = await this.prismaService.client.templateContract.create({
       data: {
         name,

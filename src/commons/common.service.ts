@@ -30,7 +30,7 @@ export class CommonService {
   async createContractAttributes(createContractAttributeCommonDto: CreateContractAttributeCommonDto, user: IUser) {
     const { templateContractId, contractId, contractAttributes } = createContractAttributeCommonDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {

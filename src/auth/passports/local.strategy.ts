@@ -15,7 +15,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException(RESPONSE_MESSAGES.ADDRESS_WALLET_OR_PIN_IS_INVALID)
     }
-
     return user
   }
 }

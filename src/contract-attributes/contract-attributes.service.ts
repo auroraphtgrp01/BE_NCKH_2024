@@ -18,7 +18,7 @@ export class ContractAttributesService {
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
     const { contractId, templateContractId, ...rest } = createContractAttributeDto
 
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const data: ICreateContractAttributeRecord = { ...rest }
 
     if (contractId) data.Contract = { connect: { id: contractId } }
@@ -90,7 +90,7 @@ export class ContractAttributesService {
     const { id, ...data } = updateContractAttributeDto
     if (id && !(await this.findOneById(id)))
       throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
-    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email }
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contractAttribute = await this.prismaService.client.contractAttribute.update({
       where: { id },
       data: { ...data, updatedBy }

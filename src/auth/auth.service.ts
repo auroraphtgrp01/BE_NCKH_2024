@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config'
 import { convertMany } from 'convert'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
 import { compare } from 'bcryptjs'
+import { ERoles } from 'src/constants/enum.constant'
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,8 @@ export class AuthService {
       id: user.id,
       name: user.name,
       addressWallet: user.addressWallet,
-      email: user.email
+      email: user.email,
+      role: user.role
     }
   }
 
@@ -51,7 +53,8 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      name: user.name
+      name: user.name,
+      role: user.role
     }
 
     return this.jwtService.sign(payload)
@@ -64,7 +67,8 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      name: user.name
+      name: user.name,
+      role: user.role
     }
 
     return this.jwtService.sign(payload, {
@@ -79,7 +83,8 @@ export class AuthService {
     if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     if (user.PIN === null) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_NOT_SET })
     if (user && (await compare(PIN, user.PIN)) === true) {
-      const { PIN, ...result } = user
+      const { PIN, ...rest } = user
+      const result: IUser = { ...rest, role: user.Role.name as ERoles }
       return result
     }
     return null
