@@ -15,16 +15,6 @@ export class ParticipantsController {
     return await this.participantsService.create(createParticipantDto, user)
   }
 
-  @Get('accept/:participantId')
-  async acceptInvitation(@Param('participantId') participantId: string, @User() user: IUser) {
-    return await this.participantsService.update({ id: participantId, status: ParticipantStatus.ACCEPTED }, user)
-  }
-
-  @Get('refuse/:participantId')
-  async refuseInvitation(@Param('participantId') participantId: string, @User() user: IUser) {
-    return await this.participantsService.update({ id: participantId, status: ParticipantStatus.REFUSED }, user)
-  }
-
   @Post('send-invitation')
   async sendInvitation(@Body() sendInvitationDto: SendInvitationsDto, @User() user: IUser) {
     return await this.participantsService.sendInvitation(sendInvitationDto, user)

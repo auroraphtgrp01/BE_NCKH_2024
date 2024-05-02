@@ -101,22 +101,20 @@ export class ParticipantsService {
       throw new BadRequestException(RESPONSE_MESSAGES.USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH)
     if (find.status !== ParticipantStatus.PENDING)
       throw new UnauthorizedException(RESPONSE_MESSAGES.PARTICIPANT_RESPONDED)
-    const rest: IUpdateParticipant = {}
-    let status: ParticipantStatus = ParticipantStatus.PENDING
-    if (updateParticipantDto.status) {
-      if (!Object.values(ParticipantStatus).includes(updateParticipantDto.status as ParticipantStatus))
-        throw new BadRequestException(RESPONSE_MESSAGES.PARTICIPANT_STATUS_INVALID)
-
-      if (updateParticipantDto.status !== ParticipantStatus.PENDING) rest.User = { connect: { id: user.id } }
-      status = updateParticipantDto.status as ParticipantStatus
-    }
-    if (updateParticipantDto.email) rest.email = updateParticipantDto.email
+    if (
+      updateParticipantDto.status &&
+      !Object.values(ParticipantStatus).includes(updateParticipantDto.status as ParticipantStatus)
+    )
+      throw new BadRequestException(RESPONSE_MESSAGES.PARTICIPANT_STATUS_INVALID)
 
     const participant = await this.prismaService.client.participant.update({
       where: { id },
       data: {
-        ...rest,
-        status: status as Exact<ParticipantStatus, ParticipantStatus>,
+        ...updateParticipantDto,
+        User: updateParticipantDto.status ? { connect: { id: user.id } } : undefined,
+        status: updateParticipantDto.status
+          ? (updateParticipantDto.status as Exact<ParticipantStatus, ParticipantStatus>)
+          : find.status,
         updatedBy: { id: user.id, name: user.name, email: user.email }
       }
     })
