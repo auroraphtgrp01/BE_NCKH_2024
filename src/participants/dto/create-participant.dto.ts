@@ -26,6 +26,8 @@ export class CreateParticipantDto {
   email: string
 
   @IsObject()
+  @ValidateNested()
+  @Type(() => PermissionDto)
   readonly permission: PermissionDto
 }
 
