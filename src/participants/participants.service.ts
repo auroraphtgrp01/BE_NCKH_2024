@@ -56,18 +56,18 @@ export class ParticipantsService {
     invitations.map(async (invitation: InvitationDto) => {
       const participantRecord = await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
       participants.push(participantRecord)
-      const payload: IQueuePayloadSendInvitation = {
-        to: invitation.email,
-        from: user.email,
-        messages: invitation.messages,
-        link: `${this.configService.get<string>('FRONTEND_HOST')}/contract/${sendInvitationDto.contractId}`,
-        receiver: user.name,
-        addressWalletSender: user.addressWallet,
-        contractName: sendInvitationDto.contractName,
-        idParticipant: participantRecord.id
-      }
+      // const payload: IQueuePayloadSendInvitation = {
+      //   to: invitation.email,
+      //   from: user.email,
+      //   messages: invitation.messages,
+      //   link: `${this.configService.get<string>('FRONTEND_HOST')}/contract/${sendInvitationDto.contractId}`,
+      //   receiver: user.name,
+      //   addressWalletSender: user.addressWallet,
+      //   contractName: sendInvitationDto.contractName,
+      //   idParticipant: participantRecord.id
+      // }
 
-      this.queueService.enqueueSendInvitation(payload)
+      // this.queueService.enqueueSendInvitation(payload)
     })
 
     return participants
