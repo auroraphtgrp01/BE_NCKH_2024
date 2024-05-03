@@ -13,7 +13,7 @@ import {
   ValidateNested
 } from 'class-validator'
 import { Transform, Type } from 'class-transformer'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { GasPriceDto } from './create-contract.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'

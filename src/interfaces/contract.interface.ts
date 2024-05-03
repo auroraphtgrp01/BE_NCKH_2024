@@ -17,3 +17,8 @@ export interface ICreateContractResponse {
   contract: Contract
   contractAttributes: IContractAttributeResponse[]
 }
+
+export interface IContractResponse {
+  readonly contracts: Contract[]
+  readonly contractAttributes: IContractAttributeResponse[]
+}

@@ -7,7 +7,7 @@ import { Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { convertMany } from 'convert'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { compare } from 'bcryptjs'
 import { ERoles } from 'src/constants/enum.constant'
 

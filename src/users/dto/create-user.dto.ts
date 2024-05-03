@@ -14,7 +14,7 @@ import {
   Min,
   MinLength
 } from 'class-validator'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateUserDto {
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })

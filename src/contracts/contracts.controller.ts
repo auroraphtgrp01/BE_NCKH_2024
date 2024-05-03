@@ -35,6 +35,16 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
+  @Get('test')
+  test() {
+    return this.contractsService.test()
+  }
+
+  @Get('get-all-contract-details/:addressWallet')
+  async getAllContractDetails(@Param('addressWallet') addressWallet: string) {
+    return await this.contractsService.getContractsByAddressWallet(addressWallet)
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.contractsService.findOneById(id)

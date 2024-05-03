@@ -19,7 +19,7 @@ import {
   ValidateNested
 } from 'class-validator'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateContractAttributesDto {
   @IsString()

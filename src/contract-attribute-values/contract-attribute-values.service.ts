@@ -5,7 +5,7 @@ import { IUser } from 'src/users/interfaces/IUser.interface'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 
 @Injectable()

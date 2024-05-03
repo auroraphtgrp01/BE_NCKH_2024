@@ -3,7 +3,7 @@ import { CreateContractDto, CreateEmptyContractDto } from './dto/create-contract
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { contractStatus } from '@prisma/client'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -12,12 +12,13 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
-import { ICreateContractResponse } from 'src/interfaces/contract.interface'
+import { IContractResponse, ICreateContractResponse } from 'src/interfaces/contract.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
-import { IContractAttributeResponse, IDataContractAttribute } from 'src/interfaces/contract-attribute.interface'
+import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
+import { ethers } from 'ethers'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -29,6 +30,76 @@ export class ContractsService {
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService
   ) {}
+
+  test() {
+    const jsonData = [
+      {
+        id: 'd9d4be94-81e3-4267-97e8-c6bf5e5c3bf8',
+        value: 'Cac ben tham gia',
+        type: 'Contract Heading 1',
+        createdBy: {
+          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
+          name: 'Khanh Tran',
+          email: 'duykhanhtran17011012@gmail.com',
+          role: 'User'
+        }
+      },
+      {
+        id: 'de386622-f133-4cf2-8339-eb908fff7fa7',
+        value: 'Ben nhan',
+        type: 'Contract Heading 2',
+        createdBy: {
+          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
+          name: 'Khanh Tran',
+          email: 'duykhanhtran17011012@gmail.com',
+          role: 'User'
+        }
+      },
+      {
+        id: '7b1bd794-122e-45f6-b093-2bf5fe5a2799',
+        property: 'Ong Dung',
+        value: '',
+        type: 'Contract Attribute',
+        createdBy: {
+          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
+          name: 'Khanh Tran',
+          email: 'duykhanhtran17011012@gmail.com',
+          role: 'User'
+        }
+      },
+      {
+        id: '3f708bdf-d78d-4281-bbd0-3a22e88e388a',
+        value: 'Ben cung cap',
+        type: 'Contract Heading 2',
+        createdBy: {
+          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
+          name: 'Khanh Tran',
+          email: 'duykhanhtran17011012@gmail.com',
+          role: 'User'
+        }
+      },
+      {
+        id: 'fb0689ec-9883-4ce3-bac6-6a097c63f48a',
+        property: 'Ba Tam',
+        value: '',
+        type: 'Contract Attribute',
+        createdBy: {
+          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
+          name: 'Khanh Tran',
+          email: 'duykhanhtran17011012@gmail.com',
+          role: 'User'
+        }
+      }
+    ]
+    const jsonStr = JSON.stringify(jsonData)
+
+    const bytesData = ethers.toUtf8Bytes(jsonStr)
+    const bytesDataHex = ethers.hexlify(bytesData)
+
+    const jsonString = ethers.toUtf8String(bytesData)
+    const jsonArray = JSON.parse(jsonString)
+    return { bytesDataHex, jsonArray }
+  }
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, id } = contractData
@@ -72,6 +143,19 @@ export class ContractsService {
     return contractResponse
   }
 
+  async getContractsByAddressWallet(addressWallet: string) {
+    const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
+
+    const contractAttributes = []
+    await Promise.all(
+      contracts.map(async (contract) => {
+        contractAttributes.push(await this.contractAttributesService.findAllByContractId(contract.id))
+      })
+    )
+
+    return { contracts, contractAttributes }
+  }
+
   findAll() {
     return `This action returns all contracts`
   }
@@ -90,149 +174,7 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    // Tạo ra một data mới từ updateContractDto, loại bỏ id ra khỏi data mới
-    // contract Attributes
-    // Tạo mới (filter không có id)
-    // Cập nhật (filter có id)
-    // Tạo các thông tin của contract
-    // deploy contract get blockAddress, contractAddress, gasPrices
-    // cập nhật lại contract
-
-    const { id, ...rest } = updateContractDto
-    console.log('rest', rest)
-
-    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    // const isContractExist = await this.prismaService.client.contract.findUnique({ where: { id } })
-    // if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    // // const gasPrice = updateContractDto.gasPrices.map((gasPrice) => {
-    // //   return { ...gasPrice }
-    // // })
-    // // const updatedGasPrices = [...isContractExist.gasPrices, ...gasPrice]
-
-    // const countContractAttributes = await this.prismaService.client.contractAttribute.count({
-    //   where: { contractId: id }
-    // })
-
-    // const contractAttributesUpdate: IDataContractAttribute[] = []
-    // const contractAttributesCreate: IDataContractAttribute[] = []
-    // const contractAttributesResponse: IContractAttributeResponse[] = []
-
-    // for (const contractAttribute of rest.contractAttributes) {
-    //   if (contractAttribute.id) contractAttributesUpdate.push(contractAttribute)
-    //   else contractAttributesCreate.push(contractAttribute)
-    // }
-
-    // if (countContractAttributes > 0) {
-    //   if (!contractAttributesUpdate || contractAttributesUpdate.length !== countContractAttributes)
-    //     throw new UnauthorizedException({ message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED })
-
-    //   await Promise.all([
-    //     contractAttributesUpdate.map(async (contractAttribute) => {
-    //       if (
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-    //       ) {
-    //         const contractAttributeRecord = await this.contractAttributesService.update(
-    //           { id: contractAttribute.id, value: contractAttribute.property, type: contractAttribute.type },
-    //           user
-    //         )
-    //         const contractAttributeValueRecord = await this.contractAttributeValuesService.update(
-    //           { value: contractAttribute.value, contractAttributeId: contractAttribute.id },
-    //           user
-    //         )
-    //         const result: IContractAttributeResponse = {
-    //           id: contractAttributeRecord.id,
-    //           property: contractAttributeRecord.value,
-    //           value: contractAttributeValueRecord.value,
-    //           type: contractAttributeRecord.type,
-    //           createdBy: contractAttributeRecord.createdBy,
-    //           updatedBy: contractAttributeRecord.updatedBy
-    //         }
-    //         contractAttributesResponse.push(result)
-    //       } else {
-    //         const contractAttributeRecord = await this.contractAttributesService.update(
-    //           { id: contractAttribute.id, value: contractAttribute.value, type: contractAttribute.type },
-    //           user
-    //         )
-    //         const result: IContractAttributeResponse = {
-    //           id: contractAttributeRecord.id,
-    //           value: contractAttributeRecord.value,
-    //           type: contractAttributeRecord.type,
-    //           createdBy: contractAttributeRecord.createdBy,
-    //           updatedBy: contractAttributeRecord.updatedBy
-    //         }
-    //         contractAttributesResponse.push(result)
-    //       }
-    //     }),
-    //     contractAttributesCreate.map(async (contractAttribute) => {
-    //       if (
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-    //         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-    //       ) {
-    //         const contractAttributeRecord = await this.contractAttributesService.create(
-    //           {
-    //             contractId: id,
-    //             value: contractAttribute.property,
-    //             type: contractAttribute.type
-    //           },
-    //           user
-    //         )
-    //         const contractAttributeValueRecord = await this.contractAttributeValuesService.create(
-    //           { value: contractAttribute.value, contractAttributeId: contractAttributeRecord.id },
-    //           user
-    //         )
-    //         const result: IContractAttributeResponse = {
-    //           id: contractAttributeRecord.id,
-    //           property: contractAttributeRecord.value,
-    //           value: contractAttributeValueRecord.value,
-    //           type: contractAttributeRecord.type,
-    //           createdBy: contractAttributeRecord.createdBy,
-    //           updatedBy: contractAttributeRecord.updatedBy
-    //         }
-    //         contractAttributesResponse.push(result)
-    //       } else {
-    //         const contractAttributeRecord = await this.contractAttributesService.create(
-    //           {
-    //             contractId: id,
-    //             value: contractAttribute.value,
-    //             type: contractAttribute.type
-    //           },
-    //           user
-    //         )
-    //         const result: IContractAttributeResponse = {
-    //           id: contractAttributeRecord.id,
-    //           value: contractAttributeRecord.value,
-    //           type: contractAttributeRecord.type,
-    //           createdBy: contractAttributeRecord.createdBy,
-    //           updatedBy: contractAttributeRecord.updatedBy
-    //         }
-    //         contractAttributesResponse.push(result)
-    //       }
-    //     })
-    //   ])
-    // }
-    // // Gọi thực thi deploy contract tại đây
-    // // ...
-    // const gasPrices: IGasPrice[] = [
-    //   {
-    //     addressWallet: '0x883654B80DaB3d9dA1C6E48cEF8046a148dB0Db1',
-    //     price: '2001',
-    //     reason: 'DEPLOY CONTRACT',
-    //     createdAt: new Date()
-    //   }
-    // ]
-    // const dataUpdate: UpdateContractDto = {
-    //   ...contractData,
-    //   status: contractStatus.DEPLOYED,
-    //   gasPrices,
-    //   contractAddress: '0xF40Ef444B65bB9a45e144fC6Ab480E873434Bb8a',
-    //   blockAddress: '0xd0cab3b7c79f849a9360b470729a584c7fb660f9ab26691efd57c364ad7542f6'
-    // }
-    // contractResponse.contract = await this.update(dataUpdate, user)
+    return 'update'
   }
 
   async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
@@ -378,6 +320,7 @@ export class ContractsService {
     const [contractAttributeRecords] = await Promise.all([
       this.commonService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
     ])
+
     return contractAttributeRecords
   }
 

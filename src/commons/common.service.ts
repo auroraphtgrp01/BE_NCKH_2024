@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable, NotFoundException, forwardRef 
 import * as crypto from 'crypto'
 import { IUser } from '../users/interfaces/IUser.interface'
 import { ContractAttributesService } from '../contract-attributes/contract-attributes.service'
-import { RESPONSE_MESSAGES } from '../constants/responseMessage'
+import { RESPONSE_MESSAGES } from '../constants/responseMessage.constant'
 import { ContractAttributeValuesService } from '../contract-attribute-values/contract-attribute-values.service'
 import {
   IContractAttributeResponse,

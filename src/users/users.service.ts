@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { CustomPrismaService } from 'nestjs-prisma'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { readContract } from 'src/utils/readContract.utils'
 import { CreateUserDto } from './dto/create-user.dto'

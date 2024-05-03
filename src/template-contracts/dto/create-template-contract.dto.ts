@@ -9,7 +9,7 @@ import {
   MaxLength,
   ValidateNested
 } from 'class-validator'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateContractAttributeDto {
   @IsOptional()
