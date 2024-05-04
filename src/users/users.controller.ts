@@ -55,4 +55,9 @@ export class UsersController {
     if (await this.usersService.findOneByAddressWallet(addressWallet)) return { exists: true }
     return { exists: false }
   }
+
+  @Post('test-deploy')
+  async testDeploy() {
+    return await this.usersService.deployContract()
+  }
 }

@@ -95,14 +95,7 @@ export class ContractsService {
   async getContractsByAddressWallet(addressWallet: string) {
     const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
 
-    const contractAttributes = []
-    await Promise.all(
-      contracts.map(async (contract) => {
-        contractAttributes.push(await this.contractAttributesService.findAllByContractId(contract.id))
-      })
-    )
-
-    return { contracts, contractAttributes }
+    return { contracts }
   }
 
   findAll() {

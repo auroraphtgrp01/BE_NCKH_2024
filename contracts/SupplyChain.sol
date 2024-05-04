@@ -116,10 +116,10 @@ contract SupplyChain {
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
-  function getContractInformation() public view returns (bytes[] memory) {
-    bytes[] memory values = new bytes[](contractInformationKeys.length);
+  function getContractInformation() public view returns (string[] memory) {
+    string[] memory values = new string[](contractInformationKeys.length);
     for (uint i = 0; i < contractInformationKeys.length; i++) {
-      values[i] = contractInformation[contractInformationKeys[i]];
+      values[i] = string(contractInformation[contractInformationKeys[i]]);
     }
     return values;
   }

@@ -4,7 +4,6 @@ import { CreateContractAttributesDto, CreateContractDto } from './dto/create-con
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
-import { CommonService } from 'src/commons/common.service'
 @Controller('contracts')
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
