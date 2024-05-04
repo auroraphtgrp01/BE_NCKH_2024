@@ -23,8 +23,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsUUID()
-  readonly roleId: string
+  readonly role: string
 
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })

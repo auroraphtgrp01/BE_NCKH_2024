@@ -14,6 +14,6 @@ export enum ETypeContractAttribute {
 
 export enum ERoles {
   ADMIN = 'Admin',
-  USER = 'User',
+  CUSTOMER = 'Customer',
   SUPPLIER = 'Supplier'
 }

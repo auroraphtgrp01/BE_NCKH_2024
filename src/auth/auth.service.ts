@@ -84,7 +84,7 @@ export class AuthService {
     if (user.PIN === null) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_NOT_SET })
     if (user && (await compare(PIN, user.PIN)) === true) {
       const { PIN, ...rest } = user
-      const result: IUser = { ...rest, role: user.Role.name as ERoles }
+      const result: IUser = { ...rest, role: user.role as ERoles }
       return result
     }
     return null

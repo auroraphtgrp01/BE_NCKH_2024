@@ -73,5 +73,5 @@ export const RESPONSE_MESSAGES = {
   UPDATE_CONTRACT_ATTRIBUTE_SUCCESS: 'Update contract attribute success',
   YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION: 'You are not allowed to perform this action',
   ROLE_IS_EXIST: 'Role is exist',
-  ROLE_NOT_FOUND: 'Role not found'
+  ROLE_IS_INVALID: 'Role is invalid'
 }

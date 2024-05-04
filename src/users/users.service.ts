@@ -11,17 +11,14 @@ import { IUser } from './interfaces/IUser.interface'
 import { Exact } from '@prisma/client/runtime/library'
 import { Gender } from '@prisma/client'
 import { isNumeric } from 'src/decorators/is-nummeric.decorator'
-import { RolesService } from 'src/roles/roles.service'
+import { ERoles } from 'src/constants/enum.constant'
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private readonly rolesService: RolesService
-  ) {}
+  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
   async create(createUserDto: CreateUserDto, user?: IUser) {
-    if (!(await this.rolesService.findOneById(createUserDto.roleId)))
-      throw new NotFoundException(RESPONSE_MESSAGES.ROLE_NOT_FOUND)
+    if (Object.values(ERoles).some((role) => role === createUserDto.role) == false)
+      throw new NotFoundException(RESPONSE_MESSAGES.ROLE_IS_INVALID)
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [
@@ -43,11 +40,9 @@ export class UsersService {
       if (createUserDto.PIN.length !== 6) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_LENGTH_IS_6_DIGIT)
       if (!isNumeric(createUserDto.PIN)) throw new UnauthorizedException(RESPONSE_MESSAGES.PIN_MUST_BE_A_NUMBER)
     }
-    const { roleId, ...data } = createUserDto
     return await this.prismaService.client.user.create({
       data: {
-        ...data,
-        Role: { connect: { id: roleId } },
+        ...createUserDto,
         gender: createUserDto.gender as Exact<Gender, Gender>,
         PIN: createUserDto.PIN ? await hashPassword(createUserDto.PIN) : null,
         updatedAt: null,
@@ -102,7 +97,7 @@ export class UsersService {
   }
 
   async findOneByAddressWallet(addressWallet: string) {
-    const user = await this.prismaService.client.user.findUnique({ where: { addressWallet }, include: { Role: true } })
+    const user = await this.prismaService.client.user.findUnique({ where: { addressWallet } })
     return user
   }
 

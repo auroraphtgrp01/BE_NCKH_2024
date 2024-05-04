@@ -4,7 +4,6 @@ import { UsersController } from './users.controller'
 import { RolesModule } from 'src/roles/roles.module'
 
 @Module({
-  imports: [RolesModule],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService]

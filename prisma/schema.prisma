@@ -48,8 +48,7 @@ model User {
   forgotPasswordToken String?
   refreshToken        String?
   userStatus          UserStatus?  @default(UNVERIFIED)
-  Role                Roles        @relation(fields: [roleId], references: [id])
-  roleId              String       @db.Uuid
+  role                String
   createdAt           DateTime?    @default(now())
   updatedAt           DateTime?    @updatedAt
   createdBy           Json?
@@ -156,7 +155,6 @@ model Roles {
   updatedBy   Json?
   deletedAt   DateTime?
   deletedBy   Json?
-  User        User[]
 }
 
 model Permission {
