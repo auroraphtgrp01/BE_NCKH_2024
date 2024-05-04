@@ -35,9 +35,9 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
-  @Get('test')
-  test() {
-    return this.contractsService.test()
+  @Post('test')
+  test(@Body() data: any) {
+    return this.contractsService.test(data)
   }
 
   @Get('get-all-contract-details/:addressWallet')

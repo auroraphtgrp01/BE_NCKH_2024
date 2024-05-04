@@ -31,66 +31,7 @@ export class ContractsService {
     private readonly contractAttributeValuesService: ContractAttributeValuesService
   ) {}
 
-  test() {
-    const jsonData = [
-      {
-        id: 'd9d4be94-81e3-4267-97e8-c6bf5e5c3bf8',
-        value: 'Cac ben tham gia',
-        type: 'Contract Heading 1',
-        createdBy: {
-          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
-          name: 'Khanh Tran',
-          email: 'duykhanhtran17011012@gmail.com',
-          role: 'User'
-        }
-      },
-      {
-        id: 'de386622-f133-4cf2-8339-eb908fff7fa7',
-        value: 'Ben nhan',
-        type: 'Contract Heading 2',
-        createdBy: {
-          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
-          name: 'Khanh Tran',
-          email: 'duykhanhtran17011012@gmail.com',
-          role: 'User'
-        }
-      },
-      {
-        id: '7b1bd794-122e-45f6-b093-2bf5fe5a2799',
-        property: 'Ong Dung',
-        value: '',
-        type: 'Contract Attribute',
-        createdBy: {
-          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
-          name: 'Khanh Tran',
-          email: 'duykhanhtran17011012@gmail.com',
-          role: 'User'
-        }
-      },
-      {
-        id: '3f708bdf-d78d-4281-bbd0-3a22e88e388a',
-        value: 'Ben cung cap',
-        type: 'Contract Heading 2',
-        createdBy: {
-          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
-          name: 'Khanh Tran',
-          email: 'duykhanhtran17011012@gmail.com',
-          role: 'User'
-        }
-      },
-      {
-        id: 'fb0689ec-9883-4ce3-bac6-6a097c63f48a',
-        property: 'Ba Tam',
-        value: '',
-        type: 'Contract Attribute',
-        createdBy: {
-          id: '393d9126-4e31-4601-b138-3e81a2f307d4',
-          name: 'Khanh Tran',
-          email: 'duykhanhtran17011012@gmail.com',
-          role: 'User'
-        }
-      }
-    ]
+  test(jsonData: any) {
     const jsonStr = JSON.stringify(jsonData)
 
     const bytesData = ethers.toUtf8Bytes(jsonStr)
@@ -98,7 +39,15 @@ export class ContractsService {
 
     const jsonString = ethers.toUtf8String(bytesData)
     const jsonArray = JSON.parse(jsonString)
-    return { bytesDataHex, jsonArray }
+
+    return {
+      bytesDataHex,
+      jsonArray,
+      jsonData,
+      type1: typeof jsonData,
+      type2: typeof jsonArray,
+      check: jsonData === jsonArray
+    }
   }
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {

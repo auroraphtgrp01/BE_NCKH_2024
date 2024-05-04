@@ -8,9 +8,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "address[]",
 						"name": "_user",
-						"type": "address"
+						"type": "address[]"
 					},
 					{
 						"internalType": "address",
@@ -26,6 +26,11 @@
 						"internalType": "bytes[]",
 						"name": "_values",
 						"type": "bytes[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_total",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -37,8 +42,14 @@
 					{
 						"indexed": false,
 						"internalType": "address",
-						"name": "user",
+						"name": "owner",
 						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address[]",
+						"name": "user",
+						"type": "address[]"
 					},
 					{
 						"indexed": false,
@@ -49,13 +60,19 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "deployAt",
+						"name": "totalBalance",
 						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "currentBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "deployAt",
 						"type": "uint256"
 					}
 				],
@@ -68,9 +85,40 @@
 					{
 						"indexed": false,
 						"internalType": "address",
-						"name": "from",
+						"name": "sender",
 						"type": "address"
 					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "receivedAt",
+						"type": "uint256"
+					}
+				],
+				"name": "received",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
 					{
 						"indexed": false,
 						"internalType": "address",
@@ -86,7 +134,19 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "transferAt",
+						"name": "totalBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "widthdrewAt",
 						"type": "uint256"
 					}
 				],
@@ -96,49 +156,24 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
+						"internalType": "address",
+						"name": "_addressWallet",
+						"type": "address"
 					}
 				],
-				"name": "contractInformation",
+				"name": "getAssets",
 				"outputs": [
-					{
-						"internalType": "bytes",
-						"name": "",
-						"type": "bytes"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
 					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "contractInformationKeys",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_addressWallet",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"name": "getBalance",
 				"outputs": [
 					{
@@ -165,7 +200,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "owner",
+				"name": "getOwnerAddressWallet",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -178,15 +213,35 @@
 			},
 			{
 				"inputs": [],
-				"name": "supplier",
+				"name": "getSupplierAddressWallet",
 				"outputs": [
 					{
-						"internalType": "address payable",
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getUserAddressWallet",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sendToSmartContract",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -202,7 +257,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "transferByCurrency",
+				"name": "withDrawByCurrency",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
@@ -220,22 +275,9 @@
 						"type": "uint256"
 					}
 				],
-				"name": "transferByPercent",
+				"name": "withDrawByPercent",
 				"outputs": [],
 				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "user",
-				"outputs": [
-					{
-						"internalType": "address payable",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -267,11 +309,11 @@
 	},
 	"sources": {
 		"contracts/SupplyChain.sol": {
-			"keccak256": "0x052083904ab069124726e79f8efa759b3b3812da798e9ce799e505e3ebb12f79",
+			"keccak256": "0x31fbb1e68c117cfb2240001a637ac4d0e5a03525f71b818bf6184ad81b8d4049",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ac65d4d111c2c16eded10233e849fc64999184e7ab37ea35d6158c2abc7cce4f",
-				"dweb:/ipfs/QmNgH98roeiM7ZoaKR87ytpV5ThpAGfEeUrtKXp2X9yRx8"
+				"bzz-raw://5490dcb5ba7500b8d8165ad70e77123a6deb4eeeb99938178bc0c7cccf2ead9c",
+				"dweb:/ipfs/QmV2AKAxxpvscZNGPU4fvbwRp3E1ntNTPBjwoLhKJyDXd2"
 			]
 		}
 	},

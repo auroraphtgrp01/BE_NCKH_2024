@@ -19,10 +19,12 @@ export class QueueRedisService {
 }
 
 export interface IQueuePayloadDeployContract {
-  contractId: string
+  contractId?: string
   _keys: string[]
   _values: string[]
   _supplier: string
+  _users?: string[]
+  _total?: string
 }
 
 export interface IQueuePayloadSendInvitation {
