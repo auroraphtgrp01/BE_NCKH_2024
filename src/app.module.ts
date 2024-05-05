@@ -19,6 +19,7 @@ import { ParticipantsModule } from './participants/participants.module'
 import { ProductsModule } from './products/products.module';
 import { ImagesModule } from './images/images.module';
 import { RolesModule } from './roles/roles.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { RolesModule } from './roles/roles.module';
     ParticipantsModule,
     ProductsModule,
     ImagesModule,
-    RolesModule
+    RolesModule,
+    SuppliersModule
   ],
   controllers: [AppController],
   providers: [

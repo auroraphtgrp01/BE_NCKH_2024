@@ -48,8 +48,7 @@ contract SupplyChain {
     address _supplier,
     string[] memory _keys,
     bytes[] memory _values,
-    uint _total,
-    StageData[] memory _stages
+    uint _total // StageData[] memory _stages
   ) {
     totalBalance = _total * 1 ether;
     supplier = _supplier;
@@ -62,9 +61,9 @@ contract SupplyChain {
       contractInformation[_keys[i]] = _values[i];
       contractInformationKeys.push(_keys[i]);
     }
-    for (uint8 i = 0; i < _stages.length; i++) {
-      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, false, false, false));
-    }
+    // for (uint8 i = 0; i < _stages.length; i++) {
+    //   stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, false, false, false));
+    // }
 
     emit contractCreated(owner, users, supplier, totalBalance, address(this).balance, block.timestamp);
   }
@@ -110,25 +109,25 @@ contract SupplyChain {
     _;
   }
 
-  function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
-    if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
-    else stages[currentStage].userConfirm = true;
+  // function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
+  //   if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
+  //   else stages[currentStage].userConfirm = true;
 
-    if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
-      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
-      currentStage++;
-      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
-      stages[currentStage].isDone = true;
-    }
+  //   if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
+  //     this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+  //     currentStage++;
+  //     this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+  //     stages[currentStage].isDone = true;
+  //   }
 
-    emit confirmedStage(
-      stages[currentStage].percent,
-      stages[currentStage].userConfirm,
-      stages[currentStage].supplierConfirm,
-      stages[currentStage].isDone,
-      block.timestamp
-    );
-  }
+  //   emit confirmedStage(
+  //     stages[currentStage].percent,
+  //     stages[currentStage].userConfirm,
+  //     stages[currentStage].supplierConfirm,
+  //     stages[currentStage].isDone,
+  //     block.timestamp
+  //   );
+  // }
 
   function withDrawByPercent(
     address payable _addressWallet,

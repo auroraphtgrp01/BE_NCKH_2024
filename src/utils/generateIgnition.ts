@@ -48,8 +48,7 @@ async function deployContract(
     const _keys = m.getParameter("_keys", ${JSON.stringify(_keys)});
     const _values = m.getParameter("_values", ${JSON.stringify(_values)});
     const _total = m.getParameter("_total", ${JSON.stringify(_total)});
-    const _stages = m.getParameter("_stages", ${JSON.stringify(_stages)});
-    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total, _stages]);
+    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total]);
 return {
     contract
 }})
