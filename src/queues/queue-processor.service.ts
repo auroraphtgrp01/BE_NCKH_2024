@@ -11,10 +11,12 @@ export class QueueProcessorService extends WorkerHost {
   async process(job: Job<IQueuePayloadDeployContract, string, string>, token?: string): Promise<string> {
     switch (job.name) {
       case 'deployContract':
-        const { _keys, _values, _supplier, contractId, _users, _total } = job.data
+        console.log('Starting contract...', job.data._total)
+
+        const { _keys, _values, _supplier, contractId, _users, _total, _stages } = job.data
         console.log('Processing contract...')
         try {
-          await deployContract(_keys, _values, _supplier, contractId, _users, _total)
+          await deployContract(_keys, _values, _supplier, contractId, _users, _total, _stages)
           this.logger.log(`Contract id ${contractId} processed successfully`)
           return `Contract id ${contractId} processed successfully`
         } catch (error) {

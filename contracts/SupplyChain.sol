@@ -2,6 +2,18 @@
 pragma solidity ^0.8.19;
 
 contract SupplyChain {
+  struct Stage {
+    uint percent;
+    uint deliveryAt;
+    bool userConfirm;
+    bool supplierConfirm;
+    bool isDone;
+  }
+
+  struct StageData {
+    uint percent;
+    uint deliveryAt;
+  }
   address private owner;
   address[] private users;
   mapping(address => uint) private assets;
@@ -9,6 +21,8 @@ contract SupplyChain {
   mapping(string => bytes) private contractInformation;
   string[] private contractInformationKeys;
   uint private totalBalance;
+  Stage[] private stages;
+  uint8 private currentStage = 0;
 
   event contractCreated(
     address owner,
@@ -20,6 +34,7 @@ contract SupplyChain {
   );
   event widthdrew(address to, uint amount, uint totalBalance, uint currentBalance, uint widthdrewAt);
   event received(address sender, uint amount, uint totalBalance, uint currentBalance, uint receivedAt);
+  event confirmedStage(uint percent, bool userConfirm, bool supplierConfirm, bool isDone, uint confirmedAt);
 
   // Mỗi lần sẽ tự deploy 1 smart contract mới
   // Mỗi smart contract sẽ có 1 address user (người chi trả), supplier
@@ -28,8 +43,15 @@ contract SupplyChain {
   // Withdraw ethers từ smart contract tới user hoặc supplier
   // Update Status SmartContract: cập nhật trạng thái của smart contract
   // Get contract Infomation
-  constructor(address[] memory _user, address _supplier, string[] memory _keys, bytes[] memory _values, uint _total) {
-    totalBalance = _total;
+  constructor(
+    address[] memory _user,
+    address _supplier,
+    string[] memory _keys,
+    bytes[] memory _values,
+    uint _total,
+    StageData[] memory _stages
+  ) {
+    totalBalance = _total * 1 ether;
     supplier = _supplier;
     owner = msg.sender;
     for (uint8 i = 0; i < _user.length; i++) {
@@ -39,6 +61,9 @@ contract SupplyChain {
     for (uint8 i = 0; i < _keys.length; i++) {
       contractInformation[_keys[i]] = _values[i];
       contractInformationKeys.push(_keys[i]);
+    }
+    for (uint8 i = 0; i < _stages.length; i++) {
+      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, false, false, false));
     }
 
     emit contractCreated(owner, users, supplier, totalBalance, address(this).balance, block.timestamp);
@@ -83,6 +108,26 @@ contract SupplyChain {
   modifier notEnoughEthers(uint _amount) {
     require(address(this).balance >= _amount, 'Not enough ethers');
     _;
+  }
+
+  function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
+    if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
+    else stages[currentStage].userConfirm = true;
+
+    if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
+      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+      currentStage++;
+      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+      stages[currentStage].isDone = true;
+    }
+
+    emit confirmedStage(
+      stages[currentStage].percent,
+      stages[currentStage].userConfirm,
+      stages[currentStage].supplierConfirm,
+      stages[currentStage].isDone,
+      block.timestamp
+    );
   }
 
   function withDrawByPercent(
@@ -147,5 +192,13 @@ contract SupplyChain {
 
   function getAssets(address _addressWallet) public view onlyPetitioner(_addressWallet) returns (uint) {
     return assets[_addressWallet];
+  }
+
+  function getTotalBalance() public view returns (uint) {
+    return totalBalance;
+  }
+
+  function getStages() public view returns (Stage[] memory) {
+    return stages;
   }
 }

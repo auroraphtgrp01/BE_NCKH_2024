@@ -4,7 +4,7 @@ import { UpdateSmartContractDto } from './dto/update-smart-contract.dto'
 import { readContract } from 'src/utils/readContract.utils'
 import { deployContract } from 'src/utils/generateIgnition'
 import { IQueuePayloadDeployContract, QueueRedisService } from 'src/queues/queue-redis.service'
-import { IKeyValueSmartContract } from 'src/interfaces/smart-contract.interface'
+import { IKeyValueSmartContract, IStage } from 'src/interfaces/smart-contract.interface'
 
 @Injectable()
 export class SmartContractsService {
@@ -25,9 +25,17 @@ export class SmartContractsService {
     contractId: string,
     _supplier: string,
     _users: string[],
-    _total: number
+    _total: number,
+    _stages: IStage[]
   ) {
     const { keys, values } = payload
+    const _stages_ = _stages.map((stage) => {
+      const date = new Date(stage.deliveryAt)
+      return {
+        percent: stage.percent,
+        deliveryAt: date.getTime() / 1000
+      }
+    })
 
     const payloadData: IQueuePayloadDeployContract = {
       _keys: keys,
@@ -35,7 +43,8 @@ export class SmartContractsService {
       _supplier,
       contractId,
       _users,
-      _total
+      _total,
+      _stages: _stages_
     }
     this.deloyContractService.enqueueDeployContract(payloadData)
     // await deployContract(_keys, _values, _supplier, contractId)

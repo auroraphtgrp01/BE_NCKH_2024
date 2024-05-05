@@ -31,10 +31,64 @@
 						"internalType": "uint256",
 						"name": "_total",
 						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "percent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "deliveryAt",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct SupplyChain.StageData[]",
+						"name": "_stages",
+						"type": "tuple[]"
 					}
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "percent",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "userConfirm",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "supplierConfirm",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isDone",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "confirmedAt",
+						"type": "uint256"
+					}
+				],
+				"name": "confirmedStage",
+				"type": "event"
 			},
 			{
 				"anonymous": false,
@@ -154,6 +208,13 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "confirmStage",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -190,9 +251,9 @@
 				"name": "getContractInformation",
 				"outputs": [
 					{
-						"internalType": "bytes[]",
+						"internalType": "string[]",
 						"name": "",
-						"type": "bytes[]"
+						"type": "string[]"
 					}
 				],
 				"stateMutability": "view",
@@ -213,12 +274,65 @@
 			},
 			{
 				"inputs": [],
+				"name": "getStages",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "percent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "deliveryAt",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "userConfirm",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "supplierConfirm",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "isDone",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct SupplyChain.Stage[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getSupplierAddressWallet",
 				"outputs": [
 					{
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -309,11 +423,11 @@
 	},
 	"sources": {
 		"contracts/SupplyChain.sol": {
-			"keccak256": "0x31fbb1e68c117cfb2240001a637ac4d0e5a03525f71b818bf6184ad81b8d4049",
+			"keccak256": "0x720b6bd178201c183091ca4009df7b91517c901a95a959f35f796d59b9945e58",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5490dcb5ba7500b8d8165ad70e77123a6deb4eeeb99938178bc0c7cccf2ead9c",
-				"dweb:/ipfs/QmV2AKAxxpvscZNGPU4fvbwRp3E1ntNTPBjwoLhKJyDXd2"
+				"bzz-raw://304a21243705dbaea9812a28500da66562a4bdff578147c7a4980bb9a81899b4",
+				"dweb:/ipfs/QmaLY6CpMxxyT41Fa9WS3A259d4pKWufhWrS9Q4YimAkZZ"
 			]
 		}
 	},

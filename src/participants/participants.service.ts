@@ -16,10 +16,9 @@ import { UsersService } from 'src/users/users.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { ConfigService } from '@nestjs/config'
-import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
 import { Participant, ParticipantStatus } from '@prisma/client'
-import { IUpdateParticipant } from 'src/interfaces/participant.interface'
 import { Exact } from '@prisma/client/runtime/library'
+import { QueueRedisService } from 'src/queues/queue-redis.service'
 
 @Injectable()
 export class ParticipantsService {

@@ -1,6 +1,7 @@
 import { InjectQueue } from '@nestjs/bullmq'
 import { Injectable } from '@nestjs/common'
 import { Queue } from 'bullmq'
+import { IStage, IStageDeploy } from 'src/interfaces/smart-contract.interface'
 
 @Injectable()
 export class QueueRedisService {
@@ -10,6 +11,8 @@ export class QueueRedisService {
   ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
+    console.log('Enqueue deploy contract', job._total)
+
     this.deployContractQueue.add('deployContract', job)
   }
 
@@ -25,6 +28,7 @@ export interface IQueuePayloadDeployContract {
   _supplier: string
   _users: string[]
   _total: number
+  _stages: IStageDeploy[]
 }
 
 export interface IQueuePayloadSendInvitation {
