@@ -21,7 +21,7 @@ export class SmartContractsService {
   }
 
   async getABI(contractName: any) {
-    const abi = readContract('d01ae844-cf71-478d-8d7e-ea8733c5a72b').abi
+    const abi = readContract('d01ae844-cf71-478d-8d7e-ea8733c5a72b')
     return {
       abi
     }

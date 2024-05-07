@@ -4,7 +4,8 @@ import { resolve } from 'path'
 
 export const readContract = (fileName: string): IContractJSON => {
   try {
-    const filePath = resolve(process.cwd(), `artifacts-storage/${fileName}.sol/${fileName}.json`)
+    // const filePath = resolve(process.cwd(), `artifacts/${fileName}.sol/${fileName}.json`)
+    const filePath = resolve(process.cwd(), `artifacts/contracts/SupplyChain.sol/SupplyChain.json`)
     const data = fs.readFileSync(filePath, 'utf8')
     const jsonData = JSON.parse(data)
     return jsonData
