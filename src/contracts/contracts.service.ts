@@ -254,35 +254,36 @@ export class ContractsService {
     templateContractId: string,
     user: IUser
   ): Promise<IContractAttributeResponse[]> {
-    const contractAttributes = await this.prismaService.client.contractAttribute
-      .findMany({
-        where: {
-          templateContractId
-        }
-      })
-      .then((contractAttributes) => {
-        const newContractAttributes: any[] = []
-        contractAttributes.forEach((contractAttribute) => {
-          if (
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
-          )
-            newContractAttributes.push({
-              property: contractAttribute.value,
-              value: 'Empty',
-              type: contractAttribute.type
-            })
-          else
-            newContractAttributes.push({
-              value: contractAttribute.value,
-              type: contractAttribute.type
-            })
+    const template = await this.templateContractsService.findOneById(templateContractId)
+    if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+    const getAllContractAttributes = await Promise.all(
+      template.ContractAttribute.map(async (item) => {
+        const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
+          where: { id: item }
         })
-        return newContractAttributes
+        return contractAttribute
       })
+    )
 
+    const contractAttributes: any[] = []
+    getAllContractAttributes.forEach((contractAttribute) => {
+      if (
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+      )
+        contractAttributes.push({
+          property: contractAttribute.value,
+          value: 'Empty',
+          type: contractAttribute.type
+        })
+      else
+        contractAttributes.push({
+          value: contractAttribute.value,
+          type: contractAttribute.type
+        })
+    })
     const [contractAttributeRecords] = await Promise.all([
       this.commonService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
     ])

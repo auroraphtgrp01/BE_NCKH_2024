@@ -27,14 +27,16 @@ export class SmartContractsService {
     }
   }
 
-  async deployContract(contractId: string, _supplier: string, _users: string[], _total?: number, orderId?: string) {
+  async deployContract(contractId: string, _total?: number, orderId?: string) {
     const dataContract = await this.contractService.getContractDetailsById(contractId)
+    if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+
     if (orderId) {
       const order = await this.orderService.findOneById(orderId)
       if (!order) throw new NotFoundException({ message: RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND })
       _total = order.products.reduce((acc, product: any) => acc + product.price, 0)
     } else if (!orderId && !_total) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.TOTAL_IS_REQUIRED })
-    if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+
     const { participants, ...payload } = dataContract
     const _stages = payload.contract.stages.map((stage: any) => {
       const date = new Date(stage.deliveryAt)
@@ -48,16 +50,16 @@ export class SmartContractsService {
     const listVal = Object.values(payload)
 
     const _values: string[] = listVal.map((val) => ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(val))))
-    const payloadData: IQueuePayloadDeployContract = {
-      _keys,
-      _values,
-      _supplier,
-      contractId,
-      _users,
-      _total,
-      _stages
-    }
-    this.deloyContractService.enqueueDeployContract(payloadData)
+    // const payloadData: IQueuePayloadDeployContract = {
+    //   _keys,
+    //   _values,
+    //   _supplier,
+    //   contractId,
+    //   _users,
+    //   _total,
+    //   _stages
+    // }
+    // this.deloyContractService.enqueueDeployContract(payloadData)
   }
 
   // async deployContract(payload: any, contractId: string, _supplier: string) {

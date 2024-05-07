@@ -5,7 +5,7 @@ import { CommonModule } from 'src/commons/common.module'
 import { ContractAttributesModule } from 'src/contract-attributes/contract-attributes.module'
 
 @Module({
-  imports: [forwardRef(() => CommonModule), ContractAttributesModule],
+  imports: [forwardRef(() => CommonModule), forwardRef(() => ContractAttributesModule)],
   controllers: [TemplateContractsController],
   providers: [TemplateContractsService],
   exports: [TemplateContractsService]

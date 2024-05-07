@@ -13,7 +13,7 @@ export class TemplateContractsService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
     @Inject(forwardRef(() => CommonService)) private commonService: CommonService,
-    private readonly contractAttributeService: ContractAttributesService
+    @Inject(forwardRef(() => ContractAttributesService)) private contractAttributesService: ContractAttributesService
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
     const { name, contractAttributes } = createTemplateContractDto
@@ -39,7 +39,7 @@ export class TemplateContractsService {
   }
 
   async getTemplateContractAttributes(templateId: string) {
-    const contractAttributes = await this.contractAttributeService.findAllByTemplateId(templateId)
+    const contractAttributes = await this.contractAttributesService.findAllByTemplateId(templateId)
     return contractAttributes
   }
 
