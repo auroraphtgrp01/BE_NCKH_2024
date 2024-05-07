@@ -11,7 +11,7 @@ import {
   MinLength,
   ValidateNested
 } from 'class-validator'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { PermissionDto } from 'src/contracts/dto/create-contract.dto'
 
 export class CreateParticipantDto {

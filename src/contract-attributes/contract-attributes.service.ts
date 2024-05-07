@@ -5,27 +5,28 @@ import { IUser } from 'src/users/interfaces/IUser.interface'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IContractAttributeResponse, ICreateContractAttributeRecord } from 'src/interfaces/contract-attribute.interface'
 import { CommonService } from 'src/commons/common.service'
+import { constants } from 'buffer'
+import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 
 @Injectable()
 export class ContractAttributesService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService
+    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService,
+    @Inject(forwardRef(() => TemplateContractsService))
+    private readonly templateContractsService: TemplateContractsService
   ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
-    const { contractId, templateContractId, ...rest } = createContractAttributeDto
+    const { contractId, ...rest } = createContractAttributeDto
 
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const data: ICreateContractAttributeRecord = { ...rest }
 
     if (contractId) data.Contract = { connect: { id: contractId } }
-    else data.TemplateContract = { connect: { id: templateContractId } }
 
-    if (!data.Contract && !data.TemplateContract)
-      throw new BadRequestException(RESPONSE_MESSAGES.THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED)
     const contractAttribute = await this.prismaService.client.contractAttribute.create({
       data: {
         ...data,
@@ -63,16 +64,17 @@ export class ContractAttributesService {
   }
 
   async findAllByTemplateId(templateContractId: string) {
-    const contractAttributes = await this.prismaService.client.contractAttribute
-      .findMany({
-        where: { templateContractId },
-        include: { ContractAttributeValue: true },
-        orderBy: {
-          index: 'asc'
-        }
+    const templateContract = await this.templateContractsService.findOneById(templateContractId)
+    const contractAttributes = await Promise.all(
+      templateContract.ContractAttribute.map(async (item) => {
+        const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
+          where: { id: item }
+        })
+        return contractAttribute
       })
-      .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
-    return contractAttributes
+    )
+    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+    return result
   }
 
   async findOneById(id: string) {

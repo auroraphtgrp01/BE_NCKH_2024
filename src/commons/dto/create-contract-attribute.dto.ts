@@ -38,12 +38,6 @@ export class CreateContractAttributeCommonDto {
   @IsUUID()
   readonly contractId?: string
 
-  @ValidateIf((object) => object.contractId === undefined)
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly templateContractId?: string
-
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })

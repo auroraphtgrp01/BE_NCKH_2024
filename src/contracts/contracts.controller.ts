@@ -4,7 +4,6 @@ import { CreateContractAttributesDto, CreateContractDto } from './dto/create-con
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
-import { CommonService } from 'src/commons/common.service'
 @Controller('contracts')
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
@@ -33,6 +32,16 @@ export class ContractsController {
   @Get()
   findAll() {
     return this.contractsService.findAll()
+  }
+
+  @Post('test')
+  test(@Body() data: any) {
+    return this.contractsService.test(data)
+  }
+
+  @Get('get-all-contract-details/:addressWallet')
+  async getAllContractDetails(@Param('addressWallet') addressWallet: string) {
+    return await this.contractsService.getContractsByAddressWallet(addressWallet)
   }
 
   @Get(':id')

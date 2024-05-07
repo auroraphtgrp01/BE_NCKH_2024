@@ -7,7 +7,7 @@ import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { Roles } from '@prisma/client'
 import { IExecutor } from 'src/interfaces/executor.interface'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 @Injectable()
 export class RolesService {

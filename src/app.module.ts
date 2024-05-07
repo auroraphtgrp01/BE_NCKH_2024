@@ -19,6 +19,8 @@ import { ParticipantsModule } from './participants/participants.module'
 import { ProductsModule } from './products/products.module';
 import { ImagesModule } from './images/images.module';
 import { RolesModule } from './roles/roles.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -51,7 +53,9 @@ import { RolesModule } from './roles/roles.module';
     ParticipantsModule,
     ProductsModule,
     ImagesModule,
-    RolesModule
+    RolesModule,
+    SuppliersModule,
+    OrdersModule
   ],
   controllers: [AppController],
   providers: [

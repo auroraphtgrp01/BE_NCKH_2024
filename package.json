@@ -75,6 +75,7 @@
     "@nomicfoundation/hardhat-verify": "^2.0.5",
     "@nomicfoundation/ignition-core": "^0.15.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@remix-project/remixd": "^0.6.31",
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^9.0.0",
     "@types/chai": "^4.2.0",

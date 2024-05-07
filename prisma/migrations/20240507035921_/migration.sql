@@ -25,7 +25,7 @@ CREATE TABLE "User" (
     "forgotPasswordToken" TEXT,
     "refreshToken" TEXT,
     "userStatus" "UserStatus" DEFAULT 'UNVERIFIED',
-    "roleId" UUID NOT NULL,
+    "role" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -67,6 +67,7 @@ CREATE TABLE "Contract" (
     "executeDate" TIMESTAMP(3),
     "agreements" TEXT[],
     "status" "contractStatus" NOT NULL DEFAULT 'PENDING',
+    "stages" JSONB[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -88,6 +89,7 @@ CREATE TABLE "TemplateContract" (
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "ContractAttribute" TEXT[],
 
     CONSTRAINT "TemplateContract_pkey" PRIMARY KEY ("id")
 );
@@ -105,7 +107,6 @@ CREATE TABLE "ContractAttribute" (
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "contractId" UUID,
-    "templateContractId" UUID,
 
     CONSTRAINT "ContractAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -197,7 +198,7 @@ CREATE TABLE "Products" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT,
     "suppliersId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -231,14 +232,14 @@ CREATE TABLE "Orders" (
     "orderCode" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'PENDING',
     "products" JSONB[],
+    "suppliersId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
-    "suppliersId" UUID NOT NULL,
-    "userId" UUID NOT NULL,
 
     CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
 );
@@ -319,9 +320,6 @@ CREATE UNIQUE INDEX "Orders_id_key" ON "Orders"("id");
 CREATE UNIQUE INDEX "Orders_orderCode_key" ON "Orders"("orderCode");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Participant" ADD CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -329,9 +327,6 @@ ALTER TABLE "Participant" ADD CONSTRAINT "Participant_contractId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_templateContractId_fkey" FOREIGN KEY ("templateContractId") REFERENCES "TemplateContract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

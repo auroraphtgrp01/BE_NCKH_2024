@@ -11,7 +11,7 @@ import {
   MaxLength,
   MinLength
 } from 'class-validator'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class UpdateUserDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })

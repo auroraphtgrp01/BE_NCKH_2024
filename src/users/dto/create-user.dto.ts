@@ -14,7 +14,7 @@ import {
   Min,
   MinLength
 } from 'class-validator'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateUserDto {
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })
@@ -23,8 +23,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsUUID()
-  readonly roleId: string
+  readonly role: string
 
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })

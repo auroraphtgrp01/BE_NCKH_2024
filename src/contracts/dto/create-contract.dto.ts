@@ -4,9 +4,10 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDateString,
   IsEmail,
   IsNotEmpty,
-  IsNumberString,
+  IsNumber,
   IsObject,
   IsOptional,
   IsString,
@@ -19,7 +20,7 @@ import {
   ValidateNested
 } from 'class-validator'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { RESPONSE_MESSAGES } from 'src/constants/responseMessage'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateContractAttributesDto {
   @IsString()
@@ -71,7 +72,7 @@ export class PermissionDto {
 }
 
 export class GasPriceDto {
-  @IsNumberString()
+  @IsNumber()
   price: string
 
   @IsString()
