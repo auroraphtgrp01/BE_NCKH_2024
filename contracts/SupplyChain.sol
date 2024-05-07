@@ -32,6 +32,7 @@ contract SupplyChain {
   Stage[] private stages;
   uint8 private currentStage = 0;
   Status private status;
+  string private privateKey;
 
   event contractCreated(
     address owner,
@@ -58,8 +59,10 @@ contract SupplyChain {
     string[] memory _keys,
     bytes[] memory _values,
     uint _total,
+    string memory _privateKey,
     StageData[] memory _stages
   ) {
+    privateKey = _privateKey;
     status = Status.ENFORCE;
     totalBalance = _total * 1 ether;
     supplier = _supplier;
@@ -120,6 +123,14 @@ contract SupplyChain {
     _;
   }
 
+  modifier checkPrivateKey(string memory _privateKey) {
+    require(
+      keccak256(abi.encodePacked((_privateKey))) == keccak256(abi.encodePacked((privateKey))),
+      'Private key is not correct'
+    );
+    _;
+  }
+
   function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
     if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
     else stages[currentStage].userConfirm = true;
@@ -171,7 +182,9 @@ contract SupplyChain {
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
-  function getContractInformation() public view returns (string[] memory) {
+  function getContractInformation(
+    string memory _privateKey
+  ) public view checkPrivateKey(_privateKey) returns (string[] memory) {
     string[] memory values = new string[](contractInformationKeys.length);
     for (uint i = 0; i < contractInformationKeys.length; i++) {
       values[i] = string(contractInformation[contractInformationKeys[i]]);
