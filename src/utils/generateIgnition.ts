@@ -40,7 +40,15 @@ async function deployContract(
   _total: number,
   _stages: IStageDeploy[]
 ): Promise<any> {
-  console.log({ _keys, _values, _supplier, contractId, _users, _total, _stages })
+  console.log({
+    _keys,
+    _values,
+    _supplier,
+    contractId,
+    _users,
+    _total,
+    _stages
+  })
 
   const ignition = `import {buildModule} from "@nomicfoundation/hardhat-ignition/modules";
     const SupplyChain = buildModule("SupplyChain", (m) => {
@@ -50,7 +58,8 @@ async function deployContract(
     const _values = m.getParameter("_values", ${JSON.stringify(_values)});
     const _total = m.getParameter("_total", ${JSON.stringify(_total)});
     const _stages = m.getParameter("_stages", ${JSON.stringify(_stages)});
-    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total, _stages]);
+    const _privateKey = m.getParameter("_privateKey", ${JSON.stringify('hello')});
+    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total, _stages, _privateKey]);
 return {
     contract
 }})

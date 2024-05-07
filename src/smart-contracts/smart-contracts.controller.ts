@@ -17,7 +17,7 @@ export class SmartContractsController {
   async deployContract(
     @Body('contractId') contractId: string,
     @Body('supplier') supplier: string,
-    @Body('user') user: string[],
+    @Body('users') user: string[],
     @Body('total') total?: number,
     @Body('orderId') orderId?: string
   ) {

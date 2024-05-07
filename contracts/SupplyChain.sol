@@ -59,8 +59,8 @@ contract SupplyChain {
     string[] memory _keys,
     bytes[] memory _values,
     uint _total,
-    string memory _privateKey,
-    StageData[] memory _stages
+    StageData[] memory _stages,
+    string memory _privateKey
   ) {
     privateKey = _privateKey;
     status = Status.ENFORCE;
@@ -118,6 +118,11 @@ contract SupplyChain {
     _;
   }
 
+  modifier onlySupplier(address addressWallet) {
+    require(addressWallet == supplier, 'Only supplier can call this function');
+    _;
+  }
+
   modifier notEnoughEthers(uint _amount) {
     require(address(this).balance >= _amount, 'Not enough ethers');
     _;
@@ -129,6 +134,48 @@ contract SupplyChain {
       'Private key is not correct'
     );
     _;
+  }
+
+  function setPrivateKey(string memory _privateKey) public onlyPetitioner(msg.sender) {
+    privateKey = _privateKey;
+  }
+
+  function setUsers(address[] memory _users) public onlyPetitioner(msg.sender) {
+    for (uint8 i = 0; i < _users.length; i++) {
+      users.push(_users[i]);
+      assets[_users[i]] = 0;
+    }
+  }
+
+  function setAddressSupplier(address _supplier) public onlySupplier(msg.sender) {
+    supplier = _supplier;
+  }
+
+  function setTotal(uint _total) public onlyPetitionerOrSupplier(msg.sender) {
+    totalBalance = _total;
+  }
+
+  //   address private owner;
+  // address[] private users;
+  // mapping(address => uint) private assets;
+  // address private supplier;
+  // mapping(string => bytes) private contractInformation;
+  // string[] private contractInformationKeys;
+  // uint private totalBalance;
+  // Stage[] private stages;
+  // uint8 private currentStage = 0;
+
+  function setStages(StageData[] memory _stages) public onlyPetitioner(msg.sender) {
+    for (uint8 i = 0; i < _stages.length; i++) {
+      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false));
+    }
+  }
+
+  function setInformation(string[] memory _keys, bytes[] memory _values) public onlyPetitionerOrSupplier(msg.sender) {
+    for (uint8 i = 0; i < _keys.length; i++) {
+      contractInformation[_keys[i]] = _values[i];
+      contractInformationKeys.push(_keys[i]);
+    }
   }
 
   function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
