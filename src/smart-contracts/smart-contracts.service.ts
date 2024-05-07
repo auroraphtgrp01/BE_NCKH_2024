@@ -27,7 +27,7 @@ export class SmartContractsService {
     }
   }
 
-  async deployContract(contractId: string, _total?: number, orderId?: string) {
+  async deployContract(contractId: string, _supplier: string, _users: string[], _total?: number, orderId?: string) {
     const dataContract = await this.contractService.getContractDetailsById(contractId)
     if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
@@ -50,16 +50,16 @@ export class SmartContractsService {
     const listVal = Object.values(payload)
 
     const _values: string[] = listVal.map((val) => ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(val))))
-    // const payloadData: IQueuePayloadDeployContract = {
-    //   _keys,
-    //   _values,
-    //   _supplier,
-    //   contractId,
-    //   _users,
-    //   _total,
-    //   _stages
-    // }
-    // this.deloyContractService.enqueueDeployContract(payloadData)
+    const payloadData: IQueuePayloadDeployContract = {
+      _keys,
+      _values,
+      _supplier,
+      contractId,
+      _users,
+      _total,
+      _stages
+    }
+    this.deloyContractService.enqueueDeployContract(payloadData)
   }
 
   // async deployContract(payload: any, contractId: string, _supplier: string) {

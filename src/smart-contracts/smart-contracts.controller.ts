@@ -16,11 +16,13 @@ export class SmartContractsController {
   @Post('/deploy-contract')
   async deployContract(
     @Body('contractId') contractId: string,
+    @Body('supplier') supplier: string,
+    @Body('user') user: string[],
     @Body('total') total?: number,
     @Body('orderId') orderId?: string
   ) {
     // return this.smartContractsService.deployContract(payload, contractId, supplier, users, total)
-    return this.smartContractsService.deployContract(contractId, total, orderId)
+    return this.smartContractsService.deployContract(contractId, supplier, user, total, orderId)
   }
 
   @Get('/abi')

@@ -128,28 +128,7 @@ export class ContractsService {
       where: { id: updateContractAttribute.id }
     })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    if (isContractExist.stages.length === 0 && !updateContractAttribute.stages)
-      throw new UnauthorizedException({ message: RESPONSE_MESSAGES.STAGE_IS_REQUIRED })
-    else {
-      const checkPersent = updateContractAttribute.stages.reduce((sum, stage) => sum + stage.percent, 0)
-      if (checkPersent !== 100) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PERCENT_NOT_EQUAL_100 })
-      const _stages: IStage[] = updateContractAttribute.stages.map((stage) => {
-        return {
-          deliveryAt: new Date(stage.deliveryAt),
-          percent: stage.percent,
-          description: stage.description ? stage.description : '',
-          userConfirm: false,
-          supplierConfirm: false,
-          isDone: false
-        }
-      })
-      await this.prismaService.client.contract.update({
-        where: { id: updateContractAttribute.id },
-        data: {
-          stages: _stages as any
-        }
-      })
-    }
+
     Promise.all([
       updateContractAttribute.updatedAttributes.map(async (item, index) => {
         if (item.statusAttribute === 'Create') {
