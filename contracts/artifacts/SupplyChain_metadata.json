@@ -208,13 +208,6 @@
 				"type": "event"
 			},
 			{
-				"inputs": [],
-				"name": "confirmStage",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -423,11 +416,11 @@
 	},
 	"sources": {
 		"contracts/SupplyChain.sol": {
-			"keccak256": "0x720b6bd178201c183091ca4009df7b91517c901a95a959f35f796d59b9945e58",
+			"keccak256": "0x690460492b416ed4ddb6aa8c146872d0061beef7b433396ccd7d262ba0677859",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://304a21243705dbaea9812a28500da66562a4bdff578147c7a4980bb9a81899b4",
-				"dweb:/ipfs/QmaLY6CpMxxyT41Fa9WS3A259d4pKWufhWrS9Q4YimAkZZ"
+				"bzz-raw://4bff7f7598227a50210f8ec6dcbdd5feabfba8c60a5e35c3b0472944fe6c518c",
+				"dweb:/ipfs/Qmf6hHauPvrs6j1nPN2kX2zusfA74Y7J4fQ7om6kyw2d7G"
 			]
 		}
 	},

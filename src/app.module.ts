@@ -20,6 +20,7 @@ import { ProductsModule } from './products/products.module';
 import { ImagesModule } from './images/images.module';
 import { RolesModule } from './roles/roles.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -53,7 +54,8 @@ import { SuppliersModule } from './suppliers/suppliers.module';
     ProductsModule,
     ImagesModule,
     RolesModule,
-    SuppliersModule
+    SuppliersModule,
+    OrdersModule
   ],
   controllers: [AppController],
   providers: [

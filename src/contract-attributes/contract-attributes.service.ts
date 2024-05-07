@@ -16,13 +16,12 @@ export class ContractAttributesService {
     @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService
   ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
-    const { contractId, templateContractId, ...rest } = createContractAttributeDto
+    const { contractId, ...rest } = createContractAttributeDto
 
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const data: ICreateContractAttributeRecord = { ...rest }
 
     if (contractId) data.Contract = { connect: { id: contractId } }
-    else data.TemplateContract = { connect: { id: templateContractId } }
 
     if (!data.Contract && !data.TemplateContract)
       throw new BadRequestException(RESPONSE_MESSAGES.THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED)

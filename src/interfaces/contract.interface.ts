@@ -8,6 +8,15 @@ export interface IGasPrice {
   createdAt: Date
 }
 
+export interface IStage {
+  deliveryAt: Date
+  percent: number
+  description?: string
+  userConfirm: boolean
+  supplierConfirm: boolean
+  isDone: boolean
+}
+
 export interface IContractAttributeValueResponse {
   id: string
   value: string

@@ -89,6 +89,7 @@ model Contract {
   executeDate       DateTime?
   agreements        String[]
   status            contractStatus      @default(PENDING)
+  stages            Json[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime?           @updatedAt
   createdBy         Json?
@@ -100,16 +101,16 @@ model Contract {
 }
 
 model TemplateContract {
-  id                String              @id @unique @default(uuid()) @db.Uuid
+  id                String    @id @unique @default(uuid()) @db.Uuid
   name              String
   path              String
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime?           @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime? @updatedAt
   createdBy         Json?
   updatedBy         Json?
   deletedAt         DateTime?
   deletedBy         Json?
-  ContractAttribute ContractAttribute[]
+  ContractAttribute String[]
 }
 
 model ContractAttribute {
@@ -125,8 +126,6 @@ model ContractAttribute {
   deletedBy              Json?
   Contract               Contract?               @relation(fields: [contractId], references: [id])
   contractId             String?                 @db.Uuid
-  TemplateContract       TemplateContract?       @relation(fields: [templateContractId], references: [id])
-  templateContractId     String?                 @db.Uuid
   ContractAttributeValue ContractAttributeValue?
 }
 

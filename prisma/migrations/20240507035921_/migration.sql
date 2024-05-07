@@ -67,6 +67,7 @@ CREATE TABLE "Contract" (
     "executeDate" TIMESTAMP(3),
     "agreements" TEXT[],
     "status" "contractStatus" NOT NULL DEFAULT 'PENDING',
+    "stages" JSONB[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,
@@ -88,6 +89,7 @@ CREATE TABLE "TemplateContract" (
     "updatedBy" JSONB,
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
+    "ContractAttribute" TEXT[],
 
     CONSTRAINT "TemplateContract_pkey" PRIMARY KEY ("id")
 );
@@ -105,7 +107,6 @@ CREATE TABLE "ContractAttribute" (
     "deletedAt" TIMESTAMP(3),
     "deletedBy" JSONB,
     "contractId" UUID,
-    "templateContractId" UUID,
 
     CONSTRAINT "ContractAttribute_pkey" PRIMARY KEY ("id")
 );
@@ -326,9 +327,6 @@ ALTER TABLE "Participant" ADD CONSTRAINT "Participant_contractId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "Contract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContractAttribute" ADD CONSTRAINT "ContractAttribute_templateContractId_fkey" FOREIGN KEY ("templateContractId") REFERENCES "TemplateContract"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContractAttributeValue" ADD CONSTRAINT "ContractAttributeValue_contractAttributeId_fkey" FOREIGN KEY ("contractAttributeId") REFERENCES "ContractAttribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

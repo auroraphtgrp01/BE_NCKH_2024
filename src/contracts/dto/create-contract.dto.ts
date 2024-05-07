@@ -4,9 +4,10 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDateString,
   IsEmail,
   IsNotEmpty,
-  IsNumberString,
+  IsNumber,
   IsObject,
   IsOptional,
   IsString,
@@ -71,7 +72,7 @@ export class PermissionDto {
 }
 
 export class GasPriceDto {
-  @IsNumberString()
+  @IsNumber()
   price: string
 
   @IsString()

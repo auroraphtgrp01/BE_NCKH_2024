@@ -11,8 +11,6 @@ export class QueueRedisService {
   ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
-    console.log('Enqueue deploy contract', job._total)
-
     this.deployContractQueue.add('deployContract', job)
   }
 

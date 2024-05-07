@@ -1,6 +1,16 @@
-export interface IKeyValueSmartContract {
+export interface IKeyValueDeploy {
   keys: string[]
   values: string[]
+}
+
+export interface IValueSmartContract {
+  contract: object
+  contractAttributes: any[]
+}
+
+export interface IKeyValue {
+  keys: string[]
+  values: IValueSmartContract
 }
 
 export interface IStage {

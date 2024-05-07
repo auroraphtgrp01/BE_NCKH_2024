@@ -5,14 +5,22 @@ contract SupplyChain {
   struct Stage {
     uint percent;
     uint deliveryAt;
+    string description;
     bool userConfirm;
     bool supplierConfirm;
     bool isDone;
   }
 
+  enum Status {
+    ENFORCE,
+    CANCELLED,
+    DONE
+  }
+
   struct StageData {
     uint percent;
     uint deliveryAt;
+    string description;
   }
   address private owner;
   address[] private users;
@@ -23,6 +31,7 @@ contract SupplyChain {
   uint private totalBalance;
   Stage[] private stages;
   uint8 private currentStage = 0;
+  Status private status;
 
   event contractCreated(
     address owner,
@@ -48,8 +57,10 @@ contract SupplyChain {
     address _supplier,
     string[] memory _keys,
     bytes[] memory _values,
-    uint _total // StageData[] memory _stages
+    uint _total,
+    StageData[] memory _stages
   ) {
+    status = Status.ENFORCE;
     totalBalance = _total * 1 ether;
     supplier = _supplier;
     owner = msg.sender;
@@ -61,9 +72,9 @@ contract SupplyChain {
       contractInformation[_keys[i]] = _values[i];
       contractInformationKeys.push(_keys[i]);
     }
-    // for (uint8 i = 0; i < _stages.length; i++) {
-    //   stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, false, false, false));
-    // }
+    for (uint8 i = 0; i < _stages.length; i++) {
+      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false));
+    }
 
     emit contractCreated(owner, users, supplier, totalBalance, address(this).balance, block.timestamp);
   }
@@ -109,25 +120,25 @@ contract SupplyChain {
     _;
   }
 
-  // function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
-  //   if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
-  //   else stages[currentStage].userConfirm = true;
+  function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
+    if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
+    else stages[currentStage].userConfirm = true;
 
-  //   if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
-  //     this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
-  //     currentStage++;
-  //     this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
-  //     stages[currentStage].isDone = true;
-  //   }
+    if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
+      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+      currentStage++;
+      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
+      stages[currentStage].isDone = true;
+    }
 
-  //   emit confirmedStage(
-  //     stages[currentStage].percent,
-  //     stages[currentStage].userConfirm,
-  //     stages[currentStage].supplierConfirm,
-  //     stages[currentStage].isDone,
-  //     block.timestamp
-  //   );
-  // }
+    emit confirmedStage(
+      stages[currentStage].percent,
+      stages[currentStage].userConfirm,
+      stages[currentStage].supplierConfirm,
+      stages[currentStage].isDone,
+      block.timestamp
+    );
+  }
 
   function withDrawByPercent(
     address payable _addressWallet,
@@ -199,5 +210,8 @@ contract SupplyChain {
 
   function getStages() public view returns (Stage[] memory) {
     return stages;
+  }
+  function getStagesLength() public view returns (uint) {
+    return stages.length;
   }
 }

@@ -3,7 +3,9 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDateString,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -18,6 +20,20 @@ import { GasPriceDto } from './create-contract.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
 import { contractStatus } from '@prisma/client'
+
+export class StageDto {
+  @IsDateString()
+  @IsNotEmpty()
+  deliveryAt: string
+
+  @IsNumber()
+  percent: number
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  description?: string
+}
 
 export class CreateContractAttributeDto {
   @IsOptional()
@@ -115,4 +131,11 @@ export class UpdateContractAttributeDto {
   @IsOptional()
   @IsArray()
   deleteArray: any[]
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => StageDto)
+  stages: StageDto[]
 }

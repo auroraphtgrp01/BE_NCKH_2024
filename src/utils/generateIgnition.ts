@@ -1,8 +1,7 @@
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import { exec } from 'child_process'
-import { IStage, IStageDeploy } from 'src/interfaces/smart-contract.interface'
-import { ethers } from 'ethers'
+import { IStageDeploy } from 'src/interfaces/smart-contract.interface'
 
 export const deployContractIgnition = (): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -41,6 +40,8 @@ async function deployContract(
   _total: number,
   _stages: IStageDeploy[]
 ): Promise<any> {
+  console.log({ _keys, _values, _supplier, contractId, _users, _total, _stages })
+
   const ignition = `import {buildModule} from "@nomicfoundation/hardhat-ignition/modules";
     const SupplyChain = buildModule("SupplyChain", (m) => {
     const _user = m.getParameter("_user", ${JSON.stringify(_users)});
@@ -48,7 +49,8 @@ async function deployContract(
     const _keys = m.getParameter("_keys", ${JSON.stringify(_keys)});
     const _values = m.getParameter("_values", ${JSON.stringify(_values)});
     const _total = m.getParameter("_total", ${JSON.stringify(_total)});
-    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total]);
+    const _stages = m.getParameter("_stages", ${JSON.stringify(_stages)});
+    const contract = m.contract("SupplyChain", [_user, _supplier, _keys, _values, _total, _stages]);
 return {
     contract
 }})

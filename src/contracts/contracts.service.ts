@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException, UnauthorizedException, forwardRe
 import { CreateContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
-import { contractStatus } from '@prisma/client'
+import { Contract, Participant, contractStatus } from '@prisma/client'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
@@ -12,7 +12,7 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
-import { IContractResponse, ICreateContractResponse } from 'src/interfaces/contract.interface'
+import { ICreateContractResponse, IStage } from 'src/interfaces/contract.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
@@ -32,7 +32,8 @@ export class ContractsService {
   ) {}
 
   test(jsonData: any) {
-    const jsonStr = JSON.stringify(jsonData)
+    const jsonStr = '"' + 'test": ' + JSON.stringify(jsonData)
+    return jsonStr
 
     const bytesData = ethers.toUtf8Bytes(jsonStr)
     const bytesDataHex = ethers.hexlify(bytesData)
@@ -107,11 +108,14 @@ export class ContractsService {
     return contract
   }
 
-  async getContractDetailsById(contractId: string) {
+  async getContractDetailsById(
+    contractId: string
+  ): Promise<{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }> {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
     const participants = await this.participantService.findAllByContractId(contractId)
+
     return { contract, contractAttributes, participants }
   }
 
@@ -124,6 +128,28 @@ export class ContractsService {
       where: { id: updateContractAttribute.id }
     })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    if (isContractExist.stages.length === 0 && !updateContractAttribute.stages)
+      throw new UnauthorizedException({ message: RESPONSE_MESSAGES.STAGE_IS_REQUIRED })
+    else {
+      const checkPersent = updateContractAttribute.stages.reduce((sum, stage) => sum + stage.percent, 0)
+      if (checkPersent !== 100) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PERCENT_NOT_EQUAL_100 })
+      const _stages: IStage[] = updateContractAttribute.stages.map((stage) => {
+        return {
+          deliveryAt: new Date(stage.deliveryAt),
+          percent: stage.percent,
+          description: stage.description ? stage.description : '',
+          userConfirm: false,
+          supplierConfirm: false,
+          isDone: false
+        }
+      })
+      await this.prismaService.client.contract.update({
+        where: { id: updateContractAttribute.id },
+        data: {
+          stages: _stages as any
+        }
+      })
+    }
     Promise.all([
       updateContractAttribute.updatedAttributes.map(async (item, index) => {
         if (item.statusAttribute === 'Create') {
@@ -175,8 +201,6 @@ export class ContractsService {
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
           ) {
-            console.log('item', item)
-
             const contractAttribute = await this.contractAttributesService.update(
               {
                 id: item.id,

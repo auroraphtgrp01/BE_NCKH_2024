@@ -19,10 +19,4 @@ export class CreateContractAttributeDto {
 
   @IsOptional()
   index?: number
-
-  @ValidateIf((object) => object.contractId === undefined)
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly templateContractId?: string
 }

@@ -28,7 +28,7 @@ export class CommonService {
   ) {}
 
   async createContractAttributes(createContractAttributeCommonDto: CreateContractAttributeCommonDto, user: IUser) {
-    const { templateContractId, contractId, contractAttributes } = createContractAttributeCommonDto
+    const { contractId, contractAttributes } = createContractAttributeCommonDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 
@@ -42,18 +42,9 @@ export class CommonService {
         type: contractAttribute.type
       }
 
-      if (contractId) {
-        if (!(await this.contractService.findOneById(contractId))) {
-          throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
-        }
-        data.contractId = contractId
-      } else {
-        if (!(await this.templateContractService.findOneById(templateContractId))) {
-          throw new NotFoundException(RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND)
-        }
-        data.templateContractId = templateContractId
-      }
-
+      if (contractId && !(await this.contractService.findOneById(contractId)))
+        throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
+      else data.contractId = contractId
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE

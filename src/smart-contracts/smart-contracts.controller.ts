@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { SmartContractsService } from './smart-contracts.service'
 import { CreateSmartContractDto } from './dto/create-smart-contract.dto'
 import { UpdateSmartContractDto } from './dto/update-smart-contract.dto'
-import { IKeyValueSmartContract, IStage } from 'src/interfaces/smart-contract.interface'
+import { IKeyValue, IStage } from 'src/interfaces/smart-contract.interface'
 
 @Controller('smart-contracts')
 export class SmartContractsController {
@@ -15,15 +15,14 @@ export class SmartContractsController {
 
   @Post('/deploy-contract')
   async deployContract(
-    @Body() payload: IKeyValueSmartContract,
     @Body('contractId') contractId: string,
     @Body('supplier') supplier: string,
     @Body('users') users: string[],
-    @Body('total') total: number,
-    @Body('stages') stages: IStage[]
+    @Body('total') total?: number,
+    @Body('orderId') orderId?: string
   ) {
     // return this.smartContractsService.deployContract(payload, contractId, supplier, users, total)
-    return this.smartContractsService.deployContract(payload, contractId, supplier, users, total, stages)
+    return this.smartContractsService.deployContract(contractId, supplier, users, total, orderId)
   }
 
   @Get('/abi')
