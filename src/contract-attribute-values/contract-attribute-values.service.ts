@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
 import { CreateContractAttributeValueDto } from './dto/create-contract-attribute-value.dto'
 import { UpdateContractAttributeValueDto } from './dto/update-contract-attribute-value.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -12,7 +12,7 @@ import { ContractAttributesService } from 'src/contract-attributes/contract-attr
 export class ContractAttributeValuesService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private contractAttributeService: ContractAttributesService
+    @Inject(forwardRef(() => ContractAttributesService)) private contractAttributeService: ContractAttributesService
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
     const { contractAttributeId, value } = createContractAttributeValueDto

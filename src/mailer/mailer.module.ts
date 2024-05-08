@@ -1,8 +1,8 @@
-import { ConfigService } from '@nestjs/config';
-import { Module } from '@nestjs/common';
-import { MailService } from './mailer.service';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { join } from 'path';
+import { ConfigService } from '@nestjs/config'
+import { Module } from '@nestjs/common'
+import { MailService } from './mailer.service'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { join } from 'path'
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           secure: false,
           auth: {
             user: configService.get('MAIL_USER'),
-            pass: configService.get('MAIL_PASS'),
+            pass: configService.get('MAIL_PASS')
           }
         },
         defaults: {
@@ -21,16 +21,16 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         },
         template: {
           dir: join(__dirname, 'templates'),
-          adapter: new HandlebarsAdapter(),
+          adapter: new HandlebarsAdapter()
         },
         options: {
           strict: false
         }
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     })
   ],
   providers: [MailService],
   exports: [MailService]
 })
-export class MailModule { }
+export class MailModule {}

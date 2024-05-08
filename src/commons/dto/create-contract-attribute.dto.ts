@@ -42,7 +42,7 @@ export class CreateContractAttributeContractCommonDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => String)
-  contractAttributes: CreateContractAttributesDto[]
+  contractAttributes: ContractAttributesDto[]
 }
 
 export class CreateContractAttributesDto {

@@ -23,10 +23,10 @@ export class CommonService {
   ) {}
 
   async createContractAttributesForContract(
-    CreateContractAttributeCommonDto: CreateContractAttributeContractCommonDto,
+    createContractAttributeCommonDto: CreateContractAttributeContractCommonDto,
     user: IUser
   ) {
-    const { contractId, contractAttributes } = CreateContractAttributeCommonDto
+    const { contractId, contractAttributes } = createContractAttributeCommonDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 

@@ -14,7 +14,7 @@ import {
 import { CommonService } from 'src/commons/common.service'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { CreateContractAttributesDto } from 'dist/src/commons/dto/create-contract-attribute.dto'
+import { CreateContractAttributesDto } from 'src/commons/dto/create-contract-attribute.dto'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 
 @Injectable()
@@ -24,6 +24,7 @@ export class ContractAttributesService {
     @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService,
     @Inject(forwardRef(() => TemplateContractsService))
     private readonly templateContractsService: TemplateContractsService,
+    @Inject(forwardRef(() => ContractAttributeValuesService))
     private readonly contractAttributeValueService: ContractAttributeValuesService
   ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
