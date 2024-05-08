@@ -45,8 +45,8 @@ export class ContractAttributesService {
     return result
   }
 
-  findAll() {
-    return `This action returns all contractAttributes`
+  async findAll() {
+    return this.prismaService.client.templateContract.findMany({})
   }
 
   async findAllByContractId(contractId: string) {

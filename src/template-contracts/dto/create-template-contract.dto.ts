@@ -35,9 +35,5 @@ export class CreateTemplateContractDto {
   @IsNotEmpty()
   path: string
 
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => CreateContractAttributeDto)
-  contractAttributes: CreateContractAttributeDto[]
+  contractAttributes: any
 }
