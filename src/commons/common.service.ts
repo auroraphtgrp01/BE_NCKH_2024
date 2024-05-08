@@ -4,12 +4,8 @@ import { IUser } from '../users/interfaces/IUser.interface'
 import { ContractAttributesService } from '../contract-attributes/contract-attributes.service'
 import { RESPONSE_MESSAGES } from '../constants/responseMessage.constant'
 import { ContractAttributeValuesService } from '../contract-attribute-values/contract-attribute-values.service'
-import {
-  IContractAttributeResponse,
-  ICreateContractAttributeRecord,
-  IDataContractAttribute
-} from '../interfaces/contract-attribute.interface'
-import { CreateContractAttributeCommonDto } from './dto/create-contract-attribute.dto'
+import { IContractAttributeResponse, IDataContractAttribute } from '../interfaces/contract-attribute.interface'
+import { CreateContractAttributeContractCommonDto } from './dto/create-contract-attribute.dto'
 import { ContractsService } from 'src/contracts/contracts.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
@@ -21,14 +17,16 @@ export class CommonService {
   constructor(
     @Inject(forwardRef(() => ContractsService)) private readonly contractService: ContractsService,
     @Inject(forwardRef(() => TemplateContractsService))
-    private readonly templateContractService: TemplateContractsService,
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributeService: ContractAttributesService,
     private readonly contractAttributeValueService: ContractAttributeValuesService
   ) {}
 
-  async createContractAttributes(createContractAttributeCommonDto: CreateContractAttributeCommonDto, user: IUser) {
-    const { contractId, contractAttributes } = createContractAttributeCommonDto
+  async createContractAttributesForContract(
+    CreateContractAttributeCommonDto: CreateContractAttributeContractCommonDto,
+    user: IUser
+  ) {
+    const { contractId, contractAttributes } = CreateContractAttributeCommonDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 
@@ -98,11 +96,11 @@ export class CommonService {
     for (const contractArribute of contractAttributes) {
       if (
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-        ||  contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         result.push({
           id: contractArribute.id,

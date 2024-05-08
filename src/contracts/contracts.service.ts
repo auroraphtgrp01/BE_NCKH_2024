@@ -122,10 +122,13 @@ export class ContractsService {
   async update(updateContractDto: UpdateContractDto, user: IUser) {
     if (!(await this.findOneById(updateContractDto.id)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const updatedby: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract = await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
-      data: { ...(updateContractDto as any) }
+      data: { ...(updateContractDto as any), updatedby }
     })
+
+    return contract
   }
 
   async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
@@ -139,11 +142,11 @@ export class ContractsService {
         if (item.statusAttribute === 'Create') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-            ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+            item.type === ETypeContractAttribute.TOTAL_AMOUNT
           ) {
             const contractAttribute = await this.contractAttributesService.create(
               {
@@ -183,11 +186,11 @@ export class ContractsService {
         if (item.statusAttribute === 'Update') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-            ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+            item.type === ETypeContractAttribute.TOTAL_AMOUNT
           ) {
             const contractAttribute = await this.contractAttributesService.update(
               {
@@ -257,11 +260,11 @@ export class ContractsService {
     getAllContractAttributes.forEach((contractAttribute) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-        ||  contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       )
         contractAttributes.push({
           property: contractAttribute.value,
@@ -275,7 +278,7 @@ export class ContractsService {
         })
     })
     const [contractAttributeRecords] = await Promise.all([
-      this.commonService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
+      this.commonService.createContractAttributesForContract({ contractAttributes, contractId: contractId }, user)
     ])
 
     return contractAttributeRecords
@@ -286,20 +289,20 @@ export class ContractsService {
     const contractTypeTitles = contractAttributes.filter(
       (item) =>
         item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-      ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
+        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        item.type === ETypeContractAttribute.TOTAL_AMOUNT
     )
     const contractTypeAttributes = contractAttributes.filter(
       (item) =>
         item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-      item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
-      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
-      ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
+        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        item.type === ETypeContractAttribute.TOTAL_AMOUNT
     )
 
     await Promise.all([

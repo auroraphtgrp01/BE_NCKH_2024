@@ -12,7 +12,7 @@ import {
 } from 'class-validator'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
-export class CreateContractAttributesDto {
+export class ContractAttributesDto {
   @IsString()
   @IsNotEmpty()
   readonly type: string
@@ -31,16 +31,24 @@ export class CreateContractAttributesDto {
   readonly property?: string
 }
 
-export class CreateContractAttributeCommonDto {
+export class CreateContractAttributeContractCommonDto {
   @ValidateIf((object) => object.templateContractId === undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly contractId?: string
+  readonly contractId: string
 
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => CreateContractAttributesDto)
+  @Type(() => String)
   contractAttributes: CreateContractAttributesDto[]
+}
+
+export class CreateContractAttributesDto {
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => String)
+  contractAttributes: ContractAttributesDto[]
 }

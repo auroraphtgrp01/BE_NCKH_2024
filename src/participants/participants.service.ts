@@ -16,7 +16,7 @@ import { UsersService } from 'src/users/users.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { ConfigService } from '@nestjs/config'
-import { Participant, ParticipantStatus } from '@prisma/client'
+import { Participant, ParticipantStatus, contractStatus } from '@prisma/client'
 import { Exact } from '@prisma/client/runtime/library'
 import { QueueRedisService } from 'src/queues/queue-redis.service'
 
@@ -120,6 +120,13 @@ export class ParticipantsService {
         updatedBy: { id: user.id, name: user.name, email: user.email }
       }
     })
+
+    if (updateParticipantDto.status) {
+      const participants = await this.findAllByContractId(find.contractId)
+      if (participants.filter((item) => item.status !== ParticipantStatus.ACCEPTED).length === 0) {
+        await this.contractService.update({ id: participant.contractId, status: contractStatus.PARTICIPATED }, user)
+      }
+    }
 
     return participant
   }

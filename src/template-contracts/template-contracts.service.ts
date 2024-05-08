@@ -17,20 +17,19 @@ export class TemplateContractsService {
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
     const { name, contractAttributes } = createTemplateContractDto
+
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    const resultContractAttributes = await this.commonService.createContractAttributes({ contractAttributes }, user)
-    const arrId: string[] = resultContractAttributes.map((item) => item.id)
     const templateContract = await this.prismaService.client.templateContract.create({
       data: {
         name,
-        path: 'https://picture/123354',
-        ContractAttribute: arrId,
+        path: createTemplateContractDto.path ? createTemplateContractDto.path : '',
+        ContractAttribute: contractAttributes,
         createdBy,
         updatedAt: null
       }
     })
 
-    return { templateContract, contractAttributes: resultContractAttributes }
+    return { templateContract }
   }
 
   async findOneById(id: string) {
