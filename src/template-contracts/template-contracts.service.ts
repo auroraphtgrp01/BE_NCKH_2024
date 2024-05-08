@@ -24,6 +24,13 @@ export class TemplateContractsService {
         name,
         path: createTemplateContractDto.path ? createTemplateContractDto.path : '',
         ContractAttribute: contractAttributes,
+    // const resultContractAttributes = await this.commonService.createContractAttributes({ contractAttributes }, user)
+    // const arrId: string[] = resultContractAttributes.map((item) => item.id)
+    const templateContract = await this.prismaService.client.templateContract.create({
+      data: {
+        name,
+        path: 'https://picture/123354',
+        ContractAttribute: [],
         createdBy,
         updatedAt: null
       }
@@ -42,8 +49,8 @@ export class TemplateContractsService {
     return contractAttributes
   }
 
-  findAll() {
-    return `This action returns all templateContracts`
+  async findAll() {
+    return await this.contractAttributesService.findAll()
   }
 
   findOne(id: number) {
