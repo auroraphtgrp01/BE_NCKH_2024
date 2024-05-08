@@ -98,9 +98,11 @@ export class CommonService {
     for (const contractArribute of contractAttributes) {
       if (
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+        ||  contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+        ||  contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         result.push({
           id: contractArribute.id,

@@ -134,9 +134,11 @@ export class ContractsService {
         if (item.statusAttribute === 'Create') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+            ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
           ) {
             const contractAttribute = await this.contractAttributesService.create(
               {
@@ -176,9 +178,11 @@ export class ContractsService {
         if (item.statusAttribute === 'Update') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+            ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+            ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
           ) {
             const contractAttribute = await this.contractAttributesService.update(
               {
@@ -248,9 +252,11 @@ export class ContractsService {
     getAllContractAttributes.forEach((contractAttribute) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+        ||  contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+        ||  contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       )
         contractAttributes.push({
           property: contractAttribute.value,
@@ -274,17 +280,21 @@ export class ContractsService {
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
     const contractTypeTitles = contractAttributes.filter(
       (item) =>
-        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE &&
-        item.type !== ETypeContractAttribute.CONTRACT_SIGNATURE &&
-        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE &&
-        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+      ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
     )
     const contractTypeAttributes = contractAttributes.filter(
       (item) =>
         item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_ADDRESS_WALLET_RECEIVE ||
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET
+      item.type === ETypeContractAttribute.CONTRACT_SIGNATURE 
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE
+      ||  item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND
+      ||  item.type === ETypeContractAttribute.TOTAL_AMOUNT
     )
 
     await Promise.all([
