@@ -76,8 +76,11 @@ export class ParticipantsService {
     return `This action returns all participants`
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} participant`
+  async findOne(email: string, contractId: string) {
+    const participant = await this.prismaService.client.participant.findFirst({
+      where: { email, contractId }
+    })
+    return participant
   }
 
   async findAllByContractId(contractId: string) {

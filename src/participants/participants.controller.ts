@@ -25,9 +25,9 @@ export class ParticipantsController {
     return this.participantsService.findAll()
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.participantsService.findOne(+id)
+  @Get('/find-one/:email/:contractId')
+  findOne(@Param('email') email: string, @Param('contractId') contractId: string) {
+    return this.participantsService.findOne(email, contractId)
   }
 
   @Patch()
