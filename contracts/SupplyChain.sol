@@ -30,7 +30,7 @@ contract SupplyChain {
   string[] private contractInformationKeys;
   uint private totalBalance;
   Stage[] private stages;
-  uint8 private currentStage = 0;
+  uint8 private currentStage;
   Status private status;
   string private privateKey;
 
@@ -62,6 +62,7 @@ contract SupplyChain {
     StageData[] memory _stages,
     string memory _privateKey
   ) {
+    currentStage = 0;
     privateKey = _privateKey;
     status = Status.ENFORCE;
     totalBalance = _total * 1 ether;
@@ -155,16 +156,6 @@ contract SupplyChain {
     totalBalance = _total;
   }
 
-  //   address private owner;
-  // address[] private users;
-  // mapping(address => uint) private assets;
-  // address private supplier;
-  // mapping(string => bytes) private contractInformation;
-  // string[] private contractInformationKeys;
-  // uint private totalBalance;
-  // Stage[] private stages;
-  // uint8 private currentStage = 0;
-
   function setStages(StageData[] memory _stages) public onlyPetitioner(msg.sender) {
     for (uint8 i = 0; i < _stages.length; i++) {
       stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false));
@@ -178,14 +169,16 @@ contract SupplyChain {
     }
   }
 
+  function setStatus(Status _status) public onlyPetitioner(msg.sender) {
+    status = _status;
+  }
+
   function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
     if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
     else stages[currentStage].userConfirm = true;
 
     if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
-      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
       currentStage++;
-      this.withDrawByPercent(payable(supplier), stages[currentStage].percent);
       stages[currentStage].isDone = true;
     }
 

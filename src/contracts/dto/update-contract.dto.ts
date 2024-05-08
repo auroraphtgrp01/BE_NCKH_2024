@@ -87,12 +87,14 @@ export class UpdateContractDto {
   @Type(() => GasPriceDto)
   gasPrices: GasPriceDto[]
 
+  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
   @Type(() => Date)
   startDate: Date
 
+  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @IsAfterDate('startDate')
@@ -100,6 +102,7 @@ export class UpdateContractDto {
   @Type(() => Date)
   executeDate: Date
 
+  @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @IsAfterDate('executeDate')
@@ -111,12 +114,6 @@ export class UpdateContractDto {
   @IsString({ each: true })
   @ArrayMinSize(1)
   agreements: string[]
-
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => CreateContractAttributeDto)
-  contractAttributes: CreateContractAttributeDto[]
 
   @IsOptional()
   @IsNotEmpty()

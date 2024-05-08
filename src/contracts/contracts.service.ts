@@ -120,7 +120,12 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    return 'update'
+    if (!(await this.findOneById(updateContractDto.id)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const contract = await this.prismaService.client.contract.update({
+      where: { id: updateContractDto.id },
+      data: { ...(updateContractDto as any) }
+    })
   }
 
   async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
