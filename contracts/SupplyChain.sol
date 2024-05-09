@@ -210,9 +210,10 @@ contract SupplyChain {
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
+    } else {
+      _addressWallet.transfer(_amount);
+      stages[currentStage].isWithdraw = true;
     }
-    _addressWallet.transfer(_amount);
-    stages[currentStage].isWithdraw = true;
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
@@ -282,6 +283,6 @@ contract SupplyChain {
         return stages[i];
       }
     }
-    return stages[currentStage];
+    return Stage(0, 0, '', false, false, false, false);
   }
 }
