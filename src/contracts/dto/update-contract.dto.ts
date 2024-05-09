@@ -111,6 +111,13 @@ export class UpdateContractDto {
 
   @IsOptional()
   @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => StageDto)
+  stages?: StageDto[]
+
+  @IsOptional()
+  @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
   agreements?: string[]
@@ -128,11 +135,4 @@ export class UpdateContractAttributeDto {
   @IsOptional()
   @IsArray()
   deleteArray: any[]
-
-  @IsOptional()
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => StageDto)
-  stages: StageDto[]
 }
