@@ -9,6 +9,7 @@ contract SupplyChain {
     bool userConfirm;
     bool supplierConfirm;
     bool isDone;
+    bool isWithdraw;
   }
 
   enum Status {
@@ -33,6 +34,7 @@ contract SupplyChain {
   uint8 private currentStage;
   Status private status;
   string private privateKey;
+  mapping(address => string) private signature;
 
   event contractCreated(
     address owner,
@@ -77,8 +79,11 @@ contract SupplyChain {
       contractInformationKeys.push(_keys[i]);
     }
     for (uint8 i = 0; i < _stages.length; i++) {
-      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false));
+      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false, false));
     }
+
+    signature[_user[0]] = '';
+    signature[_supplier] = '';
 
     emit contractCreated(owner, users, supplier, totalBalance, address(this).balance, block.timestamp);
   }
@@ -137,6 +142,14 @@ contract SupplyChain {
     _;
   }
 
+  function sign(string memory _signature) public onlyPetitionerOrSupplier(msg.sender) {
+    signature[msg.sender] = _signature;
+  }
+
+  function getSignature(address _addressWallet) public view returns (string memory) {
+    return signature[_addressWallet];
+  }
+
   function setPrivateKey(string memory _privateKey) public onlyPetitioner(msg.sender) {
     privateKey = _privateKey;
   }
@@ -158,7 +171,7 @@ contract SupplyChain {
 
   function setStages(StageData[] memory _stages) public onlyPetitioner(msg.sender) {
     for (uint8 i = 0; i < _stages.length; i++) {
-      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false));
+      stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false, false));
     }
   }
 
@@ -178,17 +191,9 @@ contract SupplyChain {
     else stages[currentStage].userConfirm = true;
 
     if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
-      currentStage++;
       stages[currentStage].isDone = true;
+      if (currentStage + 1 < stages.length) currentStage++;
     }
-
-    emit confirmedStage(
-      stages[currentStage].percent,
-      stages[currentStage].userConfirm,
-      stages[currentStage].supplierConfirm,
-      stages[currentStage].isDone,
-      block.timestamp
-    );
   }
 
   function withDrawByPercent(
@@ -197,7 +202,6 @@ contract SupplyChain {
   )
     public
     payable
-    onlyPetitioner(msg.sender)
     checkUserReceive(_addressWallet)
     notEnoughEthers((totalBalance * _percent) / 100)
   {
@@ -205,8 +209,10 @@ contract SupplyChain {
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
+    } else {
+      _addressWallet.transfer(_amount);
+      stages[currentStage].isWithdraw = true;
     }
-    _addressWallet.transfer(_amount);
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
@@ -219,6 +225,7 @@ contract SupplyChain {
       assets[_addressWallet] -= _amount;
     }
     _addressWallet.transfer(_amount);
+    stages[currentStage].isWithdraw = true;
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
@@ -264,7 +271,17 @@ contract SupplyChain {
   function getStages() public view returns (Stage[] memory) {
     return stages;
   }
-  function getStagesLength() public view returns (uint) {
-    return stages.length;
+
+  function getCurrentStage() public view returns (Stage memory) {
+    return stages[currentStage];
+  }
+
+  function getNonWithdrawalStage() public view returns (Stage memory) {
+    for (uint i = 0; i < stages.length; i++) {
+      if (stages[i].isWithdraw) {
+        return stages[i];
+      }
+    }
+    return Stage(0, 0, '', false, false, false, false);
   }
 }
