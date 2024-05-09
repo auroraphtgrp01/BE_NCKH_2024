@@ -191,8 +191,8 @@ contract SupplyChain {
     else stages[currentStage].userConfirm = true;
 
     if (stages[currentStage].supplierConfirm && stages[currentStage].userConfirm) {
-      currentStage++;
       stages[currentStage].isDone = true;
+      if (currentStage + 1 < stages.length) currentStage++;
     }
   }
 
