@@ -9,15 +9,15 @@ import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-cont
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { CommonService } from 'src/commons/common.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
-import { TemplateContractsService } from 'src/template-contracts/template-contracts.service' 
+import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse, IStage } from 'src/interfaces/contract.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
-import { ParticipantsService } from 'src/participants/participants.service' 
+import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
-import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface' 
+import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
 @Injectable()
 export class ContractsService {
@@ -122,10 +122,10 @@ export class ContractsService {
   async update(updateContractDto: UpdateContractDto, user: IUser) {
     if (!(await this.findOneById(updateContractDto.id)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    const updatedby: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract = await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
-      data: { ...(updateContractDto as any), updatedby }
+      data: { ...(updateContractDto as any), updatedBy }
     })
 
     return contract

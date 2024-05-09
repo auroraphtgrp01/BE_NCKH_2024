@@ -34,9 +34,14 @@ export class UsersController {
     return await this.usersService.findOneById(id)
   }
 
+  @Get('/find-one-by-address/:addressWallet')
+  async findOneByAddress(@Param('addressWallet') addressWallet: string) {
+    return await this.usersService.findOneByAddressWallet(addressWallet)
+  }
+
   @Get(':payload')
   async findOne(@Param('payload') payload: string) {
-    return await this.usersService.findOne(payload)
+    return { user: await this.usersService.findOne(payload) }
   }
 
   @Patch()
@@ -54,10 +59,5 @@ export class UsersController {
   async handleAccountExists(@Param('addressWallet') addressWallet: string) {
     if (await this.usersService.findOneByAddressWallet(addressWallet)) return { exists: true }
     return { exists: false }
-  }
-
-  @Post('test-deploy')
-  async testDeploy() {
-    return await this.usersService.deployContract()
   }
 }

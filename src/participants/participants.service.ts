@@ -72,19 +72,24 @@ export class ParticipantsService {
     return participants
   }
 
-  findAll() {
-    return `This action returns all participants`
+  async findAll(contractId: string) {
+    const participants = await this.prismaService.client.participant.findMany({ where: { contractId } })
+    return participants
   }
 
   async findOne(email: string, contractId: string) {
     const participant = await this.prismaService.client.participant.findFirst({
       where: { email, contractId }
     })
+
     return participant
   }
 
   async findAllByContractId(contractId: string) {
-    const participants = await this.prismaService.client.participant.findMany({ where: { contractId } })
+    const participants = await this.prismaService.client.participant.findMany({
+      where: { contractId },
+      include: { User: true }
+    })
     return participants
   }
 

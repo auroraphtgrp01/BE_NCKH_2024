@@ -20,9 +20,9 @@ export class ParticipantsController {
     return await this.participantsService.sendInvitation(sendInvitationDto, user)
   }
 
-  @Get()
-  findAll() {
-    return this.participantsService.findAll()
+  @Get('/find-all/:contractId')
+  async findAll(@Param('contractId') contractId: string) {
+    return await this.participantsService.findAll(contractId)
   }
 
   @Get('/find-one/:email/:contractId')
