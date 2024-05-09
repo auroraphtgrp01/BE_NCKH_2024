@@ -202,7 +202,6 @@ contract SupplyChain {
   )
     public
     payable
-    onlyPetitioner(msg.sender)
     checkUserReceive(_addressWallet)
     notEnoughEthers((totalBalance * _percent) / 100)
   {
