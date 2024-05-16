@@ -13,11 +13,11 @@ import { ContractAttributeValuesModule } from 'src/contract-attribute-values/con
   imports: [
     MailModule,
     UsersModule,
-    forwardRef(() => CommonModule),
     TemplateContractsModule,
     ContractAttributesModule,
     forwardRef(() => ParticipantsModule),
-    ContractAttributeValuesModule
+    ContractAttributeValuesModule,
+    forwardRef(() => ContractAttributesModule)
   ],
   controllers: [ContractsController],
   providers: [ContractsService],

@@ -14,11 +14,6 @@ export class TemplateContractsController {
     return this.templateContractsService.create(createTemplateContractDto, user)
   }
 
-  @Get()
-  findAll() {
-    return this.templateContractsService.findAll()
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.templateContractsService.findOne(+id)

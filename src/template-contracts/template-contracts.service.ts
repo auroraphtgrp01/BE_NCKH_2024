@@ -12,20 +12,17 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 export class TemplateContractsService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    @Inject(forwardRef(() => CommonService)) private commonService: CommonService,
     @Inject(forwardRef(() => ContractAttributesService)) private contractAttributesService: ContractAttributesService
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
     const { name, contractAttributes } = createTemplateContractDto
 
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    // const resultContractAttributes = await this.commonService.createContractAttributes({ contractAttributes }, user)
-    // const arrId: string[] = resultContractAttributes.map((item) => item.id)
+
     const templateContract = await this.prismaService.client.templateContract.create({
       data: {
         name,
-        path: 'https://picture/123354',
-        ContractAttribute: [],
+        ContractAttribute: contractAttributes,
         createdBy,
         updatedAt: null
       }
@@ -42,10 +39,6 @@ export class TemplateContractsService {
   async getTemplateContractAttributes(templateId: string) {
     const contractAttributes = await this.contractAttributesService.findAllByTemplateId(templateId)
     return contractAttributes
-  }
-
-  async findAll() {
-    return await this.contractAttributesService.findAll()
   }
 
   findOne(id: number) {
