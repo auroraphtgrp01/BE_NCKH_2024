@@ -24,15 +24,15 @@ import { contractStatus } from '@prisma/client'
 export class StageDto {
   @IsDateString()
   @IsNotEmpty()
-  deliveryAt: string
+  readonly deliveryAt: string
 
   @IsNumber()
-  percent: number
+  readonly percent: number
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  description?: string
+  readonly description?: string
 }
 
 export class CreateContractAttributeDto {
@@ -59,40 +59,40 @@ export class UpdateContractDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  id: string
+  readonly id: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet?: string
+  readonly addressWallet?: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle?: string
+  readonly contractTitle?: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS })
-  contractAddress?: string
+  readonly contractAddress?: string
 
   @IsOptional()
   @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
-  blockAddress?: string
+  readonly blockAddress?: string
 
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => GasPriceDto)
-  gasPrices?: GasPriceDto[]
+  readonly gasPrices?: GasPriceDto[]
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
   @Type(() => Date)
-  startDate?: Date
+  readonly startDate?: Date
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))
@@ -100,39 +100,39 @@ export class UpdateContractDto {
   @IsAfterDate('startDate')
   @IsBeforeDate('endDate')
   @Type(() => Date)
-  executeDate?: Date
+  readonly executeDate?: Date
 
   @IsOptional()
   @Transform(({ value }) => new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @IsAfterDate('executeDate')
   @Type(() => Date)
-  endDate?: Date
+  readonly endDate?: Date
 
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => StageDto)
-  stages?: StageDto[]
+  readonly stages?: StageDto[]
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
-  agreements?: string[]
+  readonly agreements?: string[]
 
   @IsOptional()
   @IsNotEmpty()
-  status: string
+  readonly status: string
 }
 
 export class UpdateContractAttributeDto {
   @IsString()
   id: string
   @IsArray()
-  updatedAttributes: any[]
+  readonly updatedAttributes: any[]
   @IsOptional()
   @IsArray()
-  deleteArray: any[]
+  readonly deleteArray: any[]
 }

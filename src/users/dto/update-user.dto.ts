@@ -17,43 +17,43 @@ export class UpdateUserDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })
   @IsString({ message: RESPONSE_MESSAGES.ID_MUST_BE_A_STRING })
   @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID })
-  readonly id: string
+  id: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })
-  readonly name: string
+  name: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   @MinLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  readonly addressWallet: string
+  addressWallet: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
-  readonly email: string
+  email: string
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly roleId: string
+  roleId: string
 
   @IsOptional()
-  readonly gender: string
+  gender: string
 
   @IsOptional()
   @IsDateString({}, { message: RESPONSE_MESSAGES.DATEOFBIRTH_MUST_BE_A_DATE })
-  readonly dateOfBirth: string
+  dateOfBirth: string
 
   @IsOptional()
-  readonly phoneNumber: string
+  phoneNumber: string
 
   @IsOptional()
   @MaxLength(12)
   @MinLength(12)
-  readonly indentifyNumber: string
+  indentifyNumber: string
 }
 
 export class UpdateUserPINDto {

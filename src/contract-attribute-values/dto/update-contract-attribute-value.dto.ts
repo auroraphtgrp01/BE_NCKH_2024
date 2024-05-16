@@ -8,16 +8,16 @@ export class UpdateContractAttributeValueDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly id?: string
+  id?: string
 
   @ValidateIf((object) => object.id !== undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly contractAttributeId?: string
+  contractAttributeId?: string
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly value: string
+  value: string
 }

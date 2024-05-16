@@ -103,7 +103,7 @@ model Contract {
 model TemplateContract {
   id                String    @id @unique @default(uuid()) @db.Uuid
   name              String
-  path              String
+  path              String?
   createdAt         DateTime  @default(now())
   updatedAt         DateTime? @updatedAt
   createdBy         Json?
