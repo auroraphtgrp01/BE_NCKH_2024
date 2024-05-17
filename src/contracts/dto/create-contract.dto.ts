@@ -27,61 +27,61 @@ export class CreateContractAttributesDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  contractId: string
+  readonly contractId: string
 
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  templateContractId: string
+  readonly templateContractId: string
 }
 
 export class TemplateContractDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  id: string
+  readonly id: string
 
   @IsString()
   @IsNotEmpty()
-  img: string
+  readonly img: string
 
   @IsString()
   @IsNotEmpty()
-  name: string
+  readonly name: string
 }
 
 export class PermissionDto {
   @IsNotEmpty()
   @IsBoolean()
-  CHANGE_STATUS_CONTRACT: boolean
+  readonly CHANGE_STATUS_CONTRACT: boolean
 
   @IsNotEmpty()
   @IsBoolean()
-  EDIT_CONTRACT: boolean
+  readonly EDIT_CONTRACT: boolean
 
   @IsNotEmpty()
   @IsBoolean()
-  INVITE_PARTICIPANT: boolean
+  readonly INVITE_PARTICIPANT: boolean
 
   @IsNotEmpty()
   @IsBoolean()
-  READ_CONTRACT: boolean
+  readonly READ_CONTRACT: boolean
 
   @IsNotEmpty()
   @IsBoolean()
-  SET_OWNER_PARTY: boolean
+  readonly SET_OWNER_PARTY: boolean
 }
 
 export class GasPriceDto {
   @IsNumber()
-  price: string
+  readonly readonlyprice: string
 
   @IsString()
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet: string
 
   @IsString()
-  reason: string
+  readonly reason: string
 }
 
 export class CreateEmptyContractDto {
@@ -89,11 +89,11 @@ export class CreateEmptyContractDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  id?: string
+  readonly id?: string
 
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet: string
 
   @IsOptional()
   @IsString()
@@ -104,24 +104,24 @@ export class CreateEmptyContractDto {
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  name: string
+  readonly name: string
 }
 
 export class CreateContractDto {
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet: string
 
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  name: string
+  readonly name: string
 
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => InvitationsDto)
-  invitation: InvitationsDto[]
+  readonly invitation: InvitationsDto[]
 
   @IsOptional()
   @IsString()
@@ -178,15 +178,15 @@ export class InvitationsDto {
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
   @IsNotEmpty()
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
-  email: string
+  readonly email: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  messages: string
+  readonly messages: string
 
   @IsObject()
   @ValidateNested()
   @Type(() => PermissionDto)
-  permission: PermissionDto
+  readonly permission: PermissionDto
 }

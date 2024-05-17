@@ -7,7 +7,6 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
 import { IUser } from 'src/users/interfaces/IUser.interface'
-import { CommonService } from 'src/commons/common.service'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
@@ -25,9 +24,9 @@ export class ContractsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
     @Inject(forwardRef(() => ParticipantsService)) private readonly participantService: ParticipantsService,
-    @Inject(forwardRef(() => CommonService)) private readonly commonService: CommonService,
     private readonly templateContractsService: TemplateContractsService,
     private readonly usersService: UsersService,
+    @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
     private readonly suppliersService: SuppliersService

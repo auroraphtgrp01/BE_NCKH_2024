@@ -15,17 +15,17 @@ import { ETypeContractAttribute } from 'src/constants/enum.constant'
 export class CreateContractAttributeDto {
   @IsString()
   @IsNotEmpty()
-  readonly type: string
+  type: string
 
   @IsString()
   @IsNotEmpty()
-  readonly value: string
+  value: string
 
   @ValidateIf((object) => object.templateContractId === undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly contractId?: string
+  contractId?: string
 
   @IsOptional()
   index?: number

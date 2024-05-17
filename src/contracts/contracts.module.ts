@@ -14,7 +14,6 @@ import { SuppliersModule } from 'src/suppliers/suppliers.module'
   imports: [
     MailModule,
     UsersModule,
-    forwardRef(() => CommonModule),
     TemplateContractsModule,
     ContractAttributesModule,
     forwardRef(() => ParticipantsModule),

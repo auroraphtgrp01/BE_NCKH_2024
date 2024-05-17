@@ -15,6 +15,7 @@ import { CommonService } from 'src/commons/common.service'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
+import { ContractsService } from 'src/contracts/contracts.service'
 
 @Injectable()
 export class ContractAttributesService {
@@ -24,7 +25,9 @@ export class ContractAttributesService {
     @Inject(forwardRef(() => TemplateContractsService))
     private readonly templateContractsService: TemplateContractsService,
     @Inject(forwardRef(() => ContractAttributeValuesService))
-    private readonly contractAttributeValueService: ContractAttributeValuesService
+    private readonly contractAttributeValueService: ContractAttributeValuesService,
+    @Inject(forwardRef(() => ContractsService))
+    private readonly contractsService: ContractsService
   ) {}
   async create(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
     const { contractId, ...rest } = createContractAttributeDto
@@ -56,6 +59,8 @@ export class ContractAttributesService {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    console.log('contractAttributes', contractAttributes)
+    console.log('contractId', contractId)
 
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
@@ -72,6 +77,7 @@ export class ContractAttributesService {
 
       if (contractId) data.contractId = contractId
 
+
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -87,11 +93,10 @@ export class ContractAttributesService {
             record.type === ETypeContractAttribute.CONTRACT_HEADING_2
         )
 
-        if (!hasHeading) {
+        if (!hasHeading)
           throw new BadRequestException(
             `The content ${contractAttribute.property} cannot be found without a title. Please create a title before generating content!`
           )
-        }
 
         const contractAttributeRecord = await this.create(data, user)
 
@@ -124,10 +129,6 @@ export class ContractAttributesService {
     }
 
     return contractAttributeRecords
-  }
-
-  async findAll() {
-    return this.prismaService.client.templateContract.findMany({})
   }
 
   async findAllByContractId(contractId: string) {

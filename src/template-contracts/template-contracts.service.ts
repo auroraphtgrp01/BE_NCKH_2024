@@ -13,7 +13,6 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 export class TemplateContractsService {
   constructor(
     @Inject('PrismaService') private prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    @Inject(forwardRef(() => CommonService)) private commonService: CommonService,
     @Inject(forwardRef(() => ContractAttributesService)) private contractAttributesService: ContractAttributesService
   ) {}
   async create(createTemplateContractDto: CreateTemplateContractDto, user: IUser) {
@@ -59,7 +58,6 @@ export class TemplateContractsService {
   async findFirst() {
     return await this.prismaService.client.templateContract.findFirst()
   }
-
   findOne(id: number) {
     return `This action returns a #${id} templateContract`
   }
