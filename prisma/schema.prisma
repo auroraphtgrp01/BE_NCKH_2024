@@ -44,6 +44,7 @@ model User {
   gender              Gender
   dateOfBirth         DateTime
   PIN                 String?
+  address             String?
   emailVerifyToken    String?
   forgotPasswordToken String?
   refreshToken        String?
@@ -90,6 +91,7 @@ model Contract {
   agreements        String[]
   status            contractStatus      @default(PENDING)
   stages            Json[]
+  type              String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime?           @updatedAt
   createdBy         Json?
@@ -101,16 +103,16 @@ model Contract {
 }
 
 model TemplateContract {
-  id                String    @id @unique @default(uuid()) @db.Uuid
-  name              String
-  path              String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime? @updatedAt
-  createdBy         Json?
-  updatedBy         Json?
-  deletedAt         DateTime?
-  deletedBy         Json?
-  ContractAttribute String[]
+  id                 String    @id @unique @default(uuid()) @db.Uuid
+  name               String
+  path               String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime? @updatedAt
+  createdBy          Json?
+  updatedBy          Json?
+  deletedAt          DateTime?
+  deletedBy          Json?
+  contractAttributes String[]
 }
 
 model ContractAttribute {

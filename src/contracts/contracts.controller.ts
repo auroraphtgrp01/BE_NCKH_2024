@@ -13,17 +13,6 @@ export class ContractsController {
     return await this.contractsService.create(createContractDto, user)
   }
 
-  @Post('create-contract-attributes')
-  async createContractAttributes(
-    @Body() createContractAttributesDto: CreateContractAttributesDto,
-    @User() user: IUser
-  ) {
-    const { contractId, templateContractId } = createContractAttributesDto
-    return {
-      contractAttributes: await this.contractsService.createContractAttributes(contractId, templateContractId, user)
-    }
-  }
-
   @Get('get-contract-details/:contractId')
   async getContractDetailsById(@Param('contractId') contractId: string) {
     return await this.contractsService.getContractDetailsById(contractId)

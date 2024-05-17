@@ -19,6 +19,11 @@ export class ContractAttributesController {
     return this.contractAttributesService.createContractAttributes(createContractAttributeDto, user)
   }
 
+  @Get()
+  findAll() {
+    return this.contractAttributesService.findAll()
+  }
+
   @Get(':contractId')
   async findAllByContractId(@Param('contractId') contractId: string) {
     return await this.contractAttributesService.findAllByContractId(contractId)

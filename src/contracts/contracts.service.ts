@@ -1,8 +1,8 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException, forwardRef } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
 import { CreateContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
-import { Contract, Participant, contractStatus } from '@prisma/client'
+import { Contract, ContractAttribute, Participant, Suppliers, User, contractStatus } from '@prisma/client'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
@@ -12,12 +12,13 @@ import { TemplateContractsService } from 'src/template-contracts/template-contra
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse, IStage } from 'src/interfaces/contract.interface'
-import { ETypeContractAttribute } from 'src/constants/enum.constant'
+import { EContractType, ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
+import { SuppliersService } from 'src/suppliers/suppliers.service'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -27,7 +28,8 @@ export class ContractsService {
     private readonly usersService: UsersService,
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
-    private readonly contractAttributeValuesService: ContractAttributeValuesService
+    private readonly contractAttributeValuesService: ContractAttributeValuesService,
+    private readonly suppliersService: SuppliersService
   ) {}
 
   test(jsonData: any) {
@@ -59,6 +61,7 @@ export class ContractsService {
         addressWallet,
         contractTitle: name,
         status: contractStatus.PENDING as Exact<contractStatus, contractStatus>,
+        type: contractData.type ? contractData.type : EContractType.CONTRACT,
         createdBy,
         updatedAt: null
       }
@@ -69,26 +72,32 @@ export class ContractsService {
 
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, ...contractData } = createContractDto
+    const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
+    const _user = await this.usersService.findOneById(userId)
+    const supplier = await this.suppliersService.findOneById(supplierId)
+    if (!_user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+    if (!supplier) throw new NotFoundException({ message: RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND })
+
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
     await this.participantService.sendInvitation(
       { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
       user
     )
     contractResponse.contract = contractRecord
-
-    if (templateId) {
+    if (templateId)
       if (!(await this.templateContractsService.findOneById(templateId)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+    contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+      contractRecord.id,
+      templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+      _user,
+      supplier,
+      user
+    )
 
-      contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-        contractRecord.id,
-        templateId,
-        user
-      )
-    }
     return contractResponse
   }
 
@@ -242,13 +251,15 @@ export class ContractsService {
   async createContractAttributesByTemplateId(
     contractId: string,
     templateContractId: string,
+    _user: User,
+    supplier: Suppliers & { User: User },
     user: IUser
   ): Promise<IContractAttributeResponse[]> {
     const template = await this.templateContractsService.findOneById(templateContractId)
     if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-    const getAllContractAttributes = await Promise.all(
-      template.ContractAttribute.map(async (item) => {
-        const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
+    const getAllContractAttributes: ContractAttribute[] = await Promise.all(
+      template.contractAttributes.map(async (item) => {
+        const contractAttribute = await this.prismaService.client.contractAttribute.findUnique({
           where: { id: item }
         })
         return contractAttribute
@@ -256,7 +267,8 @@ export class ContractsService {
     )
 
     const contractAttributes: any[] = []
-    getAllContractAttributes.forEach((contractAttribute) => {
+    const isInfoParty = { index: -1, role: '' }
+    getAllContractAttributes.forEach((contractAttribute, index) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -264,18 +276,75 @@ export class ContractsService {
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
         contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
-      )
-        contractAttributes.push({
-          property: contractAttribute.value,
-          value: 'Empty',
-          type: contractAttribute.type
-        })
-      else
+      ) {
+        if (isInfoParty.index !== -1) {
+          switch (index) {
+            case isInfoParty.index + 1:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? 'Empty' : supplier.name,
+                type: contractAttribute.type
+              })
+              break
+            case isInfoParty.index + 2:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? _user.name : supplier.User.name,
+                type: contractAttribute.type
+              })
+              break
+            case isInfoParty.index + 3:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? (_user.address ? _user.address : 'Empty') : supplier.address,
+                type: contractAttribute.type
+              })
+              break
+            default:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? _user.phoneNumber : supplier.User.phoneNumber,
+                type: contractAttribute.type
+              })
+              isInfoParty.index = -1
+              isInfoParty.role = ''
+              break
+          }
+        } else {
+          if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND)
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: _user.addressWallet,
+              type: contractAttribute.type
+            })
+          else if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE)
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: supplier.User.addressWallet,
+              type: contractAttribute.type
+            })
+          else
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: 'Empty',
+              type: contractAttribute.type
+            })
+        }
+      } else {
+        if (contractAttribute.value === 'Bên A') {
+          isInfoParty.index = index
+          isInfoParty.role = 'Customer'
+        } else if (contractAttribute.value === 'Bên B') {
+          isInfoParty.index = index
+          isInfoParty.role = 'Supplier'
+        }
         contractAttributes.push({
           value: contractAttribute.value,
           type: contractAttribute.type
         })
+      }
     })
+
     const [contractAttributeRecords] = await Promise.all([
       this.contractAttributesService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
     ])
@@ -287,12 +356,12 @@ export class ContractsService {
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
     const contractTypeTitles = contractAttributes.filter(
       (item) =>
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
-        item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
-        item.type === ETypeContractAttribute.TOTAL_AMOUNT
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE &&
+        item.type !== ETypeContractAttribute.CONTRACT_SIGNATURE &&
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED &&
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE &&
+        item.type !== ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND &&
+        item.type !== ETypeContractAttribute.TOTAL_AMOUNT
     )
     const contractTypeAttributes = contractAttributes.filter(
       (item) =>
@@ -313,19 +382,6 @@ export class ContractsService {
         await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
       })
     ])
-  }
-
-  async createContractAttributes(contractId: string, templateContractId: string, user: IUser) {
-    if (!(await this.findOneById(contractId)))
-      throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    if (!(await this.templateContractsService.findOneById(templateContractId)))
-      throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-
-    if ((await this.contractAttributesService.findAllByContractId(contractId)).length === 0) {
-      return await this.createContractAttributesByTemplateId(contractId, templateContractId, user)
-    }
-    await this.removeContractAttributesByContractId(contractId)
-    return await this.createContractAttributesByTemplateId(contractId, templateContractId, user)
   }
 
   remove(id: number) {

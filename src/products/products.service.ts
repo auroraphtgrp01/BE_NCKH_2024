@@ -14,7 +14,7 @@ export class ProductsService {
     private readonly suppliersService: SuppliersService
   ) {}
   async create(createProductDto: CreateProductDto, user: IUser) {
-    if (!(await this.suppliersService.findOneByid(createProductDto.supplierId)))
+    if (!(await this.suppliersService.findOneById(createProductDto.supplierId)))
       throw new NotFoundException('Supplier not found')
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const { supplierId, ...rest } = createProductDto

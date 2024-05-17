@@ -16,10 +16,11 @@ import {
   MaxLength,
   MinDate,
   MinLength,
+  Validate,
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { ETypeContractAttribute } from 'src/constants/enum.constant'
+import { EContractType, ETypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateContractAttributesDto {
@@ -94,6 +95,12 @@ export class CreateEmptyContractDto {
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   readonly addressWallet: string
 
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @Validate((object: any) => object.type === EContractType.DISPUTE)
+  type?: string
+
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
@@ -119,8 +126,24 @@ export class CreateContractDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
+  @Validate((object: any) => object.type === EContractType.DISPUTE)
+  type?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   @IsUUID()
   readonly templateId?: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly supplierId: string
 }
 
 export class DataUpdateContractAttributeDto {

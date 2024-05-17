@@ -39,5 +39,6 @@ export class CreateTemplateContractDto {
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
+  @IsString({ each: true })
   contractAttributes: string[]
 }

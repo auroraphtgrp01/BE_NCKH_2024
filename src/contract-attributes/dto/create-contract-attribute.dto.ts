@@ -34,24 +34,24 @@ export class CreateContractAttributeDto {
 export class ContractAttributesDto {
   @IsString()
   @IsNotEmpty()
-  type: string
+  readonly type: string
 
   @IsString()
   @IsNotEmpty()
-  value: string
+  readonly value: string
 
   @ValidateIf(
     (object) =>
       object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
       object.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
       object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
       object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
       object.type === ETypeContractAttribute.TOTAL_AMOUNT
   )
   @IsString()
   @IsNotEmpty()
-  property?: string
+  readonly property?: string
 }
 
 export class CreateContractAttributesDto {
@@ -59,7 +59,7 @@ export class CreateContractAttributesDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  contractId?: string
+  readonly contractId?: string
 
   @IsArray()
   @ArrayMinSize(1)
