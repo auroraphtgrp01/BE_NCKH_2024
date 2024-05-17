@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common'
 import { ContractAttributesService } from './contract-attributes.service'
-import { CreateContractAttributeDto } from './dto/create-contract-attribute.dto'
+import { CreateContractAttributeDto, CreateContractAttributesDto } from './dto/create-contract-attribute.dto'
 import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
@@ -12,6 +12,11 @@ export class ContractAttributesController {
   @Post()
   create(@Body() createContractAttributeDto: CreateContractAttributeDto, @User() user: IUser) {
     return this.contractAttributesService.create(createContractAttributeDto, user)
+  }
+
+  @Post('/create-contract-attributes')
+  createContractAttributes(@Body() createContractAttributeDto: CreateContractAttributesDto, @User() user: IUser) {
+    return this.contractAttributesService.createContractAttributes(createContractAttributeDto, user)
   }
 
   @Get()

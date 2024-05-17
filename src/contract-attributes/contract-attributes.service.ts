@@ -1,5 +1,5 @@
-import { BadRequestException, Inject, Injectable, forwardRef } from '@nestjs/common'
-import { CreateContractAttributeDto } from './dto/create-contract-attribute.dto'
+import { BadRequestException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
+import { CreateContractAttributeDto, CreateContractAttributesDto } from './dto/create-contract-attribute.dto'
 import { UpdateContractAttributeDto } from './dto/update-contract-attribute.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { CustomPrismaService } from 'nestjs-prisma'
@@ -14,7 +14,6 @@ import {
 import { CommonService } from 'src/commons/common.service'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { CreateContractAttributesDto } from 'src/commons/dto/create-contract-attribute.dto'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 
 @Injectable()
@@ -53,11 +52,14 @@ export class ContractAttributesService {
     return result
   }
 
-  async createContractAttributes(CreateContractAttributeCommonDto: CreateContractAttributesDto, user: IUser) {
-    const { contractAttributes } = CreateContractAttributeCommonDto
+  async createContractAttributes(createContractAttributesDto: CreateContractAttributesDto, user: IUser) {
+    const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 
+    if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
+      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
+    let i = 0
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
@@ -67,9 +69,16 @@ export class ContractAttributesService {
         value: null,
         type: contractAttribute.type
       }
+
+      if (contractId) data.contractId = contractId
+
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         data.value = contractAttribute.property
         const hasHeading = contractAttributeRecords.some(
@@ -85,6 +94,7 @@ export class ContractAttributesService {
         }
 
         const contractAttributeRecord = await this.create(data, user)
+
         const contractAttributeValueRecord = await this.contractAttributeValueService.create(
           {
             value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
@@ -110,6 +120,7 @@ export class ContractAttributesService {
         const contractAttributeRecord = await this.create(data, user)
         contractAttributeRecords.push(contractAttributeRecord)
       }
+      i++
     }
 
     return contractAttributeRecords
@@ -136,7 +147,7 @@ export class ContractAttributesService {
   async findAllByTemplateId(templateContractId: string) {
     const templateContract = await this.templateContractsService.findOneById(templateContractId)
     const contractAttributes = await Promise.all(
-      templateContract.ContractAttribute.map(async (item) => {
+      templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
           where: { id: item }
         })

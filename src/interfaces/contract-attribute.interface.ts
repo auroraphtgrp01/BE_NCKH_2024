@@ -22,5 +22,4 @@ export interface IDataContractAttribute {
   type: string
   property?: string
   contractId?: string
-  templateContractId?: string
 }

@@ -31,13 +31,13 @@ export class CreateTemplateContractDto {
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   name: string
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  path: string
+  path?: string
 
   @IsArray()
   @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => String)
+  @IsString({ each: true })
   contractAttributes: string[]
 }
