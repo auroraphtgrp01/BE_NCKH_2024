@@ -194,6 +194,7 @@ model Suppliers {
   email       String     @unique
   phoneNumber String     @unique
   address     String
+  description String?
   Images      Images[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime?  @updatedAt

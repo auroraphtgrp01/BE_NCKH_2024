@@ -40,7 +40,12 @@ export class SuppliersService {
   }
 
   async findOneById(id: string) {
-    return await this.prismaService.client.suppliers.findUnique({ where: { id }, include: { User: true } })
+    const suppliers: any = await this.prismaService.client.suppliers.findUnique({
+      where: { id },
+      include: { User: true }
+    })
+    suppliers.images = await this.prismaService.client.images.findMany({ where: { suppliersId: suppliers.id } })
+    return suppliers
   }
 
   findOne(id: number) {
