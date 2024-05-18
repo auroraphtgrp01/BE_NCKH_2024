@@ -32,12 +32,16 @@ export class ProductsService {
     if (!(await this.suppliersService.findOneById(supplierId)))
       throw new NotFoundException(RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND)
 
-    const products = await this.prismaService.client.products.findMany({
+    const products = []
+    const procs = await this.prismaService.client.products.findMany({
       where: { supplierId }
     })
-    products.forEach(async (product: any) => {
-      product.images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
-    })
+
+    for (const product of procs) {
+      const images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
+      products.push({ ...product, images })
+    }
+
     return products
   }
 
