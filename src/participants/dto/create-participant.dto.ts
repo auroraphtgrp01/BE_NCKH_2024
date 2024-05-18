@@ -46,9 +46,10 @@ export class InvitationDto {
 }
 
 export class SendInvitationsDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  contractName: string
+  contractName?: string
 
   @IsString()
   @IsNotEmpty()

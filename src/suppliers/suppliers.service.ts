@@ -30,7 +30,13 @@ export class SuppliersService {
   }
 
   async findAll() {
-    return this.prismaService.client.suppliers.findMany({ include: { User: true } })
+    const suppliers = []
+    const spl = await this.prismaService.client.suppliers.findMany({ include: { User: true } })
+    for (const supplier of spl) {
+      const images = await this.prismaService.client.images.findMany({ where: { suppliersId: supplier.id } })
+      suppliers.push({ supplier, images })
+    }
+    return suppliers
   }
 
   async findOneById(id: string) {
