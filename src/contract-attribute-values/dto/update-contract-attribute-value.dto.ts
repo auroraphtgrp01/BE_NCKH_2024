@@ -4,13 +4,13 @@ import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, ValidateIf } from 
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class UpdateContractAttributeValueDto {
-  @ValidateIf((object) => object.contractAttributeId !== undefined)
+  @ValidateIf((object) => object.contractAttributeId === undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()
   id?: string
 
-  @ValidateIf((object) => object.id !== undefined)
+  @ValidateIf((object) => object.id === undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()

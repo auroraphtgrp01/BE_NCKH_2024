@@ -1,1 +1,13 @@
-export class CreateOrderDto {}
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator'
+
+export class CreateOrderDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  supplierId: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  productId: string
+}

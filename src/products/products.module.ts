@@ -6,6 +6,7 @@ import { SuppliersModule } from 'src/suppliers/suppliers.module'
 @Module({
   imports: [SuppliersModule],
   controllers: [ProductsController],
-  providers: [ProductsService]
+  providers: [ProductsService],
+  exports: [ProductsService]
 })
 export class ProductsModule {}
