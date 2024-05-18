@@ -1,14 +1,83 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateOrderDto } from './dto/create-order.dto'
 import { UpdateOrderDto } from './dto/update-order.dto'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
+import { IUser } from 'src/users/interfaces/IUser.interface'
+import { EOrderStatus } from 'src/constants/enum.constant'
+import { ProductsService } from 'src/products/products.service'
+import { CommonService } from 'src/commons/common.service'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
+import { IExecutor } from 'src/interfaces/executor.interface'
+import { SuppliersService } from 'src/suppliers/suppliers.service'
 
 @Injectable()
 export class OrdersService {
-  constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order'
+  constructor(
+    @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
+    private readonly productsService: ProductsService,
+    private readonly commonService: CommonService,
+    private readonly suppliersService: SuppliersService
+  ) {}
+  async create(createOrderDto: CreateOrderDto, user: IUser) {
+    const productInfo = await this.productsService.findOneById(createOrderDto.productId)
+    if (!productInfo) throw new NotFoundException(RESPONSE_MESSAGES.PRODUCT_NOT_FOUND)
+    if (!(await this.suppliersService.findOneById(createOrderDto.supplierId)))
+      throw new NotFoundException(RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND)
+    const hasOrder = await this.findOneStatusPendingBySupplierIdAndUserId(createOrderDto.supplierId, user.id)
+    const executor: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    if (hasOrder) {
+      if (!hasOrder.products.some((product: any) => product.id === createOrderDto.productId))
+        await this.prismaService.client.orders.update({
+          where: { id: hasOrder.id },
+          data: {
+            products: [
+              ...hasOrder.products,
+              {
+                id: productInfo.product.id,
+                name: productInfo.product.name,
+                image:
+                  productInfo.image.length > 0
+                    ? productInfo.image[0].path
+                    : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+                quantity: 0,
+                price: productInfo.product.price,
+                description: productInfo.product.description,
+                discount: 0,
+                taxPrice: 0
+              }
+            ],
+            updatedBy: executor
+          }
+        })
+    } else {
+      await this.prismaService.client.orders.create({
+        data: {
+          Suppliers: { connect: { id: createOrderDto.supplierId } },
+          User: { connect: { id: user.id } },
+          orderCode: this.commonService.uuidv4(),
+          products: [
+            {
+              id: productInfo.product.id,
+              name: productInfo.product.name,
+              image:
+                productInfo.image.length > 0
+                  ? productInfo.image[0].path
+                  : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+              quantity: 0,
+              price: productInfo.product.price,
+              description: productInfo.product.description,
+              discount: 0,
+              taxPrice: 0
+            }
+          ],
+          status: EOrderStatus.PENDING,
+          createdBy: executor,
+          updatedAt: null
+        }
+      })
+    }
+    return { message: 'Add product successfully' }
   }
 
   findAll() {
@@ -20,12 +89,37 @@ export class OrdersService {
     return order
   }
 
+  async findOneStatusPendingBySupplierIdAndUserId(suppliersId: string, userId: string) {
+    const order = await this.prismaService.client.orders.findFirst({
+      where: { status: EOrderStatus.PENDING, suppliersId, userId }
+    })
+    return order
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} order`
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`
+  async update(updateOrderDto: UpdateOrderDto, user: IUser) {
+    if (updateOrderDto.products) {
+      const { products, ...rest } = updateOrderDto
+      return await this.prismaService.client.orders.update({
+        data: {
+          ...rest,
+          products: products as any,
+          updatedBy: { id: user.id, name: user.name, email: user.email, role: user.role }
+        },
+        where: { id: updateOrderDto.id }
+      })
+    } else {
+      return await this.prismaService.client.orders.update({
+        data: {
+          status: updateOrderDto.status,
+          updatedBy: { id: user.id, name: user.name, email: user.email, role: user.role }
+        },
+        where: { id: updateOrderDto.id }
+      })
+    }
   }
 
   remove(id: number) {

@@ -51,10 +51,6 @@ export class TemplateContractsService {
     return contractAttributes
   }
 
-  async findAll() {
-    return await this.contractAttributesService.findAll()
-  }
-
   async findFirst() {
     return await this.prismaService.client.templateContract.findFirst()
   }

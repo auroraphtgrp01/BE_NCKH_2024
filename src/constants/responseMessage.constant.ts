@@ -79,5 +79,6 @@ export const RESPONSE_MESSAGES = {
   TOTAL_IS_REQUIRED: "If you don't have an order, you need to pass in the value of the contract",
   STAGE_IS_REQUIRED: 'Stage is required',
   ONE_OF_THE_CONATRACT_ATTRIBUTES_DOES_NOT_EXIST: 'One of the contract attributes does not exist',
-  SUPPLIER_NOT_FOUND: 'Supplier not found'
+  SUPPLIER_NOT_FOUND: 'Supplier not found',
+  PRODUCT_NOT_FOUND: 'Product not found'
 }
