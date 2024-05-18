@@ -29,8 +29,8 @@ export class SuppliersService {
     return supplier
   }
 
-  findAll() {
-    return `This action returns all suppliers`
+  async findAll() {
+    return this.prismaService.client.suppliers.findMany({ include: { User: true } })
   }
 
   async findOneById(id: string) {
