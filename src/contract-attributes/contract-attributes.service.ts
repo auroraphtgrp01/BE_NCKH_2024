@@ -59,12 +59,9 @@ export class ContractAttributesService {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    console.log('contractAttributes', contractAttributes)
-    console.log('contractId', contractId)
 
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
-    let i = 0
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
@@ -76,7 +73,6 @@ export class ContractAttributesService {
       }
 
       if (contractId) data.contractId = contractId
-
 
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
@@ -125,7 +121,6 @@ export class ContractAttributesService {
         const contractAttributeRecord = await this.create(data, user)
         contractAttributeRecords.push(contractAttributeRecord)
       }
-      i++
     }
 
     return contractAttributeRecords

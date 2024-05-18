@@ -14,9 +14,14 @@ export class OrdersController {
     return await this.ordersService.create(createOrderDto, user)
   }
 
-  @Get()
-  findAll() {
-    return this.ordersService.findAll()
+  @Get('find-all-by-user-id')
+  async findAllByUserId(@User() user: IUser) {
+    return this.ordersService.findAllByUserId(user)
+  }
+
+  @Get('find-all-by-supplier-id/:supplierId')
+  async findAllBySupplierId(@Param('supplierId') supplierId: string) {
+    return this.ordersService.findAllBySupplierId(supplierId)
   }
 
   @Get(':id')

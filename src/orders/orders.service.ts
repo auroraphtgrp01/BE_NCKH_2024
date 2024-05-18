@@ -4,7 +4,7 @@ import { UpdateOrderDto } from './dto/update-order.dto'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IUser } from 'src/users/interfaces/IUser.interface'
-import { EOrderStatus } from 'src/constants/enum.constant'
+import { EOrderStatus, ERoles } from 'src/constants/enum.constant'
 import { ProductsService } from 'src/products/products.service'
 import { CommonService } from 'src/commons/common.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
@@ -80,8 +80,12 @@ export class OrdersService {
     return { message: 'Add product successfully' }
   }
 
-  findAll() {
-    return `This action returns all orders`
+  async findAllByUserId(user: IUser) {
+    return await this.prismaService.client.orders.findMany({ where: { userId: user.id } })
+  }
+
+  async findAllBySupplierId(supplierId: string) {
+    return await this.prismaService.client.orders.findMany({ where: { suppliersId: supplierId } })
   }
 
   async findOneById(id: string) {

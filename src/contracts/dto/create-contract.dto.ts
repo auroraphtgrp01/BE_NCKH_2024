@@ -135,15 +135,17 @@ export class CreateContractDto {
   @IsUUID()
   readonly templateId?: string
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly userId: string
+  readonly userId?: string
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly supplierId: string
+  readonly supplierId?: string
 }
 
 export class DataUpdateContractAttributeDto {
