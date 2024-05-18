@@ -35,13 +35,16 @@ export class ProductsService {
     const products = await this.prismaService.client.products.findMany({
       where: { supplierId }
     })
+    products.forEach(async (product: any) => {
+      product.images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
+    })
     return products
   }
 
   async findOneById(id: string) {
-    const product = await this.prismaService.client.products.findUnique({ where: { id } })
-    const image = await this.prismaService.client.images.findMany({ where: { productsId: id } })
-    return { product, image }
+    const product: any = await this.prismaService.client.products.findUnique({ where: { id } })
+    product.images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
+    return product
   }
 
   findOne(id: number) {
