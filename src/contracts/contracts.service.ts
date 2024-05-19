@@ -75,7 +75,6 @@ export class ContractsService {
     const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
     await this.participantService.sendInvitation(
       { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
