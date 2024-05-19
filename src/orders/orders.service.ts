@@ -55,7 +55,6 @@ export class OrdersService {
         data: {
           Suppliers: { connect: { id: createOrderDto.supplierId } },
           User: { connect: { id: user.id } },
-          orderCode: this.commonService.uuidv4(),
           products: [
             {
               id: productInfo.product.id,
