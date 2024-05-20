@@ -242,6 +242,7 @@ model Images {
 
 model Orders {
   id          String    @id @unique @default(uuid()) @db.Uuid
+  orderCode   String
   status      String    @default("PENDING")
   products    Json[]
   Suppliers   Suppliers @relation(fields: [suppliersId], references: [id])
