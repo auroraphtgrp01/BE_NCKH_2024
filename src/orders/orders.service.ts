@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { CreateOrderDto } from './dto/create-order.dto'
 import { UpdateOrderDto } from './dto/update-order.dto'
 import { CustomPrismaService } from 'nestjs-prisma'
@@ -10,7 +10,6 @@ import { CommonService } from 'src/commons/common.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
-import { Orders } from '@prisma/client'
 import { UsersService } from 'src/users/users.service'
 
 @Injectable()
@@ -84,6 +83,34 @@ export class OrdersService {
     return { message: 'Add product successfully' }
   }
 
+  async addProductToOrder(orderId: string, productId: string) {
+    const product = await this.productsService.findOneById(productId)
+    const { order } = await this.findOneById(orderId)
+    const newOrder = await this.prismaService.client.orders.update({
+      where: { id: orderId },
+      data: {
+        products: [
+          ...order.products,
+          {
+            id: product.id,
+            name: product.name,
+            image:
+              product.images.length > 0
+                ? product.images[0].path
+                : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
+            quantity: 0,
+            price: product.price,
+            description: product.description,
+            discount: 0,
+            taxPrice: 0,
+            unit: product.unit
+          }
+        ]
+      }
+    })
+    return { products: newOrder.products }
+  }
+
   async findAllByUserId(user: IUser) {
     if (user.role === ERoles.CUSTOMER) {
       const orders = []
@@ -144,8 +171,16 @@ export class OrdersService {
   }
 
   async update(updateOrderDto: UpdateOrderDto, user: IUser) {
-    if (updateOrderDto.products) {
-      const { products, ...rest } = updateOrderDto
+    const currentOrder = await this.prismaService.client.orders.findUnique({ where: { id: updateOrderDto.id } })
+    if (!currentOrder) throw new NotFoundException(RESPONSE_MESSAGES.ORDER_NOT_FOUND)
+    if (
+      updateOrderDto.status === EOrderStatus.COMPLETED &&
+      ((currentOrder.executeDate === null && !updateOrderDto.executeDate) ||
+        (currentOrder.endDate === null && !updateOrderDto.endDate))
+    )
+      throw new BadRequestException(RESPONSE_MESSAGES.EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED)
+    const { products, status, ...rest } = updateOrderDto
+    if (products) {
       return await this.prismaService.client.orders.update({
         data: {
           ...rest,
@@ -157,7 +192,8 @@ export class OrdersService {
     } else {
       return await this.prismaService.client.orders.update({
         data: {
-          status: updateOrderDto.status,
+          ...rest,
+          status: status,
           updatedBy: { id: user.id, name: user.name, email: user.email, role: user.role }
         },
         where: { id: updateOrderDto.id }

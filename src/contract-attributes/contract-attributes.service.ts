@@ -145,7 +145,8 @@ export class ContractAttributesService {
     const contractAttributes = await Promise.all(
       templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
-          where: { id: item }
+          where: { id: item },
+          include: { ContractAttributeValue: true }
         })
         return contractAttribute
       })
