@@ -81,7 +81,17 @@ export class OrdersService {
   }
 
   async findAllByUserId(user: IUser) {
-    return await this.prismaService.client.orders.findMany({ where: { userId: user.id } })
+    if (user.role === ERoles.CUSTOMER)
+      return { orders: [await this.prismaService.client.orders.findMany({ where: { userId: user.id } })] }
+    else {
+      const suppliers = await this.suppliersService.findAllByUserId(user.id)
+      const orders = await Promise.all(
+        suppliers.map(async (supplier) => {
+          return await this.prismaService.client.orders.findMany({ where: { suppliersId: supplier.id } })
+        })
+      )
+      return { orders, suppliers }
+    }
   }
 
   async checkOrderCode(orderCode: string, userId: string) {

@@ -39,6 +39,11 @@ export class SuppliersService {
     return suppliers
   }
 
+  async findAllByUserId(userId: string) {
+    const suppliers = await this.prismaService.client.suppliers.findMany({ where: { userId } })
+    return suppliers
+  }
+
   async findOneById(id: string) {
     const suppliers: any = await this.prismaService.client.suppliers.findUnique({
       where: { id },

@@ -46,13 +46,7 @@ export class SmartContractsService {
         description: stage.description ? stage.description : ''
       }
     })
-    const _keys: string[] = Object.keys(payload)
-    const listVal = Object.values(payload)
-
-    const _values: string[] = listVal.map((val) => ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(val))))
     const payloadData: IQueuePayloadDeployContract = {
-      _keys,
-      _values,
       _supplier,
       contractId,
       _users,
