@@ -19,11 +19,6 @@ export class OrdersController {
     return this.ordersService.findAllByUserId(user)
   }
 
-  @Get('find-all-by-supplier-id/:supplierId')
-  async findAllBySupplierId(@Param('supplierId') supplierId: string) {
-    return this.ordersService.findAllBySupplierId(supplierId)
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ordersService.findOneById(id)

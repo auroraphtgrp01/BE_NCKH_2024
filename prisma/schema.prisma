@@ -215,6 +215,7 @@ model Products {
   description String?
   Images      Images[]
   taxPrice    Float
+  unit        String
   Supplier    Suppliers @relation(fields: [supplierId], references: [id])
   supplierId  String    @db.Uuid
   createdAt   DateTime  @default(now())
@@ -249,6 +250,8 @@ model Orders {
   suppliersId String    @db.Uuid
   userId      String    @db.Uuid
   User        User      @relation(fields: [userId], references: [id])
+  excuteDate  DateTime?
+  endDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   createdBy   Json?

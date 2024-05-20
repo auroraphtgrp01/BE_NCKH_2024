@@ -20,6 +20,10 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
+  unit: string
+
+  @IsString()
+  @IsNotEmpty()
   @IsUUID()
   supplierId: string
 }

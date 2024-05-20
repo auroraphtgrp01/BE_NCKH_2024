@@ -11,6 +11,7 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
 import { Orders } from '@prisma/client'
+import { UsersService } from 'src/users/users.service'
 
 @Injectable()
 export class OrdersService {
@@ -18,7 +19,8 @@ export class OrdersService {
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
     private readonly productsService: ProductsService,
     private readonly commonService: CommonService,
-    private readonly suppliersService: SuppliersService
+    private readonly suppliersService: SuppliersService,
+    private readonly usersService: UsersService
   ) {}
   async create(createOrderDto: CreateOrderDto, user: IUser) {
     const productInfo = await this.productsService.findOneById(createOrderDto.productId)
@@ -45,7 +47,8 @@ export class OrdersService {
                 price: productInfo.price,
                 description: productInfo.description,
                 discount: 0,
-                taxPrice: 0
+                taxPrice: 0,
+                unit: productInfo.unit
               }
             ],
             updatedBy: executor
@@ -69,7 +72,8 @@ export class OrdersService {
               price: productInfo.price,
               description: productInfo.description,
               discount: 0,
-              taxPrice: 0
+              taxPrice: 0,
+              unit: productInfo.unit
             }
           ],
           status: EOrderStatus.PENDING,
@@ -81,13 +85,37 @@ export class OrdersService {
   }
 
   async findAllByUserId(user: IUser) {
-    if (user.role === ERoles.CUSTOMER)
-      return { orders: [await this.prismaService.client.orders.findMany({ where: { userId: user.id } })] }
-    else {
+    if (user.role === ERoles.CUSTOMER) {
+      const orders = []
+      const qOrders = await this.prismaService.client.orders.findMany({ where: { userId: user.id } })
+      for (const order of qOrders) {
+        const supplier = await this.suppliersService.findOneById(order.suppliersId)
+        const customer = await this.usersService.findOneById(order.userId)
+        const total = order.products.reduce(
+          (sum: number, product: any) => sum + (product.price + product.taxPrice - product.discount) * product.quantity,
+          0
+        )
+        orders.push({ ...order, supplier: supplier.name, customer: customer.name, total })
+      }
+      return { orders: [orders] }
+    } else {
       const suppliers = await this.suppliersService.findAllByUserId(user.id)
       const orders = await Promise.all(
         suppliers.map(async (supplier) => {
-          return await this.prismaService.client.orders.findMany({ where: { suppliersId: supplier.id } })
+          const orders = []
+          const qOrders = await this.prismaService.client.orders.findMany({ where: { suppliersId: supplier.id } })
+          for (const order of qOrders) {
+            const customer = await this.usersService.findOneById(order.userId)
+            const total = order.products.reduce(
+              (sum: number, product: any) =>
+                sum + (product.price + product.taxPrice - product.discount) * product.quantity,
+              0
+            )
+
+            orders.push({ ...order, supplier: supplier.name, customer: customer.name, total })
+          }
+
+          return orders
         })
       )
       return { orders, suppliers }
@@ -98,14 +126,10 @@ export class OrdersService {
     return await this.prismaService.client.orders.findFirst({ where: { orderCode, userId } })
   }
 
-  async findAllBySupplierId(supplierId: string) {
-    const orders: Orders[] = await this.prismaService.client.orders.findMany({ where: { suppliersId: supplierId } })
-    const pendingOrder = orders.filter((order: Orders) => order.status === EOrderStatus.PENDING)
-  }
-
   async findOneById(id: string) {
     const order = await this.prismaService.client.orders.findUnique({ where: { id } })
-    return order
+    const supplier = await this.suppliersService.findOneById(order.suppliersId)
+    return { order, supplier }
   }
 
   async findOneStatusPendingBySupplierIdAndUserId(suppliersId: string, userId: string) {
