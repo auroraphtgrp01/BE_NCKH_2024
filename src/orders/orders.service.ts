@@ -38,8 +38,8 @@ export class OrdersService {
                 id: productInfo.id,
                 name: productInfo.name,
                 image:
-                  productInfo.image.length > 0
-                    ? productInfo.image[0].path
+                  productInfo.images.length > 0
+                    ? productInfo.images[0].path
                     : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                 quantity: 0,
                 price: productInfo.price,
