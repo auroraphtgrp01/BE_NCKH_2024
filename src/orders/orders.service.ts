@@ -10,6 +10,7 @@ import { CommonService } from 'src/commons/common.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
+import { Orders } from '@prisma/client'
 
 @Injectable()
 export class OrdersService {
@@ -34,15 +35,15 @@ export class OrdersService {
             products: [
               ...hasOrder.products,
               {
-                id: productInfo.product.id,
-                name: productInfo.product.name,
+                id: productInfo.id,
+                name: productInfo.name,
                 image:
                   productInfo.image.length > 0
                     ? productInfo.image[0].path
                     : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
                 quantity: 0,
-                price: productInfo.product.price,
-                description: productInfo.product.description,
+                price: productInfo.price,
+                description: productInfo.description,
                 discount: 0,
                 taxPrice: 0
               }
@@ -50,22 +51,23 @@ export class OrdersService {
             updatedBy: executor
           }
         })
-    } else {
+    } else
       await this.prismaService.client.orders.create({
         data: {
+          orderCode: this.commonService.createRandomString(10),
           Suppliers: { connect: { id: createOrderDto.supplierId } },
           User: { connect: { id: user.id } },
           products: [
             {
-              id: productInfo.product.id,
-              name: productInfo.product.name,
+              id: productInfo.id,
+              name: productInfo.name,
               image:
-                productInfo.image.length > 0
-                  ? productInfo.image[0].path
+                productInfo.images.length > 0
+                  ? productInfo.images[0].path
                   : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
               quantity: 0,
-              price: productInfo.product.price,
-              description: productInfo.product.description,
+              price: productInfo.price,
+              description: productInfo.description,
               discount: 0,
               taxPrice: 0
             }
@@ -75,7 +77,6 @@ export class OrdersService {
           updatedAt: null
         }
       })
-    }
     return { message: 'Add product successfully' }
   }
 
@@ -83,8 +84,13 @@ export class OrdersService {
     return await this.prismaService.client.orders.findMany({ where: { userId: user.id } })
   }
 
+  async checkOrderCode(orderCode: string, userId: string) {
+    return await this.prismaService.client.orders.findFirst({ where: { orderCode, userId } })
+  }
+
   async findAllBySupplierId(supplierId: string) {
-    return await this.prismaService.client.orders.findMany({ where: { suppliersId: supplierId } })
+    const orders: Orders[] = await this.prismaService.client.orders.findMany({ where: { suppliersId: supplierId } })
+    const pendingOrder = orders.filter((order: Orders) => order.status === EOrderStatus.PENDING)
   }
 
   async findOneById(id: string) {
