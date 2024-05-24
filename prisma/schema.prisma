@@ -194,6 +194,7 @@ model Suppliers {
   email       String     @unique
   phoneNumber String     @unique
   address     String
+  description String?
   Images      Images[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime?  @updatedAt
@@ -213,6 +214,8 @@ model Products {
   price       Float
   description String?
   Images      Images[]
+  taxPrice    Float
+  unit        String
   Supplier    Suppliers @relation(fields: [supplierId], references: [id])
   supplierId  String    @db.Uuid
   createdAt   DateTime  @default(now())
@@ -240,13 +243,15 @@ model Images {
 
 model Orders {
   id          String    @id @unique @default(uuid()) @db.Uuid
-  orderCode   String    @unique
+  orderCode   String
   status      String    @default("PENDING")
   products    Json[]
   Suppliers   Suppliers @relation(fields: [suppliersId], references: [id])
   suppliersId String    @db.Uuid
   userId      String    @db.Uuid
   User        User      @relation(fields: [userId], references: [id])
+  executeDate DateTime?
+  endDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   createdBy   Json?

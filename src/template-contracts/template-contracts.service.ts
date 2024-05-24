@@ -31,7 +31,9 @@ export class TemplateContractsService {
     const templateContract = await this.prismaService.client.templateContract.create({
       data: {
         name,
-        path: createTemplateContractDto.path ? createTemplateContractDto.path : null,
+        path: createTemplateContractDto.path
+          ? createTemplateContractDto.path
+          : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg',
         contractAttributes: contractAttributes,
         createdBy,
         updatedAt: null
@@ -39,6 +41,10 @@ export class TemplateContractsService {
     })
 
     return { templateContract }
+  }
+
+  async findAll() {
+    return await this.prismaService.client.templateContract.findMany()
   }
 
   async findOneById(id: string) {

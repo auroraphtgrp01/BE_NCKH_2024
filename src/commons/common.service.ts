@@ -16,7 +16,7 @@ export class CommonService {
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
         contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
-      ) {
+      )
         result.push({
           id: contractArribute.id,
           property: contractArribute.value,
@@ -25,7 +25,7 @@ export class CommonService {
           createdBy: contractArribute.createdBy,
           updatedBy: contractArribute.updatedBy
         })
-      } else {
+      else
         result.push({
           id: contractArribute.id,
           value: contractArribute.value,
@@ -33,7 +33,6 @@ export class CommonService {
           createdBy: contractArribute.createdBy,
           updatedBy: contractArribute.updatedBy
         })
-      }
     }
     return result
   }
@@ -42,5 +41,14 @@ export class CommonService {
     return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
       (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
     )
+  }
+
+  createRandomString(length: number): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let result = ''
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return result
   }
 }

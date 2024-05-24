@@ -32,7 +32,7 @@ export class SmartContractsService {
     if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
     if (orderId) {
-      const order = await this.orderService.findOneById(orderId)
+      const { order } = await this.orderService.findOneById(orderId)
       if (!order) throw new NotFoundException({ message: RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND })
       _total = order.products.reduce((acc, product: any) => acc + product.price, 0)
     } else if (!orderId && !_total) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.TOTAL_IS_REQUIRED })
@@ -46,13 +46,7 @@ export class SmartContractsService {
         description: stage.description ? stage.description : ''
       }
     })
-    const _keys: string[] = Object.keys(payload)
-    const listVal = Object.values(payload)
-
-    const _values: string[] = listVal.map((val) => ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(val))))
     const payloadData: IQueuePayloadDeployContract = {
-      _keys,
-      _values,
       _supplier,
       contractId,
       _users,

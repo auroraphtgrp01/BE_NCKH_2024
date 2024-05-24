@@ -18,7 +18,8 @@ export enum ETypeContractAttribute {
 export enum ERoles {
   ADMIN = 'Admin',
   CUSTOMER = 'Customer',
-  SUPPLIER = 'Supplier'
+  SUPPLIER = 'Supplier',
+  ECONOMIC_ARBITRATION = 'Economic Arbitration'
 }
 
 export enum EContractType {
@@ -31,4 +32,10 @@ export enum EOrderStatus {
   IN_PROGRESS = 'In Progress',
   COMPLETED = 'Completed',
   CANCELLED = 'Cancelled'
+}
+
+export enum EVoting {
+  PENDING = 'Pending',
+  CUSTOMER = 'Customer',
+  SUPPLIER = 'Supplier'
 }

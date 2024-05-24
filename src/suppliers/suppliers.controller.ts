@@ -15,8 +15,8 @@ export class SuppliersController {
   }
 
   @Get()
-  findAll() {
-    return this.suppliersService.findAll()
+  async findAll() {
+    return await this.suppliersService.findAll()
   }
 
   @Get(':id')

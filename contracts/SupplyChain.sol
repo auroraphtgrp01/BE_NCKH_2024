@@ -27,8 +27,7 @@ contract SupplyChain {
   address[] private users;
   mapping(address => uint) private assets;
   address private supplier;
-  mapping(string => bytes) private contractInformation;
-  string[] private contractInformationKeys;
+  string private cid;
   uint private totalBalance;
   Stage[] private stages;
   uint8 private currentStage;
@@ -47,23 +46,15 @@ contract SupplyChain {
   event widthdrew(address to, uint amount, uint totalBalance, uint currentBalance, uint widthdrewAt);
   event received(address sender, uint amount, uint totalBalance, uint currentBalance, uint receivedAt);
   event confirmedStage(uint percent, bool userConfirm, bool supplierConfirm, bool isDone, uint confirmedAt);
-
-  // Mỗi lần sẽ tự deploy 1 smart contract mới
-  // Mỗi smart contract sẽ có 1 address user (người chi trả), supplier
-  // Thông tin bao gồm thông tin contract (key, value: bytes)
-  // Chức năng chính: Transfer ethers từ smart contract tới supplier
-  // Withdraw ethers từ smart contract tới user hoặc supplier
-  // Update Status SmartContract: cập nhật trạng thái của smart contract
-  // Get contract Infomation
   constructor(
     address[] memory _user,
     address _supplier,
-    string[] memory _keys,
-    bytes[] memory _values,
+    string memory _cid,
     uint _total,
     StageData[] memory _stages,
     string memory _privateKey
   ) {
+    cid = _cid;
     currentStage = 0;
     privateKey = _privateKey;
     status = Status.ENFORCE;
@@ -73,10 +64,6 @@ contract SupplyChain {
     for (uint8 i = 0; i < _user.length; i++) {
       users.push(_user[i]);
       assets[_user[i]] = 0;
-    }
-    for (uint8 i = 0; i < _keys.length; i++) {
-      contractInformation[_keys[i]] = _values[i];
-      contractInformationKeys.push(_keys[i]);
     }
     for (uint8 i = 0; i < _stages.length; i++) {
       stages.push(Stage(_stages[i].percent, _stages[i].deliveryAt, _stages[i].description, false, false, false, false));
@@ -175,13 +162,6 @@ contract SupplyChain {
     }
   }
 
-  function setInformation(string[] memory _keys, bytes[] memory _values) public onlyPetitionerOrSupplier(msg.sender) {
-    for (uint8 i = 0; i < _keys.length; i++) {
-      contractInformation[_keys[i]] = _values[i];
-      contractInformationKeys.push(_keys[i]);
-    }
-  }
-
   function setStatus(Status _status) public onlyPetitioner(msg.sender) {
     status = _status;
   }
@@ -199,12 +179,7 @@ contract SupplyChain {
   function withDrawByPercent(
     address payable _addressWallet,
     uint _percent
-  )
-    public
-    payable
-    checkUserReceive(_addressWallet)
-    notEnoughEthers((totalBalance * _percent) / 100)
-  {
+  ) public payable checkUserReceive(_addressWallet) notEnoughEthers((totalBalance * _percent) / 100) {
     uint _amount = (totalBalance * _percent) / 100;
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
@@ -227,16 +202,6 @@ contract SupplyChain {
     _addressWallet.transfer(_amount);
     stages[currentStage].isWithdraw = true;
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
-  }
-
-  function getContractInformation(
-    string memory _privateKey
-  ) public view checkPrivateKey(_privateKey) returns (string[] memory) {
-    string[] memory values = new string[](contractInformationKeys.length);
-    for (uint i = 0; i < contractInformationKeys.length; i++) {
-      values[i] = string(contractInformation[contractInformationKeys[i]]);
-    }
-    return values;
   }
 
   function getOwnerAddressWallet() public view returns (address) {
@@ -283,5 +248,9 @@ contract SupplyChain {
       }
     }
     return Stage(0, 0, '', false, false, false, false);
+  }
+
+  function getCid() public view returns (string memory) {
+    return cid;
   }
 }

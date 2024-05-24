@@ -39,7 +39,6 @@ export class InvitationDto {
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
-  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
   readonly messages: string
 
   @IsObject()
@@ -47,9 +46,10 @@ export class InvitationDto {
 }
 
 export class SendInvitationsDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  contractName: string
+  contractName?: string
 
   @IsString()
   @IsNotEmpty()

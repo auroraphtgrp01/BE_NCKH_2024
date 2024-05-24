@@ -14,9 +14,14 @@ export class OrdersController {
     return await this.ordersService.create(createOrderDto, user)
   }
 
-  @Get()
-  findAll() {
-    return this.ordersService.findAll()
+  @Post('/add-product')
+  async addProduct(@Body('orderId') orderId: string, @Body('productId') productId: string, @User() user: IUser) {
+    return await this.ordersService.addProductToOrder(orderId, productId, user)
+  }
+
+  @Get('find-all-by-user-id')
+  async findAllByUserId(@User() user: IUser) {
+    return this.ordersService.findAllByUserId(user)
   }
 
   @Get(':id')
