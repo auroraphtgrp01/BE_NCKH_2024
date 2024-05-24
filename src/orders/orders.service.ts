@@ -83,7 +83,7 @@ export class OrdersService {
     return { message: 'Add product successfully' }
   }
 
-  async addProductToOrder(orderId: string, productId: string) {
+  async addProductToOrder(orderId: string, productId: string, user: IUser) {
     const product = await this.productsService.findOneById(productId)
     const { order } = await this.findOneById(orderId)
     const newOrder = await this.prismaService.client.orders.update({
@@ -105,7 +105,8 @@ export class OrdersService {
             taxPrice: 0,
             unit: product.unit
           }
-        ]
+        ],
+        updatedBy: { id: user.id, name: user.name, email: user.email, role: user.role }
       }
     })
     return { products: newOrder.products }

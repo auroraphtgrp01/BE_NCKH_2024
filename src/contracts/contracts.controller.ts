@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
-import { CreateContractAttributesDto, CreateContractDto } from './dto/create-contract.dto'
+import { CreateContractAttributesDto, CreateContractDto, CreateDisputeContractDto } from './dto/create-contract.dto'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
@@ -8,9 +8,14 @@ import { User } from 'src/decorators/user.decorator'
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 
-  @Post()
-  async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
-    return await this.contractsService.create(createContractDto, user)
+  // @Post()
+  // async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
+  //   return await this.contractsService.create(createContractDto, user)
+  // }
+
+  @Post('dispute-contract')
+  async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
+    return await this.contractsService.createDisptuteContract(createDisputeContractDto, user)
   }
 
   @Get('get-contract-details/:contractId')

@@ -6,6 +6,7 @@ import {
   IsDateString,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
@@ -77,10 +78,6 @@ export class UpdateContractDto {
   readonly contractAddress?: string
 
   @IsOptional()
-  @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
-  readonly blockAddress?: string
-
-  @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
@@ -124,7 +121,11 @@ export class UpdateContractDto {
 
   @IsOptional()
   @IsNotEmpty()
-  readonly status: string
+  readonly status?: string
+
+  @IsOptional()
+  @IsObject()
+  readonly votings?: object
 }
 
 export class UpdateContractAttributeDto {

@@ -59,21 +59,19 @@ export class ContractAttributesService {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
+    let index: number = 0
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
       }
-
       const data: IDataContractAttribute = {
         value: null,
         type: contractAttribute.type
       }
-
       if (contractId) data.contractId = contractId
-
+      data.index = index
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -88,14 +86,11 @@ export class ContractAttributesService {
             record.type === ETypeContractAttribute.CONTRACT_HEADING_1 ||
             record.type === ETypeContractAttribute.CONTRACT_HEADING_2
         )
-
         if (!hasHeading)
           throw new BadRequestException(
             `The content ${contractAttribute.property} cannot be found without a title. Please create a title before generating content!`
           )
-
         const contractAttributeRecord = await this.create(data, user)
-
         const contractAttributeValueRecord = await this.contractAttributeValueService.create(
           {
             value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
@@ -110,17 +105,16 @@ export class ContractAttributesService {
           type: contractAttributeRecord.type,
           createdBy
         }
-
         contractAttributeRecords.push(result)
       } else {
         data.value = contractAttribute.value
         if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
           throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
         }
-
         const contractAttributeRecord = await this.create(data, user)
         contractAttributeRecords.push(contractAttributeRecord)
       }
+      index++
     }
 
     return contractAttributeRecords

@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
-import { CreateContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
+import { CreateContractDto, CreateDisputeContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { Contract, ContractAttribute, Participant, Suppliers, User, contractStatus } from '@prisma/client'
@@ -11,14 +11,15 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
-import { ICreateContractResponse, IStage } from 'src/interfaces/contract.interface'
-import { EContractType, ETypeContractAttribute } from 'src/constants/enum.constant'
+import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
+import { EContractType, ERoles, ETypeContractAttribute, EVoting } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
+import { ICreateInvitation } from 'src/interfaces/participant.interface'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -53,15 +54,15 @@ export class ContractsService {
   }
 
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
-    const { addressWallet, name, id } = contractData
+    const { addressWallet, name, type } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+
     const contract = await this.prismaService.client.contract.create({
       data: {
-        id,
         addressWallet,
         contractTitle: name,
         status: contractStatus.PENDING as Exact<contractStatus, contractStatus>,
-        type: contractData.type ? contractData.type : EContractType.CONTRACT,
+        type: type ? type : EContractType.CONTRACT,
         createdBy,
         updatedAt: null
       }
@@ -70,44 +71,88 @@ export class ContractsService {
     return contract
   }
 
-  async create(createContractDto: CreateContractDto, user: IUser) {
-    const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
-    if (!(await this.usersService.findOne(contractData.addressWallet)))
-      throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-    const contractRecord = await this.createEmptyContract({ ...contractData }, user)
-    await this.participantService.sendInvitation(
-      { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
+  async createDisptuteContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
+    const { totalAmount, customer, supplier, ...rest } = createDisputeContractDto
+    const economicArbitrations = await this.prismaService.client.user.findMany({
+      where: { role: ERoles.ECONOMIC_ARBITRATION }
+    })
+    const invitation: ICreateInvitation[] = []
+    const votings: IVoting[] = []
+
+    const contract = await this.createEmptyContract(
+      { ...rest, name: 'HỢP ĐỒNG TRANH CHẤP', type: EContractType.DISPUTE },
       user
     )
-    contractResponse.contract = contractRecord
-    if (templateId) {
-      if (!(await this.templateContractsService.findOneById(templateId)))
-        throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-      if ((!userId && supplierId) || (userId && !supplierId))
-        throw new NotFoundException({ message: 'User or supplier information not provided' })
-      else if (!userId && !supplierId)
-        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-          contractRecord.id,
-          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-          user
-        )
-      else {
-        const _user = await this.usersService.findOneById(userId)
-        const supplier = await this.suppliersService.findOneById(supplierId)
-        if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
-        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-          contractRecord.id,
-          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-          user,
-          _user,
-          supplier
-        )
-      }
-    }
 
-    return contractResponse
+    await Promise.all(
+      economicArbitrations.map((economicArbitration) => {
+        invitation.push({
+          email: economicArbitration.email,
+          messages: 'An invitation to become an economic arbitrator of a disputed contract',
+          permission: {
+            CHANGE_STATUS_CONTRACT: false,
+            EDIT_CONTRACT: false,
+            INVITE_PARTICIPANT: true,
+            READ_CONTRACT: true,
+            SET_OWNER_PARTY: false
+          }
+        })
+        votings.push({
+          userId: economicArbitration.id,
+          contractId: contract.id,
+          vote: EVoting.PENDING
+        })
+      })
+    )
+
+    const result = await this.update({ id: contract.id, votings }, user)
+
+    await this.participantService.sendInvitation(
+      { invitation, contractName: contract.contractTitle, contractId: contract.id },
+      user
+    )
+
+    return result
   }
+
+  // async create(createContractDto: CreateContractDto, user: IUser) {
+  //   const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
+  //   const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
+  //   if (!(await this.usersService.findOne(contractData.addressWallet)))
+  //     throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+  //   const contractRecord = await this.createEmptyContract({ ...contractData }, user)
+  //   await this.participantService.sendInvitation(
+  //     { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
+  //     user
+  //   )
+  //   contractResponse.contract = contractRecord
+  //   if (templateId) {
+  //     if (!(await this.templateContractsService.findOneById(templateId)))
+  //       throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+  //     if ((!userId && supplierId) || (userId && !supplierId))
+  //       throw new NotFoundException({ message: 'User or supplier information not provided' })
+  //     else if (!userId && !supplierId)
+  //       contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+  //         contractRecord.id,
+  //         templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+  //         user
+  //       )
+  //     else {
+  //       const _user = await this.usersService.findOneById(userId)
+  //       const supplier = await this.suppliersService.findOneById(supplierId)
+  //       if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
+  //       contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+  //         contractRecord.id,
+  //         templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+  //         user,
+  //         _user,
+  //         supplier
+  //       )
+  //     }
+  //   }
+
+  //   return contractResponse
+  // }
 
   async getContractsByAddressWallet(addressWallet: string) {
     const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
@@ -153,7 +198,7 @@ export class ContractsService {
     })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
-    Promise.all([
+    await Promise.all([
       updateContractAttribute.updatedAttributes.map(async (item, index) => {
         if (item.statusAttribute === 'Create') {
           if (
