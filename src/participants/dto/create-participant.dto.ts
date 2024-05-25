@@ -29,6 +29,12 @@ export class CreateParticipantDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+
+  @IsOptional()
+  userId?: string
+
+  @IsOptional()
+  status?: any
 }
 
 export class InvitationDto {

@@ -1,5 +1,15 @@
 import { Type } from 'class-transformer'
-import { IsBoolean, IsEmail, IsNotEmpty, IsObject, IsOptional, IsString, IsUUID, ValidateNested } from 'class-validator'
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsString,
+  IsUUID,
+  ValidateIf,
+  ValidateNested
+} from 'class-validator'
 
 export class PermissionDto {
   @IsNotEmpty()
@@ -24,19 +34,21 @@ export class PermissionDto {
 }
 
 export class UpdateParticipantDto {
+  @ValidateIf((object: any) => object.userId === undefined)
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly id: string
+  readonly id?: string
+
+  @ValidateIf((object: any) => object.id === undefined)
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
 
   @IsOptional()
   @IsString()
   readonly status?: string
-
-  @IsOptional()
-  @IsString()
-  @IsEmail()
-  readonly email?: string
 
   @IsOptional()
   @IsObject()

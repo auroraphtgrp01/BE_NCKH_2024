@@ -29,13 +29,15 @@ export class ParticipantsService {
     private queueService: QueueRedisService
   ) {}
   async create(createParticipantDto: CreateParticipantDto, user: IUser) {
-    const { contractId, permission, email } = createParticipantDto
+    const { contractId, permission, email, userId, status } = createParticipantDto
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const participantRecord = await this.prismaService.client.participant.create({
       data: {
         email,
         permission,
         Contract: { connect: { id: contractId } },
+        User: userId ? { connect: { id: userId } } : undefined,
+        status,
         updatedAt: null,
         createdBy
       }
@@ -48,6 +50,24 @@ export class ParticipantsService {
     const invitations: InvitationDto[] = sendInvitationDto.invitation.filter(
       (invitation) => invitation.email !== user.email
     )
+
+    await this.create(
+      {
+        userId: user.id,
+        email: user.email,
+        contractId: sendInvitationDto.contractId,
+        status: ParticipantStatus.ACCEPTED,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: true
+        }
+      },
+      user
+    )
+
     const participants: Participant[] = []
     invitations.map(async (invitation: InvitationDto) => {
       const participantRecord = await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
@@ -91,31 +111,33 @@ export class ParticipantsService {
   }
 
   async findOneById(id: string) {
-    const participant = await this.prismaService.client.participant.findUnique({ where: { id } })
+    const participant = await this.prismaService.client.participant.findUnique({
+      where: { id },
+      include: { User: true }
+    })
     return participant
   }
 
   async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
-    const { id } = updateParticipantDto
-    const find = await this.findOneById(id)
+    const { id, userId, ...rest } = updateParticipantDto
+
+    const find =
+      id && !userId
+        ? await this.findOneById(id)
+        : await this.prismaService.client.participant.findFirst({ where: { userId }, include: { User: true } })
 
     if (!find) throw new NotFoundException(RESPONSE_MESSAGES.PARTICIPANT_NOT_FOUND)
-
     if (find.email !== user.email)
-      throw new BadRequestException(RESPONSE_MESSAGES.USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH)
-    if (find.status !== ParticipantStatus.PENDING)
-      throw new UnauthorizedException(RESPONSE_MESSAGES.PARTICIPANT_RESPONDED)
-    if (
-      updateParticipantDto.status &&
-      !Object.values(ParticipantStatus).includes(updateParticipantDto.status as ParticipantStatus)
-    )
-      throw new BadRequestException(RESPONSE_MESSAGES.PARTICIPANT_STATUS_INVALID)
+      throw new BadRequestException({ message: RESPONSE_MESSAGES.USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH })
 
     const participant = await this.prismaService.client.participant.update({
       where: { id },
       data: {
-        ...updateParticipantDto,
-        User: updateParticipantDto.status ? { connect: { id: user.id } } : undefined,
+        ...rest,
+        User:
+          updateParticipantDto.status === ParticipantStatus.ACCEPTED && find.status === ParticipantStatus.PENDING
+            ? { connect: { id: user.id } }
+            : undefined,
         status: updateParticipantDto.status
           ? (updateParticipantDto.status as Exact<ParticipantStatus, ParticipantStatus>)
           : find.status,
