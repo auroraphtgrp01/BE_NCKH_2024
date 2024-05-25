@@ -49,7 +49,11 @@ export class SuppliersService {
       where: { id },
       include: { User: true }
     })
-    suppliers.images = await this.prismaService.client.images.findMany({ where: { suppliersId: suppliers.id } })
+
+    suppliers.images =
+      (await this.prismaService.client.images.count({ where: { suppliersId: id } })) > 0
+        ? await this.prismaService.client.images.findMany({ where: { suppliersId: id } })
+        : []
     return suppliers
   }
 

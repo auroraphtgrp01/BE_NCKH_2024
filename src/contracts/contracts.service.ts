@@ -115,44 +115,49 @@ export class ContractsService {
     return result
   }
 
-  // async create(createContractDto: CreateContractDto, user: IUser) {
-  //   const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-  //   const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
-  //   if (!(await this.usersService.findOne(contractData.addressWallet)))
-  //     throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-  //   const contractRecord = await this.createEmptyContract({ ...contractData }, user)
-  //   await this.participantService.sendInvitation(
-  //     { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
-  //     user
-  //   )
-  //   contractResponse.contract = contractRecord
-  //   if (templateId) {
-  //     if (!(await this.templateContractsService.findOneById(templateId)))
-  //       throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-  //     if ((!userId && supplierId) || (userId && !supplierId))
-  //       throw new NotFoundException({ message: 'User or supplier information not provided' })
-  //     else if (!userId && !supplierId)
-  //       contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-  //         contractRecord.id,
-  //         templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-  //         user
-  //       )
-  //     else {
-  //       const _user = await this.usersService.findOneById(userId)
-  //       const supplier = await this.suppliersService.findOneById(supplierId)
-  //       if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
-  //       contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-  //         contractRecord.id,
-  //         templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-  //         user,
-  //         _user,
-  //         supplier
-  //       )
-  //     }
-  //   }
+  async create(createContractDto: CreateContractDto, user: IUser) {
+    const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
+    const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
+    if (!(await this.usersService.findOne(contractData.addressWallet)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+    const contractRecord = await this.createEmptyContract({ ...contractData }, user)
+    await this.participantService.sendInvitation(
+      { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
+      user
+    )
+    contractResponse.contract = contractRecord
+    if (templateId) {
+      if (!(await this.templateContractsService.findOneById(templateId)))
+        throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+      if ((!userId && supplierId) || (userId && !supplierId))
+        throw new NotFoundException({ message: 'User or supplier information not provided' })
+      else if (!userId && !supplierId)
+        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+          contractRecord.id,
+          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+          user
+        )
+      else {
+        const _user = await this.usersService.findOneById(userId)
+        const supplier = await this.suppliersService.findOneById(supplierId)
+        if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
+        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+          contractRecord.id,
+          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+          user,
+          _user,
+          supplier
+        )
+      }
+    }
 
-  //   return contractResponse
-  // }
+    return contractResponse
+  }
+
+  async handleDeployContract(contractId: string) {
+    const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
+    await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
+  }
 
   async getContractsByAddressWallet(addressWallet: string) {
     const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })

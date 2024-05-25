@@ -17,6 +17,7 @@ enum ParticipantStatus {
   PENDING
   ACCEPTED
   REFUSED
+  SIGNED
 }
 
 enum Gender {
@@ -79,27 +80,28 @@ model Participant {
 }
 
 model Contract {
-  id                String              @id @unique @default(uuid()) @db.Uuid
-  contractTitle     String
-  addressWallet     String
-  contractAddress   String?
-  blockAddress      String?
-  gasPrices         Json[]              @db.Json
-  startDate         DateTime?
-  endDate           DateTime?
-  executeDate       DateTime?
-  agreements        String[]
-  status            contractStatus      @default(PENDING)
-  stages            Json[]
-  type              String
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime?           @updatedAt
-  createdBy         Json?
-  updatedBy         Json?
-  deletedAt         DateTime?
-  deletedBy         Json?
-  ContractAttribute ContractAttribute[]
-  Participant       Participant[]
+  id                            String                          @id @unique @default(uuid()) @db.Uuid
+  contractTitle                 String
+  addressWallet                 String
+  contractAddress               String?
+  blockAddress                  String?
+  gasPrices                     Json[]                          @db.Json
+  startDate                     DateTime?
+  endDate                       DateTime?
+  executeDate                   DateTime?
+  agreements                    String[]
+  status                        contractStatus                  @default(PENDING)
+  stages                        Json[]
+  type                          String
+  createdAt                     DateTime                        @default(now())
+  updatedAt                     DateTime?                       @updatedAt
+  createdBy                     Json?
+  updatedBy                     Json?
+  deletedAt                     DateTime?
+  deletedBy                     Json?
+  ContractAttribute             ContractAttribute[]
+  Participant                   Participant[]
+  ContractAttributeInBlockchain ContractAttributeInBlockchain[]
 }
 
 model TemplateContract {
@@ -142,6 +144,23 @@ model ContractAttributeValue {
   deletedBy           Json?
   ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String            @unique @db.Uuid
+}
+
+model ContractAttributeInBlockchain {
+  id                                 String                              @id @unique @default(uuid()) @db.Uuid
+  value                              String
+  index                              Int?
+  type                               String
+  Contract                           Contract?                           @relation(fields: [contractId], references: [id])
+  contractId                         String?                             @db.Uuid
+  ContractAttributeValueInBlockchain ContractAttributeValueInBlockchain?
+}
+
+model ContractAttributeValueInBlockchain {
+  id                  String                        @id @unique @default(uuid()) @db.Uuid
+  value               String
+  ContractAttribute   ContractAttributeInBlockchain @relation(fields: [contractAttributeId], references: [id])
+  contractAttributeId String                        @unique @db.Uuid
 }
 
 model Roles {

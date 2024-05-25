@@ -55,6 +55,28 @@ export class ContractAttributesService {
     return result
   }
 
+  async createInBlockchain(createContractAttributeDto: CreateContractAttributeDto) {
+    const { contractId, ...rest } = createContractAttributeDto
+
+    const data: ICreateContractAttributeRecord = { ...rest }
+
+    if (contractId) data.Contract = { connect: { id: contractId } }
+
+    const contractAttribute = await this.prismaService.client.contractAttributeInBlockchain.create({
+      data: {
+        ...data
+      }
+    })
+
+    const result = {
+      id: contractAttribute.id,
+      value: contractAttribute.value,
+      type: contractAttribute.type
+    }
+
+    return result
+  }
+
   async createContractAttributes(createContractAttributesDto: CreateContractAttributesDto, user: IUser) {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
@@ -120,7 +142,42 @@ export class ContractAttributesService {
     return contractAttributeRecords
   }
 
-  async findAllByContractId(contractId: string) {
+  async createContractAttributesInBlockchain(createContractAttributesDto: CreateContractAttributesDto) {
+    const { contractAttributes, contractId } = createContractAttributesDto
+    let index: number = 0
+    for (const contractAttribute of contractAttributes) {
+      const data: IDataContractAttribute = {
+        value: null,
+        type: contractAttribute.type
+      }
+      if (contractId) data.contractId = contractId
+      data.index = index
+      if (
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+      ) {
+        data.value = contractAttribute.property
+        const contractAttributeRecord = await this.createInBlockchain(data)
+        await this.contractAttributeValueService.createInBlockchain({
+          value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
+          contractAttributeId: contractAttributeRecord.id
+        })
+      } else {
+        data.value = contractAttribute.value
+        if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
+          throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
+        }
+        await this.createInBlockchain(data)
+      }
+      index++
+    }
+  }
+
+  async findAllByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
     const contractAttributes = await this.prismaService.client.contractAttribute
       .findMany({
         where: { contractId },

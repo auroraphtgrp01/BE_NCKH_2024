@@ -8,10 +8,10 @@ import { User } from 'src/decorators/user.decorator'
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 
-  // @Post()
-  // async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
-  //   return await this.contractsService.create(createContractDto, user)
-  // }
+  @Post()
+  async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
+    return await this.contractsService.create(createContractDto, user)
+  }
 
   @Post('dispute-contract')
   async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
@@ -56,5 +56,10 @@ export class ContractsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.contractsService.remove(+id)
+  }
+
+  @Post('/handle-deploy')
+  async handleDeploy(@Body('contractId') contractId: string) {
+    return await this.contractsService.handleDeployContract(contractId)
   }
 }
