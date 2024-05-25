@@ -32,27 +32,6 @@ export class ContractsService {
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
     private readonly suppliersService: SuppliersService
   ) {}
-
-  test(jsonData: any) {
-    const jsonStr = '"' + 'test": ' + JSON.stringify(jsonData)
-    return jsonStr
-
-    const bytesData = ethers.toUtf8Bytes(jsonStr)
-    const bytesDataHex = ethers.hexlify(bytesData)
-
-    const jsonString = ethers.toUtf8String(bytesData)
-    const jsonArray = JSON.parse(jsonString)
-
-    return {
-      bytesDataHex,
-      jsonArray,
-      jsonData,
-      type1: typeof jsonData,
-      type2: typeof jsonArray,
-      check: jsonData === jsonArray
-    }
-  }
-
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }

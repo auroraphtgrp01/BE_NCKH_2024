@@ -16,11 +16,11 @@ import { ContractAttributeValuesModule } from './contract-attribute-values/contr
 import { TemplateContractsModule } from './template-contracts/template-contracts.module'
 import { CommonModule } from './commons/common.module'
 import { ParticipantsModule } from './participants/participants.module'
-import { ProductsModule } from './products/products.module';
-import { ImagesModule } from './images/images.module';
-import { RolesModule } from './roles/roles.module';
-import { SuppliersModule } from './suppliers/suppliers.module';
-import { OrdersModule } from './orders/orders.module';
+import { ProductsModule } from './products/products.module'
+import { ImagesModule } from './images/images.module'
+import { RolesModule } from './roles/roles.module'
+import { SuppliersModule } from './suppliers/suppliers.module'
+import { OrdersModule } from './orders/orders.module'
 
 @Module({
   imports: [
@@ -45,7 +45,6 @@ import { OrdersModule } from './orders/orders.module';
     SmartContractsModule,
     AuthModule,
     ContractsModule,
-    QueueRedisModule,
     ContractAttributesModule,
     ContractAttributeValuesModule,
     TemplateContractsModule,
@@ -55,7 +54,8 @@ import { OrdersModule } from './orders/orders.module';
     ImagesModule,
     RolesModule,
     SuppliersModule,
-    OrdersModule
+    OrdersModule,
+    QueueRedisModule
   ],
   controllers: [AppController],
   providers: [

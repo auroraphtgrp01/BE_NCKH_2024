@@ -19,6 +19,16 @@ export class OrdersController {
     return await this.ordersService.addProductToOrder(orderId, productId, user)
   }
 
+  @Get('/send-request/:surveyId')
+  async sendEmail(@Param('surveyId') surveyId: string, @User() user: IUser) {
+    return await this.ordersService.sendRequestSurvey(surveyId, user)
+  }
+
+  @Get('/resend-request/:surveyId')
+  async reSendEmail(@Param('surveyId') surveyId: string, @User() user: IUser) {
+    return await this.ordersService.resendRequestSurvey(surveyId, user)
+  }
+
   @Get('find-all-by-user-id')
   async findAllByUserId(@User() user: IUser) {
     return this.ordersService.findAllByUserId(user)
