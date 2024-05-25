@@ -3,10 +3,9 @@ import { SmartContractsService } from './smart-contracts.service'
 import { SmartContractsController } from './smart-contracts.controller'
 import { QueueRedisModule } from 'src/queues/queue-redis.module'
 import { ContractsModule } from 'src/contracts/contracts.module'
-import { OrdersModule } from 'src/orders/orders.module'
 
 @Module({
-  imports: [QueueRedisModule, ContractsModule, OrdersModule],
+  imports: [QueueRedisModule, ContractsModule],
   controllers: [SmartContractsController],
   providers: [SmartContractsService]
 })

@@ -28,11 +28,6 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
-  @Post('test')
-  test(@Body() data: any) {
-    return this.contractsService.test(data)
-  }
-
   @Get('get-all-contract-details/:addressWallet')
   async getAllContractDetails(@Param('addressWallet') addressWallet: string) {
     return await this.contractsService.getContractsByAddressWallet(addressWallet)

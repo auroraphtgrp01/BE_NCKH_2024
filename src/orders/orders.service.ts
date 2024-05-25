@@ -11,6 +11,8 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
 import { UsersService } from 'src/users/users.service'
+import { IQueuePayloadSendRequestSurvey, QueueRedisService } from 'src/queues/queue-redis.service'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class OrdersService {
@@ -19,7 +21,9 @@ export class OrdersService {
     private readonly productsService: ProductsService,
     private readonly commonService: CommonService,
     private readonly suppliersService: SuppliersService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly queueRedisService: QueueRedisService,
+    private readonly configService: ConfigService
   ) {}
   async create(createOrderDto: CreateOrderDto, user: IUser) {
     const productInfo = await this.productsService.findOneById(createOrderDto.productId)
@@ -82,6 +86,33 @@ export class OrdersService {
       })
     return { message: 'Add product successfully' }
   }
+
+  async sendRequestSurvey(surveyId: string, user: IUser) {
+    const updatedBy: IExecutor = { ...user }
+    await this.prismaService.client.orders.update({
+      where: { id: surveyId },
+      data: { status: EOrderStatus.IN_PROGRESS, updatedBy: updatedBy }
+    })
+    try {
+      const survey = await this.findOneById(surveyId)
+      if (!survey) throw new NotFoundException({ message: RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND })
+      const payload: IQueuePayloadSendRequestSurvey = {
+        to: survey.supplier.User.email,
+        from: user.email,
+        receiver: user.name,
+        surveyCode: survey.order.orderCode,
+        addressWalletSender: user.addressWallet,
+        messages: 'Look forward to working with you',
+        link: `${this.configService.get<string>('FRONTEND_HOST')}/order/${survey.order.id}`
+      }
+      this.queueRedisService.enqueueSendRequestSurvey(payload)
+      return { message: 'Send request survey to supplier successfully' }
+    } catch (error) {
+      return { message: 'Error' }
+    }
+  }
+
+  async resendRequestSurvey(surveyId: string, user: IUser) {}
 
   async addProductToOrder(orderId: string, productId: string, user: IUser) {
     const product = await this.productsService.findOneById(productId)
@@ -173,7 +204,7 @@ export class OrdersService {
 
   async update(updateOrderDto: UpdateOrderDto, user: IUser) {
     const currentOrder = await this.prismaService.client.orders.findUnique({ where: { id: updateOrderDto.id } })
-    if (!currentOrder) throw new NotFoundException(RESPONSE_MESSAGES.ORDER_NOT_FOUND)
+    if (!currentOrder) throw new NotFoundException(RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND)
     if (
       updateOrderDto.status === EOrderStatus.COMPLETED &&
       ((currentOrder.executeDate === null && !updateOrderDto.executeDate) ||
