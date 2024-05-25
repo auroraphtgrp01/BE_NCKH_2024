@@ -147,9 +147,16 @@ export class ParticipantsService {
 
     if (updateParticipantDto.status) {
       const participants = await this.findAllByContractId(find.contractId)
-      if (participants.filter((item) => item.status !== ParticipantStatus.ACCEPTED).length === 0) {
+      if (
+        updateParticipantDto.status === ParticipantStatus.ACCEPTED &&
+        participants.filter((item) => item.status !== ParticipantStatus.ACCEPTED).length === 0
+      )
         await this.contractService.update({ id: participant.contractId, status: contractStatus.PARTICIPATED }, user)
-      }
+      else if (
+        updateParticipantDto.status === ParticipantStatus.SIGNED &&
+        participants.filter((item) => item.status !== ParticipantStatus.SIGNED).length === 0
+      )
+        await this.contractService.update({ id: participant.contractId, status: contractStatus.SIGNED }, user)
     }
 
     return participant
