@@ -8,7 +8,8 @@ export class QueueRedisService {
   constructor(
     @InjectQueue('deployContract') private readonly deployContractQueue: Queue,
     @InjectQueue('sendInvitation') private readonly sendInvitationQueue: Queue,
-    @InjectQueue('sendRequestSurvey') private readonly sendRequestSurveyQueue: Queue
+    @InjectQueue('sendRequestSurvey') private readonly sendRequestSurveyQueue: Queue,
+    @InjectQueue('resendRequestSurvey') private readonly resendRequestSurveyQueue: Queue
   ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
@@ -21,6 +22,10 @@ export class QueueRedisService {
 
   enqueueSendRequestSurvey(job: IQueuePayloadSendRequestSurvey) {
     this.sendRequestSurveyQueue.add('sendRequestSurvey', job)
+  }
+
+  enqueueResendRequestSurvey(job: IQueuePayloadResendRequestSurvey) {
+    this.resendRequestSurveyQueue.add('resendRequestSurvey', job)
   }
 }
 
@@ -49,6 +54,16 @@ export interface IQueuePayloadSendRequestSurvey {
   receiver: string
   surveyCode: string
   addressWalletSender: string
+  messages: string
+  link: string
+}
+
+export interface IQueuePayloadResendRequestSurvey {
+  to: string
+  from: string
+  receiver: string
+  supplierName: string
+  surveyCode: string
   messages: string
   link: string
 }

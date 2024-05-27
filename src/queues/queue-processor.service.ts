@@ -4,6 +4,7 @@ import { Job } from 'bullmq'
 import { MailService } from 'src/mailer/mailer.service'
 import {
   IQueuePayloadDeployContract,
+  IQueuePayloadResendRequestSurvey,
   IQueuePayloadSendInvitation,
   IQueuePayloadSendRequestSurvey
 } from 'src/queues/queue-redis.service'
@@ -115,6 +116,52 @@ export class QueueProcessorSendRequestSurvey extends WorkerHost {
           } else return false
         } catch (error) {
           this.logger.error('Error processing send request survey...', error)
+        }
+      default:
+        throw new Error('No job name match')
+    }
+  }
+
+  @OnWorkerEvent('active')
+  onQueueActive(job: Job) {
+    this.logger.log(`Job has been started: ${job.id}`)
+  }
+
+  @OnWorkerEvent('completed')
+  onQueueComplete(job: Job, result: any) {
+    this.logger.log(`Job has been finished: ${job.id}`)
+  }
+
+  @OnWorkerEvent('failed')
+  onQueueFailed(job: Job, err: any) {
+    this.logger.log(`Job has been failed: ${job.id}`)
+    this.logger.log({ err })
+  }
+
+  @OnWorkerEvent('error')
+  onQueueError(err: any) {
+    this.logger.log(`Job has got error: `)
+    this.logger.log({ err })
+  }
+}
+
+@Processor('resendRequestSurvey')
+export class QueueProcessorResendRequestSurvey extends WorkerHost {
+  constructor(private mailService: MailService) {
+    super()
+  }
+  private logger = new Logger()
+  async process(job: Job<IQueuePayloadResendRequestSurvey, string, string>, token?: string): Promise<boolean> {
+    switch (job.name) {
+      case 'resendRequestSurvey':
+        try {
+          const result = this.mailService.resendRequestSurvey(job.data)
+          if (result) {
+            this.logger.log(`Send reply an request survey code ${job.data.surveyCode} processed successfully`)
+            return true
+          } else return false
+        } catch (error) {
+          this.logger.error('Error processing send reply an request survey...', error)
         }
       default:
         throw new Error('No job name match')

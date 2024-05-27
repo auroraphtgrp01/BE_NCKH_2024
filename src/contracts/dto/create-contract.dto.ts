@@ -140,6 +140,12 @@ export class CreateContractDto {
   @IsNotEmpty()
   @IsUUID()
   readonly supplierId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly orderId?: string
 }
 
 export class DataUpdateContractAttributeDto {

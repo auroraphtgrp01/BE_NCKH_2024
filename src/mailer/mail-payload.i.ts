@@ -17,3 +17,13 @@ export interface RequestSurveyPayload {
   messages: string
   link: string
 }
+
+export interface ResendQuotationPayload {
+  to: string
+  from: string
+  receiver: string
+  supplierName: string
+  surveyCode: string
+  messages: string
+  link: string
+}

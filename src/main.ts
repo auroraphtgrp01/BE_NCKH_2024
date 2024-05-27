@@ -17,8 +17,14 @@ async function bootstrap() {
   const aQueue = app.get<Queue>(`BullQueue_deployContract`)
   const bQueue = app.get<Queue>(`BullQueue_sendInvitation`)
   const cQueue = app.get<Queue>(`BullQueue_sendRequestSurvey`)
+  const dQueue = app.get<Queue>(`BullQueue_resendRequestSurvey`)
   createBullBoard({
-    queues: [new BullMQAdapter(aQueue), new BullMQAdapter(bQueue), new BullMQAdapter(cQueue)],
+    queues: [
+      new BullMQAdapter(aQueue),
+      new BullMQAdapter(bQueue),
+      new BullMQAdapter(cQueue),
+      new BullMQAdapter(dQueue)
+    ],
     serverAdapter
   })
   app.use('/bull-admin', serverAdapter.getRouter())
