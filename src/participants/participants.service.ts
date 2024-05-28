@@ -159,7 +159,9 @@ export class ParticipantsService {
         await this.contractService.update({ id: participant.contractId, status: contractStatus.SIGNED }, user)
     }
 
-    return participant
+    const status = await this.contractService.findOneById(participant.contractId)
+
+    return { participant, contratStatus: status }
   }
 
   remove(id: number) {
