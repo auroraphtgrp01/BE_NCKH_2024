@@ -133,13 +133,7 @@ export class CreateContractDto {
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly userId?: string
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly supplierId?: string
+  readonly orderId?: string
 }
 
 export class DataUpdateContractAttributeDto {

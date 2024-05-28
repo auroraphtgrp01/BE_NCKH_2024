@@ -96,7 +96,7 @@ export class ContractsService {
 
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
+    const { invitation, templateId, orderId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
