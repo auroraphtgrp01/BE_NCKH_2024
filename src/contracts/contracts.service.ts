@@ -108,26 +108,31 @@ export class ContractsService {
     if (templateId) {
       if (!(await this.templateContractsService.findOneById(templateId)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-      if ((!userId && supplierId) || (userId && !supplierId))
-        throw new NotFoundException({ message: 'User or supplier information not provided' })
-      else if (!userId && !supplierId)
-        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-          contractRecord.id,
-          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-          user
-        )
-      else {
-        const _user = await this.usersService.findOneById(userId)
-        const supplier = await this.suppliersService.findOneById(supplierId)
-        if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
-        contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-          contractRecord.id,
-          templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-          user,
-          _user,
-          supplier
-        )
-      }
+      contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+        contractRecord.id,
+        templateId,
+        user
+      )
+      // if ((!userId && supplierId) || (userId && !supplierId))
+      //   throw new NotFoundException({ message: 'User or supplier information not provided' })
+      // else if (!userId && !supplierId)
+      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+      //     contractRecord.id,
+      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+      //     user
+      //   )
+      // else {
+      //   const _user = await this.usersService.findOneById(userId)
+      //   const supplier = await this.suppliersService.findOneById(supplierId)
+      //   if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
+      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+      //     contractRecord.id,
+      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+      //     user,
+      //     _user,
+      //     supplier
+      //   )
+      // }
     }
 
     return contractResponse
@@ -183,7 +188,7 @@ export class ContractsService {
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
     await Promise.all([
-      updateContractAttribute.updatedAttributes.map(async (item, index) => {
+      updateContractAttribute.updatedAttributes.map(async (item) => {
         if (item.statusAttribute === 'Create') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
@@ -295,17 +300,18 @@ export class ContractsService {
     const template = await this.templateContractsService.findOneById(templateContractId)
     if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
     const getAllContractAttributes: ContractAttribute[] = await Promise.all(
-      template.contractAttributes.map(async (item) => {
-        const contractAttribute = await this.prismaService.client.contractAttribute.findUnique({
-          where: { id: item }
-        })
-        return contractAttribute
+      template.contractAttributes.map(async (element) => {
+        return await this.prismaService.client.contractAttribute.findUnique({ where: { id: element } })
       })
     )
+    const allContractAttributes: ContractAttribute[] = getAllContractAttributes.sort((a, b) => a.index - b.index)
+    console.log('getAllContractAttributes', allContractAttributes)
 
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
-    getAllContractAttributes.forEach((contractAttribute, index) => {
+    console.log('getAllContractAttributes', getAllContractAttributes)
+
+    allContractAttributes.forEach((contractAttribute, index) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
