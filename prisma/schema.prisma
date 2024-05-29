@@ -36,12 +36,12 @@ enum contractStatus {
 }
 
 model User {
-  id                  String       @id @unique @default(uuid()) @db.Uuid
-  email               String       @unique
+  id                  String        @id @unique @default(uuid()) @db.Uuid
+  email               String        @unique
   name                String
   phoneNumber         String
-  indentifyNumber     String       @unique
-  addressWallet       String       @unique
+  indentifyNumber     String        @unique
+  addressWallet       String        @unique
   gender              Gender
   dateOfBirth         DateTime
   PIN                 String?
@@ -49,15 +49,15 @@ model User {
   emailVerifyToken    String?
   forgotPasswordToken String?
   refreshToken        String?
-  userStatus          UserStatus?  @default(UNVERIFIED)
+  userStatus          UserStatus?   @default(UNVERIFIED)
   role                String
-  createdAt           DateTime?    @default(now())
-  updatedAt           DateTime?    @updatedAt
+  createdAt           DateTime?     @default(now())
+  updatedAt           DateTime?     @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
-  Participant         Participant?
+  Participant         Participant[]
   Supplier            Suppliers[]
   Orders              Orders[]
 }
@@ -65,7 +65,7 @@ model User {
 model Participant {
   id         String            @id @unique @default(uuid()) @db.Uuid
   User       User?             @relation(fields: [userId], references: [id])
-  userId     String?           @unique @db.Uuid
+  userId     String?           @db.Uuid
   email      String
   permission Json
   contractId String            @db.Uuid

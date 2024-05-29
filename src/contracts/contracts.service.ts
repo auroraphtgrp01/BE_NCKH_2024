@@ -30,7 +30,8 @@ export class ContractsService {
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
-    private readonly suppliersService: SuppliersService
+    private readonly suppliersService: SuppliersService,
+    private readonly participantsService: ParticipantsService
   ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type } = contractData
@@ -143,10 +144,12 @@ export class ContractsService {
     await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
   }
 
-  async getContractsByAddressWallet(addressWallet: string) {
-    const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
-
-    return { contracts }
+  async getContractsByUserId(user: IUser) {
+    const participants = await this.participantsService.findAllByUserId(user.id)
+    const contracts = await Promise.all(
+      participants.map(async (participant) => await this.findOneById(participant.contractId))
+    )
+    return contracts
   }
 
   findAll() {
@@ -224,13 +227,6 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.create(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
           }
         }
         if (item.statusAttribute === 'Update') {
@@ -268,13 +264,6 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.update(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
           }
         }
       }),
@@ -305,11 +294,9 @@ export class ContractsService {
       })
     )
     const allContractAttributes: ContractAttribute[] = getAllContractAttributes.sort((a, b) => a.index - b.index)
-    console.log('getAllContractAttributes', allContractAttributes)
 
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
-    console.log('getAllContractAttributes', getAllContractAttributes)
 
     allContractAttributes.forEach((contractAttribute, index) => {
       if (

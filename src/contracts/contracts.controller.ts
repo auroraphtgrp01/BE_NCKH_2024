@@ -28,9 +28,9 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
-  @Get('get-all-contract-details/:addressWallet')
-  async getAllContractDetails(@Param('addressWallet') addressWallet: string) {
-    return await this.contractsService.getContractsByAddressWallet(addressWallet)
+  @Get('get-all-contract-details')
+  async getAllContractDetails(@User() user: IUser) {
+    return await this.contractsService.getContractsByUserId(user)
   }
 
   @Get(':id')
