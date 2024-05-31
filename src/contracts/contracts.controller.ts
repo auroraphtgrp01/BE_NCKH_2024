@@ -19,8 +19,8 @@ export class ContractsController {
   }
 
   @Get('get-contract-details/:contractId')
-  async getContractDetailsById(@Param('contractId') contractId: string) {
-    return await this.contractsService.getContractDetailsById(contractId)
+  async getContractDetailsById(@Param('contractId') contractId: string, @User() user: IUser) {
+    return await this.contractsService.getContractDetailsById(contractId, user)
   }
 
   @Get()

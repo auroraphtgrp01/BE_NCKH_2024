@@ -63,20 +63,22 @@ model User {
 }
 
 model Participant {
-  id         String            @id @unique @default(uuid()) @db.Uuid
-  User       User?             @relation(fields: [userId], references: [id])
-  userId     String?           @db.Uuid
-  email      String
-  permission Json
-  contractId String            @db.Uuid
-  Contract   Contract          @relation(fields: [contractId], references: [id])
-  status     ParticipantStatus @default(PENDING)
-  createdAt  DateTime?         @default(now())
-  updatedAt  DateTime?         @updatedAt
-  createdBy  Json?
-  updatedBy  Json?
-  deletedAt  DateTime?
-  deletedBy  Json?
+  id              String            @id @unique @default(uuid()) @db.Uuid
+  User            User?             @relation(fields: [userId], references: [id])
+  userId          String?           @db.Uuid
+  email           String
+  permission      Json
+  contractId      String            @db.Uuid
+  Contract        Contract          @relation(fields: [contractId], references: [id])
+  status          ParticipantStatus @default(PENDING)
+  role            String?
+  completedStages Json[]            @db.Json
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @updatedAt
+  createdBy       Json?
+  updatedBy       Json?
+  deletedAt       DateTime?
+  deletedBy       Json?
 }
 
 model Contract {

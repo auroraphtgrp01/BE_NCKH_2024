@@ -12,7 +12,7 @@ import { TemplateContractsService } from 'src/template-contracts/template-contra
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
-import { EContractType, ERoles, ETypeContractAttribute, EVoting } from 'src/constants/enum.constant'
+import { EContractType, ERoleParticipant, ERoles, ETypeContractAttribute, EVoting } from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
@@ -54,7 +54,7 @@ export class ContractsService {
   async createDisptuteContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
     const { totalAmount, customer, supplier, ...rest } = createDisputeContractDto
     const economicArbitrations = await this.prismaService.client.user.findMany({
-      where: { role: ERoles.ECONOMIC_ARBITRATION }
+      where: { role: ERoles.ARBITRATION }
     })
     const invitation: ICreateInvitation[] = []
     const votings: IVoting[] = []
@@ -74,7 +74,8 @@ export class ContractsService {
             EDIT_CONTRACT: false,
             INVITE_PARTICIPANT: true,
             READ_CONTRACT: true,
-            SET_OWNER_PARTY: false
+            SET_OWNER_PARTY: false,
+            role: ERoleParticipant.ARBITRATION
           }
         })
         votings.push({
@@ -162,12 +163,13 @@ export class ContractsService {
   }
 
   async getContractDetailsById(
-    contractId: string
+    contractId: string,
+    user?: IUser
   ): Promise<{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }> {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
-    const participants = await this.participantService.findAllByContractId(contractId)
+    const participants = await this.participantService.findAllByContractId(contractId, user)
 
     return { contract, contractAttributes, participants }
   }

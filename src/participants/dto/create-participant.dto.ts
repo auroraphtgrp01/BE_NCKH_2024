@@ -9,6 +9,7 @@ import {
   IsString,
   IsUUID,
   MinLength,
+  Validate,
   ValidateNested
 } from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
