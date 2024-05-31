@@ -12,7 +12,14 @@ import { TemplateContractsService } from 'src/template-contracts/template-contra
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
-import { EContractType, ERoles, ETypeContractAttribute, EVoting } from 'src/constants/enum.constant'
+import {
+  EContractType,
+  ERoleParticipant,
+  ERoles,
+  EStageStatus,
+  ETypeContractAttribute,
+  EVoting
+} from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
@@ -30,7 +37,8 @@ export class ContractsService {
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
-    private readonly suppliersService: SuppliersService
+    private readonly suppliersService: SuppliersService,
+    private readonly participantsService: ParticipantsService
   ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type } = contractData
@@ -53,7 +61,7 @@ export class ContractsService {
   async createDisptuteContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
     const { totalAmount, customer, supplier, ...rest } = createDisputeContractDto
     const economicArbitrations = await this.prismaService.client.user.findMany({
-      where: { role: ERoles.ECONOMIC_ARBITRATION }
+      where: { role: ERoles.ARBITRATION }
     })
     const invitation: ICreateInvitation[] = []
     const votings: IVoting[] = []
@@ -73,7 +81,8 @@ export class ContractsService {
             EDIT_CONTRACT: false,
             INVITE_PARTICIPANT: true,
             READ_CONTRACT: true,
-            SET_OWNER_PARTY: false
+            SET_OWNER_PARTY: false,
+            role: ERoleParticipant.ARBITRATION
           }
         })
         votings.push({
@@ -143,10 +152,12 @@ export class ContractsService {
     await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
   }
 
-  async getContractsByAddressWallet(addressWallet: string) {
-    const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
-
-    return { contracts }
+  async getContractsByUserId(user: IUser) {
+    const participants = await this.participantsService.findAllByUserId(user.id)
+    const contracts = await Promise.all(
+      participants.map(async (participant) => await this.findOneById(participant.contractId))
+    )
+    return contracts
   }
 
   findAll() {
@@ -159,12 +170,28 @@ export class ContractsService {
   }
 
   async getContractDetailsById(
-    contractId: string
+    contractId: string,
+    user?: IUser
   ): Promise<{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }> {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
-    const participants = await this.participantService.findAllByContractId(contractId)
+    const participants = await this.participantService.findAllByContractId(contractId, user)
+    const isReceiver = participants.find((item: any) => item.role === ERoleParticipant.RECEIVER)
+    if (isReceiver) {
+      isReceiver.completedStages.map((stage: any) => {
+        const now = new Date()
+        const sub = Math.floor((now.getTime() - new Date(stage.createdAt).getTime()) / 60000)
+        if (sub > 120)
+          this.participantService.update(
+            {
+              id: isReceiver.id,
+              stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE }
+            },
+            user
+          )
+      })
+    }
 
     return { contract, contractAttributes, participants }
   }
@@ -224,13 +251,6 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.create(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
           }
         }
         if (item.statusAttribute === 'Update') {
@@ -268,13 +288,6 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.update(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
           }
         }
       }),
@@ -305,11 +318,9 @@ export class ContractsService {
       })
     )
     const allContractAttributes: ContractAttribute[] = getAllContractAttributes.sort((a, b) => a.index - b.index)
-    console.log('getAllContractAttributes', allContractAttributes)
 
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
-    console.log('getAllContractAttributes', getAllContractAttributes)
 
     allContractAttributes.forEach((contractAttribute, index) => {
       if (

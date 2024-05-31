@@ -19,7 +19,7 @@ export enum ERoles {
   ADMIN = 'Admin',
   CUSTOMER = 'Customer',
   SUPPLIER = 'Supplier',
-  ECONOMIC_ARBITRATION = 'Economic Arbitration'
+  ARBITRATION = 'Arbitration'
 }
 
 export enum EContractType {
@@ -38,4 +38,18 @@ export enum EVoting {
   PENDING = 'Pending',
   CUSTOMER = 'Customer',
   SUPPLIER = 'Supplier'
+}
+
+export enum EStageStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  OUT_OF_DATE = 'OUT_OF_DATE'
+}
+
+export enum ERoleParticipant {
+  SENDER = 'SENDER',
+  RECEIVER = 'RECEIVER',
+  PARTICIPANT = 'PARTICIPANT',
+  ARBITRATION = 'ARBITRATION'
 }

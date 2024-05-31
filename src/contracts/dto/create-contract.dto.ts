@@ -70,6 +70,10 @@ export class PermissionDto {
   @IsNotEmpty()
   @IsBoolean()
   readonly SET_OWNER_PARTY: boolean
+
+  @IsString()
+  @IsNotEmpty()
+  readonly role: string
 }
 
 export class GasPriceDto {

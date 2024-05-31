@@ -1,3 +1,5 @@
+import { ERoleParticipant, EStageStatus } from 'src/constants/enum.constant'
+
 export interface IUpdateParticipant {
   email?: string
   User?: any
@@ -15,4 +17,15 @@ export interface IPermissionContract {
   INVITE_PARTICIPANT: boolean
   READ_CONTRACT: boolean
   SET_OWNER_PARTY: boolean
+  role: ERoleParticipant
+}
+
+export interface IStageContract {
+  id: string
+  percent: number
+  requestBy: string
+  requestTo: string
+  description?: string
+  status: EStageStatus
+  createdAt: Date
 }
