@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID, Length } from 'class-validator'
 
 export class CreateSupplierDto {
   @IsString()
@@ -20,4 +20,9 @@ export class CreateSupplierDto {
   @IsString()
   @IsNotEmpty()
   address: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  description?: string
 }

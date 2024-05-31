@@ -29,12 +29,32 @@ export class SuppliersService {
     return supplier
   }
 
-  findAll() {
-    return `This action returns all suppliers`
+  async findAll() {
+    const suppliers = []
+    const spl = await this.prismaService.client.suppliers.findMany({ include: { User: true } })
+    for (const supplier of spl) {
+      const images = await this.prismaService.client.images.findMany({ where: { suppliersId: supplier.id } })
+      suppliers.push({ ...supplier, images })
+    }
+    return suppliers
+  }
+
+  async findAllByUserId(userId: string) {
+    const suppliers = await this.prismaService.client.suppliers.findMany({ where: { userId } })
+    return suppliers
   }
 
   async findOneById(id: string) {
-    return await this.prismaService.client.suppliers.findUnique({ where: { id }, include: { User: true } })
+    const suppliers: any = await this.prismaService.client.suppliers.findUnique({
+      where: { id },
+      include: { User: true }
+    })
+
+    suppliers.images =
+      (await this.prismaService.client.images.count({ where: { suppliersId: id } })) > 0
+        ? await this.prismaService.client.images.findMany({ where: { suppliersId: id } })
+        : []
+    return suppliers
   }
 
   findOne(id: number) {

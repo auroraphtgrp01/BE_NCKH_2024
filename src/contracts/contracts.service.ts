@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
-import { CreateContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
+import { CreateContractDto, CreateDisputeContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { Contract, ContractAttribute, Participant, Suppliers, User, contractStatus } from '@prisma/client'
@@ -11,14 +11,22 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
-import { ICreateContractResponse, IStage } from 'src/interfaces/contract.interface'
-import { EContractType, ETypeContractAttribute } from 'src/constants/enum.constant'
+import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
+import {
+  EContractType,
+  ERoleParticipant,
+  ERoles,
+  EStageStatus,
+  ETypeContractAttribute,
+  EVoting
+} from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
 import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
+import { ICreateInvitation } from 'src/interfaces/participant.interface'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -29,39 +37,19 @@ export class ContractsService {
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
-    private readonly suppliersService: SuppliersService
+    private readonly suppliersService: SuppliersService,
+    private readonly participantsService: ParticipantsService
   ) {}
-
-  test(jsonData: any) {
-    const jsonStr = '"' + 'test": ' + JSON.stringify(jsonData)
-    return jsonStr
-
-    const bytesData = ethers.toUtf8Bytes(jsonStr)
-    const bytesDataHex = ethers.hexlify(bytesData)
-
-    const jsonString = ethers.toUtf8String(bytesData)
-    const jsonArray = JSON.parse(jsonString)
-
-    return {
-      bytesDataHex,
-      jsonArray,
-      jsonData,
-      type1: typeof jsonData,
-      type2: typeof jsonArray,
-      check: jsonData === jsonArray
-    }
-  }
-
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
-    const { addressWallet, name, id } = contractData
+    const { addressWallet, name, type } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+
     const contract = await this.prismaService.client.contract.create({
       data: {
-        id,
         addressWallet,
         contractTitle: name,
         status: contractStatus.PENDING as Exact<contractStatus, contractStatus>,
-        type: contractData.type ? contractData.type : EContractType.CONTRACT,
+        type: type ? type : EContractType.CONTRACT,
         createdBy,
         updatedAt: null
       }
@@ -70,41 +58,107 @@ export class ContractsService {
     return contract
   }
 
+  async createDisptuteContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
+    const { totalAmount, customer, supplier, ...rest } = createDisputeContractDto
+    const economicArbitrations = await this.prismaService.client.user.findMany({
+      where: { role: ERoles.ARBITRATION }
+    })
+    const invitation: ICreateInvitation[] = []
+    const votings: IVoting[] = []
+
+    const contract = await this.createEmptyContract(
+      { ...rest, name: 'HỢP ĐỒNG TRANH CHẤP', type: EContractType.DISPUTE },
+      user
+    )
+
+    await Promise.all(
+      economicArbitrations.map((economicArbitration) => {
+        invitation.push({
+          email: economicArbitration.email,
+          messages: 'An invitation to become an economic arbitrator of a disputed contract',
+          permission: {
+            CHANGE_STATUS_CONTRACT: false,
+            EDIT_CONTRACT: false,
+            INVITE_PARTICIPANT: true,
+            READ_CONTRACT: true,
+            SET_OWNER_PARTY: false,
+            role: ERoleParticipant.ARBITRATION
+          }
+        })
+        votings.push({
+          userId: economicArbitration.id,
+          contractId: contract.id,
+          vote: EVoting.PENDING
+        })
+      })
+    )
+
+    const result = await this.update({ id: contract.id, votings }, user)
+
+    await this.participantService.sendInvitation(
+      { invitation, contractName: contract.contractTitle, contractId: contract.id },
+      user
+    )
+
+    return result
+  }
+
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, userId, supplierId, ...contractData } = createContractDto
-    const _user = await this.usersService.findOneById(userId)
-    const supplier = await this.suppliersService.findOneById(supplierId)
-    if (!_user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-    if (!supplier) throw new NotFoundException({ message: RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND })
-
+    const { invitation, templateId, orderId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
-
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
-    await this.participantService.sendInvitation(
-      { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
-      user
-    )
+    if (invitation && invitation.length > 0)
+      await this.participantService.sendInvitation(
+        { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
+        user
+      )
     contractResponse.contract = contractRecord
-    if (templateId)
+    if (templateId) {
       if (!(await this.templateContractsService.findOneById(templateId)))
         throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
-    contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-      contractRecord.id,
-      templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-      _user,
-      supplier,
-      user
-    )
+      contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+        contractRecord.id,
+        templateId,
+        user
+      )
+      // if ((!userId && supplierId) || (userId && !supplierId))
+      //   throw new NotFoundException({ message: 'User or supplier information not provided' })
+      // else if (!userId && !supplierId)
+      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+      //     contractRecord.id,
+      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+      //     user
+      //   )
+      // else {
+      //   const _user = await this.usersService.findOneById(userId)
+      //   const supplier = await this.suppliersService.findOneById(supplierId)
+      //   if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
+      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
+      //     contractRecord.id,
+      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
+      //     user,
+      //     _user,
+      //     supplier
+      //   )
+      // }
+    }
 
     return contractResponse
   }
 
-  async getContractsByAddressWallet(addressWallet: string) {
-    const contracts = await this.prismaService.client.contract.findMany({ where: { addressWallet } })
+  async handleDeployContract(contractId: string) {
+    const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
+    await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
+  }
 
-    return { contracts }
+  async getContractsByUserId(user: IUser) {
+    const participants = await this.participantsService.findAllByUserId(user.id)
+    const contracts = await Promise.all(
+      participants.map(async (participant) => await this.findOneById(participant.contractId))
+    )
+    return contracts
   }
 
   findAll() {
@@ -112,17 +166,33 @@ export class ContractsService {
   }
 
   async findOneById(id: string) {
-    const contract = await this.prismaService.client.contract.findUnique({ where: { id } })
+    const contract = await this.prismaService.client.contract.findFirst({ where: { id } })
     return contract
   }
 
   async getContractDetailsById(
-    contractId: string
+    contractId: string,
+    user?: IUser
   ): Promise<{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }> {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
-    const participants = await this.participantService.findAllByContractId(contractId)
+    const participants = await this.participantService.findAllByContractId(contractId, user)
+    const isReceiver = participants.find((item: any) => item.role === ERoleParticipant.RECEIVER)
+    if (isReceiver) {
+      isReceiver.completedStages.map((stage: any) => {
+        const now = new Date()
+        const sub = Math.floor((now.getTime() - new Date(stage.createdAt).getTime()) / 60000)
+        if (sub > 120)
+          this.participantService.update(
+            {
+              id: isReceiver.id,
+              stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE }
+            },
+            user
+          )
+      })
+    }
 
     return { contract, contractAttributes, participants }
   }
@@ -145,8 +215,8 @@ export class ContractsService {
     })
     if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
-    Promise.all([
-      updateContractAttribute.updatedAttributes.map(async (item, index) => {
+    await Promise.all([
+      updateContractAttribute.updatedAttributes.map(async (item) => {
         if (item.statusAttribute === 'Create') {
           if (
             item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
@@ -179,13 +249,6 @@ export class ContractsService {
                 value: item.value,
                 type: item.type,
                 index: item.index
-              },
-              user
-            )
-            await this.contractAttributeValuesService.create(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
               },
               user
             )
@@ -226,13 +289,6 @@ export class ContractsService {
               },
               user
             )
-            await this.contractAttributeValuesService.update(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
           }
         }
       }),
@@ -251,24 +307,23 @@ export class ContractsService {
   async createContractAttributesByTemplateId(
     contractId: string,
     templateContractId: string,
-    _user: User,
-    supplier: Suppliers & { User: User },
-    user: IUser
+    user: IUser,
+    _user?: User,
+    supplier?: Suppliers & { User: User }
   ): Promise<IContractAttributeResponse[]> {
     const template = await this.templateContractsService.findOneById(templateContractId)
     if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
     const getAllContractAttributes: ContractAttribute[] = await Promise.all(
-      template.contractAttributes.map(async (item) => {
-        const contractAttribute = await this.prismaService.client.contractAttribute.findUnique({
-          where: { id: item }
-        })
-        return contractAttribute
+      template.contractAttributes.map(async (element) => {
+        return await this.prismaService.client.contractAttribute.findUnique({ where: { id: element } })
       })
     )
+    const allContractAttributes: ContractAttribute[] = getAllContractAttributes.sort((a, b) => a.index - b.index)
 
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
-    getAllContractAttributes.forEach((contractAttribute, index) => {
+
+    allContractAttributes.forEach((contractAttribute, index) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -282,28 +337,41 @@ export class ContractsService {
             case isInfoParty.index + 1:
               contractAttributes.push({
                 property: contractAttribute.value,
-                value: isInfoParty.role === 'Customer' ? 'Empty' : supplier.name,
+                value: _user && supplier ? (isInfoParty.role === 'Customer' ? 'Empty' : supplier.name) : 'Empty',
                 type: contractAttribute.type
               })
               break
             case isInfoParty.index + 2:
               contractAttributes.push({
                 property: contractAttribute.value,
-                value: isInfoParty.role === 'Customer' ? _user.name : supplier.User.name,
+                value:
+                  _user && supplier ? (isInfoParty.role === 'Customer' ? _user.name : supplier.User.name) : 'Empty',
                 type: contractAttribute.type
               })
               break
             case isInfoParty.index + 3:
               contractAttributes.push({
                 property: contractAttribute.value,
-                value: isInfoParty.role === 'Customer' ? (_user.address ? _user.address : 'Empty') : supplier.address,
+                value:
+                  _user && supplier
+                    ? isInfoParty.role === 'Customer'
+                      ? _user.address
+                        ? _user.address
+                        : 'Empty'
+                      : supplier.address
+                    : 'Empty',
                 type: contractAttribute.type
               })
               break
             default:
               contractAttributes.push({
                 property: contractAttribute.value,
-                value: isInfoParty.role === 'Customer' ? _user.phoneNumber : supplier.User.phoneNumber,
+                value:
+                  _user || supplier
+                    ? isInfoParty.role === 'Customer'
+                      ? _user.phoneNumber
+                      : supplier.User.phoneNumber
+                    : 'Empty',
                 type: contractAttribute.type
               })
               isInfoParty.index = -1
@@ -314,13 +382,13 @@ export class ContractsService {
           if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND)
             contractAttributes.push({
               property: contractAttribute.value,
-              value: _user.addressWallet,
+              value: _user ? _user.addressWallet : 'Empty',
               type: contractAttribute.type
             })
           else if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE)
             contractAttributes.push({
               property: contractAttribute.value,
-              value: supplier.User.addressWallet,
+              value: supplier ? supplier.User.addressWallet : 'Empty',
               type: contractAttribute.type
             })
           else

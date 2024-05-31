@@ -17,6 +17,7 @@ enum ParticipantStatus {
   PENDING
   ACCEPTED
   REFUSED
+  SIGNED
 }
 
 enum Gender {
@@ -35,12 +36,12 @@ enum contractStatus {
 }
 
 model User {
-  id                  String       @id @unique @default(uuid()) @db.Uuid
-  email               String       @unique
+  id                  String        @id @unique @default(uuid()) @db.Uuid
+  email               String        @unique
   name                String
   phoneNumber         String
-  indentifyNumber     String       @unique
-  addressWallet       String       @unique
+  indentifyNumber     String        @unique
+  addressWallet       String        @unique
   gender              Gender
   dateOfBirth         DateTime
   PIN                 String?
@@ -48,58 +49,62 @@ model User {
   emailVerifyToken    String?
   forgotPasswordToken String?
   refreshToken        String?
-  userStatus          UserStatus?  @default(UNVERIFIED)
+  userStatus          UserStatus?   @default(UNVERIFIED)
   role                String
-  createdAt           DateTime?    @default(now())
-  updatedAt           DateTime?    @updatedAt
+  createdAt           DateTime?     @default(now())
+  updatedAt           DateTime?     @updatedAt
   createdBy           Json?
   updatedBy           Json?
   deletedAt           DateTime?
   deletedBy           Json?
-  Participant         Participant?
+  Participant         Participant[]
   Supplier            Suppliers[]
   Orders              Orders[]
 }
 
 model Participant {
-  id         String            @id @unique @default(uuid()) @db.Uuid
-  User       User?             @relation(fields: [userId], references: [id])
-  userId     String?           @unique @db.Uuid
-  email      String
-  permission Json
-  contractId String            @db.Uuid
-  Contract   Contract          @relation(fields: [contractId], references: [id])
-  status     ParticipantStatus @default(PENDING)
-  createdAt  DateTime?         @default(now())
-  updatedAt  DateTime?         @updatedAt
-  createdBy  Json?
-  updatedBy  Json?
-  deletedAt  DateTime?
-  deletedBy  Json?
+  id              String            @id @unique @default(uuid()) @db.Uuid
+  User            User?             @relation(fields: [userId], references: [id])
+  userId          String?           @db.Uuid
+  email           String
+  permission      Json
+  contractId      String            @db.Uuid
+  Contract        Contract          @relation(fields: [contractId], references: [id])
+  status          ParticipantStatus @default(PENDING)
+  role            String?
+  completedStages Json[]            @db.Json
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @updatedAt
+  createdBy       Json?
+  updatedBy       Json?
+  deletedAt       DateTime?
+  deletedBy       Json?
 }
 
 model Contract {
-  id                String              @id @unique @default(uuid()) @db.Uuid
-  contractTitle     String
-  addressWallet     String
-  contractAddress   String?
-  blockAddress      String?
-  gasPrices         Json[]              @db.Json
-  startDate         DateTime?
-  endDate           DateTime?
-  executeDate       DateTime?
-  agreements        String[]
-  status            contractStatus      @default(PENDING)
-  stages            Json[]
-  type              String
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime?           @updatedAt
-  createdBy         Json?
-  updatedBy         Json?
-  deletedAt         DateTime?
-  deletedBy         Json?
-  ContractAttribute ContractAttribute[]
-  Participant       Participant[]
+  id                            String                          @id @unique @default(uuid()) @db.Uuid
+  contractTitle                 String
+  addressWallet                 String
+  contractAddress               String?
+  blockAddress                  String?
+  gasPrices                     Json[]                          @db.Json
+  startDate                     DateTime?
+  endDate                       DateTime?
+  executeDate                   DateTime?
+  agreements                    String[]
+  status                        contractStatus                  @default(PENDING)
+  stages                        Json[]
+  disputedContractId            String?
+  type                          String
+  createdAt                     DateTime                        @default(now())
+  updatedAt                     DateTime?                       @updatedAt
+  createdBy                     Json?
+  updatedBy                     Json?
+  deletedAt                     DateTime?
+  deletedBy                     Json?
+  ContractAttribute             ContractAttribute[]
+  Participant                   Participant[]
+  ContractAttributeInBlockchain ContractAttributeInBlockchain[]
 }
 
 model TemplateContract {
@@ -142,6 +147,23 @@ model ContractAttributeValue {
   deletedBy           Json?
   ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String            @unique @db.Uuid
+}
+
+model ContractAttributeInBlockchain {
+  id                                 String                              @id @unique @default(uuid()) @db.Uuid
+  value                              String
+  index                              Int?
+  type                               String
+  Contract                           Contract?                           @relation(fields: [contractId], references: [id])
+  contractId                         String?                             @db.Uuid
+  ContractAttributeValueInBlockchain ContractAttributeValueInBlockchain?
+}
+
+model ContractAttributeValueInBlockchain {
+  id                  String                        @id @unique @default(uuid()) @db.Uuid
+  value               String
+  ContractAttribute   ContractAttributeInBlockchain @relation(fields: [contractAttributeId], references: [id])
+  contractAttributeId String                        @unique @db.Uuid
 }
 
 model Roles {
@@ -194,6 +216,7 @@ model Suppliers {
   email       String     @unique
   phoneNumber String     @unique
   address     String
+  description String?
   Images      Images[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime?  @updatedAt
@@ -213,6 +236,8 @@ model Products {
   price       Float
   description String?
   Images      Images[]
+  taxPrice    Float
+  unit        String
   Supplier    Suppliers @relation(fields: [supplierId], references: [id])
   supplierId  String    @db.Uuid
   createdAt   DateTime  @default(now())
@@ -240,13 +265,15 @@ model Images {
 
 model Orders {
   id          String    @id @unique @default(uuid()) @db.Uuid
-  orderCode   String    @unique
+  orderCode   String
   status      String    @default("PENDING")
   products    Json[]
   Suppliers   Suppliers @relation(fields: [suppliersId], references: [id])
   suppliersId String    @db.Uuid
   userId      String    @db.Uuid
   User        User      @relation(fields: [userId], references: [id])
+  executeDate DateTime?
+  endDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   createdBy   Json?

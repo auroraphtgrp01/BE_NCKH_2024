@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from '@nestjs/common'
 import { ContractsService } from './contracts.service'
-import { CreateContractAttributesDto, CreateContractDto } from './dto/create-contract.dto'
+import { CreateContractAttributesDto, CreateContractDto, CreateDisputeContractDto } from './dto/create-contract.dto'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { User } from 'src/decorators/user.decorator'
@@ -13,9 +13,14 @@ export class ContractsController {
     return await this.contractsService.create(createContractDto, user)
   }
 
+  @Post('dispute-contract')
+  async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
+    return await this.contractsService.createDisptuteContract(createDisputeContractDto, user)
+  }
+
   @Get('get-contract-details/:contractId')
-  async getContractDetailsById(@Param('contractId') contractId: string) {
-    return await this.contractsService.getContractDetailsById(contractId)
+  async getContractDetailsById(@Param('contractId') contractId: string, @User() user: IUser) {
+    return await this.contractsService.getContractDetailsById(contractId, user)
   }
 
   @Get()
@@ -23,14 +28,9 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
-  @Post('test')
-  test(@Body() data: any) {
-    return this.contractsService.test(data)
-  }
-
-  @Get('get-all-contract-details/:addressWallet')
-  async getAllContractDetails(@Param('addressWallet') addressWallet: string) {
-    return await this.contractsService.getContractsByAddressWallet(addressWallet)
+  @Get('get-all-contract-details')
+  async getAllContractDetails(@User() user: IUser) {
+    return await this.contractsService.getContractsByUserId(user)
   }
 
   @Get(':id')
@@ -51,5 +51,10 @@ export class ContractsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.contractsService.remove(+id)
+  }
+
+  @Post('/handle-deploy')
+  async handleDeploy(@Body('contractId') contractId: string) {
+    return await this.contractsService.handleDeployContract(contractId)
   }
 }

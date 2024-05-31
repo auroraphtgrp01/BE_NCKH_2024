@@ -16,8 +16,9 @@ async function bootstrap() {
   serverAdapter.setBasePath('/bull-admin')
   const aQueue = app.get<Queue>(`BullQueue_deployContract`)
   const bQueue = app.get<Queue>(`BullQueue_sendInvitation`)
+  const cQueue = app.get<Queue>(`BullQueue_sendRequestSurvey`)
   createBullBoard({
-    queues: [new BullMQAdapter(aQueue), new BullMQAdapter(bQueue)],
+    queues: [new BullMQAdapter(aQueue), new BullMQAdapter(bQueue), new BullMQAdapter(cQueue)],
     serverAdapter
   })
   app.use('/bull-admin', serverAdapter.getRouter())
@@ -48,6 +49,6 @@ async function bootstrap() {
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
-  await app.listen(3000)
+  await app.listen(4000)
 }
 bootstrap()

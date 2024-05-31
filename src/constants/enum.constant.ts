@@ -18,7 +18,8 @@ export enum ETypeContractAttribute {
 export enum ERoles {
   ADMIN = 'Admin',
   CUSTOMER = 'Customer',
-  SUPPLIER = 'Supplier'
+  SUPPLIER = 'Supplier',
+  ARBITRATION = 'Arbitration'
 }
 
 export enum EContractType {
@@ -31,4 +32,24 @@ export enum EOrderStatus {
   IN_PROGRESS = 'In Progress',
   COMPLETED = 'Completed',
   CANCELLED = 'Cancelled'
+}
+
+export enum EVoting {
+  PENDING = 'Pending',
+  CUSTOMER = 'Customer',
+  SUPPLIER = 'Supplier'
+}
+
+export enum EStageStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  OUT_OF_DATE = 'OUT_OF_DATE'
+}
+
+export enum ERoleParticipant {
+  SENDER = 'SENDER',
+  RECEIVER = 'RECEIVER',
+  PARTICIPANT = 'PARTICIPANT',
+  ARBITRATION = 'ARBITRATION'
 }

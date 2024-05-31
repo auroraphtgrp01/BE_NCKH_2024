@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { CreateSmartContractDto } from './dto/create-smart-contract.dto'
 import { UpdateSmartContractDto } from './dto/update-smart-contract.dto'
 import { readContract } from 'src/utils/readContract.utils'
@@ -8,13 +8,16 @@ import { ethers } from 'ethers'
 import { ContractsService } from 'src/contracts/contracts.service'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { OrdersService } from 'src/orders/orders.service'
+import { CustomPrismaService } from 'nestjs-prisma'
+import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
+import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 @Injectable()
 export class SmartContractsService {
   constructor(
+    @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
     private readonly deloyContractService: QueueRedisService,
-    private readonly contractService: ContractsService,
-    private readonly orderService: OrdersService
+    private readonly contractService: ContractsService
   ) {}
   create(createSmartContractDto: CreateSmartContractDto) {
     return 'This action adds a new smartContract'
@@ -27,15 +30,15 @@ export class SmartContractsService {
     }
   }
 
-  async deployContract(contractId: string, _supplier: string, _users: string[], _total?: number, orderId?: string) {
+  async deployContract(contractId: string, _supplier: string, _users: string[]) {
     const dataContract = await this.contractService.getContractDetailsById(contractId)
     if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
-    if (orderId) {
-      const order = await this.orderService.findOneById(orderId)
-      if (!order) throw new NotFoundException({ message: RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND })
-      _total = order.products.reduce((acc, product: any) => acc + product.price, 0)
-    } else if (!orderId && !_total) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.TOTAL_IS_REQUIRED })
+    const _total = Number(
+      dataContract.contractAttributes.find(
+        (contractAttribute) => contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+      ).value
+    )
 
     const { participants, ...payload } = dataContract
     const _stages = payload.contract.stages.map((stage: any) => {
@@ -46,13 +49,7 @@ export class SmartContractsService {
         description: stage.description ? stage.description : ''
       }
     })
-    const _keys: string[] = Object.keys(payload)
-    const listVal = Object.values(payload)
-
-    const _values: string[] = listVal.map((val) => ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(val))))
     const payloadData: IQueuePayloadDeployContract = {
-      _keys,
-      _values,
       _supplier,
       contractId,
       _users,

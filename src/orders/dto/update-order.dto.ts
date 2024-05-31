@@ -1,6 +1,16 @@
 import { PartialType } from '@nestjs/swagger'
 import { CreateOrderDto } from './create-order.dto'
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID, Validate, ValidateNested } from 'class-validator'
+import {
+  IsArray,
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Validate,
+  ValidateNested
+} from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class OrderProductDto {
@@ -47,4 +57,12 @@ export class UpdateOrderDto {
   @ValidateNested({ each: true })
   @Type(() => OrderProductDto)
   products?: OrderProductDto[]
+
+  @IsOptional()
+  @IsDateString()
+  executeDate?: string
+
+  @IsOptional()
+  @IsDateString()
+  endDate?: string
 }

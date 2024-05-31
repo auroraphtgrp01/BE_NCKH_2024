@@ -14,6 +14,14 @@ export class CreateProductDto {
   @IsNotEmpty()
   price: number
 
+  @IsNumber()
+  @IsNotEmpty()
+  taxPrice: number
+
+  @IsString()
+  @IsNotEmpty()
+  unit: string
+
   @IsString()
   @IsNotEmpty()
   @IsUUID()

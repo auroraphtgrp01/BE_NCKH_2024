@@ -70,11 +70,15 @@ export class PermissionDto {
   @IsNotEmpty()
   @IsBoolean()
   readonly SET_OWNER_PARTY: boolean
+
+  @IsString()
+  @IsNotEmpty()
+  readonly role: string
 }
 
 export class GasPriceDto {
   @IsNumber()
-  readonly readonlyprice: string
+  readonly price: string
 
   @IsString()
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
@@ -85,12 +89,6 @@ export class GasPriceDto {
 }
 
 export class CreateEmptyContractDto {
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly id?: string
-
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   readonly addressWallet: string
@@ -117,11 +115,11 @@ export class CreateContractDto {
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   readonly name: string
 
+  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => InvitationsDto)
-  readonly invitation: InvitationsDto[]
+  readonly invitation?: InvitationsDto[]
 
   @IsOptional()
   @IsString()
@@ -135,15 +133,11 @@ export class CreateContractDto {
   @IsUUID()
   readonly templateId?: string
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  readonly userId: string
-
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly supplierId: string
+  readonly orderId?: string
 }
 
 export class DataUpdateContractAttributeDto {
@@ -189,4 +183,26 @@ export class InvitationsDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+}
+
+export class CreateDisputeContractDto {
+  @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  readonly addressWallet: string
+
+  @IsNumber()
+  @IsNotEmpty()
+  readonly totalAmount: number
+
+  @IsString()
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  readonly customer: string
+
+  @IsString()
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  readonly supplier: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly contractAddress: string
 }

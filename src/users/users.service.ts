@@ -90,14 +90,11 @@ export class UsersService {
   }
 
   async findOne(payload: string) {
-    console.log('payload', payload)
-
     const user = await this.prismaService.client.user.findFirst({
       where: {
         OR: [{ email: payload }, { addressWallet: payload }, { indentifyNumber: payload }]
       }
     })
-    console.log('user', user)
 
     return user
   }

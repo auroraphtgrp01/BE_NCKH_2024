@@ -55,29 +55,45 @@ export class ContractAttributesService {
     return result
   }
 
+  async createInBlockchain(createContractAttributeDto: CreateContractAttributeDto) {
+    const { contractId, ...rest } = createContractAttributeDto
+
+    const data: ICreateContractAttributeRecord = { ...rest }
+
+    if (contractId) data.Contract = { connect: { id: contractId } }
+
+    const contractAttribute = await this.prismaService.client.contractAttributeInBlockchain.create({
+      data: {
+        ...data
+      }
+    })
+
+    const result = {
+      id: contractAttribute.id,
+      value: contractAttribute.value,
+      type: contractAttribute.type
+    }
+
+    return result
+  }
+
   async createContractAttributes(createContractAttributesDto: CreateContractAttributesDto, user: IUser) {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    console.log('contractAttributes', contractAttributes)
-    console.log('contractId', contractId)
-
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
-    let i = 0
+    let index: number = 0
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
       }
-
       const data: IDataContractAttribute = {
         value: null,
         type: contractAttribute.type
       }
-
       if (contractId) data.contractId = contractId
-
-
+      data.index = index
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -87,19 +103,7 @@ export class ContractAttributesService {
         contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         data.value = contractAttribute.property
-        const hasHeading = contractAttributeRecords.some(
-          (record) =>
-            record.type === ETypeContractAttribute.CONTRACT_HEADING_1 ||
-            record.type === ETypeContractAttribute.CONTRACT_HEADING_2
-        )
-
-        if (!hasHeading)
-          throw new BadRequestException(
-            `The content ${contractAttribute.property} cannot be found without a title. Please create a title before generating content!`
-          )
-
         const contractAttributeRecord = await this.create(data, user)
-
         const contractAttributeValueRecord = await this.contractAttributeValueService.create(
           {
             value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
@@ -114,24 +118,57 @@ export class ContractAttributesService {
           type: contractAttributeRecord.type,
           createdBy
         }
-
         contractAttributeRecords.push(result)
       } else {
         data.value = contractAttribute.value
         if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
           throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
         }
-
         const contractAttributeRecord = await this.create(data, user)
         contractAttributeRecords.push(contractAttributeRecord)
       }
-      i++
+      index++
     }
 
     return contractAttributeRecords
   }
 
-  async findAllByContractId(contractId: string) {
+  async createContractAttributesInBlockchain(createContractAttributesDto: CreateContractAttributesDto) {
+    const { contractAttributes, contractId } = createContractAttributesDto
+    let index: number = 0
+    for (const contractAttribute of contractAttributes) {
+      const data: IDataContractAttribute = {
+        value: null,
+        type: contractAttribute.type
+      }
+      if (contractId) data.contractId = contractId
+      data.index = index
+      if (
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+      ) {
+        data.value = contractAttribute.property
+        const contractAttributeRecord = await this.createInBlockchain(data)
+        await this.contractAttributeValueService.createInBlockchain({
+          value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
+          contractAttributeId: contractAttributeRecord.id
+        })
+      } else {
+        data.value = contractAttribute.value
+        if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
+          throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
+        }
+        await this.createInBlockchain(data)
+      }
+      index++
+    }
+  }
+
+  async findAllByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
     const contractAttributes = await this.prismaService.client.contractAttribute
       .findMany({
         where: { contractId },
@@ -150,7 +187,8 @@ export class ContractAttributesService {
     const contractAttributes = await Promise.all(
       templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
-          where: { id: item }
+          where: { id: item },
+          include: { ContractAttributeValue: true }
         })
         return contractAttribute
       })
