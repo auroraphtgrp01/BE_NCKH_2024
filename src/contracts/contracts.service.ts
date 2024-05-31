@@ -12,7 +12,14 @@ import { TemplateContractsService } from 'src/template-contracts/template-contra
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
 import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
-import { EContractType, ERoleParticipant, ERoles, ETypeContractAttribute, EVoting } from 'src/constants/enum.constant'
+import {
+  EContractType,
+  ERoleParticipant,
+  ERoles,
+  EStageStatus,
+  ETypeContractAttribute,
+  EVoting
+} from 'src/constants/enum.constant'
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
@@ -170,6 +177,21 @@ export class ContractsService {
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
     const participants = await this.participantService.findAllByContractId(contractId, user)
+    const isReceiver = participants.find((item: any) => item.role === ERoleParticipant.RECEIVER)
+    if (isReceiver) {
+      isReceiver.completedStages.map((stage: any) => {
+        const now = new Date()
+        const sub = Math.floor((now.getTime() - new Date(stage.createdAt).getTime()) / 60000)
+        if (sub > 120)
+          this.participantService.update(
+            {
+              id: isReceiver.id,
+              stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE }
+            },
+            user
+          )
+      })
+    }
 
     return { contract, contractAttributes, participants }
   }

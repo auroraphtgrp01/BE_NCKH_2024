@@ -22,7 +22,6 @@ import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue
 import { ERoleParticipant, EStageStatus } from 'src/constants/enum.constant'
 import { IStageContract } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
-import dayjs from 'dayjs'
 
 @Injectable()
 export class ParticipantsService {
