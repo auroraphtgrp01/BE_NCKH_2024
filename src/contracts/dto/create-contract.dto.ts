@@ -115,11 +115,11 @@ export class CreateContractDto {
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   readonly name: string
 
+  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => InvitationsDto)
-  readonly invitation: InvitationsDto[]
+  readonly invitation?: InvitationsDto[]
 
   @IsOptional()
   @IsString()
