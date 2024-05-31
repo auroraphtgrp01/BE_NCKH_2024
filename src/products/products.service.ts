@@ -6,6 +6,7 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
+import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 @Injectable()
 export class ProductsService {
@@ -14,17 +15,40 @@ export class ProductsService {
     private readonly suppliersService: SuppliersService
   ) {}
   async create(createProductDto: CreateProductDto, user: IUser) {
-    if (!(await this.suppliersService.findOneByid(createProductDto.supplierId)))
+    if (!(await this.suppliersService.findOneById(createProductDto.supplierId)))
       throw new NotFoundException('Supplier not found')
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const { supplierId, ...rest } = createProductDto
     return await this.prismaService.client.products.create({
-      data: { ...rest, Suppliers: { connect: { id: supplierId } }, createdBy }
+      data: { ...rest, Supplier: { connect: { id: supplierId } }, createdBy }
     })
   }
 
   findAll() {
     return `This action returns all products`
+  }
+
+  async findAllBySupplierId(supplierId: string) {
+    if (!(await this.suppliersService.findOneById(supplierId)))
+      throw new NotFoundException(RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND)
+
+    const products = []
+    const procs = await this.prismaService.client.products.findMany({
+      where: { supplierId }
+    })
+
+    for (const product of procs) {
+      const images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
+      products.push({ ...product, images })
+    }
+
+    return products
+  }
+
+  async findOneById(id: string) {
+    const product: any = await this.prismaService.client.products.findUnique({ where: { id } })
+    product.images = await this.prismaService.client.images.findMany({ where: { productsId: product.id } })
+    return product
   }
 
   findOne(id: number) {

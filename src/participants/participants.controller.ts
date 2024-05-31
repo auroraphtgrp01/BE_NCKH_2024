@@ -22,7 +22,7 @@ export class ParticipantsController {
 
   @Get('/find-all/:contractId')
   async findAll(@Param('contractId') contractId: string) {
-    return await this.participantsService.findAll(contractId)
+    return await this.participantsService.findAllByContractId(contractId)
   }
 
   @Get('/find-one/:email/:contractId')

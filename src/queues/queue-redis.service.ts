@@ -7,7 +7,8 @@ import { IStage, IStageDeploy } from 'src/interfaces/smart-contract.interface'
 export class QueueRedisService {
   constructor(
     @InjectQueue('deployContract') private readonly deployContractQueue: Queue,
-    @InjectQueue('sendInvitation') private readonly sendInvitationQueue: Queue
+    @InjectQueue('sendInvitation') private readonly sendInvitationQueue: Queue,
+    @InjectQueue('sendRequestSurvey') private readonly sendRequestSurveyQueue: Queue
   ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
@@ -17,12 +18,14 @@ export class QueueRedisService {
   enqueueSendInvitation(job: IQueuePayloadSendInvitation) {
     this.sendInvitationQueue.add('sendInvitation', job)
   }
+
+  enqueueSendRequestSurvey(job: IQueuePayloadSendRequestSurvey) {
+    this.sendRequestSurveyQueue.add('sendRequestSurvey', job)
+  }
 }
 
 export interface IQueuePayloadDeployContract {
   contractId: string
-  _keys: string[]
-  _values: string[]
   _supplier: string
   _users: string[]
   _total: number
@@ -38,4 +41,14 @@ export interface IQueuePayloadSendInvitation {
   messages: string
   link: string
   idParticipant: string
+}
+
+export interface IQueuePayloadSendRequestSurvey {
+  to: string
+  from: string
+  receiver: string
+  surveyCode: string
+  addressWalletSender: string
+  messages: string
+  link: string
 }

@@ -1,8 +1,37 @@
 import { Type } from 'class-transformer'
-import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateIf } from 'class-validator'
+import {
+  ArrayMinSize,
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  ValidateIf,
+  ValidateNested
+} from 'class-validator'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 
 export class CreateContractAttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  type: string
+
+  @IsString()
+  @IsNotEmpty()
+  value: string
+
+  @ValidateIf((object) => object.templateContractId === undefined)
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  contractId?: string
+
+  @IsOptional()
+  index?: number
+}
+
+export class ContractAttributesDto {
   @IsString()
   @IsNotEmpty()
   readonly type: string
@@ -11,12 +40,30 @@ export class CreateContractAttributeDto {
   @IsNotEmpty()
   readonly value: string
 
-  @ValidateIf((object) => object.templateContractId === undefined)
+  @ValidateIf(
+    (object) =>
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+      object.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+      object.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+      object.type === ETypeContractAttribute.TOTAL_AMOUNT
+  )
+  @IsString()
+  @IsNotEmpty()
+  readonly property?: string
+}
+
+export class CreateContractAttributesDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsUUID()
   readonly contractId?: string
 
-  @IsOptional()
-  index?: number
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => ContractAttributesDto)
+  contractAttributes: ContractAttributesDto[]
 }

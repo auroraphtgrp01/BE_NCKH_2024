@@ -19,9 +19,14 @@ export class ProductsController {
     return this.productsService.findAll()
   }
 
+  @Get('find-all-by-supplier/:supplierId')
+  findAllBySupplierId(@Param('supplierId') supplierId: string) {
+    return this.productsService.findAllBySupplierId(supplierId)
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id)
+    return this.productsService.findOneById(id)
   }
 
   @Patch(':id')

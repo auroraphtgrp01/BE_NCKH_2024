@@ -82,7 +82,7 @@ CREATE TABLE "Contract" (
 CREATE TABLE "TemplateContract" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
-    "path" TEXT NOT NULL,
+    "path" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "createdBy" JSONB,

@@ -30,6 +30,17 @@ export class ContractAttributeValuesService {
     return contractAttributeValue
   }
 
+  async createInBlockchain(createContractAttributeValueDto: CreateContractAttributeValueDto) {
+    const { contractAttributeId, value } = createContractAttributeValueDto
+    const contractAttributeValue = await this.prismaService.client.contractAttributeValueInBlockchain.create({
+      data: {
+        value,
+        ContractAttribute: { connect: { id: contractAttributeId } }
+      }
+    })
+    return contractAttributeValue
+  }
+
   findAll() {
     return `This action returns all contractAttributeValues`
   }

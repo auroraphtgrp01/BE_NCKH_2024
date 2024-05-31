@@ -77,5 +77,11 @@ export const RESPONSE_MESSAGES = {
   PERCENT_NOT_EQUAL_100: 'Percent not equal 100',
   ORDER_IS_NOT_FOUND: 'Order is not found',
   TOTAL_IS_REQUIRED: "If you don't have an order, you need to pass in the value of the contract",
-  STAGE_IS_REQUIRED: 'Stage is required'
+  STAGE_IS_REQUIRED: 'Stage is required',
+  ONE_OF_THE_CONATRACT_ATTRIBUTES_DOES_NOT_EXIST: 'One of the contract attributes does not exist',
+  SUPPLIER_NOT_FOUND: 'Supplier not found',
+  PRODUCT_NOT_FOUND: 'Product not found',
+  ORDER_CODE_EXISTED: 'Order code existed',
+  EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: 'Excute date or end date is not provided',
+  SENDER_IS_NOT_FOUND: 'Sender is not found'
 }

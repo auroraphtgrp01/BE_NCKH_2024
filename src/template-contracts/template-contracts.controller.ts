@@ -15,8 +15,8 @@ export class TemplateContractsController {
   }
 
   @Get()
-  findAll() {
-    return this.templateContractsService.findAll()
+  async findAll() {
+    return await this.templateContractsService.findAll()
   }
 
   @Get(':id')

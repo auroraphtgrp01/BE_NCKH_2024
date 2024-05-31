@@ -9,6 +9,7 @@ import {
   IsString,
   IsUUID,
   MinLength,
+  Validate,
   ValidateNested
 } from 'class-validator'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
@@ -29,6 +30,12 @@ export class CreateParticipantDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+
+  @IsOptional()
+  userId?: string
+
+  @IsOptional()
+  status?: any
 }
 
 export class InvitationDto {
@@ -39,7 +46,6 @@ export class InvitationDto {
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
-  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
   readonly messages: string
 
   @IsObject()
@@ -47,9 +53,10 @@ export class InvitationDto {
 }
 
 export class SendInvitationsDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  contractName: string
+  contractName?: string
 
   @IsString()
   @IsNotEmpty()
