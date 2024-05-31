@@ -43,12 +43,4 @@ export class ContractAttributesController {
   remove(@Param('id') id: string) {
     return this.contractAttributesService.remove(+id)
   }
-
-  @Post('/create-contract-attributes')
-  createContractAttributesInBlockchain(
-    @Body() createContractAttributeDto: CreateContractAttributesDto,
-    @User() user: IUser
-  ) {
-    return this.contractAttributesService.createContractAttributesInBlockchain(createContractAttributeDto)
-  }
 }

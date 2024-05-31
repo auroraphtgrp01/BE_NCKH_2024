@@ -103,15 +103,6 @@ export class ContractAttributesService {
         contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         data.value = contractAttribute.property
-        const hasHeading = contractAttributeRecords.some(
-          (record) =>
-            record.type === ETypeContractAttribute.CONTRACT_HEADING_1 ||
-            record.type === ETypeContractAttribute.CONTRACT_HEADING_2
-        )
-        if (!hasHeading)
-          throw new BadRequestException(
-            `The content ${contractAttribute.property} cannot be found without a title. Please create a title before generating content!`
-          )
         const contractAttributeRecord = await this.create(data, user)
         const contractAttributeValueRecord = await this.contractAttributeValueService.create(
           {
