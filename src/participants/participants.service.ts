@@ -34,11 +34,11 @@ export class ParticipantsService {
   ) {}
   async create(createParticipantDto: CreateParticipantDto, user: IUser) {
     const { contractId, permission, email, userId, status } = createParticipantDto
-    const { role, ...restPermission } = permission
+    const { ROLES, ...restPermission } = permission
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const participantRecord = await this.prismaService.client.participant.create({
       data: {
-        role,
+        role: ROLES,
         email,
         permission: restPermission,
         Contract: { connect: { id: contractId } },
@@ -74,7 +74,7 @@ export class ParticipantsService {
             INVITE_PARTICIPANT: true,
             READ_CONTRACT: true,
             SET_OWNER_PARTY: true,
-            role: ERoleParticipant.SENDER
+            ROLES: ERoleParticipant.SENDER
           }
         },
         user

@@ -73,7 +73,7 @@ export class PermissionDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly role: string
+  readonly ROLES: string
 }
 
 export class GasPriceDto {
@@ -177,7 +177,7 @@ export class InvitationsDto {
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  readonly messages: string
+  readonly messages?: string
 
   @IsObject()
   @ValidateNested()

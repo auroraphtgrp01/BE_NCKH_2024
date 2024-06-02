@@ -82,7 +82,7 @@ export class ContractsService {
             INVITE_PARTICIPANT: true,
             READ_CONTRACT: true,
             SET_OWNER_PARTY: false,
-            role: ERoleParticipant.ARBITRATION
+            ROLES: ERoleParticipant.ARBITRATION
           }
         })
         votings.push({

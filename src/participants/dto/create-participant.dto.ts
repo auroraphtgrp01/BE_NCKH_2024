@@ -46,7 +46,7 @@ export class InvitationDto {
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
-  readonly messages: string
+  readonly messages?: string
 
   @IsObject()
   readonly permission: PermissionDto
