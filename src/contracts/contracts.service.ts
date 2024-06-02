@@ -158,7 +158,7 @@ export class ContractsService {
     const contracts = await Promise.all(
       participants.map(async (participant) => await this.findOneById(participant.contractId))
     )
-    return contracts
+    return { contracts }
   }
 
   findAll() {
@@ -243,7 +243,7 @@ export class ContractsService {
               user
             )
           } else {
-            const contractAttribute = await this.contractAttributesService.create(
+            await this.contractAttributesService.create(
               {
                 contractId: updateContractAttribute.id,
                 value: item.value,
@@ -280,7 +280,7 @@ export class ContractsService {
               user
             )
           } else {
-            const contractAttribute = await this.contractAttributesService.update(
+            await this.contractAttributesService.update(
               {
                 id: item.id,
                 value: item.value,

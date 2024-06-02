@@ -54,26 +54,32 @@ export class ParticipantsService {
 
   async sendInvitation(sendInvitationDto: SendInvitationsDto, user: IUser) {
     const participants: Participant[] = []
+    const hasSender = await this.prismaService.client.participant.findFirst({
+      where: { contractId: sendInvitationDto.contractId, role: ERoleParticipant.SENDER }
+    })
+    const invitationSender = sendInvitationDto.invitation.find((item: any) => item.permission.role === 'SENDER')
+    if (hasSender && invitationSender) {
+      const index = sendInvitationDto.invitation.findIndex((item: any) => item === invitationSender)
+      sendInvitationDto.invitation.splice(index, 1)
+    } else if (!hasSender && !invitationSender)
+      await this.create(
+        {
+          userId: user.id,
+          email: user.email,
+          contractId: sendInvitationDto.contractId,
+          status: ParticipantStatus.ACCEPTED,
+          permission: {
+            CHANGE_STATUS_CONTRACT: true,
+            EDIT_CONTRACT: true,
+            INVITE_PARTICIPANT: true,
+            READ_CONTRACT: true,
+            SET_OWNER_PARTY: true,
+            role: ERoleParticipant.SENDER
+          }
+        },
+        user
+      )
     sendInvitationDto.invitation.map(async (invitation: InvitationDto) => {
-      if (invitation.email === user.email) {
-        const participantRecord = await this.create(
-          {
-            userId: user.id,
-            email: user.email,
-            contractId: sendInvitationDto.contractId,
-            status: ParticipantStatus.ACCEPTED,
-            permission: {
-              CHANGE_STATUS_CONTRACT: true,
-              EDIT_CONTRACT: true,
-              INVITE_PARTICIPANT: true,
-              READ_CONTRACT: true,
-              SET_OWNER_PARTY: true,
-              role: ERoleParticipant.SENDER
-            }
-          },
-          user
-        )
-      }
       const participantRecord = await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
       participants.push(participantRecord)
       const payload: IQueuePayloadSendInvitation = {
