@@ -466,4 +466,15 @@ export class ContractsService {
    remove(id: number) {
       return `This action removes a #${id} contract`
    }
+
+   async compareAttribute(contractId: string): Promise<boolean> {
+      const inContract = await this.getContractDetailsById(contractId)
+      const inBlockChain = await thi
+
+      return true
+   }
+
+   async getContractDetailsInBlockchainById(contractId: string) {
+      const 
+   }
 }
