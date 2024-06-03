@@ -71,7 +71,6 @@ model Participant {
   contractId      String            @db.Uuid
   Contract        Contract          @relation(fields: [contractId], references: [id])
   status          ParticipantStatus @default(PENDING)
-  role            String?
   completedStages Json[]            @db.Json
   createdAt       DateTime?         @default(now())
   updatedAt       DateTime?         @updatedAt
