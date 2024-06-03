@@ -17,7 +17,7 @@ export interface IPermissionContract {
   INVITE_PARTICIPANT: boolean
   READ_CONTRACT: boolean
   SET_OWNER_PARTY: boolean
-  role: ERoleParticipant
+  ROLES: ERoleParticipant
 }
 
 export interface IStageContract {

@@ -63,7 +63,6 @@ export const RESPONSE_MESSAGES = {
   CONTRACT_ATTRIBUTE_NOT_FOUND: 'Contract attribute not found',
   CONTRACT_NOT_FOUND: 'Contract not found',
   THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED: 'The contract or contract template is undefined',
-  CONTRACT_ATTRIBUTE_DUPLICATE: 'The titles duplicate',
   INVITATION_NOT_FOUND: 'Invitation not found',
   PARTICIPANT_STATUS_INVALID: 'Participant status invalid',
   USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH: 'User email and invited email do not match',

@@ -82,7 +82,7 @@ export class ContractsService {
             INVITE_PARTICIPANT: true,
             READ_CONTRACT: true,
             SET_OWNER_PARTY: false,
-            role: ERoleParticipant.ARBITRATION
+            ROLES: ERoleParticipant.ARBITRATION
           }
         })
         votings.push({
@@ -104,6 +104,8 @@ export class ContractsService {
   }
 
   async create(createContractDto: CreateContractDto, user: IUser) {
+    console.log()
+
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
     const { invitation, templateId, orderId, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
@@ -158,7 +160,7 @@ export class ContractsService {
     const contracts = await Promise.all(
       participants.map(async (participant) => await this.findOneById(participant.contractId))
     )
-    return contracts
+    return { contracts }
   }
 
   findAll() {
@@ -243,7 +245,7 @@ export class ContractsService {
               user
             )
           } else {
-            const contractAttribute = await this.contractAttributesService.create(
+            await this.contractAttributesService.create(
               {
                 contractId: updateContractAttribute.id,
                 value: item.value,
@@ -280,7 +282,7 @@ export class ContractsService {
               user
             )
           } else {
-            const contractAttribute = await this.contractAttributesService.update(
+            await this.contractAttributesService.update(
               {
                 id: item.id,
                 value: item.value,
@@ -446,7 +448,9 @@ export class ContractsService {
         await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
       }),
       contractTypeAttributes.map(async (item) => {
-        await this.prismaService.client.contractAttributeValue.deleteMany({ where: { contractAttributeId: item.id } })
+        await this.prismaService.client.contractAttributeValue.deleteMany({
+          where: { contractAttributeId: item.id }
+        })
         await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
       })
     ])
@@ -455,4 +459,15 @@ export class ContractsService {
   remove(id: number) {
     return `This action removes a #${id} contract`
   }
+
+  // async compareAttribute(contractId: string): Promise<boolean> {
+  //    const inContract = await this.getContractDetailsById(contractId)
+  //    const inBlockChain = await thi
+
+  //    return true
+  // }
+
+  // async getContractDetailsInBlockchainById(contractId: string) {
+  //    const
+  // }
 }

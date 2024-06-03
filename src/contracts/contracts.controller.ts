@@ -57,4 +57,9 @@ export class ContractsController {
   async handleDeploy(@Body('contractId') contractId: string) {
     return await this.contractsService.handleDeployContract(contractId)
   }
+
+  // @Get('/compare-attribute')
+  // async compareAttribute(contractId: string) {
+  //    return await this.contractsService.compareAttribute(contractId)
+  // }
 }
