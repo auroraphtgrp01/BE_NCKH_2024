@@ -7,7 +7,7 @@ export interface IUpdateParticipant {
 
 export interface ICreateInvitation {
   email: string
-  messages: string
+  messages?: string
   permission: IPermissionContract
 }
 

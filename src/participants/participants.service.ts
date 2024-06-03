@@ -61,27 +61,7 @@ export class ParticipantsService {
     })
 
     const invitationSender = sendInvitationDto.invitation.find((item: any) => item.permission.ROLES === 'SENDER')
-    if (hasSender && invitationSender) {
-      const index = sendInvitationDto.invitation.findIndex((item: any) => item === invitationSender)
-      sendInvitationDto.invitation.splice(index, 1)
-    } else if (!hasSender && !invitationSender)
-      await this.create(
-        {
-          userId: user.id,
-          email: user.email,
-          contractId: sendInvitationDto.contractId,
-          status: ParticipantStatus.ACCEPTED,
-          permission: {
-            CHANGE_STATUS_CONTRACT: true,
-            EDIT_CONTRACT: true,
-            INVITE_PARTICIPANT: true,
-            READ_CONTRACT: true,
-            SET_OWNER_PARTY: true,
-            ROLES: ERoleParticipant.SENDER
-          }
-        },
-        user
-      )
+    if (hasSender && invitationSender) throw new BadRequestException({ message: RESPONSE_MESSAGES.SENDER_IS_EXIST })
     sendInvitationDto.invitation.map(async (invitation: InvitationDto) => {
       const participantRecord = await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
       participants.push(participantRecord)
@@ -103,7 +83,10 @@ export class ParticipantsService {
   }
 
   async findAllByUserId(userId: string) {
-    const participants = await this.prismaService.client.participant.findMany({ where: { userId } })
+    const participants = await this.prismaService.client.participant.findMany({
+      where: { userId },
+      include: { User: true }
+    })
     return participants
   }
 

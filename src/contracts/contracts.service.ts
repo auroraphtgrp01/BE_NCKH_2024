@@ -2,7 +2,15 @@ import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/commo
 import { CreateContractDto, CreateDisputeContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
-import { Contract, ContractAttribute, Participant, Suppliers, User, contractStatus } from '@prisma/client'
+import {
+  Contract,
+  ContractAttribute,
+  Participant,
+  ParticipantStatus,
+  Suppliers,
+  User,
+  contractStatus
+} from '@prisma/client'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { UpdateContractAttributeDto, UpdateContractDto } from './dto/update-contract.dto'
 
@@ -106,18 +114,31 @@ export class ContractsService {
   }
 
   async create(createContractDto: CreateContractDto, user: IUser) {
-    console.log()
-
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, orderId, ...contractData } = createContractDto
+    const { invitation, templateId, orderId, rolesOfCreator, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
-    if (invitation && invitation.length > 0)
+    if (invitation && invitation.length > 0) {
+      invitation.push({
+        email: user.email,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: true,
+          ROLES: rolesOfCreator
+        },
+        messages: invitation[0].messages ? invitation[0].messages : '',
+        userId: user.id,
+        status: ParticipantStatus.ACCEPTED
+      })
       await this.participantService.sendInvitation(
         { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
         user
       )
+    }
     contractResponse.contract = contractRecord
     if (templateId) {
       if (!(await this.templateContractsService.findOneById(templateId)))
@@ -162,7 +183,7 @@ export class ContractsService {
     const contracts = await Promise.all(
       participants.map(async (participant) => await this.findOneById(participant.contractId))
     )
-    return { contracts }
+    return { contracts, participants }
   }
 
   findAll() {

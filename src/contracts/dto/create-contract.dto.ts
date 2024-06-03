@@ -1,3 +1,4 @@
+import { ParticipantStatus } from '@prisma/client'
 import { Transform, Type } from 'class-transformer'
 import {
   ArrayMinSize,
@@ -138,6 +139,8 @@ export class CreateContractDto {
   @IsNotEmpty()
   @IsUUID()
   readonly orderId?: string
+
+  readonly rolesOfCreator: ERoleParticipant
 }
 
 export class DataUpdateContractAttributeDto {
@@ -183,6 +186,17 @@ export class InvitationsDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: ParticipantStatus
 }
 
 export class CreateDisputeContractDto {
