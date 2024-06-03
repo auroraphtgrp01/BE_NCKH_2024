@@ -28,4 +28,5 @@ export interface IStageContract {
   description?: string
   status: EStageStatus
   createdAt: Date
+  stageContractId: string
 }

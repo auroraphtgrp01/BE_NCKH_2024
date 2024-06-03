@@ -10,6 +10,7 @@ export interface IGasPrice {
 }
 
 export interface IStage {
+  id: string
   deliveryAt: Date
   percent: number
   description?: string

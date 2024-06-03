@@ -134,7 +134,6 @@ export class ParticipantsService {
 
   async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
     const { id, userId, stage, ...rest } = updateParticipantDto
-
     const find =
       id && !userId
         ? await this.findOneById(id)
@@ -152,7 +151,8 @@ export class ParticipantsService {
             requestTo: checkStage.requestTo,
             createdAt: checkStage.createdAt,
             status: stage.status ? (stage.status as EStageStatus) : checkStage.status,
-            description: stage.description
+            description: stage.description,
+            stageContractId: checkStage.stageContractId
           }
           stageUpdate = stageUpdate.map((item) => (item.id === stage.id ? newStage : item))
         }
@@ -161,9 +161,7 @@ export class ParticipantsService {
           where: { contractId: find.contractId }
         })
 
-        const sender = findParticipants.find((item: any) => {
-          item.permission.ROLES === ERoleParticipant.SENDER
-        })
+        const sender = findParticipants.find((item: any) => item.permission.ROLES === ERoleParticipant.SENDER)
         if (!sender) throw new NotFoundException({ message: RESPONSE_MESSAGES.SENDER_IS_NOT_FOUND })
         const newStage: IStageContract = {
           percent: stage.percent,
@@ -171,7 +169,8 @@ export class ParticipantsService {
           requestTo: sender.id,
           id: this.commonService.uuidv4(),
           createdAt: new Date(),
-          status: EStageStatus.PENDING
+          status: EStageStatus.PENDING,
+          stageContractId: stage.stageContractId
         }
         stageUpdate.push(newStage)
       }

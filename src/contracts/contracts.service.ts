@@ -27,6 +27,7 @@ import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.in
 import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
 import { ICreateInvitation } from 'src/interfaces/participant.interface'
+import { CommonService } from 'src/commons/common.service'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -38,7 +39,8 @@ export class ContractsService {
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
     private readonly suppliersService: SuppliersService,
-    private readonly participantsService: ParticipantsService
+    private readonly participantsService: ParticipantsService,
+    private readonly commonService: CommonService
   ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type } = contractData
@@ -200,12 +202,27 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    if (!(await this.findOneById(updateContractDto.id)))
-      throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const { stage, stages, ...rest } = updateContractDto
+    const find = await this.findOneById(updateContractDto.id)
+    if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const newStages = []
+    if (stages && !stage)
+      stages.map((item: any) => {
+        newStages.push({ ...item, id: this.commonService.uuidv4() })
+      })
+    else if (!stages && stage)
+      find.stages.map((item: any) => {
+        if (item.id === stage.id) newStages.push(stage)
+        else newStages.push(item)
+      })
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract = await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
-      data: { ...(updateContractDto as any), updatedBy }
+      data: {
+        ...(rest as any),
+        stages: stage || stages ? (stage && !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
+        updatedBy
+      }
     })
 
     return contract

@@ -58,6 +58,12 @@ export class StageDto {
   @IsString()
   @IsNotEmpty()
   description?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  stageContractId?: string
 }
 
 export class UpdateParticipantDto {

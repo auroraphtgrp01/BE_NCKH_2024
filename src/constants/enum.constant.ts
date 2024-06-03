@@ -57,8 +57,8 @@ export enum EStageContractStatus {
 }
 
 export enum ERoleParticipant {
-  SENDER = 'SENDER',
-  RECEIVER = 'RECEIVER',
-  PARTICIPANT = 'PARTICIPANT',
-  ARBITRATION = 'ARBITRATION'
+  SENDER = 'Sender Users',
+  RECEIVER = 'Receiver Users',
+  ARBITRATION = 'Arbitration',
+  PARTICIPANT = 'Participant'
 }

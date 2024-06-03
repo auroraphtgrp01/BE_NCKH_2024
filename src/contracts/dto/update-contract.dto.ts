@@ -24,6 +24,12 @@ import { contractStatus } from '@prisma/client'
 import { EStageContractStatus } from 'src/constants/enum.constant'
 
 export class StageDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id?: string
+
   @IsDateString()
   @IsNotEmpty()
   readonly deliveryAt: string
@@ -109,8 +115,12 @@ export class UpdateContractDto {
   readonly endDate?: Date
 
   @IsOptional()
+  @ValidateNested()
+  @Type(() => StageDto)
+  readonly stage?: StageDto
+
+  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => StageDto)
   readonly stages?: StageDto[]
