@@ -60,6 +60,6 @@ export class ContractsController {
 
   // @Get('/compare-attribute')
   // async compareAttribute(contractId: string) {
-  //    return await this.contractsService.compareAttribute(contractId)
+  //   return await this.contractsService.compareAttribute(contractId)
   // }
 }
