@@ -1,3 +1,4 @@
+import { ParticipantStatus } from '@prisma/client'
 import { ERoleParticipant } from 'src/constants/enum.constant'
 
 export interface IUpdateParticipant {
@@ -10,7 +11,6 @@ export interface ICreateInvitation {
   messages?: string
   permission: IPermissionContract
 }
-
 export interface IPermissionContract {
   CHANGE_STATUS_CONTRACT: boolean
   EDIT_CONTRACT: boolean
@@ -18,4 +18,12 @@ export interface IPermissionContract {
   READ_CONTRACT: boolean
   SET_OWNER_PARTY: boolean
   ROLES: ERoleParticipant
+}
+
+export interface ICreateParticipant {
+  email: string
+  permission: IPermissionContract
+  userId?: string
+  status?: ParticipantStatus
+  contractId: string
 }

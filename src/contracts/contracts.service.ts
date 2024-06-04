@@ -34,8 +34,9 @@ import { ContractAttributeValuesService } from 'src/contract-attribute-values/co
 import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
-import { ICreateInvitation } from 'src/interfaces/participant.interface'
+import { ICreateInvitation, ICreateParticipant } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
+
 @Injectable()
 export class ContractsService {
   constructor(
@@ -49,6 +50,7 @@ export class ContractsService {
     private readonly participantsService: ParticipantsService,
     private readonly commonService: CommonService
   ) {}
+
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -69,47 +71,119 @@ export class ContractsService {
 
   async createDisptuteContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
     const { totalAmount, customer, supplier, ...rest } = createDisputeContractDto
-    const economicArbitrations = await this.prismaService.client.user.findMany({
-      where: { role: ERoles.ARBITRATION }
-    })
-    const invitation: ICreateInvitation[] = []
-    const votings: IVoting[] = []
+    const userSender: User = await this.usersService.findOneByAddressWallet(customer)
+    const userReceiver: User = await this.usersService.findOneByAddressWallet(supplier)
 
     const contract = await this.createEmptyContract(
       { ...rest, name: 'HỢP ĐỒNG TRANH CHẤP', type: EContractType.DISPUTE },
       user
     )
 
-    await Promise.all(
-      economicArbitrations.map((economicArbitration) => {
-        invitation.push({
-          email: economicArbitration.email,
-          messages: 'An invitation to become an economic arbitrator of a disputed contract',
-          permission: {
-            CHANGE_STATUS_CONTRACT: false,
-            EDIT_CONTRACT: false,
-            INVITE_PARTICIPANT: true,
-            READ_CONTRACT: true,
-            SET_OWNER_PARTY: false,
-            ROLES: ERoleParticipant.ARBITRATION
+    const { contractAttributes } = await this.templateContractsService.findOneById(
+      'c77f564a-d4b7-47f0-9039-e17676d61d1b'
+    )
+
+    const sorted = contractAttributes.sort((a, b) => a.index - b.index)
+    const resContractAttributes: any[] = []
+    const isInfoParty = { index: -1, role: '' }
+    sorted.forEach((contractAttribute: any, index: number) => {
+      if (
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+      ) {
+        if (isInfoParty.index !== -1) {
+          switch (index) {
+            case isInfoParty.index + 1:
+              resContractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? userSender.name : userReceiver.name,
+                type: contractAttribute.type
+              })
+              break
+            case isInfoParty.index + 2:
+              resContractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? userSender.phoneNumber : userReceiver.phoneNumber,
+                type: contractAttribute.type
+              })
+              break
+            default:
+              resContractAttributes.push({
+                property: contractAttribute.value,
+                value: isInfoParty.role === 'Customer' ? userSender.addressWallet : userReceiver.addressWallet,
+                type: contractAttribute.type
+              })
+              isInfoParty.index = -1
+              isInfoParty.role = ''
+              break
           }
+        } else
+          resContractAttributes.push({
+            property: contractAttribute.value,
+            value: contractAttribute.ContractAttributeValue.value,
+            type: contractAttribute.type
+          })
+      } else {
+        if (contractAttribute.value === 'BÊN A') {
+          isInfoParty.index = index
+          isInfoParty.role = 'Customer'
+        } else if (contractAttribute.value === 'BÊN B') {
+          isInfoParty.index = index
+          isInfoParty.role = 'Supplier'
+        }
+        resContractAttributes.push({
+          value: contractAttribute.value,
+          type: contractAttribute.type
         })
-        votings.push({
-          userId: economicArbitration.id,
-          contractId: contract.id,
-          vote: EVoting.PENDING
-        })
+      }
+    })
+
+    const participantCreates: ICreateParticipant[] = [
+      {
+        email: userSender.email,
+        contractId: contract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: ERoleParticipant.SENDER
+        },
+        userId: userSender.id,
+        status: ParticipantStatus.ACCEPTED
+      },
+      {
+        email: userReceiver.email,
+        contractId: contract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: ERoleParticipant.RECEIVER
+        },
+        userId: userReceiver.id,
+        status: ParticipantStatus.ACCEPTED
+      }
+    ]
+
+    const [contractAttributeRecords, participants] = await Promise.all([
+      this.contractAttributesService.createContractAttributes(
+        { contractAttributes: resContractAttributes, contractId: contract.id },
+        user
+      ),
+      participantCreates.map(async (item: any) => {
+        return await this.participantsService.create(item, user)
       })
-    )
+    ])
 
-    const result = await this.update({ id: contract.id, votings }, user)
-
-    await this.participantsService.sendInvitation(
-      { invitation, contractName: contract.contractTitle, contractId: contract.id },
-      user
-    )
-
-    return result
+    return { contract, participants, contractAttributes: contractAttributeRecords }
   }
 
   async create(createContractDto: CreateContractDto, user: IUser) {
@@ -386,17 +460,24 @@ export class ContractsService {
     templateContractId: string,
     isCreateAttributeValue: boolean,
     user: IUser,
+    isDisputeContract?: boolean,
     _user?: User,
     supplier?: Suppliers & { User: User }
   ): Promise<IContractAttributeResponse[]> {
-    const template = await this.templateContractsService.findOneById(templateContractId)
-    if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+    const { templateContract } = await this.templateContractsService.findOneById(templateContractId)
+    if (!templateContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
     const getAllContractAttributes: ContractAttribute[] = await Promise.all(
-      template.contractAttributes.map(async (element) => {
+      templateContract.contractAttributes.map(async (element) => {
         return await this.prismaService.client.contractAttribute.findUnique({
           where: { id: element },
           include: { ContractAttributeValue: true }
         })
+      })
+    )
+
+    await Promise.all(
+      getAllContractAttributes.map((item: any) => {
+        console.log(item.id, '>>', item.index)
       })
     )
     const allContractAttributes: any = getAllContractAttributes.sort((a, b) => a.index - b.index)
@@ -404,95 +485,148 @@ export class ContractsService {
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
 
-    allContractAttributes.forEach((contractAttribute: any, index: number) => {
-      if (
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
-        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
-        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
-      ) {
-        if (isInfoParty.index !== -1) {
-          switch (index) {
-            case isInfoParty.index + 1:
-              contractAttributes.push({
-                property: contractAttribute.value,
-                value: _user && supplier ? (isInfoParty.role === 'Customer' ? 'Empty' : supplier.name) : 'Empty',
-                type: contractAttribute.type
-              })
-              break
-            case isInfoParty.index + 2:
-              contractAttributes.push({
-                property: contractAttribute.value,
-                value:
-                  _user && supplier ? (isInfoParty.role === 'Customer' ? _user.name : supplier.User.name) : 'Empty',
-                type: contractAttribute.type
-              })
-              break
-            case isInfoParty.index + 3:
-              contractAttributes.push({
-                property: contractAttribute.value,
-                value:
-                  _user && supplier
-                    ? isInfoParty.role === 'Customer'
-                      ? _user.address
-                        ? _user.address
-                        : 'Empty'
-                      : supplier.address
-                    : 'Empty',
-                type: contractAttribute.type
-              })
-              break
-            default:
-              contractAttributes.push({
-                property: contractAttribute.value,
-                value:
-                  _user || supplier
-                    ? isInfoParty.role === 'Customer'
-                      ? _user.phoneNumber
-                      : supplier.User.phoneNumber
-                    : 'Empty',
-                type: contractAttribute.type
-              })
-              isInfoParty.index = -1
-              isInfoParty.role = ''
-              break
-          }
-        } else {
-          if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND)
-            contractAttributes.push({
-              property: contractAttribute.value,
-              value: _user ? _user.addressWallet : 'Empty',
-              type: contractAttribute.type
-            })
-          else if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE)
-            contractAttributes.push({
-              property: contractAttribute.value,
-              value: supplier ? supplier.User.addressWallet : 'Empty',
-              type: contractAttribute.type
-            })
-          else
-            contractAttributes.push({
-              property: contractAttribute.value,
-              value: isCreateAttributeValue === true ? contractAttribute.ContractAttributeValue.value : 'Empty',
-              type: contractAttribute.type
-            })
-        }
-      } else {
-        if (contractAttribute.value === 'Bên A') {
-          isInfoParty.index = index
-          isInfoParty.role = 'Customer'
-        } else if (contractAttribute.value === 'Bên B') {
-          isInfoParty.index = index
-          isInfoParty.role = 'Supplier'
-        }
-        contractAttributes.push({
-          value: contractAttribute.value,
-          type: contractAttribute.type
-        })
-      }
-    })
+    // allContractAttributes.forEach((contractAttribute: any, index: number) => {
+    //   if (
+    //     contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+    //     contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+    //     contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+    //     contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+    //     contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+    //     contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+    //   ) {
+    //     if (isInfoParty.index !== -1) {
+    //       switch (index) {
+    //         case isInfoParty.index + 1: // Ten cong ty
+    //           if (isDisputeContract) break
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value: _user && supplier ? (isInfoParty.role === 'Customer' ? 'Empty' : supplier.name) : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           break
+    //         case isInfoParty.index + 2: // Ho va ten
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier
+    //                 ? isInfoParty.role === 'Customer'
+    //                   ? _user.name
+    //                   : isDisputeContract === true
+    //                   ? supplier.name
+    //                   : (supplier as Suppliers & { User: User }).User.name
+    //                 : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           break
+    //         case isInfoParty.index + 3: // Dia chi
+    //           if (isDisputeContract) break
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier ? (isInfoParty.role === 'Customer' ? _user.address : supplier.address) : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           break
+    //         case isInfoParty.index + 4: // SDT
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier
+    //                 ? isInfoParty.role === 'Customer'
+    //                   ? _user.phoneNumber
+    //                   : isDisputeContract === true
+    //                   ? supplier.phoneNumber
+    //                   : (supplier as Suppliers & { User: User }).User.phoneNumber
+    //                 : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           isInfoParty.index = -1
+    //           isInfoParty.role = ''
+    //           break
+    //         case isInfoParty.index + 5: // Email
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier
+    //                 ? isInfoParty.role === 'Customer'
+    //                   ? _user.email
+    //                   : isDisputeContract === true
+    //                   ? supplier.email
+    //                   : (supplier as Suppliers & { User: User }).User.email
+    //                 : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           isInfoParty.index = -1
+    //           isInfoParty.role = ''
+    //           break
+    //         case isInfoParty.index + 6: // Ma so thue
+    //           if (isDisputeContract) break
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier
+    //                 ? isInfoParty.role === 'Customer'
+    //                   ? 'Empty'
+    //                   : (supplier as Suppliers & { User: User }).taxCode
+    //                 : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           isInfoParty.index = -1
+    //           isInfoParty.role = ''
+    //           break
+    //         default:
+    //           contractAttributes.push({
+    //             property: contractAttribute.value,
+    //             value:
+    //               _user && supplier
+    //                 ? isInfoParty.role === 'Customer'
+    //                   ? _user.addressWallet
+    //                   : isDisputeContract === true
+    //                   ? (supplier as User).addressWallet
+    //                   : (supplier as Suppliers & { User: User }).User.addressWallet
+    //                 : 'Empty',
+    //             type: contractAttribute.type
+    //           })
+    //           isInfoParty.index = -1
+    //           isInfoParty.role = ''
+    //           break
+    //       }
+    //     } else {
+    //       if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND)
+    //         contractAttributes.push({
+    //           property: contractAttribute.value,
+    //           value: _user ? _user.addressWallet : 'Empty',
+    //           type: contractAttribute.type
+    //         })
+    //       else if (contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE)
+    //         contractAttributes.push({
+    //           property: contractAttribute.value,
+    //           value: supplier
+    //             ? (supplier as User).addressWallet ?? (supplier as Suppliers & { User: User }).User.addressWallet
+    //             : 'Empty',
+    //           type: contractAttribute.type
+    //         })
+    //       else
+    //         contractAttributes.push({
+    //           property: contractAttribute.value,
+    //           value: isCreateAttributeValue === true ? contractAttribute.ContractAttributeValue.value : 'Empty',
+    //           type: contractAttribute.type
+    //         })
+    //     }
+    //   } else {
+    //     if (contractAttribute.value === 'BÊN A') {
+    //       isInfoParty.index = index
+    //       isInfoParty.role = 'Customer'
+    //     } else if (contractAttribute.value === 'BÊN B') {
+    //       isInfoParty.index = index
+    //       isInfoParty.role = 'Supplier'
+    //     }
+    //     contractAttributes.push({
+    //       value: contractAttribute.value,
+    //       type: contractAttribute.type
+    //     })
+    //   }
+    // })
 
     const [contractAttributeRecords] = await Promise.all([
       this.contractAttributesService.createContractAttributes({ contractAttributes, contractId: contractId }, user)

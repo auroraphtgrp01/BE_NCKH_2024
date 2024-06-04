@@ -207,7 +207,6 @@ export class InvitationsDto {
 
 export class CreateDisputeContractDto {
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   readonly addressWallet: string
 
   @IsNumber()
@@ -215,11 +214,11 @@ export class CreateDisputeContractDto {
   readonly totalAmount: number
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly customer: string
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly supplier: string
 
   @IsString()
