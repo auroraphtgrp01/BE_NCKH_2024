@@ -140,7 +140,13 @@ export class CreateContractDto {
   @IsUUID()
   readonly orderId?: string
 
+  @IsString()
+  @IsNotEmpty()
   readonly rolesOfCreator: ERoleParticipant
+
+  @ValidateIf((object: any) => object.templateId !== undefined)
+  @IsBoolean()
+  readonly isCreateAttributeValue?: boolean
 }
 
 export class DataUpdateContractAttributeDto {

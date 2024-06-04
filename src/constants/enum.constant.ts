@@ -44,15 +44,8 @@ export enum EStageStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
-  OUT_OF_DATE = 'OUT_OF_DATE',
-  WITHDRAWN = 'WITHDRAWN'
-}
-
-export enum EStageContractStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
   ENFORCE = 'ENFORCE',
+  OUT_OF_DATE = 'OUT_OF_DATE',
   WITHDRAWN = 'WITHDRAWN'
 }
 

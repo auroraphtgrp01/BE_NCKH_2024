@@ -1,6 +1,6 @@
 import { Contract } from '@prisma/client'
 import { IContractAttributeResponse } from './contract-attribute.interface'
-import { EStageContractStatus, EStageStatus, EVoting } from 'src/constants/enum.constant'
+import { EStageStatus, EVoting } from 'src/constants/enum.constant'
 
 export interface IGasPrice {
   addressWallet: string
@@ -11,10 +11,13 @@ export interface IGasPrice {
 
 export interface IStage {
   id: string
-  deliveryAt: Date
   percent: number
+  requestBy: string
+  requestTo: string
   description?: string
-  status: EStageContractStatus
+  status: EStageStatus
+  createdAt: Date
+  deliveryAt: Date
 }
 
 export interface IContractAttributeValueResponse {

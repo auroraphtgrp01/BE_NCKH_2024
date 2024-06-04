@@ -40,7 +40,6 @@ import { CommonService } from 'src/commons/common.service'
 export class ContractsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    @Inject(forwardRef(() => ParticipantsService)) private readonly participantService: ParticipantsService,
     private readonly templateContractsService: TemplateContractsService,
     private readonly usersService: UsersService,
     @Inject(forwardRef(() => ContractAttributesService))
@@ -105,7 +104,7 @@ export class ContractsService {
 
     const result = await this.update({ id: contract.id, votings }, user)
 
-    await this.participantService.sendInvitation(
+    await this.participantsService.sendInvitation(
       { invitation, contractName: contract.contractTitle, contractId: contract.id },
       user
     )
@@ -134,7 +133,7 @@ export class ContractsService {
         userId: user.id,
         status: ParticipantStatus.ACCEPTED
       })
-      await this.participantService.sendInvitation(
+      await this.participantsService.sendInvitation(
         { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
         user
       )
@@ -146,6 +145,7 @@ export class ContractsService {
       contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
         contractRecord.id,
         templateId,
+        createContractDto.isCreateAttributeValue,
         user
       )
       // if ((!userId && supplierId) || (userId && !supplierId))
@@ -180,9 +180,34 @@ export class ContractsService {
 
   async getContractsByUserId(user: IUser) {
     const participants = await this.participantsService.findAllByUserId(user.id)
-    const contracts = await Promise.all(
+    let contracts: Contract[] = await Promise.all(
       participants.map(async (participant) => await this.findOneById(participant.contractId))
     )
+
+    contracts = (
+      await Promise.all(
+        contracts.map(async (contract: Contract) => {
+          const result: Contract[] = []
+          let updated = contract
+          await Promise.all(
+            contract.stages.map(async (stage: any) => {
+              const now = new Date().getTime()
+              const deliveryTime = new Date(stage.deliveryAt).getTime()
+              const sub = Math.floor((now - deliveryTime) / 60000)
+              if (sub > 60) {
+                updated = await this.update(
+                  { id: contract.id, stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE } },
+                  user
+                )
+              }
+            })
+          )
+          result.push(updated)
+          return result
+        })
+      )
+    ).flat()
+
     return { contracts, participants }
   }
 
@@ -202,22 +227,7 @@ export class ContractsService {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
-    const participants = await this.participantService.findAllByContractId(contractId, user)
-    const isReceiver = participants.find((item: any) => item.role === ERoleParticipant.RECEIVER)
-    if (isReceiver) {
-      isReceiver.completedStages.map((stage: any) => {
-        const now = new Date()
-        const sub = Math.floor((now.getTime() - new Date(stage.createdAt).getTime()) / 60000)
-        if (sub > 120)
-          this.participantService.update(
-            {
-              id: isReceiver.id,
-              stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE }
-            },
-            user
-          )
-      })
-    }
+    const participants = await this.participantsService.findAllByContractId(contractId, user)
 
     return { contract, contractAttributes, participants }
   }
@@ -226,14 +236,41 @@ export class ContractsService {
     const { stage, stages, ...rest } = updateContractDto
     const find = await this.findOneById(updateContractDto.id)
     if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    const newStages = []
-    if (stages && !stage)
+    const newStages: IStage[] = []
+
+    const participantOfcontract = await this.participantsService.findAllByContractId(updateContractDto.id)
+    if (stages && !stage) {
+      const sender = participantOfcontract.find(
+        (item: any) =>
+          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.SENDER
+      )
+      const receiver = participantOfcontract.find(
+        (item: any) =>
+          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.RECEIVER
+      )
+      if (!sender || sender.userId === null || sender.userId === '')
+        throw new NotFoundException({ message: 'The sender has not been invited or has not agreed to participate' })
+      if (!receiver || receiver.userId === null || receiver.userId === '')
+        throw new NotFoundException({ message: 'The receiver has not been invited or has not agreed to participate' })
       stages.map((item: any) => {
-        newStages.push({ ...item, id: this.commonService.uuidv4() })
+        newStages.push({
+          ...item,
+          id: this.commonService.uuidv4(),
+          requestBy: sender.User.addressWallet,
+          requestTo: receiver.User.addressWallet,
+          createdAt: new Date(),
+          status: EStageStatus.ENFORCE
+        })
       })
-    else if (!stages && stage)
+    } else if (!stages && stage)
       find.stages.map((item: any) => {
-        if (item.id === stage.id) newStages.push(stage)
+        if (item.id === stage.id)
+          newStages.push({
+            ...item,
+            description: stage.description ? stage.description : item.description,
+            status: stage.status ? stage.status : item.status,
+            percent: stage.percent ? stage.percent : item.percent
+          })
         else newStages.push(item)
       })
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -347,6 +384,7 @@ export class ContractsService {
   async createContractAttributesByTemplateId(
     contractId: string,
     templateContractId: string,
+    isCreateAttributeValue: boolean,
     user: IUser,
     _user?: User,
     supplier?: Suppliers & { User: User }
@@ -355,15 +393,18 @@ export class ContractsService {
     if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
     const getAllContractAttributes: ContractAttribute[] = await Promise.all(
       template.contractAttributes.map(async (element) => {
-        return await this.prismaService.client.contractAttribute.findUnique({ where: { id: element } })
+        return await this.prismaService.client.contractAttribute.findUnique({
+          where: { id: element },
+          include: { ContractAttributeValue: true }
+        })
       })
     )
-    const allContractAttributes: ContractAttribute[] = getAllContractAttributes.sort((a, b) => a.index - b.index)
+    const allContractAttributes: any = getAllContractAttributes.sort((a, b) => a.index - b.index)
 
     const contractAttributes: any[] = []
     const isInfoParty = { index: -1, role: '' }
 
-    allContractAttributes.forEach((contractAttribute, index) => {
+    allContractAttributes.forEach((contractAttribute: any, index: number) => {
       if (
         contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
         contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
@@ -434,7 +475,7 @@ export class ContractsService {
           else
             contractAttributes.push({
               property: contractAttribute.value,
-              value: 'Empty',
+              value: isCreateAttributeValue === true ? contractAttribute.ContractAttributeValue.value : 'Empty',
               type: contractAttribute.type
             })
         }

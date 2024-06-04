@@ -13,6 +13,7 @@ import {
   Length,
   MaxLength,
   MinDate,
+  ValidateIf,
   ValidateNested
 } from 'class-validator'
 import { Transform, Type } from 'class-transformer'
@@ -20,8 +21,7 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { GasPriceDto } from './create-contract.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
-import { contractStatus } from '@prisma/client'
-import { EStageContractStatus } from 'src/constants/enum.constant'
+import { EStageStatus } from 'src/constants/enum.constant'
 
 export class StageDto {
   @IsOptional()
@@ -30,18 +30,19 @@ export class StageDto {
   @IsUUID()
   readonly id?: string
 
-  @IsDateString()
-  @IsNotEmpty()
-  readonly deliveryAt: string
-
+  @IsOptional()
   @IsNumber()
-  readonly percent: number
+  readonly percent?: number
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   readonly description?: string
-  readonly status: EStageContractStatus
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: EStageStatus
 }
 
 export class CreateContractAttributeDto {
