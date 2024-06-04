@@ -104,6 +104,14 @@ export class CreateEmptyContractDto {
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   readonly name: string
+
+  @IsString()
+  @IsOptional()
+  readonly disputedContractId?: string
+
+  @IsString()
+  @IsOptional()
+  readonly status?: string
 }
 
 export class CreateContractDto {
@@ -215,14 +223,14 @@ export class CreateDisputeContractDto {
   readonly totalAmount: number
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly customer: string
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly supplier: string
 
   @IsString()
   @IsNotEmpty()
-  readonly contractAddress: string
+  readonly disputedContractId: string
 }

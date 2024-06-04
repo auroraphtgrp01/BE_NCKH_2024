@@ -49,7 +49,12 @@ export class TemplateContractsService {
 
   async findOneById(id: string) {
     const templateContract = await this.prismaService.client.templateContract.findUnique({ where: { id } })
-    return templateContract
+    const contractAttributes = await Promise.all(
+      templateContract.contractAttributes.map(async (contractAttributeId: string) => {
+        return await this.contractAttributesService.findOneById(contractAttributeId)
+      })
+    )
+    return { templateContract, contractAttributes }
   }
 
   async getTemplateContractAttributes(templateId: string) {

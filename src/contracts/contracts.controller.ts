@@ -15,7 +15,7 @@ export class ContractsController {
 
   @Post('dispute-contract')
   async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
-    return await this.contractsService.createDisptuteContract(createDisputeContractDto, user)
+    return await this.contractsService.createDisputeContract(createDisputeContractDto, user)
   }
 
   @Get('get-contract-details/:contractId')

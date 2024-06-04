@@ -33,6 +33,7 @@ enum contractStatus {
   ENFORCE // đã deploy
   COMPLETED // hoàn thành hợp đồng
   FAILED // thất bại ( không thể thực hiện hợp đồng )
+  VOTED
 }
 
 model User {
@@ -63,21 +64,21 @@ model User {
 }
 
 model Participant {
-  id              String            @id @unique @default(uuid()) @db.Uuid
-  User            User?             @relation(fields: [userId], references: [id])
-  userId          String?           @db.Uuid
-  email           String
-  permission      Json
-  contractId      String            @db.Uuid
-  Contract        Contract          @relation(fields: [contractId], references: [id])
-  status          ParticipantStatus @default(PENDING)
-  completedStages Json[]            @db.Json
-  createdAt       DateTime?         @default(now())
-  updatedAt       DateTime?         @updatedAt
-  createdBy       Json?
-  updatedBy       Json?
-  deletedAt       DateTime?
-  deletedBy       Json?
+  id         String            @id @unique @default(uuid()) @db.Uuid
+  User       User?             @relation(fields: [userId], references: [id])
+  userId     String?           @db.Uuid
+  email      String
+  permission Json
+  contractId String            @db.Uuid
+  Contract   Contract          @relation(fields: [contractId], references: [id])
+  status     ParticipantStatus @default(PENDING)
+  vote       Boolean?
+  createdAt  DateTime?         @default(now())
+  updatedAt  DateTime?         @updatedAt
+  createdBy  Json?
+  updatedBy  Json?
+  deletedAt  DateTime?
+  deletedBy  Json?
 }
 
 model Contract {
