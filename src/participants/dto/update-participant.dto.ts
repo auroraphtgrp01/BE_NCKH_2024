@@ -58,4 +58,9 @@ export class UpdateParticipantDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission?: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly vote?: string
 }

@@ -115,7 +115,7 @@ export class ParticipantsService {
   }
 
   async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
-    const { id, userId, ...rest } = updateParticipantDto
+    const { id, userId, vote, ...rest } = updateParticipantDto
     const find =
       id && !userId
         ? await this.findOneById(id)

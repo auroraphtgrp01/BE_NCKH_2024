@@ -72,7 +72,7 @@ model Participant {
   contractId String            @db.Uuid
   Contract   Contract          @relation(fields: [contractId], references: [id])
   status     ParticipantStatus @default(PENDING)
-  vote       Boolean?
+  vote       String?
   createdAt  DateTime?         @default(now())
   updatedAt  DateTime?         @updatedAt
   createdBy  Json?
@@ -154,6 +154,12 @@ model ContractAttributeInBlockchain {
   value                              String
   index                              Int?
   type                               String
+  createdAt                          DateTime                            @default(now())
+  updatedAt                          DateTime?                           @updatedAt
+  createdBy                          Json?
+  updatedBy                          Json?
+  deletedAt                          DateTime?
+  deletedBy                          Json?
   Contract                           Contract?                           @relation(fields: [contractId], references: [id])
   contractId                         String?                             @db.Uuid
   ContractAttributeValueInBlockchain ContractAttributeValueInBlockchain?
@@ -162,6 +168,12 @@ model ContractAttributeInBlockchain {
 model ContractAttributeValueInBlockchain {
   id                  String                        @id @unique @default(uuid()) @db.Uuid
   value               String
+  createdAt           DateTime                      @default(now())
+  updatedAt           DateTime?                     @updatedAt
+  createdBy           Json?
+  updatedBy           Json?
+  deletedAt           DateTime?
+  deletedBy           Json?
   ContractAttribute   ContractAttributeInBlockchain @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String                        @unique @db.Uuid
 }
