@@ -133,12 +133,15 @@ export class UpdateContractDto {
   readonly agreements?: string[]
 
   @IsOptional()
-  @IsNotEmpty()
   readonly status?: string
 
   @IsOptional()
   @IsObject()
   readonly votings?: object
+
+  @IsOptional()
+  @IsNotEmpty()
+  readonly disputedContractId?: string
 }
 
 export class UpdateContractAttributeDto {

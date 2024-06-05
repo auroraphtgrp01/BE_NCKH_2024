@@ -34,6 +34,7 @@ enum contractStatus {
   COMPLETED // hoàn thành hợp đồng
   FAILED // thất bại ( không thể thực hiện hợp đồng )
   VOTED
+  DISPUTED
 }
 
 model User {
@@ -95,7 +96,7 @@ model Contract {
   status                        contractStatus                  @default(PENDING)
   stages                        Json[]
   disputedContractId            String?
-  contractId                    String?
+  parentId                      String?
   type                          String
   createdAt                     DateTime                        @default(now())
   updatedAt                     DateTime?                       @updatedAt

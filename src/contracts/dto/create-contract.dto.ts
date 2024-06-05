@@ -107,7 +107,7 @@ export class CreateEmptyContractDto {
 
   @IsString()
   @IsOptional()
-  readonly disputedContractId?: string
+  readonly parentId?: string
 
   @IsString()
   @IsOptional()
@@ -236,5 +236,5 @@ export class CreateDisputeContractDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly disputedContractId: string
+  readonly parentId: string
 }

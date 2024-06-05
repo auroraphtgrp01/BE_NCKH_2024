@@ -50,7 +50,7 @@ export class ContractsService {
     private readonly commonService: CommonService
   ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
-    const { addressWallet, name, type, disputedContractId } = contractData
+    const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
 
     const contract = await this.prismaService.client.contract.create({
@@ -63,7 +63,7 @@ export class ContractsService {
         type: type ? type : EContractType.CONTRACT,
         createdBy,
         updatedAt: null,
-        disputedContractId: disputedContractId ? disputedContractId : null,
+        parentId: parentId ? parentId : null,
         contractAddress: contractData.contractAddress ? contractData.contractAddress : null
       }
     })
@@ -269,7 +269,7 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    const { stage, stages, ...rest } = updateContractDto
+    const { stage, stages, disputedContractId, ...rest } = updateContractDto
     const find = await this.findOneById(updateContractDto.id)
     if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const newStages: IStage[] = []
@@ -315,6 +315,7 @@ export class ContractsService {
       data: {
         ...(rest as any),
         stages: stage || stages ? (stage && !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
+        disputedContractId: disputedContractId ? disputedContractId : null,
         updatedBy
       }
     })
