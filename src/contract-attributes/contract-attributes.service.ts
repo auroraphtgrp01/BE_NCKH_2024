@@ -199,13 +199,13 @@ export class ContractAttributesService {
       templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
           where: { id: item },
-          orderBy: { index: 'asc' },
           include: { ContractAttributeValue: true }
         })
         return contractAttribute
       })
     )
-    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+    const sorted = contractAttributes.sort((a, b) => a.index - b.index)
+    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(sorted))
     return result
   }
 
