@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
-
 contract SupplyChain {
   struct Stage {
     uint percent;
@@ -267,5 +266,13 @@ contract SupplyChain {
       }
     }
     return Stage(0, 0, '', false, false, false, false);
+  }
+
+  function transferTokenToDisputeContract(
+    address payable _addressContract,
+    uint256 amount
+  ) external payable onlyPetitionerOrSupplier(msg.sender) {
+    (bool success, ) = _addressContract.call{value: amount}('');
+    require(success, 'transaction failed');
   }
 }
