@@ -34,12 +34,15 @@ export class ContractAttributeValuesService {
     }
   }
 
-  async createInBlockchain(createContractAttributeValueDto: CreateContractAttributeValueDto) {
+  async createInBlockchain(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
     const { contractAttributeId, value } = createContractAttributeValueDto
+    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contractAttributeValue = await this.prismaService.client.contractAttributeValueInBlockchain.create({
       data: {
         value,
-        ContractAttribute: { connect: { id: contractAttributeId } }
+        ContractAttribute: { connect: { id: contractAttributeId } },
+        createdBy,
+        updatedAt: null
       }
     })
     return contractAttributeValue

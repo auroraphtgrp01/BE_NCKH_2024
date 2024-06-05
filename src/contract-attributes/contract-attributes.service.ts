@@ -55,8 +55,9 @@ export class ContractAttributesService {
     return result
   }
 
-  async createInBlockchain(createContractAttributeDto: CreateContractAttributeDto) {
+  async createInBlockchain(createContractAttributeDto: CreateContractAttributeDto, user: IUser) {
     const { contractId, ...rest } = createContractAttributeDto
+    const createdBy: IExecutor = { name: user.name, id: user.id, email: user.email, role: user.role }
 
     const data: ICreateContractAttributeRecord = { ...rest }
 
@@ -64,7 +65,9 @@ export class ContractAttributesService {
 
     const contractAttribute = await this.prismaService.client.contractAttributeInBlockchain.create({
       data: {
-        ...data
+        ...data,
+        createdBy,
+        updatedAt: null
       }
     })
 
@@ -133,7 +136,7 @@ export class ContractAttributesService {
     return contractAttributeRecords
   }
 
-  async createContractAttributesInBlockchain(createContractAttributesDto: CreateContractAttributesDto) {
+  async createContractAttributesInBlockchain(createContractAttributesDto: CreateContractAttributesDto, user) {
     const { contractAttributes, contractId } = createContractAttributesDto
     let index: number = 0
     for (const contractAttribute of contractAttributes) {
@@ -152,14 +155,17 @@ export class ContractAttributesService {
         contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         data.value = contractAttribute.property
-        const contractAttributeRecord = await this.createInBlockchain(data)
-        await this.contractAttributeValueService.createInBlockchain({
-          value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
-          contractAttributeId: contractAttributeRecord.id
-        })
+        const contractAttributeRecord = await this.createInBlockchain(data, user)
+        await this.contractAttributeValueService.createInBlockchain(
+          {
+            value: contractAttribute.value !== 'Empty' ? contractAttribute.value : '',
+            contractAttributeId: contractAttributeRecord.id
+          },
+          user
+        )
       } else {
         data.value = contractAttribute.value
-        await this.createInBlockchain(data)
+        await this.createInBlockchain(data, user)
       }
       index++
     }

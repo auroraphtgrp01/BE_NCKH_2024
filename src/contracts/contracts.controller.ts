@@ -54,12 +54,12 @@ export class ContractsController {
   }
 
   @Post('/handle-deploy')
-  async handleDeploy(@Body('contractId') contractId: string) {
-    return await this.contractsService.handleDeployContract(contractId)
+  async handleDeploy(@Body('contractId') contractId: string, @User() user: IUser) {
+    return await this.contractsService.handleDeployContract(contractId, user)
   }
 
-  @Get('/compare-attribute')
-  async compareAttribute(contractId: string) {
+  @Get('/compare-attribute/:contractId')
+  async compareAttribute(@Param('contractId') contractId: string) {
     return await this.contractsService.compareAttribute(contractId)
   }
 }

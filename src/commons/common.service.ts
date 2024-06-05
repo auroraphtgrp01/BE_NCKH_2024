@@ -32,41 +32,24 @@ export class CommonService {
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
         contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       )
-        if (
-          this.isType<ContractAttribute & { ContractAttributeValue: true }>(contractArribute, 'ContractAttributeValue')
-        )
-          result.push({
-            id: contractArribute.id,
-            property: contractArribute.value,
-            value: (contractArribute as any).ContractAttributeValue.value,
-            type: contractArribute.type,
-            createdBy: (contractArribute as ContractAttribute).createdBy,
-            updatedBy: (contractArribute as ContractAttribute).updatedBy
-          })
-        else
-          result.push({
-            id: contractArribute.id,
-            property: contractArribute.value,
-            value: (contractArribute as any).ContractAttributeValue.value,
-            type: contractArribute.type
-          })
+        result.push({
+          id: contractArribute.id,
+          property: contractArribute.value,
+          value: (contractArribute as any).ContractAttributeValue
+            ? (contractArribute as any).ContractAttributeValue.value
+            : (contractArribute as any).ContractAttributeValueInBlockchain.value,
+          type: contractArribute.type,
+          createdBy: (contractArribute as ContractAttribute).createdBy,
+          updatedBy: (contractArribute as ContractAttribute).updatedBy
+        })
       else {
-        if (
-          this.isType<ContractAttribute & { ContractAttributeValue: true }>(contractArribute, 'ContractAttributeValue')
-        )
-          result.push({
-            id: contractArribute.id,
-            value: contractArribute.value,
-            type: contractArribute.type,
-            createdBy: (contractArribute as ContractAttribute).createdBy,
-            updatedBy: (contractArribute as ContractAttribute).updatedBy
-          })
-        else
-          result.push({
-            id: contractArribute.id,
-            value: contractArribute.value,
-            type: contractArribute.type
-          })
+        result.push({
+          id: contractArribute.id,
+          value: contractArribute.value,
+          type: contractArribute.type,
+          createdBy: (contractArribute as ContractAttribute).createdBy,
+          updatedBy: (contractArribute as ContractAttribute).updatedBy
+        })
       }
     }
     return result
@@ -85,9 +68,5 @@ export class CommonService {
       result += chars.charAt(Math.floor(Math.random() * chars.length))
     }
     return result
-  }
-
-  isType<T>(obj: any, key: keyof T): obj is T[] {
-    return Array.isArray(obj) && obj.every((item: any) => key in item)
   }
 }

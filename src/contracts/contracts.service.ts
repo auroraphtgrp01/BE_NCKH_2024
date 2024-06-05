@@ -34,9 +34,7 @@ import { ContractAttributeValuesService } from 'src/contract-attribute-values/co
 import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
 import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
-import { ICreateInvitation, ICreateParticipant } from 'src/interfaces/participant.interface'
-import { CommonService } from 'src/commons/common.service'
-import { ICreateInvitation } from 'src/interfaces/participant.interface'
+import { ICreateParticipant } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
 @Injectable()
 export class ContractsService {
@@ -48,8 +46,6 @@ export class ContractsService {
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
     private readonly suppliersService: SuppliersService,
-    private readonly participantsService: ParticipantsService,
-    private readonly commonService: CommonService
     private readonly participantsService: ParticipantsService,
     private readonly commonService: CommonService
   ) {}
@@ -212,9 +208,9 @@ export class ContractsService {
     return contractResponse
   }
 
-  async handleDeployContract(contractId: string) {
+  async handleDeployContract(contractId: string, user: IUser) {
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
-    await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
+    await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes }, user)
   }
 
   async getContractsByUserId(user: IUser) {
@@ -645,6 +641,7 @@ export class ContractsService {
   async compareAttribute(contractId: string): Promise<boolean> {
     const inContract = await this.getContractDetailsById(contractId)
     const inBlockChain = await this.getContractDetailsInBlockchainById(contractId)
+    console.log(inBlockChain)
 
     return true
   }
@@ -655,21 +652,8 @@ export class ContractsService {
       orderBy: { index: 'asc' },
       include: { ContractAttributeValueInBlockchain: true }
     })
-    contractAttributes.map((item: any) => {
-      console.log(
-        this.commonService.isType<ContractAttribute & { ContractAttributeValue: true }>(item, 'ContractAttributeValue')
-      )
-    })
-    const result = this.commonService.convertToTypeContractAttributesResponse(contractAttributes as any)
-  }
-  //   async compareAttribute(contractId: string): Promise<boolean> {
-  //      const inContract = await this.getContractDetailsById(contractId)
-  //      const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({ where: { contractId }, include: { ContractAttributeValueInBlockchain: true } })
-  //      const
-  //      return true
-  //   }
 
-  //   async getContractDetailsInBlockchainById(contractId: string) {
-  //      const
-  //   }
+    const result = this.commonService.convertToTypeContractAttributesResponse(contractAttributes as any)
+    return result
+  }
 }
