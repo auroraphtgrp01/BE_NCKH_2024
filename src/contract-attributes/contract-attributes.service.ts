@@ -174,24 +174,28 @@ export class ContractAttributesService {
           index: 'asc'
         }
       })
-      .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+      .then((contractAttributes) =>
+        this.commonService.convertToTypeContractAttributesResponse(contractAttributes as any)
+      )
 
     return contractAttributes
   }
 
-  // async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
-  //    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
-  //       .findMany({
-  //          where: { contractId },
-  //          include: { ContractAttributeValueInBlockchain: true },
-  //          orderBy: {
-  //             index: 'asc'
-  //          }
-  //       })
-  //       .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+  async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
+    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
+      .findMany({
+        where: { contractId },
+        include: { ContractAttributeValueInBlockchain: true },
+        orderBy: {
+          index: 'asc'
+        }
+      })
+      .then((contractAttributes) =>
+        this.commonService.convertToTypeContractAttributesResponse(contractAttributes as any)
+      )
 
-  //    return contractAttributes
-  // }
+    return contractAttributes
+  }
 
   async findAllByTemplateId(templateContractId: string) {
     const { templateContract } = await this.templateContractsService.findOneById(templateContractId)
@@ -204,7 +208,9 @@ export class ContractAttributesService {
         return contractAttribute
       })
     )
-    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+    const result = await Promise.all(
+      this.commonService.convertToTypeContractAttributesResponse(contractAttributes as any)
+    )
     return result
   }
 

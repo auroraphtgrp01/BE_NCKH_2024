@@ -2,12 +2,27 @@ import { Injectable } from '@nestjs/common'
 import * as crypto from 'crypto'
 import { IContractAttributeResponse } from '../interfaces/contract-attribute.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { ContractAttribute, ContractAttributeInBlockchain } from '@prisma/client'
+import { ContractAttribute, ContractAttributeInBlockchain, Prisma } from '@prisma/client'
+
+type ContractAttributeWithValues = {
+  [K in keyof ContractAttribute]: ContractAttribute[K] & { ContractAttributeValue: true }
+}
+
+type TContractAttribute = Prisma.ContractAttributeGetPayload<{
+  include: {
+    ContractAttributeValue: true
+  }
+}>
 
 @Injectable()
 export class CommonService {
-  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttributeResponse[] {
+  convertToTypeContractAttributesResponse(
+    contractAttributes:
+      | (ContractAttribute & { ContractAttributeValue: true })[]
+      | (ContractAttributeInBlockchain & { ContractAttributeValueInBlockchain: true })[]
+  ): IContractAttributeResponse[] {
     const result: IContractAttributeResponse[] = []
+
     for (const contractArribute of contractAttributes) {
       if (
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
@@ -17,22 +32,42 @@ export class CommonService {
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
         contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       )
-        result.push({
-          id: contractArribute.id,
-          property: contractArribute.value,
-          value: (contractArribute as any).ContractAttributeValue.value,
-          type: contractArribute.type,
-          createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy
-        })
-      else
-        result.push({
-          id: contractArribute.id,
-          value: contractArribute.value,
-          type: contractArribute.type,
-          createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy
-        })
+        if (
+          this.isType<ContractAttribute & { ContractAttributeValue: true }>(contractArribute, 'ContractAttributeValue')
+        )
+          result.push({
+            id: contractArribute.id,
+            property: contractArribute.value,
+            value: (contractArribute as any).ContractAttributeValue.value,
+            type: contractArribute.type,
+            createdBy: (contractArribute as ContractAttribute).createdBy,
+            updatedBy: (contractArribute as ContractAttribute).updatedBy
+          })
+        else
+          result.push({
+            id: contractArribute.id,
+            property: contractArribute.value,
+            value: (contractArribute as any).ContractAttributeValue.value,
+            type: contractArribute.type
+          })
+      else {
+        if (
+          this.isType<ContractAttribute & { ContractAttributeValue: true }>(contractArribute, 'ContractAttributeValue')
+        )
+          result.push({
+            id: contractArribute.id,
+            value: contractArribute.value,
+            type: contractArribute.type,
+            createdBy: (contractArribute as ContractAttribute).createdBy,
+            updatedBy: (contractArribute as ContractAttribute).updatedBy
+          })
+        else
+          result.push({
+            id: contractArribute.id,
+            value: contractArribute.value,
+            type: contractArribute.type
+          })
+      }
     }
     return result
   }
@@ -50,5 +85,9 @@ export class CommonService {
       result += chars.charAt(Math.floor(Math.random() * chars.length))
     }
     return result
+  }
+
+  isType<T>(obj: any, key: keyof T): obj is T[] {
+    return Array.isArray(obj) && obj.every((item: any) => key in item)
   }
 }

@@ -13,7 +13,7 @@ export interface IContractAttributeResponse {
   property?: string
   value: string
   type: string
-  createdBy: any
+  createdBy?: any
   updatedBy?: any
 }
 

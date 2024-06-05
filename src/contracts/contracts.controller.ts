@@ -58,8 +58,8 @@ export class ContractsController {
     return await this.contractsService.handleDeployContract(contractId)
   }
 
-  // @Get('/compare-attribute')
-  // async compareAttribute(contractId: string) {
-  //   return await this.contractsService.compareAttribute(contractId)
-  // }
+  @Get('/compare-attribute')
+  async compareAttribute(contractId: string) {
+    return await this.contractsService.compareAttribute(contractId)
+  }
 }
