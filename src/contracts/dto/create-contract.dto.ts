@@ -1,3 +1,4 @@
+import { ParticipantStatus } from '@prisma/client'
 import { Transform, Type } from 'class-transformer'
 import {
   ArrayMinSize,
@@ -20,7 +21,7 @@ import {
   ValidateIf,
   ValidateNested
 } from 'class-validator'
-import { EContractType, ETypeContractAttribute } from 'src/constants/enum.constant'
+import { EContractType, ERoleParticipant, ETypeContractAttribute } from 'src/constants/enum.constant'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 
 export class CreateContractAttributesDto {
@@ -73,7 +74,7 @@ export class PermissionDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly role: string
+  readonly ROLES: ERoleParticipant
 }
 
 export class GasPriceDto {
@@ -103,6 +104,18 @@ export class CreateEmptyContractDto {
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   readonly name: string
+
+  @IsString()
+  @IsOptional()
+  readonly parentId?: string
+
+  @IsString()
+  @IsOptional()
+  readonly status?: string
+
+  @IsString()
+  @IsOptional()
+  readonly contractAddress?: string
 }
 
 export class CreateContractDto {
@@ -138,6 +151,14 @@ export class CreateContractDto {
   @IsNotEmpty()
   @IsUUID()
   readonly orderId?: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly rolesOfCreator: ERoleParticipant
+
+  @ValidateIf((object: any) => object.templateId !== undefined)
+  @IsBoolean()
+  readonly isCreateAttributeValue?: boolean
 }
 
 export class DataUpdateContractAttributeDto {
@@ -177,12 +198,23 @@ export class InvitationsDto {
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
   @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
-  readonly messages: string
+  readonly messages?: string
 
   @IsObject()
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: ParticipantStatus
 }
 
 export class CreateDisputeContractDto {
@@ -195,14 +227,14 @@ export class CreateDisputeContractDto {
   readonly totalAmount: number
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly customer: string
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly supplier: string
 
   @IsString()
   @IsNotEmpty()
-  readonly contractAddress: string
+  readonly parentId: string
 }

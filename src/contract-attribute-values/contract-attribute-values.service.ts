@@ -15,19 +15,23 @@ export class ContractAttributeValuesService {
     @Inject(forwardRef(() => ContractAttributesService)) private contractAttributeService: ContractAttributesService
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
-    const { contractAttributeId, value } = createContractAttributeValueDto
-    const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
-    if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
-    const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
-      data: {
-        value,
-        ContractAttribute: { connect: { id: contractAttributeId } },
-        createdBy,
-        updatedAt: null
-      }
-    })
-    return contractAttributeValue
+    try {
+      const { contractAttributeId, value } = createContractAttributeValueDto
+      const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+      if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
+        throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
+      const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
+        data: {
+          value,
+          ContractAttribute: { connect: { id: contractAttributeId } },
+          createdBy,
+          updatedAt: null
+        }
+      })
+      return contractAttributeValue
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   async createInBlockchain(createContractAttributeValueDto: CreateContractAttributeValueDto) {

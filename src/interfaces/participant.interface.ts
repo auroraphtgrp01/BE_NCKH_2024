@@ -1,4 +1,5 @@
-import { ERoleParticipant, EStageStatus } from 'src/constants/enum.constant'
+import { ParticipantStatus } from '@prisma/client'
+import { ERoleParticipant } from 'src/constants/enum.constant'
 
 export interface IUpdateParticipant {
   email?: string
@@ -7,7 +8,7 @@ export interface IUpdateParticipant {
 
 export interface ICreateInvitation {
   email: string
-  messages: string
+  messages?: string
   permission: IPermissionContract
 }
 
@@ -17,15 +18,13 @@ export interface IPermissionContract {
   INVITE_PARTICIPANT: boolean
   READ_CONTRACT: boolean
   SET_OWNER_PARTY: boolean
-  role: ERoleParticipant
+  ROLES: ERoleParticipant
 }
 
-export interface IStageContract {
-  id: string
-  percent: number
-  requestBy: string
-  requestTo: string
-  description?: string
-  status: EStageStatus
-  createdAt: Date
+export interface ICreateParticipant {
+  email: string
+  permission: IPermissionContract
+  userId?: string
+  status?: ParticipantStatus
+  contractId: string
 }

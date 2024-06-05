@@ -3,6 +3,7 @@ import { IExecutor } from './executor.interface'
 export interface ICreateContractAttributeRecord {
   value: string
   type: string
+  property?: string
   Contract?: any
   TemplateContract?: any
 }

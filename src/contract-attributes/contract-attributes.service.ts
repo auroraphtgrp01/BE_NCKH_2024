@@ -77,13 +77,16 @@ export class ContractAttributesService {
     return result
   }
 
-  async createContractAttributes(createContractAttributesDto: CreateContractAttributesDto, user: IUser) {
+  async createContractAttributes(
+    createContractAttributesDto: CreateContractAttributesDto,
+    user: IUser,
+    index: number = 0
+  ) {
     const { contractAttributes, contractId } = createContractAttributesDto
     const contractAttributeRecords: IContractAttributeResponse[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
-    let index: number = 0
     for (const contractAttribute of contractAttributes) {
       if (!Object.values(ETypeContractAttribute).includes(contractAttribute.type as ETypeContractAttribute)) {
         throw new BadRequestException(RESPONSE_MESSAGES.TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID)
@@ -121,9 +124,6 @@ export class ContractAttributesService {
         contractAttributeRecords.push(result)
       } else {
         data.value = contractAttribute.value
-        if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
-          throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
-        }
         const contractAttributeRecord = await this.create(data, user)
         contractAttributeRecords.push(contractAttributeRecord)
       }
@@ -159,9 +159,6 @@ export class ContractAttributesService {
         })
       } else {
         data.value = contractAttribute.value
-        if (contractAttributes.filter((item) => item.value === contractAttribute.value).length > 1) {
-          throw new BadRequestException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DUPLICATE)
-        }
         await this.createInBlockchain(data)
       }
       index++
@@ -182,8 +179,22 @@ export class ContractAttributesService {
     return contractAttributes
   }
 
+  // async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
+  //    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
+  //       .findMany({
+  //          where: { contractId },
+  //          include: { ContractAttributeValueInBlockchain: true },
+  //          orderBy: {
+  //             index: 'asc'
+  //          }
+  //       })
+  //       .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+
+  //    return contractAttributes
+  // }
+
   async findAllByTemplateId(templateContractId: string) {
-    const templateContract = await this.templateContractsService.findOneById(templateContractId)
+    const { templateContract } = await this.templateContractsService.findOneById(templateContractId)
     const contractAttributes = await Promise.all(
       templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
@@ -193,12 +204,16 @@ export class ContractAttributesService {
         return contractAttribute
       })
     )
-    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+    const sorted = contractAttributes.sort((a, b) => a.index - b.index)
+    const result = await Promise.all(this.commonService.convertToTypeContractAttributesResponse(sorted))
     return result
   }
 
   async findOneById(id: string) {
-    return await this.prismaService.client.contractAttribute.findUnique({ where: { id } })
+    return await this.prismaService.client.contractAttribute.findUnique({
+      where: { id },
+      include: { ContractAttributeValue: true, Contract: true }
+    })
   }
 
   async findOne(payload: string) {

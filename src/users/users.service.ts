@@ -126,7 +126,7 @@ export class UsersService {
   }
 
   getABI() {
-    const filePath = 'artifacts/contracts/ContractA.sol/ContractA.json'
-    return readContract(filePath).abi
+    // const filePath = 'artifacts/contracts/ContractA.sol/ContractA.json'
+    // return readContract(filePath).abi
   }
 }

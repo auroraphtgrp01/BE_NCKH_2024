@@ -13,6 +13,7 @@ import {
   Length,
   MaxLength,
   MinDate,
+  ValidateIf,
   ValidateNested
 } from 'class-validator'
 import { Transform, Type } from 'class-transformer'
@@ -20,20 +21,28 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { GasPriceDto } from './create-contract.dto'
 import { IsAfterDate } from 'src/decorators/is-after-Date.decorator'
 import { IsBeforeDate } from 'src/decorators/is-before-date.decorator'
-import { contractStatus } from '@prisma/client'
+import { EStageStatus } from 'src/constants/enum.constant'
 
 export class StageDto {
-  @IsDateString()
+  @IsOptional()
+  @IsString()
   @IsNotEmpty()
-  readonly deliveryAt: string
+  @IsUUID()
+  readonly id?: string
 
+  @IsOptional()
   @IsNumber()
-  readonly percent: number
+  readonly percent?: number
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   readonly description?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: EStageStatus
 }
 
 export class CreateContractAttributeDto {
@@ -107,8 +116,12 @@ export class UpdateContractDto {
   readonly endDate?: Date
 
   @IsOptional()
+  @ValidateNested()
+  @Type(() => StageDto)
+  readonly stage?: StageDto
+
+  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => StageDto)
   readonly stages?: StageDto[]
@@ -120,12 +133,15 @@ export class UpdateContractDto {
   readonly agreements?: string[]
 
   @IsOptional()
-  @IsNotEmpty()
   readonly status?: string
 
   @IsOptional()
   @IsObject()
   readonly votings?: object
+
+  @IsOptional()
+  @IsNotEmpty()
+  readonly disputedContractId?: string
 }
 
 export class UpdateContractAttributeDto {

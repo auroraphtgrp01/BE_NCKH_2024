@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
-
 contract SupplyChain {
   struct Stage {
     uint percent;
@@ -27,7 +26,6 @@ contract SupplyChain {
   address[] private users;
   mapping(address => uint) private assets;
   address private supplier;
-  string private cid;
   uint private totalBalance;
   Stage[] private stages;
   uint8 private currentStage;
@@ -49,12 +47,10 @@ contract SupplyChain {
   constructor(
     address[] memory _user,
     address _supplier,
-    string memory _cid,
     uint _total,
     StageData[] memory _stages,
     string memory _privateKey
   ) {
-    cid = _cid;
     currentStage = 0;
     privateKey = _privateKey;
     status = Status.ENFORCE;
@@ -129,7 +125,10 @@ contract SupplyChain {
     _;
   }
 
-  function sign(string memory _signature) public onlyPetitionerOrSupplier(msg.sender) {
+  function sign(
+    string memory _signature,
+    string memory _privateKey
+  ) public checkPrivateKey(_privateKey) onlyPetitionerOrSupplier(msg.sender) {
     signature[msg.sender] = _signature;
   }
 
@@ -166,7 +165,9 @@ contract SupplyChain {
     status = _status;
   }
 
-  function confirmStage() public onlyPetitionerOrSupplier(msg.sender) {
+  function confirmStage(
+    string memory _privateKey
+  ) public checkPrivateKey(_privateKey) onlyPetitionerOrSupplier(msg.sender) {
     if (msg.sender == supplier) stages[currentStage].supplierConfirm = true;
     else stages[currentStage].userConfirm = true;
 
@@ -178,23 +179,36 @@ contract SupplyChain {
 
   function withDrawByPercent(
     address payable _addressWallet,
-    uint _percent
-  ) public payable checkUserReceive(_addressWallet) notEnoughEthers((totalBalance * _percent) / 100) {
+    uint _percent,
+    string memory _privateKey
+  )
+    public
+    payable
+    checkPrivateKey(_privateKey)
+    checkUserReceive(_addressWallet)
+    notEnoughEthers((totalBalance * _percent) / 100)
+  {
     uint _amount = (totalBalance * _percent) / 100;
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
-    } else {
-      _addressWallet.transfer(_amount);
-      stages[currentStage].isWithdraw = true;
-    }
+    } else stages[currentStage].isWithdraw = true;
+    _addressWallet.transfer(_amount);
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
 
   function withDrawByCurrency(
     address payable _addressWallet,
-    uint _amount
-  ) public payable onlyPetitioner(msg.sender) checkUserReceive(_addressWallet) notEnoughEthers(_amount) {
+    uint _amount,
+    string memory _privateKey
+  )
+    public
+    payable
+    checkPrivateKey(_privateKey)
+    onlyPetitioner(msg.sender)
+    checkUserReceive(_addressWallet)
+    notEnoughEthers(_amount)
+  {
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
@@ -216,7 +230,9 @@ contract SupplyChain {
     return supplier;
   }
 
-  function sendToSmartContract() public payable onlyPetitioner(msg.sender) {
+  function sendToSmartContract(
+    string memory _privateKey
+  ) public payable checkPrivateKey(_privateKey) onlyPetitioner(msg.sender) {
     assets[msg.sender] += msg.value;
     emit received(msg.sender, msg.value, totalBalance, address(this).balance, block.timestamp);
   }
@@ -250,7 +266,12 @@ contract SupplyChain {
     return Stage(0, 0, '', false, false, false, false);
   }
 
-  function getCid() public view returns (string memory) {
-    return cid;
+  function transferTokenToDisputeContract(
+    address payable _addressContract,
+    uint256 amount,
+    string memory _privateKey
+  ) external payable checkPrivateKey(_privateKey) onlyPetitionerOrSupplier(msg.sender) {
+    (bool success, ) = _addressContract.call{value: amount}('');
+    require(success, 'transaction failed');
   }
 }

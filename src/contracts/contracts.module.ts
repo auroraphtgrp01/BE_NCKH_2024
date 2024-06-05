@@ -18,7 +18,8 @@ import { SuppliersModule } from 'src/suppliers/suppliers.module'
     ContractAttributesModule,
     forwardRef(() => ParticipantsModule),
     ContractAttributeValuesModule,
-    SuppliersModule
+    SuppliersModule,
+    forwardRef(() => CommonModule)
   ],
   controllers: [ContractsController],
   providers: [ContractsService],

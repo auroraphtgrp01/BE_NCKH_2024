@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import * as crypto from 'crypto'
 import { IContractAttributeResponse } from '../interfaces/contract-attribute.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { ContractAttribute } from '@prisma/client'
+import { ContractAttribute, ContractAttributeInBlockchain } from '@prisma/client'
 
 @Injectable()
 export class CommonService {

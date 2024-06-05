@@ -63,7 +63,6 @@ export const RESPONSE_MESSAGES = {
   CONTRACT_ATTRIBUTE_NOT_FOUND: 'Contract attribute not found',
   CONTRACT_NOT_FOUND: 'Contract not found',
   THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED: 'The contract or contract template is undefined',
-  CONTRACT_ATTRIBUTE_DUPLICATE: 'The titles duplicate',
   INVITATION_NOT_FOUND: 'Invitation not found',
   PARTICIPANT_STATUS_INVALID: 'Participant status invalid',
   USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH: 'User email and invited email do not match',
@@ -83,5 +82,6 @@ export const RESPONSE_MESSAGES = {
   PRODUCT_NOT_FOUND: 'Product not found',
   ORDER_CODE_EXISTED: 'Order code existed',
   EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: 'Excute date or end date is not provided',
-  SENDER_IS_NOT_FOUND: 'Sender is not found'
+  SENDER_IS_NOT_FOUND: 'Sender is not found',
+  SENDER_IS_EXIST: 'Sender is exist'
 }

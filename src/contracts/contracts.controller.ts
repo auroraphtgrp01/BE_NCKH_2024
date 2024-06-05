@@ -15,7 +15,7 @@ export class ContractsController {
 
   @Post('dispute-contract')
   async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
-    return await this.contractsService.createDisptuteContract(createDisputeContractDto, user)
+    return await this.contractsService.createDisputeContract(createDisputeContractDto, user)
   }
 
   @Get('get-contract-details/:contractId')
@@ -57,4 +57,9 @@ export class ContractsController {
   async handleDeploy(@Body('contractId') contractId: string) {
     return await this.contractsService.handleDeployContract(contractId)
   }
+
+  // @Get('/compare-attribute')
+  // async compareAttribute(contractId: string) {
+  //   return await this.contractsService.compareAttribute(contractId)
+  // }
 }

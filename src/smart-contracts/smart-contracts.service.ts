@@ -23,10 +23,11 @@ export class SmartContractsService {
     return 'This action adds a new smartContract'
   }
 
-  async getABI(contractName: any) {
-    const abi = readContract('d01ae844-cf71-478d-8d7e-ea8733c5a72b')
+  async getABI(type: 'disputed | supplyChain') {
+    const abi = readContract(type)
     return {
-      abi
+      abi,
+      type
     }
   }
 
