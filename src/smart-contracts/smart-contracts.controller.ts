@@ -24,8 +24,8 @@ export class SmartContractsController {
   }
 
   @Get('/abi')
-  getABI(@Query() contractName: object) {
-    return this.smartContractsService.getABI(contractName)
+  getABI(@Query('type') typeContract: 'disputed | supplyChain') {
+    return this.smartContractsService.getABI(typeContract)
   }
 
   @Get(':id')
