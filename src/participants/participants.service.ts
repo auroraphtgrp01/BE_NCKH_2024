@@ -20,7 +20,6 @@ import { Participant, ParticipantStatus, contractStatus } from '@prisma/client'
 import { Exact } from '@prisma/client/runtime/library'
 import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
 import { ERoleParticipant, EStageStatus } from 'src/constants/enum.constant'
-import { IStageContract } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
 
 @Injectable()
@@ -61,27 +60,7 @@ export class ParticipantsService {
     })
 
     const invitationSender = sendInvitationDto.invitation.find((item: any) => item.permission.ROLES === 'SENDER')
-    if (hasSender && invitationSender) {
-      const index = sendInvitationDto.invitation.findIndex((item: any) => item === invitationSender)
-      sendInvitationDto.invitation.splice(index, 1)
-    } else if (!hasSender && !invitationSender)
-      await this.create(
-        {
-          userId: user.id,
-          email: user.email,
-          contractId: sendInvitationDto.contractId,
-          status: ParticipantStatus.ACCEPTED,
-          permission: {
-            CHANGE_STATUS_CONTRACT: true,
-            EDIT_CONTRACT: true,
-            INVITE_PARTICIPANT: true,
-            READ_CONTRACT: true,
-            SET_OWNER_PARTY: true,
-            ROLES: ERoleParticipant.SENDER
-          }
-        },
-        user
-      )
+    if (hasSender && invitationSender) throw new BadRequestException({ message: RESPONSE_MESSAGES.SENDER_IS_EXIST })
     sendInvitationDto.invitation.map(async (invitation: InvitationDto) => {
       const participantRecord = await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
       participants.push(participantRecord)
@@ -103,7 +82,10 @@ export class ParticipantsService {
   }
 
   async findAllByUserId(userId: string) {
-    const participants = await this.prismaService.client.participant.findMany({ where: { userId } })
+    const participants = await this.prismaService.client.participant.findMany({
+      where: { userId },
+      include: { User: true }
+    })
     return participants
   }
 
@@ -133,55 +115,17 @@ export class ParticipantsService {
   }
 
   async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
-    const { id, userId, stage, ...rest } = updateParticipantDto
-
+    const { id, userId, ...rest } = updateParticipantDto
     const find =
       id && !userId
         ? await this.findOneById(id)
         : await this.prismaService.client.participant.findFirst({ where: { userId }, include: { User: true } })
     if (!find) throw new NotFoundException(RESPONSE_MESSAGES.PARTICIPANT_NOT_FOUND)
-    let stageUpdate: IStageContract[] = [...(find.completedStages as any)]
-    if (stage) {
-      if (stage.id) {
-        const checkStage: any = find.completedStages.find((item: any) => item.id === stage.id)
-        if (checkStage) {
-          const newStage: IStageContract = {
-            id: stage.id,
-            percent: stage.percent,
-            requestBy: checkStage.requestBy,
-            requestTo: checkStage.requestTo,
-            createdAt: checkStage.createdAt,
-            status: stage.status ? (stage.status as EStageStatus) : checkStage.status,
-            description: stage.description
-          }
-          stageUpdate = stageUpdate.map((item) => (item.id === stage.id ? newStage : item))
-        }
-      } else {
-        const findParticipants = await this.prismaService.client.participant.findMany({
-          where: { contractId: find.contractId }
-        })
-
-        const sender = findParticipants.find((item: any) => {
-          item.permission.ROLES === ERoleParticipant.SENDER
-        })
-        if (!sender) throw new NotFoundException({ message: RESPONSE_MESSAGES.SENDER_IS_NOT_FOUND })
-        const newStage: IStageContract = {
-          percent: stage.percent,
-          requestBy: find.id,
-          requestTo: sender.id,
-          id: this.commonService.uuidv4(),
-          createdAt: new Date(),
-          status: EStageStatus.PENDING
-        }
-        stageUpdate.push(newStage)
-      }
-    }
 
     const participant = await this.prismaService.client.participant.update({
       where: { id },
       data: {
         ...rest,
-        completedStages: stageUpdate as any,
         User:
           updateParticipantDto.status === ParticipantStatus.ACCEPTED && find.status === ParticipantStatus.PENDING
             ? { connect: { id: user.id } }
@@ -207,9 +151,9 @@ export class ParticipantsService {
         await this.contractService.update({ id: participant.contractId, status: contractStatus.SIGNED }, user)
     }
 
-    const status = await this.contractService.findOneById(participant.contractId)
+    const status = (await this.contractService.findOneById(participant.contractId)).status
 
-    return { participant, contractStatus: status.status }
+    return { participant, contractStatus: status }
   }
 
   remove(id: number) {

@@ -44,21 +44,14 @@ export enum EStageStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
+  ENFORCE = 'ENFORCE',
   OUT_OF_DATE = 'OUT_OF_DATE',
   WITHDRAWN = 'WITHDRAWN'
 }
 
-export enum EStageContractStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  ENFORCE = 'ENFORCE',
-  WITHDRAWN = 'WITHDRAWN'
-}
-
 export enum ERoleParticipant {
-  SENDER = 'SENDER',
-  RECEIVER = 'RECEIVER',
-  PARTICIPANT = 'PARTICIPANT',
-  ARBITRATION = 'ARBITRATION'
+  SENDER = 'Sender Users',
+  RECEIVER = 'Receiver Users',
+  ARBITRATION = 'Arbitration',
+  PARTICIPANT = 'Participant'
 }

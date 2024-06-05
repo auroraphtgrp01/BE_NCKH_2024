@@ -1,3 +1,4 @@
+import { ParticipantStatus } from '@prisma/client'
 import { Transform, Type } from 'class-transformer'
 import {
   ArrayMinSize,
@@ -103,6 +104,14 @@ export class CreateEmptyContractDto {
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
   readonly name: string
+
+  @IsString()
+  @IsOptional()
+  readonly disputedContractId?: string
+
+  @IsString()
+  @IsOptional()
+  readonly status?: string
 }
 
 export class CreateContractDto {
@@ -138,6 +147,14 @@ export class CreateContractDto {
   @IsNotEmpty()
   @IsUUID()
   readonly orderId?: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly rolesOfCreator: ERoleParticipant
+
+  @ValidateIf((object: any) => object.templateId !== undefined)
+  @IsBoolean()
+  readonly isCreateAttributeValue?: boolean
 }
 
 export class DataUpdateContractAttributeDto {
@@ -183,6 +200,17 @@ export class InvitationsDto {
   @ValidateNested()
   @Type(() => PermissionDto)
   readonly permission: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: ParticipantStatus
 }
 
 export class CreateDisputeContractDto {
@@ -195,14 +223,14 @@ export class CreateDisputeContractDto {
   readonly totalAmount: number
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly customer: string
 
   @IsString()
-  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  @IsNotEmpty()
   readonly supplier: string
 
   @IsString()
   @IsNotEmpty()
-  readonly contractAddress: string
+  readonly disputedContractId: string
 }

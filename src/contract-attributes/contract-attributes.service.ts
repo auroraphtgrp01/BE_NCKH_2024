@@ -194,7 +194,7 @@ export class ContractAttributesService {
   // }
 
   async findAllByTemplateId(templateContractId: string) {
-    const templateContract = await this.templateContractsService.findOneById(templateContractId)
+    const { templateContract } = await this.templateContractsService.findOneById(templateContractId)
     const contractAttributes = await Promise.all(
       templateContract.contractAttributes.map(async (item) => {
         const contractAttribute = await this.prismaService.client.contractAttribute.findFirst({
@@ -209,7 +209,10 @@ export class ContractAttributesService {
   }
 
   async findOneById(id: string) {
-    return await this.prismaService.client.contractAttribute.findUnique({ where: { id } })
+    return await this.prismaService.client.contractAttribute.findUnique({
+      where: { id },
+      include: { ContractAttributeValue: true, Contract: true }
+    })
   }
 
   async findOne(payload: string) {

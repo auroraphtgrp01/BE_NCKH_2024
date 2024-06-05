@@ -35,4 +35,9 @@ export class AuthController {
       isExits: await this.authService.handleAddressWallet(addressWallet)
     }
   }
+
+  @Get('get-user-info-login')
+  getUserInfoLogin(@User() user: IUser) {
+    return this.authService.getUserInfoLogin(user)
+  }
 }

@@ -1,3 +1,4 @@
+import { ParticipantStatus } from '@prisma/client'
 import { Type } from 'class-transformer'
 import {
   ArrayMinSize,
@@ -37,7 +38,6 @@ export class CreateParticipantDto {
   @IsOptional()
   status?: any
 }
-
 export class InvitationDto {
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
   @IsNotEmpty()
@@ -50,6 +50,17 @@ export class InvitationDto {
 
   @IsObject()
   readonly permission: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: ParticipantStatus
 }
 
 export class SendInvitationsDto {

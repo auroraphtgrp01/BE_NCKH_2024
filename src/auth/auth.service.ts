@@ -95,4 +95,8 @@ export class AuthService {
     if (!user) return false
     return true
   }
+
+  getUserInfoLogin(user: IUser) {
+    return user
+  }
 }
