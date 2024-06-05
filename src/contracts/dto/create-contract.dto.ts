@@ -112,6 +112,10 @@ export class CreateEmptyContractDto {
   @IsString()
   @IsOptional()
   readonly status?: string
+
+  @IsString()
+  @IsOptional()
+  readonly contractAddress?: string
 }
 
 export class CreateContractDto {

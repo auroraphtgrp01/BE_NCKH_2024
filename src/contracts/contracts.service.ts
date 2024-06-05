@@ -63,7 +63,8 @@ export class ContractsService {
         type: type ? type : EContractType.CONTRACT,
         createdBy,
         updatedAt: null,
-        disputedContractId: disputedContractId ? disputedContractId : null
+        disputedContractId: disputedContractId ? disputedContractId : null,
+        contractAddress: contractData.contractAddress ? contractData.contractAddress : null
       }
     })
 

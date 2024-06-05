@@ -192,8 +192,7 @@ contract SupplyChain {
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
-    } else
-      stages[currentStage].isWithdraw = true;
+    } else stages[currentStage].isWithdraw = true;
     _addressWallet.transfer(_amount);
     emit widthdrew(_addressWallet, _amount, totalBalance, address(this).balance, block.timestamp);
   }
@@ -269,8 +268,9 @@ contract SupplyChain {
 
   function transferTokenToDisputeContract(
     address payable _addressContract,
-    uint256 amount
-  ) external payable onlyPetitionerOrSupplier(msg.sender) {
+    uint256 amount,
+    string memory _privateKey
+  ) external payable checkPrivateKey(_privateKey) onlyPetitionerOrSupplier(msg.sender) {
     (bool success, ) = _addressContract.call{value: amount}('');
     require(success, 'transaction failed');
   }
