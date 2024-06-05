@@ -21,6 +21,7 @@ import { Exact } from '@prisma/client/runtime/library'
 import { IQueuePayloadSendInvitation, QueueRedisService } from 'src/queues/queue-redis.service'
 import { ERoleParticipant, EStageStatus } from 'src/constants/enum.constant'
 import { CommonService } from 'src/commons/common.service'
+import { map } from 'rxjs'
 
 @Injectable()
 export class ParticipantsService {
@@ -126,6 +127,7 @@ export class ParticipantsService {
       where: { id },
       data: {
         ...rest,
+        vote: vote ? vote : find.vote,
         User:
           updateParticipantDto.status === ParticipantStatus.ACCEPTED && find.status === ParticipantStatus.PENDING
             ? { connect: { id: user.id } }
@@ -136,6 +138,17 @@ export class ParticipantsService {
         updatedBy: { id: user.id, name: user.name, email: user.email }
       }
     })
+
+    if (vote) {
+      const arbitrations = (
+        await this.prismaService.client.participant.findMany({
+          where: { contractId: find.contractId }
+        })
+      ).filter((item: any) => ERoleParticipant[item.permission.ROLES] === ERoleParticipant.ARBITRATION)
+      const isVoted = arbitrations.every((item: any) => item.vote !== null)
+
+      if (isVoted) await this.contractService.update({ id: find.contractId, status: contractStatus.VOTED }, user)
+    }
 
     if (updateParticipantDto.status) {
       const participants = await this.findAllByContractId(find.contractId, user)
@@ -154,6 +167,7 @@ export class ParticipantsService {
     const status = (await this.contractService.findOneById(participant.contractId)).status
 
     return { participant, contractStatus: status }
+    return null
   }
 
   remove(id: number) {
