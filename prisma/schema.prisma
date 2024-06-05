@@ -97,6 +97,7 @@ model Contract {
   stages                        Json[]
   disputedContractId            String?
   parentId                      String?
+  winnerAddressWallet           String?
   type                          String
   createdAt                     DateTime                        @default(now())
   updatedAt                     DateTime?                       @updatedAt

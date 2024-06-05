@@ -48,7 +48,7 @@ export class ContractsService {
     private readonly suppliersService: SuppliersService,
     private readonly participantsService: ParticipantsService,
     private readonly commonService: CommonService
-  ) {}
+  ) { }
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -269,7 +269,7 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    const { stage, stages, disputedContractId, ...rest } = updateContractDto
+    const { stage, stages, disputedContractId, winnerAddressWallet, ...rest } = updateContractDto
     const find = await this.findOneById(updateContractDto.id)
     if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const newStages: IStage[] = []
@@ -316,6 +316,7 @@ export class ContractsService {
         ...(rest as any),
         stages: stage || stages ? (stage && !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
         disputedContractId: disputedContractId ? disputedContractId : null,
+        winnerAddressWallet: winnerAddressWallet ? winnerAddressWallet : null,
         updatedBy
       }
     })
