@@ -81,33 +81,33 @@ export class ContractsService {
     )
     const contractAttributeInfoArr = [
       {
-        keyId: 'ba9e0d6b-19a9-494c-ae7c-81c6ccaf00ac',
+        keyId: '169e82db-94ae-4843-b462-51044fef55e3',
         value: userSender.name
       },
       {
-        keyId: '0f5e5fc2-fd34-4c2d-b742-9e4f5270467b',
+        keyId: '26bf8d25-d040-410f-8fb4-60093c66007c',
         value: userSender.phoneNumber
       },
       {
-        keyId: 'c8aff4d8-2a03-45e6-91f8-5f215c3e4480',
+        keyId: '71475e26-b680-48d7-9ec2-736116f3df16',
         value: userSender.addressWallet
       },
       {
-        keyId: '3564038c-2bac-431f-aa1a-91a1b434c24b',
+        keyId: 'cdee2a3b-19b7-4140-8240-17114a2ba467',
         value: userReceiver.name
       },
       {
-        keyId: '3640d26a-7706-435e-9e23-57837fca229a',
+        keyId: 'bc38a62d-bed7-49d8-855f-05927f0e1fa9',
         value: userReceiver.phoneNumber
       },
       {
-        keyId: 'f55b74ff-8fef-47d0-9bc9-de9bab40efa0',
+        keyId: 'c97fa3aa-b7da-492c-8275-0f92bb90f4a8',
         value: userReceiver.addressWallet
       }
     ]
     this.createContractAttributeAndValueByTemplateId(
       newContract.id,
-      'c77f564a-d4b7-47f0-9039-e17676d61d1b',
+      'bfaff943-4890-41f4-b6fc-41792307fb80',
       user,
       contractAttributeInfoArr
     )
