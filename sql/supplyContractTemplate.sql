@@ -1,2210 +1,1159 @@
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '6a898a14-cb7c-4b1e-b3dd-afa1f28584e4'::uuid,
-        'Độc lập – Tự do – Hạnh phúc',
-        1,
-        'Contract Header',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '5baa78de-262c-41b0-b022-1bdee55e2b40'::uuid,
-        'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM',
-        0,
-        'Contract Header',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '6d7a0ace-9978-4264-b409-f89694c2050f'::uuid,
-        '– Nhu cầu và khả năng của các bên;',
-        8,
-        'Contract Text',
-        '2024-06-05 13:17:21.809',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '15de578d-3a27-4a1e-ba96-4c5ff5daf8bf'::uuid,
-        'Số: 01/01/HĐMB',
-        4,
-        'Contract Number',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '9241c0c5-1c3b-493a-8c33-235ea2db15fc'::uuid,
-        'Tổng ',
-        34,
-        'Contract Attribute',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '51e135f3-c4c2-465a-b1e6-6b96b3cc3684'::uuid,
-        'Tên hàng hóa',
-        30,
-        'Contract Attribute',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '0c74b324-8b95-46e4-b30d-4552ad30c5cb'::uuid,
-        'Đơn giá',
-        33,
-        'Contract Attribute',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '2e31c4fd-4f27-4159-86d8-6f2c3803912f'::uuid,
-        'Đơn vị',
-        32,
-        'Contract Attribute',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '7026b40b-834b-46c2-9542-63f6a0c934ed'::uuid,
-        'Số lượng',
-        31,
-        'Contract Attribute',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '0fc1dfef-8b66-4bb6-ad50-d769dfb8c82a'::uuid,
-        'CÁC ĐIỀU KHOẢN CHÍNH',
-        28,
-        'Contract Heading 1',
-        '2024-06-05 13:22:25.677',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '0aa38b1f-355f-49a0-84cc-974b4646f76b'::uuid,
-        '- Bên B phải thanh toán cho Bên A số tiền ghi tại Điều 1 của Hợp đồng này vào ngày 13 tháng 10 năm 2024',
-        36,
-        'Contract Text',
-        '2024-06-05 13:23:25.825',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '651bc261-dec2-41e6-9fc2-9a3df1d8ebb2'::uuid,
-        'ĐIỀU 2: THANH TOÁN',
-        35,
-        'Contract Heading 2',
-        '2024-06-05 13:22:25.678',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'fe7efd8d-484a-4edd-9eae-355fbc256ebe'::uuid,
-        'Trên cơ sở thỏa thuận, hai bên thống nhất ký kết hợp đồng mua bán hàng hóa với các điều khoản như sau:',
-        27,
-        'Contract Text',
-        '2024-06-05 13:20:33.916',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'a13b821a-7114-483c-85ba-5473054b8921'::uuid,
-        '- Trừ trường hợp quy định tại khoản 1 Điều này, trong thời hạn khiếu nại theo quy định của Luật thương mại 2005, bên bán phải chịu trách nhiệm về bất kỳ khiếm khuyết nào của hàng hoá đã có trước thời điểm chuyển rủi ro cho bên mua, kể cả trường hợp khiếm khuyết đó được phát hiện sau thời điểm chuyển rủi ro;',
-        44,
-        'Contract Text',
-        '2024-06-05 13:28:55.571',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'cec1f260-98df-42d3-ba02-ba6a0ac0bce8'::uuid,
-        'ĐIỀU 6: NGƯNG THANH TOÁN TIỀN MUA HÀNG',
-        50,
-        'Contract Heading 2',
-        '2024-06-05 13:30:47.382',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '6474c9a7-aeb6-4bea-bba3-e8b4f05bfc1f'::uuid,
-        '- Trừ trường hợp bất khả kháng, hai bên phải thực hiện đầy đủ và đúng thời hạn các nội dung của hợp đồng này. Trong quá trình thực hiện hợp đồng, nếu có vướng mắc từ bất kỳ bên nào, hai bên sẽ cùng nhau giải quyết trên tinh thần hợp tác. Trong trường hợp không tự giải quyết được, hai bên thống nhất đưa ra giải quyết tại Tòa án có thẩm quyền. Phán quyết của tòa án là quyết định cuối cùng, có giá trị ràng buộc các bên. Bên thua phải chịu toàn bộ các chi phí giải quyết tranh chấp.',
-        62,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '27d551e1-2998-44a1-af0b-94748811efa7'::uuid,
-        '- Bên nào vi phạm các điều khoản trên đây sẽ phải chịu trách nhiệm vật chất theo quy định của các văn bản pháp luật có hiệu lực hiện hành về phạt vi phạm chất lượng, số lượng, thời gian, địa điểm, thanh toán, bảo hành v.v… mức phạt cụ thể do hai bên thỏa thuận dựa trên khung phạt Nhà nước đã quy định trong các văn bản pháp luật về loại hợp đồng này.',
-        58,
-        'Contract Text',
-        '2024-06-05 13:30:47.383',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'ff47d959-eb0b-4d9d-8fdd-7594037de7e9'::uuid,
-        'ĐIỀU 9: ĐIỀU KHOẢN CHUNG',
-        63,
-        'Contract Heading 2',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'f86a2d08-114f-4cf1-a008-7555e287d8c5'::uuid,
-        '- Bên B có bằng chứng về việc bên A lừa dối thì có quyền tạm ngừng việc thanh toán;',
-        52,
-        'Contract Text',
-        '2024-06-05 13:30:47.383',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'ca81c971-b4a0-4965-a3a6-2ca4e048660c'::uuid,
-        '- Hai bên cam kết thực hiện nghiêm túc các điều khoản đã thỏa thuận trên, không được đơn phương thay đổi hoặc hủy bỏ hợp đồng, bên nào không thực hiện hoặc đơn phương đình chỉ thực hiện hợp đồng mà không có lý do chính đáng thì sẽ bị phạt tới 80% giá trị của hợp đồng bị vi phạm.',
-        57,
-        'Contract Text',
-        '2024-06-05 13:30:47.383',
-        '2024-06-05 13:30:57.480',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '45774143-39db-4584-b066-e9ce44f62f3e'::uuid,
-        '- Bên B có bằng chứng về việc hàng hóa đang là đối tượng bị tranh chấp thì có quyền tạm ngừng thanh toán cho đến khi việc tranh chấp đã được giải quyết;',
-        53,
-        'Contract Text',
-        '2024-06-05 13:30:47.382',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '99e6ba66-675a-47a5-8849-e4fb60333a4f'::uuid,
-        '- Trừ các trường hợp được quy định ở trên, Hợp đồng này không thể bị hủy bỏ nếu không có thỏa thuận bằng văn bản của các bên. Trong trường hợp hủy hợp đồng, trách nhiệm liên quan tới phạt vi phạm và bồi thường thiệt hại được bảo lưu.',
-        66,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '51111357-b46d-42e4-a39f-a36b93cae3cd'::uuid,
-        'ĐIỀU 7: ĐIỀU KHOẢN PHẠT VI PHẠM HỢP ĐỒNG',
-        56,
-        'Contract Heading 2',
-        '2024-06-05 13:30:47.382',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '73443463-01d1-484b-8526-864b611f2ae6'::uuid,
-        '- Hợp đồng này có giá trị thay thế mọi giao dịch, thỏa thuận trước đây của hai bên. Mọi sự bổ sung, sửa đổi hợp đồng này đều phải có sự đồng ý bằng văn bản của hai bên.',
-        65,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '44b121ec-ace5-4e59-9709-8db2023e7d99'::uuid,
-        '- Trường hợp tạm ngừng thanh toán theo quy định tại khoản 2 và khoản 3 Điều này mà bằng chứng do bên B đưa ra không xác thực, gây thiệt hại cho bên A thì bên B phải bồi thường thiệt hại đó và chịu các chế tài khác theo quy định của pháp luật.',
-        55,
-        'Contract Text',
-        '2024-06-05 13:30:47.383',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '87bc6d93-7f6e-4ec8-9a64-718858f3acf0'::uuid,
-        'ĐIỀU 8: BẤT KHẢ KHÁNG VÀ GIẢI QUYẾT TRANH CHẤP',
-        59,
-        'Contract Heading 2',
-        '2024-06-05 13:31:25.084',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '9983a8d9-b713-4eed-9018-321aeece0075'::uuid,
-        '- Bất khả kháng nghĩa là các sự kiện xảy ra một cách khách quan, không thể lường trước được và không thể khắc phục được mặc dù đã áp dụng mọi biện pháp cần thiết trong khả năng cho phép, một trong các Bên vẫn không có khả năng thực hiện được nghĩa vụ của mình theo Hợp đồng này; gồm nhưng không giới hạn ở: thiên tai, hỏa hoạn, lũ lụt, chiến tranh, can thiệp của chính quyền bằng vũ trang, cản trở giao thông vận tải và các sự kiện khác tương tự.',
-        61,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'd2c27d63-b3ed-4e20-a1e5-013eb0c0d3c1'::uuid,
-        'Việc ngừng thanh toán tiền mua hàng được quy định như sau:',
-        51,
-        'Contract Text',
-        '2024-06-05 13:30:47.382',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'e386ee79-3a8d-4ed8-8a69-e20fb517fa34'::uuid,
-        '- Hợp đồng này được làm thành 2 bản, có giá trị như nhau. Mỗi bên giữ 1 bản và có giá trị pháp lý như nhau.',
-        67,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'c2906d6d-e5db-4924-8e6d-88b37cb812c2'::uuid,
-        'Địa chỉ',
-        22,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.139',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'bb832ff7-7a53-4ef6-858b-34ce807156a4'::uuid,
-        'Tài khoản số',
-        24,
-        'Contract Attribute',
-        '2024-06-05 13:20:33.916',
-        '2024-06-05 13:26:19.139',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'fb65dbdc-6135-4436-93ac-edef84f9027f'::uuid,
-        'Ngân hàng',
-        25,
-        'Contract Attribute',
-        '2024-06-05 13:24:13.446',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '496a3a45-79b5-47c8-8fca-12f72da518e4'::uuid,
-        'ĐIỀU 1: TÊN HÀNG – SỐ LƯỢNG – CHẤT LƯỢNG – GIÁ TRỊ HỢP ĐỒNG',
-        29,
-        'Contract Heading 2',
-        '2024-06-05 13:20:33.916',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '89c8b6b2-b7ee-4d95-89b3-6f87721d74d0'::uuid,
-        '- Bên B thanh toán cho Bên A theo hình thức ngân hàng',
-        37,
-        'Contract Text',
-        '2024-06-05 13:23:25.825',
-        '2024-06-05 13:26:19.141',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'afa635ef-71ec-48ce-ad36-670f9f12efc7'::uuid,
-        '- Bên A phải cung cấp đủ mỗi đơn vị hàng hóa một giấy hướng dẫn sử dụng (nếu cần).',
-        49,
-        'Contract Text',
-        '2024-06-05 13:28:55.571',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '22b3e4c5-0b14-40ca-b119-aec7dc137d1f'::uuid,
-        'ĐIỀU 4: TRÁCH NHIỆM CỦA CÁC BÊN',
-        42,
-        'Contract Heading 2',
-        '2024-06-05 13:28:55.570',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'fffa3cf2-0dca-427d-8a48-ec58d6ece674'::uuid,
-        '- Bên bán không chịu trách nhiệm về bất kỳ khiếm khuyết nào của hàng hoá nếu vào thời điểm giao kết hợp đồng bên mua đã biết hoặc phải biết về những khiếm khuyết đó;',
-        43,
-        'Contract Text',
-        '2024-06-05 13:28:55.570',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'a608990c-a4d3-43d9-a07c-4d78aa7e682f'::uuid,
-        '- Bên mua có trách nhiệm thanh toán và nhận hàng theo đúng thời gian đã thỏa thuận.',
-        46,
-        'Contract Text',
-        '2024-06-05 13:28:55.571',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '73fbab26-1ae5-44ae-bf8f-196bda655a71'::uuid,
-        'ĐIỀU 5: BẢO HÀNH VÀ HƯỚNG DẪN SỬ DỤNG HÀNG HÓA',
-        47,
-        'Contract Heading 2',
-        '2024-06-05 13:28:55.571',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'a14aefd8-bd07-4e97-b42c-77571c4e91ca'::uuid,
-        '- Bên A có trách nhiệm bảo hành chất lượng và giá trị sử dụng loại hàng SỮA CÔ GÁI HÀ LAN cho bên mua trong thời gian là 3 tháng.',
-        48,
-        'Contract Text',
-        '2024-06-05 13:28:55.571',
-        '2024-06-05 13:29:20.606',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '8ce6725a-43ab-4129-9013-cd5d352b086a'::uuid,
-        '- Bên B có bằng chứng về việc bên A đã giao hàng không phù hợp với hợp đồng thì có quyền tạm ngừng thanh toán cho đến khi bên A đã khắc phục sự không phù hợp đó;',
-        54,
-        'Contract Text',
-        '2024-06-05 13:30:47.382',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '4b8b63c1-82db-426e-8d76-65b67d42b0e3'::uuid,
-        '- Bất khả kháng nghĩa là các sự kiện xảy ra một cách khách quan, không thể lường trước được và không thể khắc phục được mặc dù đã áp dụng mọi biện pháp cần thiết trong khả năng cho phép, một trong các Bên vẫn không có khả năng thực hiện được nghĩa vụ của mình theo Hợp đồng này; gồm nhưng không giới hạn ở: thiên tai, hỏa hoạn, lũ lụt, chiến tranh, can thiệp của chính quyền bằng vũ trang, cản trở giao thông vận tải và các sự kiện khác tương tự.',
-        60,
-        'Contract Text',
-        '2024-06-05 13:31:25.084',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '9e8f246e-92da-44e0-99c0-01e792ad07b9'::uuid,
-        '- Hợp đồng này có hiệu lực từ ngày ký và tự động thanh lý hợp đồng kể từ khi Bên B đã nhận đủ hàng và Bên A đã nhận đủ tiền.',
-        64,
-        'Contract Text',
-        '2024-06-05 13:32:50.691',
-        '2024-06-05 13:33:01.018',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '44270b0d-2038-49f8-b682-47b747a9cd72'::uuid,
-        '– Luật Thương mại số 36/2005/QH11 ngày 14/06/2005 và các văn bản pháp luật liên quan;',
-        7,
-        'Contract Text',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '11f01628-bfaf-4229-918f-af9b94440141'::uuid,
-        'Căn cứ:',
-        5,
-        'Contract Text',
-        '2024-06-05 13:17:21.809',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'aca5ab4a-da60-4554-9181-9fa399518505'::uuid,
-        '----------------------------------',
-        2,
-        'Contract Header',
-        '2024-06-05 13:17:21.809',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'e5e7f433-7b6f-4720-9269-5648a7333866'::uuid,
-        '– Bộ luật Dân sự số 91/2015/QH13 ngày 24/11/2015 và các văn bản pháp luật liên quan;',
-        6,
-        'Contract Text',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '2deb02ee-7a26-41ca-b56a-38741de9c2cf'::uuid,
-        'HỢP ĐỒNG MUA BÁN HÀNG HÓA',
-        3,
-        'Contract Title',
-        '2024-06-05 13:17:21.808',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '3853e379-74f3-4350-a9bd-c39756b09ac3'::uuid,
-        'Hôm nay, ngày 10 tháng 10 năm 2024, Tại Đà Nẵng',
-        9,
-        'Contract Text',
-        '2024-06-05 13:17:21.812',
-        '2024-06-05 13:17:38.442',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '02f3066f-1365-4e25-bcbe-6ad8d5e00d25'::uuid,
-        'BÊN A',
-        11,
-        'Contract Heading 2',
-        '2024-06-05 13:18:31.750',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '7ede4bd1-c7ef-4b92-bf2b-da3a7eddda95'::uuid,
-        'CÁC BÊN THAM GIA',
-        10,
-        'Contract Heading 1',
-        '2024-06-05 13:18:31.750',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'd1ab44d8-2138-4e7f-9e73-45096b545b18'::uuid,
-        'Họ và Tên',
-        13,
-        'Contract Attribute',
-        '2024-06-05 13:18:31.750',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'd11c3296-f34a-47d1-95e4-460ef2202487'::uuid,
-        'Địa chỉ',
-        14,
-        'Contract Attribute',
-        '2024-06-05 13:18:31.751',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'ae7da4ca-5d80-4548-b5f3-56f221ff7da9'::uuid,
-        'Số điện thoại',
-        15,
-        'Contract Attribute',
-        '2024-06-05 13:18:31.750',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '91bb397a-cd6c-4a71-b6be-d8d20f7836a5'::uuid,
-        'Tên Công Ty / Tổ Chức',
-        12,
-        'Contract Attribute',
-        '2024-06-05 13:18:31.750',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'ad39d2b4-61e5-4074-ba31-d60d987170d7'::uuid,
-        'Tài khoản số',
-        16,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'efee612f-dfec-4c90-82ac-c11b5e5b07e4'::uuid,
-        'Tên Công Ty / Tổ Chức',
-        20,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.138',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'd05361fc-4bd6-46b6-bda5-6a793a01a2ee'::uuid,
-        'Họ và Tên',
-        21,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.138',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '522e93b2-6582-427d-a732-930d23b78fe8'::uuid,
-        'Mã số thuế',
-        26,
-        'Contract Attribute',
-        '2024-06-05 13:20:33.916',
-        '2024-06-05 13:26:19.140',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '2cfb4246-1b5e-4120-8cc9-67c07a56caeb'::uuid,
-        'Số điện thoại',
-        23,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.139',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '1b2ff74a-df51-4988-8dfa-a4a76c8385ba'::uuid,
-        '- Khi nhận hàng, bên mua có trách nhiệm kiểm nhận phẩm chất, quy cách hàng hóa tại chỗ. Nếu phát hiện hàng thiếu hoặc không đúng tiêu chuẩn chất lượng v.v… thì lập biên bản tại chỗ, yêu cầu bên bán xác nhận. Hàng đã ra khỏi kho bên bán không chịu trách nhiệm (trừ loại hàng có quy định thời hạn bảo hành).',
-        41,
-        'Contract Text',
-        '2024-06-05 13:26:19.087',
-        '2024-06-05 13:26:45.918',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        'b5a4dbec-0a57-4047-9d81-67002589f111'::uuid,
-        '- Bên bán phải chịu trách nhiệm về khiếm khuyết của hàng hóa phát sinh sau thời điểm chuyển rủi ro nếu khiếm khuyết đó do bên bán vi phạm hợp đồng.',
-        45,
-        'Contract Text',
-        '2024-06-05 13:28:55.571',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '2f70cfff-669b-4d54-9da5-b42543f28a1f'::uuid,
-        'ĐIỀU 3: THỜI GIAN, ĐỊA ĐIỂM VÀ PHƯƠNG THỨC GIAO HÀNG',
-        38,
-        'Contract Heading 2',
-        '2024-06-05 13:26:19.087',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '5a6c8577-91dd-43ab-a99c-e9e2ce7462af'::uuid,
-        'Ngân hàng',
-        17,
-        'Contract Attribute',
-        '2024-06-05 13:26:19.087',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '7e335793-6a91-443b-aff4-491cd57a3cc6'::uuid,
-        '- Bên A giao cho bên B vào ngày 12 tháng 10 nằm 2024',
-        39,
-        'Contract Text',
-        '2024-06-05 13:26:19.087',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '51f64a58-fae6-44e9-a4b7-0a09da0e906e'::uuid,
-        '- Phương tiện vận chuyển và chi phí vận chuyển do bên A chịu.',
-        40,
-        'Contract Text',
-        '2024-06-05 13:26:19.087',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '14875246-5507-41ff-9beb-413a174cae1e'::uuid,
-        'Mã số thuế',
-        18,
-        'Contract Attribute',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.138',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttribute" (
-        id,
-        value,
-        "index",
-        "type",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractId"
-    )
-VALUES(
-        '3b293a04-72dd-4408-898a-6c4090d17ff4'::uuid,
-        'BÊN B',
-        19,
-        'Contract Heading 2',
-        '2024-06-05 13:19:48.162',
-        '2024-06-05 13:26:19.138',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '0a0c52f8-d4d3-4bdf-bc98-2b93985a8f16'::uuid,
-        'Công ty A',
-        '2024-06-05 13:18:31.803',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        '91bb397a-cd6c-4a71-b6be-d8d20f7836a5'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'dbcee90f-607d-4bfe-b440-e7cd7b6ec7bd'::uuid,
-        '1111',
-        '2024-06-05 13:19:48.200',
-        '2024-06-05 13:26:19.152',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '14875246-5507-41ff-9beb-413a174cae1e'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'a648279f-4498-430b-804f-c3d443c8d9f2'::uuid,
-        '200000',
-        '2024-06-05 13:22:25.732',
-        '2024-06-05 13:26:19.163',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '0c74b324-8b95-46e4-b30d-4552ad30c5cb'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'ab0d647d-8eb6-45a1-ad6a-00295a1ada08'::uuid,
-        '0987654321',
-        '2024-06-05 13:18:31.800',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        'ae7da4ca-5d80-4548-b5f3-56f221ff7da9'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '7576d72d-eecc-4d5d-89a4-590db127147f'::uuid,
-        'Hà Nội',
-        '2024-06-05 13:19:48.234',
-        '2024-06-05 13:26:19.155',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        'c2906d6d-e5db-4924-8e6d-88b37cb812c2'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'd9f6e8e8-1023-4d78-b222-82406186941d'::uuid,
-        '222',
-        '2024-06-05 13:20:33.941',
-        '2024-06-05 13:26:19.156',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        'bb832ff7-7a53-4ef6-858b-34ce807156a4'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '2ec9061f-bf76-4e33-b705-3b000b2e497c'::uuid,
-        '0123456789',
-        '2024-06-05 13:19:48.210',
-        '2024-06-05 13:26:19.172',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '2cfb4246-1b5e-4120-8cc9-67c07a56caeb'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '4a9f1b33-e28d-4f4a-9c3a-7028b52c6841'::uuid,
-        'Tên bên A',
-        '2024-06-05 13:18:31.799',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        'd1ab44d8-2138-4e7f-9e73-45096b545b18'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '35c19a79-8a0a-4f86-b5ee-730df574710e'::uuid,
-        'MB',
-        '2024-06-05 13:26:19.121',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        '5a6c8577-91dd-43ab-a99c-e9e2ce7462af'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '55a8101a-3b1f-4bb5-bb5b-b9a957029c97'::uuid,
-        'Tên bên B',
-        '2024-06-05 13:19:48.207',
-        '2024-06-05 13:26:19.154',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        'd05361fc-4bd6-46b6-bda5-6a793a01a2ee'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'a023707d-fbbe-440b-b7bc-54176b7a1fd3'::uuid,
-        'thùng',
-        '2024-06-05 13:22:25.746',
-        '2024-06-05 13:26:19.157',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '2e31c4fd-4f27-4159-86d8-6f2c3803912f'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '67ba7c91-15be-4d2d-9e93-e2b4e664934e'::uuid,
-        'Đà Nẵng',
-        '2024-06-05 13:18:31.801',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        'd11c3296-f34a-47d1-95e4-460ef2202487'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'bee677c5-becd-4bb8-9ba8-fd77e9674e34'::uuid,
-        '11111',
-        '2024-06-05 13:19:48.209',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        'ad39d2b4-61e5-4074-ba31-d60d987170d7'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '04a90fed-e372-440f-92cb-da5c493589c6'::uuid,
-        'Sữa cô gái hà lan',
-        '2024-06-05 13:22:25.726',
-        '2024-06-05 13:26:19.153',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '51e135f3-c4c2-465a-b1e6-6b96b3cc3684'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        'ec17cc07-24e8-46bb-921e-ffe1b7c97714'::uuid,
-        'Công ty B',
-        '2024-06-05 13:19:48.206',
-        '2024-06-05 13:26:19.149',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        'efee612f-dfec-4c90-82ac-c11b5e5b07e4'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '6b98663e-63ec-4969-9f67-1142fa1b5bd2'::uuid,
-        '500',
-        '2024-06-05 13:22:25.735',
-        '2024-06-05 13:26:19.164',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '7026b40b-834b-46c2-9542-63f6a0c934ed'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '67ae8740-ec20-4cdc-a662-5dfbc0cbb992'::uuid,
-        '2 tỷ',
-        '2024-06-05 13:22:25.723',
-        '2024-06-05 13:26:19.165',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '9241c0c5-1c3b-493a-8c33-235ea2db15fc'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '5326bda4-c287-4dda-8daf-13d851b3c0d3'::uuid,
-        '2222',
-        '2024-06-05 13:20:33.947',
-        '2024-06-05 13:26:19.175',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        '522e93b2-6582-427d-a732-930d23b78fe8'::uuid
-    );
-INSERT INTO public."ContractAttributeValue" (
-        id,
-        value,
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributeId"
-    )
-VALUES(
-        '0bf15d45-3506-4338-b781-6fce64738d24'::uuid,
-        'VCB',
-        '2024-06-05 13:24:13.477',
-        '2024-06-05 13:26:19.176',
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        'fb65dbdc-6135-4436-93ac-edef84f9027f'::uuid
-    );
-INSERT INTO public."TemplateContract" (
-        id,
-        "name",
-        "path",
-        "createdAt",
-        "updatedAt",
-        "createdBy",
-        "updatedBy",
-        "deletedAt",
-        "deletedBy",
-        "contractAttributes"
-    )
-VALUES(
-        '399cf86d-1314-49aa-ab4f-621102bfff02'::uuid,
-        'HỢP ĐỒNG GIAO DỊCH HÀNG HÓA',
-        'https://i.ibb.co/cJKLfHP/z5511320285359-9c7cc4de726fbd2ae7b6ac24b38714b2.jpg',
-        '2024-06-05 15:38:35.802',
-        NULL,
-        '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}'::jsonb,
-        NULL,
-        NULL,
-        NULL,
-        '{5baa78de-262c-41b0-b022-1bdee55e2b40,6a898a14-cb7c-4b1e-b3dd-afa1f28584e4,aca5ab4a-da60-4554-9181-9fa399518505,2deb02ee-7a26-41ca-b56a-38741de9c2cf,15de578d-3a27-4a1e-ba96-4c5ff5daf8bf,11f01628-bfaf-4229-918f-af9b94440141,e5e7f433-7b6f-4720-9269-5648a7333866,44270b0d-2038-49f8-b682-47b747a9cd72,6d7a0ace-9978-4264-b409-f89694c2050f,3853e379-74f3-4350-a9bd-c39756b09ac3,7ede4bd1-c7ef-4b92-bf2b-da3a7eddda95,02f3066f-1365-4e25-bcbe-6ad8d5e00d25,91bb397a-cd6c-4a71-b6be-d8d20f7836a5,d1ab44d8-2138-4e7f-9e73-45096b545b18,d11c3296-f34a-47d1-95e4-460ef2202487,ae7da4ca-5d80-4548-b5f3-56f221ff7da9,ad39d2b4-61e5-4074-ba31-d60d987170d7,5a6c8577-91dd-43ab-a99c-e9e2ce7462af,14875246-5507-41ff-9beb-413a174cae1e,3b293a04-72dd-4408-898a-6c4090d17ff4,efee612f-dfec-4c90-82ac-c11b5e5b07e4,d05361fc-4bd6-46b6-bda5-6a793a01a2ee,c2906d6d-e5db-4924-8e6d-88b37cb812c2,2cfb4246-1b5e-4120-8cc9-67c07a56caeb,bb832ff7-7a53-4ef6-858b-34ce807156a4,fb65dbdc-6135-4436-93ac-edef84f9027f,522e93b2-6582-427d-a732-930d23b78fe8,fe7efd8d-484a-4edd-9eae-355fbc256ebe,0fc1dfef-8b66-4bb6-ad50-d769dfb8c82a,496a3a45-79b5-47c8-8fca-12f72da518e4,51e135f3-c4c2-465a-b1e6-6b96b3cc3684,7026b40b-834b-46c2-9542-63f6a0c934ed,2e31c4fd-4f27-4159-86d8-6f2c3803912f,0c74b324-8b95-46e4-b30d-4552ad30c5cb,9241c0c5-1c3b-493a-8c33-235ea2db15fc,651bc261-dec2-41e6-9fc2-9a3df1d8ebb2,0aa38b1f-355f-49a0-84cc-974b4646f76b,89c8b6b2-b7ee-4d95-89b3-6f87721d74d0,2f70cfff-669b-4d54-9da5-b42543f28a1f,7e335793-6a91-443b-aff4-491cd57a3cc6,51f64a58-fae6-44e9-a4b7-0a09da0e906e,1b2ff74a-df51-4988-8dfa-a4a76c8385ba,22b3e4c5-0b14-40ca-b119-aec7dc137d1f,fffa3cf2-0dca-427d-8a48-ec58d6ece674,a13b821a-7114-483c-85ba-5473054b8921,b5a4dbec-0a57-4047-9d81-67002589f111,a608990c-a4d3-43d9-a07c-4d78aa7e682f,73fbab26-1ae5-44ae-bf8f-196bda655a71,a14aefd8-bd07-4e97-b42c-77571c4e91ca,afa635ef-71ec-48ce-ad36-670f9f12efc7,cec1f260-98df-42d3-ba02-ba6a0ac0bce8,d2c27d63-b3ed-4e20-a1e5-013eb0c0d3c1,f86a2d08-114f-4cf1-a008-7555e287d8c5,45774143-39db-4584-b066-e9ce44f62f3e,8ce6725a-43ab-4129-9013-cd5d352b086a,44b121ec-ace5-4e59-9709-8db2023e7d99,51111357-b46d-42e4-a39f-a36b93cae3cd,ca81c971-b4a0-4965-a3a6-2ca4e048660c,27d551e1-2998-44a1-af0b-94748811efa7,87bc6d93-7f6e-4ec8-9a64-718858f3acf0,4b8b63c1-82db-426e-8d76-65b67d42b0e3,9983a8d9-b713-4eed-9018-321aeece0075,6474c9a7-aeb6-4bea-bba3-e8b4f05bfc1f,ff47d959-eb0b-4d9d-8fdd-7594037de7e9,9e8f246e-92da-44e0-99c0-01e792ad07b9,73443463-01d1-484b-8526-864b611f2ae6,99e6ba66-675a-47a5-8849-e4fb60333a4f,e386ee79-3a8d-4ed8-8a69-e20fb517fa34}'
-    );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2',
+    'Địa chỉ ví',
+    27,
+    'Contract Attribute Address Wallet Receive',
+    '2024-06-06 11:07:03.97',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'e16a9319-a5d8-4e27-96b8-a6bc3023c282',
+    'Số: 09/01/HĐMB',
+    5,
+    'Contract Number',
+    '2024-06-06 03:39:19.595',
+    '2024-06-06 04:33:01.213',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '25f3a94b-5415-4e39-8420-d1f626701953',
+    'Địa chỉ',
+    11,
+    'Contract Attribute',
+    '2024-06-06 03:40:08.448',
+    '2024-06-06 04:33:01.212',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'b5c42fa3-6f5a-462f-ae34-ca9cfde430d1',
+    'Email',
+    13,
+    'Contract Attribute',
+    '2024-06-06 03:40:56.976',
+    '2024-06-06 04:33:01.219',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd1d3d832-08a3-4276-bf92-0982a729d9bd',
+    'Địa chỉ ví',
+    15,
+    'Contract Attribute Address Wallet Send',
+    '2024-06-06 03:40:56.976',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'e3dd1fcd-3cf3-4bca-8e4d-d9c6928af34d',
+    'Đà Nẵng, ngày 20 tháng 11 năm 2024',
+    3,
+    'Contract Header Date',
+    '2024-06-06 04:33:01.003',
+    '2024-06-06 04:34:08.111',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'b08dbfdb-5ff0-4269-b831-d467e6ca7d84',
+    'Email',
+    25,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.215',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '27292812-30a6-464b-b930-d687ed316ee7',
+    'Số điện thoại',
+    12,
+    'Contract Attribute',
+    '2024-06-06 03:40:08.449',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '6a52ce27-5b76-4bec-a8e0-f059f72488f8',
+    'BÊN B',
+    16,
+    'Contract Heading 2',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd2c67df4-1232-4b81-afa1-7c59d754e3e4',
+    'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM',
+    0,
+    'Contract Header',
+    '2024-06-06 03:39:19.595',
+    NULL,
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '776acbb5-c407-4bc0-92b3-ac5baa27ab3a',
+    'Mã số thuế',
+    26,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.942',
+    '2024-06-06 04:33:01.215',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '15b3b476-3b64-4f28-b8e3-b3dab50bf656',
+    'Họ và Tên',
+    10,
+    'Contract Attribute',
+    '2024-06-06 03:40:08.448',
+    '2024-06-06 04:33:01.22',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'b1ecc215-77ad-4313-8eb2-7f04c9aa24b5',
+    'Độc lập – Tự do – Hạnh phúc',
+    1,
+    'Contract Header',
+    '2024-06-06 03:39:19.595',
+    NULL,
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '54320d96-08a4-49f5-b38f-8297dc557daa',
+    '----------------------------------------',
+    2,
+    'Contract Header',
+    '2024-06-06 03:39:19.597',
+    NULL,
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'e3ca49cc-3534-4739-a992-dd461fa6d4fb',
+    'Địa chỉ',
+    19,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.215',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '57656933-121d-4be5-ad9d-f15f046d6600',
+    'HỢP ĐỒNG MUA BÁN HÀNG HÓA',
+    4,
+    'Contract Title',
+    '2024-06-06 03:39:19.595',
+    '2024-06-06 04:33:01.212',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '7902d48b-9b52-4dee-948e-7674ce2bce2c',
+    '- Phương tiện vận chuyển và chi phí vận chuyển do bên A chịu.',
+    40,
+    'Contract Text',
+    '2024-06-06 03:49:13.119',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd1f34d4d-fc7e-4fb5-b430-01d7e86daa9d',
+    '- Bên B có bằng chứng về việc bên A lừa dối thì có quyền tạm ngừng việc thanh toán;',
+    53,
+    'Contract Text',
+    '2024-06-06 03:53:00.486',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '032f7745-b84a-422d-8232-87952ff48d3e',
+    '- Bên A có trách nhiệm bảo hành chất lượng và giá trị sử dụng loại hàng SỮA VINAMILK cho bên mua trong thời gian là 3 tháng.',
+    49,
+    'Contract Text',
+    '2024-06-06 03:50:38.965',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'dcbf60d7-f810-4f54-ac0c-62232d1af120',
+    'ĐIỀU 8: BẤT KHẢ KHÁNG VÀ GIẢI QUYẾT TRANH CHẤP',
+    60,
+    'Contract Heading 2',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '65698c04-6cf1-499d-ae2e-440086529b40',
+    'ĐIỀU 1: TÊN HÀNG – SỐ LƯỢNG – CHẤT LƯỢNG – GIÁ TRỊ HỢP ĐỒNG',
+    29,
+    'Contract Heading 2',
+    '2024-06-06 03:44:19.327',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '01afea4a-d470-461f-86d9-a60eddafd744',
+    '- Bên B thanh toán cho Bên A theo hình thức chuyển khoản ngân hàng',
+    37,
+    'Contract Text',
+    '2024-06-06 03:45:54.378',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '58a5f451-ca67-44de-9e5e-89cbfd675575',
+    'Mã số thuế',
+    14,
+    'Contract Attribute',
+    '2024-06-06 03:40:56.976',
+    '2024-06-06 04:33:01.213',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '28b2a95f-9d48-4261-bf38-68cf89cf6f31',
+    'Tên Công Ty / Tổ Chức',
+    17,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '7dabfe09-89e0-49fe-9303-a1d56434fbec',
+    'ĐIỀU 3: THỜI GIAN, ĐỊA ĐIỂM VÀ PHƯƠNG THỨC GIAO HÀNG',
+    38,
+    'Contract Heading 2',
+    '2024-06-06 03:49:13.118',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '2e2f9b77-82ed-47fd-9b1d-9095b11a8a98',
+    'Tổng giá trị đơn hàng',
+    34,
+    'Total Amount',
+    '2024-06-06 03:44:48.963',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '84f6db29-a6d5-4dff-b686-77b020e3bae0',
+    'Số lượng',
+    31,
+    'Contract Attribute',
+    '2024-06-06 03:44:19.327',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '6971272b-6179-445a-a5c4-d60401cae98a',
+    'ĐIỀU 2: THANH TOÁN',
+    35,
+    'Contract Heading 2',
+    '2024-06-06 03:45:54.378',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'b29b542b-5935-409b-91ba-7801521a138b',
+    '- Bên nào vi phạm các điều khoản trên đây sẽ phải chịu trách nhiệm vật chất theo quy định của các văn bản pháp luật có hiệu lực hiện hành về phạt vi phạm chất lượng, số lượng, thời gian, địa điểm, thanh toán, bảo hành v.v… mức phạt cụ thể do hai bên thỏa thuận dựa trên khung phạt Nhà nước đã quy định trong các văn bản pháp luật về loại hợp đồng này.',
+    59,
+    'Contract Text',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '22a28a0c-522a-4f53-9527-418c05c07790',
+    '- Khi xảy ra sự kiện bất khả kháng, bên gặp phải bất khả kháng phải không chậm chễ, thông báo cho bên kia tình trạng thực tế, đề xuất phương án xử lý và nỗ lực giảm thiểu tổn thất, thiệt hại đến mức thấp nhất có thể.',
+    62,
+    'Contract Text',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd61280c7-ad8d-4c7e-93ed-1d38944cb24f',
+    'CÁC BÊN THAM GIA',
+    7,
+    'Contract Heading 1',
+    '2024-06-06 03:39:19.597',
+    '2024-06-06 04:33:01.212',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '835d3d40-bde1-442b-8a60-afc27184f3b0',
+    '- Bên B phải thanh toán cho Bên A số tiền ghi tại Điều 1 của Hợp đồng này vào ngày 14 tháng 10 năm 2024',
+    36,
+    'Contract Text',
+    '2024-06-06 03:45:54.378',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '28ab7fc9-eccc-4a57-b3b8-79951f0e42ab',
+    '- Bên B có bằng chứng về việc bên A đã giao hàng không phù hợp với hợp đồng thì có quyền tạm ngừng thanh toán cho đến khi bên A đã khắc phục sự không phù hợp đó;',
+    55,
+    'Contract Text',
+    '2024-06-06 03:53:00.487',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '2d89df0c-3f70-4a30-801c-21f576e5061b',
+    'ĐIỀU 7: ĐIỀU KHOẢN PHẠT VI PHẠM HỢP ĐỒNG',
+    57,
+    'Contract Heading 2',
+    '2024-06-06 03:53:00.487',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'f11b18d5-b605-4fc1-8b90-02839383652a',
+    '- Trường hợp tạm ngừng thanh toán theo quy định tại khoản 2 và khoản 3 Điều này mà bằng chứng do bên B đưa ra không xác thực, gây thiệt hại cho bên A thì bên B phải bồi thường thiệt hại đó và chịu các chế tài khác theo quy định của pháp luật.',
+    56,
+    'Contract Text',
+    '2024-06-06 03:53:00.488',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '44c037cd-3c9a-4cab-9d63-68adfa24107e',
+    'ĐIỀU 9: ĐIỀU KHOẢN CHUNG',
+    64,
+    'Contract Heading 2',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '17b98238-6a4b-4dc3-b30b-ed3273fb1722',
+    'Tên Công Ty / Tổ Chức',
+    9,
+    'Contract Attribute',
+    '2024-06-06 03:40:08.447',
+    '2024-06-06 04:33:01.219',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '70b06a22-689b-46fd-9122-1fbd1f2f9b90',
+    'Họ và Tên',
+    18,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.214',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'ed0aa1bc-d235-48f9-9cc8-649c06cf9b98',
+    '- Khi nhận hàng, bên mua có trách nhiệm kiểm nhận phẩm chất, quy cách hàng hóa tại chỗ. Nếu phát hiện hàng thiếu hoặc không đúng tiêu chuẩn chất lượng v.v… thì lập biên bản tại chỗ, yêu cầu bên bán xác nhận. Hàng đã ra khỏi kho bên bán không chịu trách nhiệm (trừ loại hàng có quy định thời hạn bảo hành).',
+    42,
+    'Contract Text',
+    '2024-06-06 03:49:13.119',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'bccd624f-1595-44f1-97f9-9e4a3eaaf586',
+    'ĐIỀU 4: TRÁCH NHIỆM CỦA CÁC BÊN',
+    43,
+    'Contract Heading 2',
+    '2024-06-06 03:49:13.121',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '0964daf0-a087-463d-8cb5-561ce656045c',
+    '- Bên bán phải chịu trách nhiệm về khiếm khuyết của hàng hóa phát sinh sau thời điểm chuyển rủi ro nếu khiếm khuyết đó do bên bán vi phạm hợp đồng.',
+    46,
+    'Contract Text',
+    '2024-06-06 03:50:38.964',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'c12bbd55-9c77-4973-aab5-2f0f90e86c85',
+    '- Bên mua có trách nhiệm thanh toán và nhận hàng theo đúng thời gian đã thỏa thuận.',
+    47,
+    'Contract Text',
+    '2024-06-06 03:50:38.964',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'a7c291d4-86dc-44f1-ae66-4343452e2583',
+    '- Hợp đồng này có hiệu lực từ ngày ký và tự động thanh lý hợp đồng kể từ khi Bên B đã nhận đủ hàng và Bên A đã nhận đủ tiền.',
+    65,
+    'Contract Text',
+    '2024-06-06 03:53:57.127',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'e01c2426-5f3f-4035-ade5-b298cd4f97b7',
+    'CÁC ĐIỀU KHOẢN CHÍNH',
+    28,
+    'Contract Heading 1',
+    '2024-06-06 03:44:19.325',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'b7c8eba0-e26f-4fcf-9ab3-559b4b156dba',
+    'Đơn vị',
+    32,
+    'Contract Attribute',
+    '2024-06-06 03:44:19.327',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '457032f1-5aa3-4a7f-8a74-6d282ca56ee7',
+    'Yêu cầu',
+    33,
+    'Contract Attribute',
+    '2024-06-06 03:44:19.327',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '522d896a-cc17-4083-8dd1-12484cc40297',
+    'Tên hàng hóa',
+    30,
+    'Contract Attribute',
+    '2024-06-06 03:44:19.327',
+    '2024-06-06 04:33:01.216',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'c247a5e9-4e42-45d1-b129-ffa7968d18c9',
+    '- Thời gian giao hàng trong vòng 3 ngày kể từ khi hợp đồng được kí.',
+    39,
+    'Contract Text',
+    '2024-06-06 03:49:13.118',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'f9bbd909-706c-4726-968a-e7bd9e84a64f',
+    '- Bên bán không chịu trách nhiệm về bất kỳ khiếm khuyết nào của hàng hoá nếu vào thời điểm giao kết hợp đồng bên mua đã biết hoặc phải biết về những khiếm khuyết đó;',
+    44,
+    'Contract Text',
+    '2024-06-06 03:49:13.12',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd22ebe60-aaf2-4355-b9d6-cbaa94f009b2',
+    'Số điện thoại',
+    20,
+    'Contract Attribute',
+    '2024-06-06 03:41:59.941',
+    '2024-06-06 04:33:01.215',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '70cbda14-3c65-489b-aacf-cafeee80ebf8',
+    'ĐIỀU 5: BẢO HÀNH VÀ HƯỚNG DẪN SỬ DỤNG HÀNG HÓA',
+    48,
+    'Contract Heading 2',
+    '2024-06-06 03:50:38.964',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'efe6ae8c-ac0c-488e-a7b9-df5362aa2bf5',
+    'BÊN A',
+    8,
+    'Contract Heading 2',
+    '2024-06-06 03:40:08.447',
+    '2024-06-06 04:33:01.219',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '452cec08-d5db-42fb-8248-ea0f1f3ec771',
+    'ĐIỀU 6: NGƯNG THANH TOÁN TIỀN MUA HÀNG',
+    51,
+    'Contract Heading 2',
+    '2024-06-06 03:53:00.486',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '2c136a4e-b47d-4db5-90e3-fa6370cd38cc',
+    'Căn cứ:
+– Bộ luật Dân sự số 91/2015/QH13 ngày 24/11/2015 và các văn bản pháp luật liên quan;
+– Luật Thương mại số 36/2005/QH11 ngày 14/06/2005 và các văn bản pháp luật liên quan;
+– Nhu cầu và khả năng của các bên;
+Hôm nay, ngày 10 tháng 10 năm 2024 , Tại Đà Nẵng gồm: ',
+    6,
+    'Contract Text',
+    '2024-06-06 04:46:26.542',
+    NULL,
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '2cb99e6f-ad76-41e6-ba7d-220e1226e4e7',
+    '- Bất khả kháng nghĩa là các sự kiện xảy ra một cách khách quan, không thể lường trước được và không thể khắc phục được mặc dù đã áp dụng mọi biện pháp cần thiết trong khả năng cho phép, một trong các Bên vẫn không có khả năng thực hiện được nghĩa vụ của mình theo Hợp đồng này; gồm nhưng không giới hạn ở: thiên tai, hỏa hoạn, lũ lụt, chiến tranh, can thiệp của chính quyền bằng vũ trang, cản trở giao thông vận tải và các sự kiện khác tương tự.',
+    61,
+    'Contract Text',
+    '2024-06-06 03:53:00.49',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'dfb6645c-98b0-4f76-84ff-49b9b8e82510',
+    '- Quy định lịch giao nhận hàng hóa mà bên mua không đến nhận hàng thì phải chịu chi phí lưu kho bãi là 300 đồng/ngày. Nếu phương tiện vận chuyển bên mua đến mà bên bán không có hàng giao thì bên bán phải chịu chi phí thực tế cho việc điều động phương tiện.',
+    41,
+    'Contract Text',
+    '2024-06-06 03:49:13.119',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '197fc68f-abfa-4217-95bd-5187b01484c5',
+    'Việc ngừng thanh toán tiền mua hàng được quy định như sau:',
+    52,
+    'Contract Text',
+    '2024-06-06 03:53:00.486',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'bbb8d3c1-d977-4689-a286-5baa554d2508',
+    '- Hai bên cam kết thực hiện nghiêm túc các điều khoản đã thỏa thuận trên, không được đơn phương thay đổi hoặc hủy bỏ hợp đồng, bên nào không thực hiện hoặc đơn phương đình chỉ thực hiện hợp đồng mà không có lý do chính đáng thì sẽ bị phạt tới 90% giá trị của hợp đồng bị vi phạm.',
+    58,
+    'Contract Text',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '2459e1a1-7532-4263-a118-44872ed52890',
+    '- Bên B có bằng chứng về việc hàng hóa đang là đối tượng bị tranh chấp thì có quyền tạm ngừng thanh toán cho đến khi việc tranh chấp đã được giải quyết;',
+    54,
+    'Contract Text',
+    '2024-06-06 03:53:00.487',
+    '2024-06-06 04:33:01.218',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'cd216774-77ff-4bc0-a319-dc4dea2a3c28',
+    '- Hợp đồng này có giá trị thay thế mọi giao dịch, thỏa thuận trước đây của hai bên. Mọi sự bổ sung, sửa đổi hợp đồng này đều phải có sự đồng ý bằng văn bản của hai bên.',
+    66,
+    'Contract Text',
+    '2024-06-06 03:53:57.127',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '940f5c6c-4d4d-44ba-a5d3-c9effc325f44',
+    '- Bên A phải cung cấp đủ mỗi đơn vị hàng hóa một giấy hướng dẫn sử dụng (nếu cần).',
+    50,
+    'Contract Text',
+    '2024-06-06 03:50:38.965',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'aef0ae41-573d-41a7-8038-4cde342bf1a1',
+    '- Trừ trường hợp bất khả kháng, hai bên phải thực hiện đầy đủ và đúng thời hạn các nội dung của hợp đồng này. Trong quá trình thực hiện hợp đồng, nếu có vướng mắc từ bất kỳ bên nào, hai bên sẽ cùng nhau giải quyết trên tinh thần hợp tác. Trong trường hợp không tự giải quyết được, hai bên thống nhất đưa ra giải quyết tại Tòa án có thẩm quyền. Phán quyết của tòa án là quyết định cuối cùng, có giá trị ràng buộc các bên. Bên thua phải chịu toàn bộ các chi phí giải quyết tranh chấp.',
+    63,
+    'Contract Text',
+    '2024-06-06 03:53:00.489',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '1e3287c8-d5b3-4b26-bd8a-d8f6dae67027',
+    '- Hợp đồng này được làm thành 2 bản, có giá trị như nhau. Mỗi bên giữ 1 bản và có giá trị pháp lý như nhau.',
+    68,
+    'Contract Text',
+    '2024-06-06 03:53:57.128',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    '895f85fa-ee3e-43d7-8e4b-03dd8d4d55c9',
+    '- Trừ trường hợp quy định tại khoản 1 Điều này, trong thời hạn khiếu nại theo quy định của Luật thương mại 2005, bên bán phải chịu trách nhiệm về bất kỳ khiếm khuyết nào của hàng hoá đã có trước thời điểm chuyển rủi ro cho bên mua, kể cả trường hợp khiếm khuyết đó được phát hiện sau thời điểm chuyển rủi ro;',
+    45,
+    'Contract Text',
+    '2024-06-06 03:49:13.12',
+    '2024-06-06 04:33:01.217',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+INSERT INTO "public"."ContractAttribute"
+VALUES (
+    'd8d6fa84-d0a7-42ec-93b4-5fbdda4cc51f',
+    '- Trừ các trường hợp được quy định ở trên, Hợp đồng này không thể bị hủy bỏ nếu không có thỏa thuận bằng văn bản của các bên. Trong trường hợp hủy hợp đồng, trách nhiệm liên quan tới phạt vi phạm và bồi thường thiệt hại được bảo lưu.',
+    67,
+    'Contract Text',
+    '2024-06-06 03:53:57.127',
+    '2024-06-06 04:33:01.221',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL
+  );
+-- ----------------------------
+-- Records of ContractAttributeValue
+-- ----------------------------
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '067d47d8-0df9-4f7f-b07a-b283a5eee241',
+    '0123456789',
+    '2024-06-06 03:42:00.021',
+    '2024-06-06 04:33:01.569',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'd22ebe60-aaf2-4355-b9d6-cbaa94f009b2'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '00fd2872-0b9f-4ddf-a0d3-2b4c18259fa6',
+    'bbb@gmail.com',
+    '2024-06-06 03:42:00.101',
+    '2024-06-06 04:33:01.266',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'b08dbfdb-5ff0-4269-b831-d467e6ca7d84'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '214edb26-c71a-4605-8bb5-8dc637a1057e',
+    'Đà Nẵng',
+    '2024-06-06 03:40:08.516',
+    '2024-06-06 04:33:01.261',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '25f3a94b-5415-4e39-8420-d1f626701953'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'de018bbe-a714-448d-8afd-20aa6f0c1848',
+    'Hà Nội',
+    '2024-06-06 03:42:00.013',
+    '2024-06-06 04:33:01.288',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'e3ca49cc-3534-4739-a992-dd461fa6d4fb'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '1008bf45-008b-4188-8d8e-349929c7ad59',
+    '0x2622ba885f7dd479e81636534c7c89b938b5c9eb',
+    '2024-06-06 11:09:10.325',
+    '2024-06-06 04:33:01.281',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'd22121dc-66ec-47a8-8a81-32f9b7326e92',
+    '222',
+    '2024-06-06 03:42:00.017',
+    '2024-06-06 04:33:01.274',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '776acbb5-c407-4bc0-92b3-ac5baa27ab3a'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '1b7b8f78-90c4-4042-ac7f-85408a0f217b',
+    '10',
+    '2024-06-06 03:44:48.99',
+    '2024-06-06 04:33:01.342',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '2e2f9b77-82ed-47fd-9b1d-9095b11a8a98'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'f026b9a8-d840-4a0f-813d-f91ec553e31d',
+    'thùng',
+    '2024-06-06 03:44:19.365',
+    '2024-06-06 04:33:01.285',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'b7c8eba0-e26f-4fcf-9ab3-559b4b156dba'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '3edc332e-cc8c-4f0b-827c-05afe4349fe2',
+    'Sữa hộp loại lớn, sữa bò 100% sữa tươi',
+    '2024-06-06 03:44:19.362',
+    '2024-06-06 04:33:01.293',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '457032f1-5aa3-4a7f-8a74-6d282ca56ee7'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '982b76a7-7bfb-467d-a34d-4a23123e1215',
+    '0xde22c26373c55f760c77cd0924a694a6bb5c6f6e',
+    '2024-06-06 03:40:57.014',
+    '2024-06-06 04:33:01.31',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'd1d3d832-08a3-4276-bf92-0982a729d9bd'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'e87356d1-1b7b-4a85-9bfe-9566a55d6fdb',
+    'CÔNG TY A',
+    '2024-06-06 03:40:08.511',
+    '2024-06-06 04:33:01.566',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '17b98238-6a4b-4dc3-b30b-ed3273fb1722'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '0218b546-4714-435f-a8be-a021840d8900',
+    'Sữa Vinamilk',
+    '2024-06-06 03:44:19.367',
+    '2024-06-06 04:33:01.325',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '522d896a-cc17-4083-8dd1-12484cc40297'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'd4f3fd94-b72b-42dd-99d5-5381760dbdb9',
+    '1111',
+    '2024-06-06 03:40:57.006',
+    '2024-06-06 04:33:01.395',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '58a5f451-ca67-44de-9e5e-89cbfd675575'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '1fb6bb04-cea9-4433-afbf-cd3b8d713d7a',
+    'CÔNG TY B',
+    '2024-06-06 03:42:00.006',
+    '2024-06-06 04:33:01.529',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '28b2a95f-9d48-4261-bf38-68cf89cf6f31'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'c57be39a-58bc-4552-9ddb-c9cfa10c0bc9',
+    'TÊN BÊN B',
+    '2024-06-06 03:42:00.01',
+    '2024-06-06 04:33:01.512',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '70b06a22-689b-46fd-9122-1fbd1f2f9b90'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '6ecd2da7-4f67-46a0-ba50-b348250a9e05',
+    '0987654321',
+    '2024-06-06 03:40:08.513',
+    '2024-06-06 04:33:01.55',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '27292812-30a6-464b-b930-d687ed316ee7'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '879340e8-1278-45a2-9ca4-057ba41f7143',
+    'aaa@gmail.com',
+    '2024-06-06 03:40:57.012',
+    '2024-06-06 04:33:01.55',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    'b5c42fa3-6f5a-462f-ae34-ca9cfde430d1'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    '31138347-0379-4c47-adb9-7ada31565c5c',
+    '50',
+    '2024-06-06 03:44:19.37',
+    '2024-06-06 04:33:01.459',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '84f6db29-a6d5-4dff-b686-77b020e3bae0'
+  );
+INSERT INTO "public"."ContractAttributeValue"
+VALUES (
+    'f28352df-13e5-4d38-87bf-27990876fdd0',
+    'TÊN BÊN A',
+    '2024-06-06 03:40:08.514',
+    '2024-06-06 04:33:01.564',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    '15b3b476-3b64-4f28-b8e3-b3dab50bf656'
+  );
+-- ----------------------------
+INSERT INTO "public"."TemplateContract"
+VALUES (
+    '5828a8b5-0582-4f3a-83b3-e8b634d290f4',
+    'HỢP ĐỒNG GIAO DỊCH HÀNG HÓA',
+    'https://i.ibb.co/cJKLfHP/z5511320285359-9c7cc4de726fbd2ae7b6ac24b38714b2.jpg',
+    '2024-06-06 04:19:37.278',
+    NULL,
+    '{"id": "24c3ba19-7c70-4701-8306-c64c6ce2a73f", "name": "Thanh Thanh", "role": "Supplier", "email": "thanhthanh186203@gmail.com"}',
+    NULL,
+    NULL,
+    NULL,
+    '{6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2,e16a9319-a5d8-4e27-96b8-a6bc3023c282,25f3a94b-5415-4e39-8420-d1f626701953,b5c42fa3-6f5a-462f-ae34-ca9cfde430d1,d1d3d832-08a3-4276-bf92-0982a729d9bd,e3dd1fcd-3cf3-4bca-8e4d-d9c6928af34d,b08dbfdb-5ff0-4269-b831-d467e6ca7d84,27292812-30a6-464b-b930-d687ed316ee7,6a52ce27-5b76-4bec-a8e0-f059f72488f8,d2c67df4-1232-4b81-afa1-7c59d754e3e4,776acbb5-c407-4bc0-92b3-ac5baa27ab3a,15b3b476-3b64-4f28-b8e3-b3dab50bf656,b1ecc215-77ad-4313-8eb2-7f04c9aa24b5,54320d96-08a4-49f5-b38f-8297dc557daa,e3ca49cc-3534-4739-a992-dd461fa6d4fb,57656933-121d-4be5-ad9d-f15f046d6600,7902d48b-9b52-4dee-948e-7674ce2bce2c,d1f34d4d-fc7e-4fb5-b430-01d7e86daa9d,032f7745-b84a-422d-8232-87952ff48d3e,dcbf60d7-f810-4f54-ac0c-62232d1af120,65698c04-6cf1-499d-ae2e-440086529b40,01afea4a-d470-461f-86d9-a60eddafd744,58a5f451-ca67-44de-9e5e-89cbfd675575,28b2a95f-9d48-4261-bf38-68cf89cf6f31,7dabfe09-89e0-49fe-9303-a1d56434fbec,2e2f9b77-82ed-47fd-9b1d-9095b11a8a98,84f6db29-a6d5-4dff-b686-77b020e3bae0,6971272b-6179-445a-a5c4-d60401cae98a,b29b542b-5935-409b-91ba-7801521a138b,22a28a0c-522a-4f53-9527-418c05c07790,d61280c7-ad8d-4c7e-93ed-1d38944cb24f,835d3d40-bde1-442b-8a60-afc27184f3b0,28ab7fc9-eccc-4a57-b3b8-79951f0e42ab,2d89df0c-3f70-4a30-801c-21f576e5061b,f11b18d5-b605-4fc1-8b90-02839383652a,44c037cd-3c9a-4cab-9d63-68adfa24107e,17b98238-6a4b-4dc3-b30b-ed3273fb1722,70b06a22-689b-46fd-9122-1fbd1f2f9b90,ed0aa1bc-d235-48f9-9cc8-649c06cf9b98,bccd624f-1595-44f1-97f9-9e4a3eaaf586,0964daf0-a087-463d-8cb5-561ce656045c,c12bbd55-9c77-4973-aab5-2f0f90e86c85,a7c291d4-86dc-44f1-ae66-4343452e2583,e01c2426-5f3f-4035-ade5-b298cd4f97b7,b7c8eba0-e26f-4fcf-9ab3-559b4b156dba,457032f1-5aa3-4a7f-8a74-6d282ca56ee7,522d896a-cc17-4083-8dd1-12484cc40297,c247a5e9-4e42-45d1-b129-ffa7968d18c9,f9bbd909-706c-4726-968a-e7bd9e84a64f,d22ebe60-aaf2-4355-b9d6-cbaa94f009b2,70cbda14-3c65-489b-aacf-cafeee80ebf8,efe6ae8c-ac0c-488e-a7b9-df5362aa2bf5,452cec08-d5db-42fb-8248-ea0f1f3ec771,2c136a4e-b47d-4db5-90e3-fa6370cd38cc,2cb99e6f-ad76-41e6-ba7d-220e1226e4e7,dfb6645c-98b0-4f76-84ff-49b9b8e82510,197fc68f-abfa-4217-95bd-5187b01484c5,bbb8d3c1-d977-4689-a286-5baa554d2508,2459e1a1-7532-4263-a118-44872ed52890,cd216774-77ff-4bc0-a319-dc4dea2a3c28,940f5c6c-4d4d-44ba-a5d3-c9effc325f44,aef0ae41-573d-41a7-8038-4cde342bf1a1,1e3287c8-d5b3-4b26-bd8a-d8f6dae67027,895f85fa-ee3e-43d7-8e4b-03dd8d4d55c9,d8d6fa84-d0a7-42ec-93b4-5fbdda4cc51f}'
+  );
