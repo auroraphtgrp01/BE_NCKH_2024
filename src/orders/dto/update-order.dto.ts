@@ -57,12 +57,4 @@ export class UpdateOrderDto {
   @ValidateNested({ each: true })
   @Type(() => OrderProductDto)
   products?: OrderProductDto[]
-
-  @IsOptional()
-  @IsDateString()
-  executeDate?: string
-
-  @IsOptional()
-  @IsDateString()
-  endDate?: string
 }

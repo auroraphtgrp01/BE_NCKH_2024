@@ -205,12 +205,7 @@ export class OrdersService {
   async update(updateOrderDto: UpdateOrderDto, user: IUser) {
     const currentOrder = await this.prismaService.client.orders.findUnique({ where: { id: updateOrderDto.id } })
     if (!currentOrder) throw new NotFoundException(RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND)
-    if (
-      updateOrderDto.status === EOrderStatus.COMPLETED &&
-      ((currentOrder.executeDate === null && !updateOrderDto.executeDate) ||
-        (currentOrder.endDate === null && !updateOrderDto.endDate))
-    )
-      throw new BadRequestException(RESPONSE_MESSAGES.EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED)
+
     const { products, status, ...rest } = updateOrderDto
     if (products) {
       return await this.prismaService.client.orders.update({
