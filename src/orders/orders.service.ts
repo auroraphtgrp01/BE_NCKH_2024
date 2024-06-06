@@ -50,7 +50,7 @@ export class OrdersService {
                 price: productInfo.price,
                 description: productInfo.description,
                 discount: 0,
-                taxPrice: 0,
+                taxPrice: productInfo.taxPrice,
                 unit: productInfo.unit
               }
             ],
@@ -75,7 +75,7 @@ export class OrdersService {
               price: productInfo.price,
               description: productInfo.description,
               discount: 0,
-              taxPrice: 0,
+              taxPrice: productInfo.taxPrice,
               unit: productInfo.unit
             }
           ],
@@ -112,7 +112,30 @@ export class OrdersService {
     }
   }
 
-  async resendRequestSurvey(surveyId: string, user: IUser) {}
+  async resendRequestSurvey(surveyId: string, user: IUser) {
+    const updatedBy: IExecutor = { ...user }
+    await this.prismaService.client.orders.update({
+      where: { id: surveyId },
+      data: { status: EOrderStatus.COMPLETED, updatedBy: updatedBy }
+    })
+    try {
+      const survey = await this.findOneById(surveyId)
+      if (!survey) throw new NotFoundException({ message: RESPONSE_MESSAGES.ORDER_IS_NOT_FOUND })
+      const payload: IQueuePayloadSendRequestSurvey = {
+        to: survey.order.User.email,
+        from: user.email,
+        receiver: user.name,
+        surveyCode: survey.order.orderCode,
+        addressWalletSender: user.addressWallet,
+        messages: 'Look forward to working with you',
+        link: `${this.configService.get<string>('FRONTEND_HOST')}/order/${survey.order.id}`
+      }
+      this.queueRedisService.enqueueSendRequestSurvey(payload)
+      return { message: 'Resend request survey to supplier successfully' }
+    } catch (error) {
+      return { message: 'Error' }
+    }
+  }
 
   async addProductToOrder(orderId: string, productId: string, user: IUser) {
     const product = await this.productsService.findOneById(productId)
@@ -186,7 +209,10 @@ export class OrdersService {
   }
 
   async findOneById(id: string) {
-    const order = await this.prismaService.client.orders.findUnique({ where: { id } })
+    const order = await this.prismaService.client.orders.findUnique({
+      where: { id },
+      include: { Suppliers: true, User: true }
+    })
     const supplier = await this.suppliersService.findOneById(order.suppliersId)
     return { order, supplier }
   }

@@ -36,6 +36,7 @@ import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
 import { ICreateInvitation, ICreateParticipant } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
+import { OrdersService } from 'src/orders/orders.service'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -45,10 +46,10 @@ export class ContractsService {
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
-    private readonly suppliersService: SuppliersService,
     private readonly participantsService: ParticipantsService,
-    private readonly commonService: CommonService
-  ) { }
+    private readonly commonService: CommonService,
+    private readonly ordersService: OrdersService
+  ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -148,9 +149,74 @@ export class ContractsService {
     return newContract
   }
 
+  async createContractBySurveyId(surveyId: string, user: IUser) {
+    const newContract = await this.createEmptyContract(
+      {
+        name: 'HỢP ĐỒNG GIAO DỊCH',
+        addressWallet: user.addressWallet
+      },
+      user
+    )
+    const surveyInfo = await this.ordersService.findOneById(surveyId)
+
+    const sum = surveyInfo.order.products.reduce((acc: number, item: any) => {
+      return acc + (item.price + item.taxPrice) * item.quantity - item.discount
+    }, 0)
+    const contractAttributeInfoArr = [
+      {
+        keyId: '91bb397a-cd6c-4a71-b6be-d8d20f7836a5',
+        value: ''
+      },
+      {
+        keyId: '5188952f-5dec-482b-aaa1-64c4a2f6dfad',
+        value: surveyInfo.order.User.name
+      },
+      {
+        keyId: '16bc29fe-afb4-4de5-a377-642d6398c76a',
+        value: surveyInfo.order.User.phoneNumber
+      },
+      {
+        keyId: 'e079b20c-4d07-46f7-b596-b561b2bc0aa7',
+        value: surveyInfo.order.User.email
+      },
+      {
+        keyId: '1f171388-d020-4ab9-9769-a7016587f5e4',
+        value: ''
+      },
+      {
+        keyId: '46e14b09-d9b2-4036-95cc-3dc5b9b3459b',
+        value: surveyInfo.order.User.addressWallet
+      },
+      {
+        keyId: '5188952f-5dec-482b-aaa1-64c4a2f6dfad',
+        value: surveyInfo.order.User.name
+      },
+      {
+        keyId: '18a70b83-1113-419a-9417-5a555b46a23e',
+        value: surveyInfo.supplier.name
+      },
+      {
+        keyId: 'ac3e2efe-ae28-49a4-a5a7-a006efad6116',
+        value: surveyInfo.supplier.User.name
+      },
+      {
+        keyId: '2b194210-2de2-4a7a-a4da-6bd60998c3ad',
+        value: surveyInfo.supplier.phoneNumber
+      },
+      {
+        keyId: 'e970d432-aa40-4e18-8ca5-7af213ead2b7',
+        value: surveyInfo.supplier.taxCode
+      },
+      {
+        keyId: '70c374d6-ef68-4bfc-8319-7e196b223a4e',
+        value: surveyInfo.supplier.User.addressWallet
+      }
+    ]
+  }
+
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, orderId, rolesOfCreator, ...contractData } = createContractDto
+    const { invitation, templateId, rolesOfCreator, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
@@ -184,26 +250,6 @@ export class ContractsService {
         createContractDto.isCreateAttributeValue,
         user
       )
-      // if ((!userId && supplierId) || (userId && !supplierId))
-      //   throw new NotFoundException({ message: 'User or supplier information not provided' })
-      // else if (!userId && !supplierId)
-      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-      //     contractRecord.id,
-      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-      //     user
-      //   )
-      // else {
-      //   const _user = await this.usersService.findOneById(userId)
-      //   const supplier = await this.suppliersService.findOneById(supplierId)
-      //   if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
-      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-      //     contractRecord.id,
-      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-      //     user,
-      //     _user,
-      //     supplier
-      //   )
-      // }
     }
 
     return contractResponse

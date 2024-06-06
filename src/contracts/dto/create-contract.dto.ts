@@ -100,10 +100,11 @@ export class CreateEmptyContractDto {
   @Validate((object: any) => object.type === EContractType.DISPUTE)
   type?: string
 
+  @ValidateIf((object: any) => object.surveyId === undefined)
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  readonly name: string
+  readonly name?: string
 
   @IsString()
   @IsOptional()
@@ -145,12 +146,6 @@ export class CreateContractDto {
   @IsNotEmpty()
   @IsUUID()
   readonly templateId?: string
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
-  readonly orderId?: string
 
   @IsString()
   @IsNotEmpty()

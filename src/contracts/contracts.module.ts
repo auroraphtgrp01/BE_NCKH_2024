@@ -9,6 +9,7 @@ import { ContractAttributesModule } from 'src/contract-attributes/contract-attri
 import { ParticipantsModule } from 'src/participants/participants.module'
 import { ContractAttributeValuesModule } from 'src/contract-attribute-values/contract-attribute-values.module'
 import { SuppliersModule } from 'src/suppliers/suppliers.module'
+import { OrdersModule } from 'src/orders/orders.module'
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { SuppliersModule } from 'src/suppliers/suppliers.module'
     forwardRef(() => ParticipantsModule),
     ContractAttributeValuesModule,
     SuppliersModule,
-    forwardRef(() => CommonModule)
+    forwardRef(() => CommonModule),
+    OrdersModule
   ],
   controllers: [ContractsController],
   providers: [ContractsService],
