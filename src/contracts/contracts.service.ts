@@ -153,7 +153,8 @@ export class ContractsService {
     const newContract = await this.createEmptyContract(
       {
         name: 'HỢP ĐỒNG GIAO DỊCH',
-        addressWallet: user.addressWallet
+        addressWallet: user.addressWallet,
+        status: 'PARTICIPATED'
       },
       user
     )
@@ -164,54 +165,108 @@ export class ContractsService {
     }, 0)
     const contractAttributeInfoArr = [
       {
-        keyId: '91bb397a-cd6c-4a71-b6be-d8d20f7836a5',
-        value: ''
+        keyId: '28b2a95f-9d48-4261-bf38-68cf89cf6f31',
+        value: 'Empty'
       },
       {
-        keyId: '5188952f-5dec-482b-aaa1-64c4a2f6dfad',
+        keyId: '15b3b476-3b64-4f28-b8e3-b3dab50bf656',
         value: surveyInfo.order.User.name
       },
       {
-        keyId: '16bc29fe-afb4-4de5-a377-642d6398c76a',
+        keyId: '25f3a94b-5415-4e39-8420-d1f626701953',
+        value: surveyInfo.order.User.address ? surveyInfo.order.User.address : 'Empty'
+      },
+      {
+        keyId: '27292812-30a6-464b-b930-d687ed316ee7',
         value: surveyInfo.order.User.phoneNumber
       },
       {
-        keyId: 'e079b20c-4d07-46f7-b596-b561b2bc0aa7',
+        keyId: 'b5c42fa3-6f5a-462f-ae34-ca9cfde430d1',
         value: surveyInfo.order.User.email
       },
       {
-        keyId: '1f171388-d020-4ab9-9769-a7016587f5e4',
-        value: ''
+        keyId: '58a5f451-ca67-44de-9e5e-89cbfd675575',
+        value: 'Empty'
       },
       {
-        keyId: '46e14b09-d9b2-4036-95cc-3dc5b9b3459b',
+        keyId: 'd1d3d832-08a3-4276-bf92-0982a729d9bd',
         value: surveyInfo.order.User.addressWallet
       },
+      //-----------
       {
-        keyId: '5188952f-5dec-482b-aaa1-64c4a2f6dfad',
-        value: surveyInfo.order.User.name
-      },
-      {
-        keyId: '18a70b83-1113-419a-9417-5a555b46a23e',
+        keyId: '28b2a95f-9d48-4261-bf38-68cf89cf6f31',
         value: surveyInfo.supplier.name
       },
       {
-        keyId: 'ac3e2efe-ae28-49a4-a5a7-a006efad6116',
+        keyId: '70b06a22-689b-46fd-9122-1fbd1f2f9b90',
         value: surveyInfo.supplier.User.name
       },
       {
-        keyId: '2b194210-2de2-4a7a-a4da-6bd60998c3ad',
+        keyId: 'ac3e2efe-ae28-49a4-a5a7-a006efad6116',
+        value: surveyInfo.supplier.User.address ? surveyInfo.supplier.User.address : 'Empty'
+      },
+      {
+        keyId: 'e3ca49cc-3534-4739-a992-dd461fa6d4fb',
         value: surveyInfo.supplier.phoneNumber
       },
       {
-        keyId: 'e970d432-aa40-4e18-8ca5-7af213ead2b7',
+        keyId: 'b08dbfdb-5ff0-4269-b831-d467e6ca7d84',
+        value: surveyInfo.supplier.email
+      },
+      {
+        keyId: '776acbb5-c407-4bc0-92b3-ac5baa27ab3a',
         value: surveyInfo.supplier.taxCode
       },
       {
-        keyId: '70c374d6-ef68-4bfc-8319-7e196b223a4e',
+        keyId: '6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2',
         value: surveyInfo.supplier.User.addressWallet
+      },
+      {
+        keyId: '2e2f9b77-82ed-47fd-9b1d-9095b11a8a98',
+        value: String(sum)
       }
     ]
+
+    await this.createContractAttributeAndValueByTemplateId(
+      newContract.id,
+      '5828a8b5-0582-4f3a-83b3-e8b634d290f4',
+      user,
+      contractAttributeInfoArr
+    )
+    const participantCreates: ICreateParticipant[] = [
+      {
+        email: user.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: 'SENDER' as ERoleParticipant
+        },
+        userId: user.id,
+        status: ParticipantStatus.ACCEPTED
+      },
+      {
+        email: surveyInfo.supplier.User.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: 'RECEIVER' as ERoleParticipant
+        },
+        userId: surveyInfo.supplier.User.id,
+        status: ParticipantStatus.ACCEPTED
+      }
+    ]
+    participantCreates.map(async (item: any) => {
+      return await this.participantsService.create(item, user)
+    })
+    return { contract: newContract }
   }
 
   async create(createContractDto: CreateContractDto, user: IUser) {
@@ -519,7 +574,7 @@ export class ContractsService {
         } else {
           await this.contractAttributeValuesService.create(
             {
-              value: data.ContractAttributeValue.value,
+              value: data.ContractAttributeValue ? data.ContractAttributeValue?.value : 'Empty',
               contractAttributeId: attributeId
             },
             user
