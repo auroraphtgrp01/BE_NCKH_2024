@@ -16,16 +16,18 @@ export class CommonService {
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
         contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
-      )
+      ) {
         result.push({
           id: contractArribute.id,
           property: contractArribute.value,
-          value: (contractArribute as any).ContractAttributeValue.value,
+          value: (contractArribute as any)?.ContractAttributeValue
+            ? (contractArribute as any)?.ContractAttributeValue?.value
+            : (contractArribute as any)?.ContractAttributeInBlockchain?.value,
           type: contractArribute.type,
           createdBy: contractArribute.createdBy,
           updatedBy: contractArribute.updatedBy
         })
-      else
+      } else
         result.push({
           id: contractArribute.id,
           value: contractArribute.value,

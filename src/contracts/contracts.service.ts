@@ -742,14 +742,29 @@ export class ContractsService {
     return `This action removes a #${id} contract`
   }
 
-  //   async compareAttribute(contractId: string): Promise<boolean> {
-  //      const inContract = await this.getContractDetailsById(contractId)
-  //      const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({ where: { contractId }, include: { ContractAttributeValueInBlockchain: true } })
-  //      const
-  //      return true
-  //   }
+  async compareAttribute(contractId: string) {
+    const inContract = await this.getContractDetailsById(contractId).then((res: any) =>
+      this.commonService.convertToTypeContractAttributesResponse(res.contractAttributes)
+    )
 
-  //   async getContractDetailsInBlockchainById(contractId: string) {
-  //      const
-  //   }
+    const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({
+      where: { contractId },
+      include: { ContractAttributeValueInBlockchain: true }
+    })
+    for (const item of inContract) {
+      const itemInBlockChain = inBlockChain.find((element: any) => element.index === (item as any).index)
+      if (!itemInBlockChain) {
+        return { result: false }
+      }
+      if (item.value !== itemInBlockChain.ContractAttributeValueInBlockchain.value) {
+        return { result: false }
+      }
+    }
+
+    return { result: true }
+  }
+
+  // async getContractDetailsInBlockchainById(contractId: string) {
+  //    const
+  // }
 }
