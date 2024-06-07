@@ -31,7 +31,7 @@ export class ParticipantsService {
     @Inject(forwardRef(() => ContractsService)) private readonly contractService: ContractsService,
     private queueService: QueueRedisService,
     private commonService: CommonService
-  ) {}
+  ) { }
   async create(createParticipantDto: CreateParticipantDto, user: IUser) {
     const { contractId, permission, email, userId, status } = createParticipantDto
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -116,7 +116,9 @@ export class ParticipantsService {
   }
 
   async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
-    const { id, userId, vote, ...rest } = updateParticipantDto
+    const { id, userId, vote, individual, ...rest } = updateParticipantDto
+    console.log('individual', individual);
+
     const find =
       id && !userId
         ? await this.findOneById(id)
@@ -138,16 +140,15 @@ export class ParticipantsService {
         updatedBy: { id: user.id, name: user.name, email: user.email }
       }
     })
-
+    let isVotedAll
     if (vote) {
       const arbitrations = (
         await this.prismaService.client.participant.findMany({
           where: { contractId: find.contractId }
         })
       ).filter((item: any) => ERoleParticipant[item.permission.ROLES] === ERoleParticipant.ARBITRATION)
-      const isVoted = arbitrations.every((item: any) => item.vote !== null)
-
-      if (isVoted) await this.contractService.update({ id: find.contractId, status: contractStatus.VOTED }, user)
+      isVotedAll = this.calculateVoteRatio(arbitrations, individual)
+      if (isVotedAll.result) await this.contractService.update({ id: find.contractId, status: contractStatus.VOTED, winnerAddressWallet: isVotedAll.addressWallet }, user)
     }
 
     if (updateParticipantDto.status) {
@@ -166,11 +167,34 @@ export class ParticipantsService {
 
     const status = (await this.contractService.findOneById(participant.contractId)).status
 
-    return { participant, contractStatus: status }
-    return null
+    return { participant, contractStatus: status, isVotedAll }
   }
 
   remove(id: number) {
     return `This action removes a #${id} participant`
   }
+
+  calculateVoteRatio(votes: any[], individual: any) {
+    if (!votes || !individual) return { result: false };
+
+    const countVotes = (voteType: 'A' | 'B' | null): number =>
+      votes.filter((item) => item.vote === voteType).length;
+
+    const countA = countVotes('A');
+    const countB = countVotes('B');
+    const countUnd = countVotes(null);
+
+    if (countA !== countB && countUnd === 0) {
+      const personWinner = countA > countB ? 'Customer' : 'Supplier';
+      const addressWallet = countA > countB ? individual.sender : individual.receiver;
+
+      return {
+        result: true,
+        personWinner,
+        addressWallet
+      };
+    }
+
+    return { result: false };
+  };
 }

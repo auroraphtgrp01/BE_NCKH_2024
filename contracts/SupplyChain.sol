@@ -24,9 +24,9 @@ contract SupplyChain {
   }
   address private owner;
   address[] private users;
-  mapping(address => uint) private assets;
+  mapping(address => uint256) private assets;
   address private supplier;
-  uint private totalBalance;
+  uint256 private totalBalance;
   Stage[] private stages;
   uint8 private currentStage;
   Status private status;
@@ -37,8 +37,8 @@ contract SupplyChain {
     address owner,
     address[] user,
     address supplier,
-    uint totalBalance,
-    uint currentBalance,
+    uint256 totalBalance,
+    uint256 currentBalance,
     uint deployAt
   );
   event widthdrew(address to, uint amount, uint totalBalance, uint currentBalance, uint widthdrewAt);
@@ -47,14 +47,14 @@ contract SupplyChain {
   constructor(
     address[] memory _user,
     address _supplier,
-    uint _total,
+    uint256 _total,
     StageData[] memory _stages,
     string memory _privateKey
   ) {
     currentStage = 0;
     privateKey = _privateKey;
     status = Status.ENFORCE;
-    totalBalance = _total * 1 ether;
+    totalBalance = _total;
     supplier = _supplier;
     owner = msg.sender;
     for (uint8 i = 0; i < _user.length; i++) {
@@ -179,7 +179,7 @@ contract SupplyChain {
 
   function withDrawByPercent(
     address payable _addressWallet,
-    uint _percent,
+    uint256 _percent,
     string memory _privateKey
   )
     public
@@ -188,7 +188,7 @@ contract SupplyChain {
     checkUserReceive(_addressWallet)
     notEnoughEthers((totalBalance * _percent) / 100)
   {
-    uint _amount = (totalBalance * _percent) / 100;
+    uint256 _amount = (totalBalance * _percent) / 100;
     if (_addressWallet != supplier) {
       require(assets[_addressWallet] >= _amount, 'Not enough assets');
       assets[_addressWallet] -= _amount;
@@ -199,7 +199,7 @@ contract SupplyChain {
 
   function withDrawByCurrency(
     address payable _addressWallet,
-    uint _amount,
+    uint256 _amount,
     string memory _privateKey
   )
     public
@@ -237,15 +237,15 @@ contract SupplyChain {
     emit received(msg.sender, msg.value, totalBalance, address(this).balance, block.timestamp);
   }
 
-  function getBalance() public view returns (uint) {
+  function getBalance() public view returns (uint256) {
     return address(this).balance;
   }
 
-  function getAssets(address _addressWallet) public view onlyPetitioner(_addressWallet) returns (uint) {
+  function getAssets(address _addressWallet) public view onlyPetitioner(_addressWallet) returns (uint256) {
     return assets[_addressWallet];
   }
 
-  function getTotalBalance() public view returns (uint) {
+  function getTotalBalance() public view returns (uint256) {
     return totalBalance;
   }
 

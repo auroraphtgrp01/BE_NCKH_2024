@@ -36,6 +36,7 @@ import { ethers } from 'ethers'
 import { SuppliersService } from 'src/suppliers/suppliers.service'
 import { ICreateInvitation, ICreateParticipant } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
+import { OrdersService } from 'src/orders/orders.service'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -45,10 +46,10 @@ export class ContractsService {
     @Inject(forwardRef(() => ContractAttributesService))
     private readonly contractAttributesService: ContractAttributesService,
     private readonly contractAttributeValuesService: ContractAttributeValuesService,
-    private readonly suppliersService: SuppliersService,
     private readonly participantsService: ParticipantsService,
-    private readonly commonService: CommonService
-  ) {}
+    private readonly commonService: CommonService,
+    private readonly ordersService: OrdersService
+  ) { }
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -148,9 +149,129 @@ export class ContractsService {
     return newContract
   }
 
+  async createContractBySurveyId(surveyId: string, user: IUser) {
+    const newContract = await this.createEmptyContract(
+      {
+        name: 'HỢP ĐỒNG GIAO DỊCH',
+        addressWallet: user.addressWallet,
+        status: 'PARTICIPATED'
+      },
+      user
+    )
+    const surveyInfo = await this.ordersService.findOneById(surveyId)
+
+    const sum = surveyInfo.order.products.reduce((acc: number, item: any) => {
+      return acc + (item.price + item.taxPrice) * item.quantity - item.discount
+    }, 0)
+    const contractAttributeInfoArr = [
+      {
+        keyId: '28b2a95f-9d48-4261-bf38-68cf89cf6f31',
+        value: 'Empty'
+      },
+      {
+        keyId: '15b3b476-3b64-4f28-b8e3-b3dab50bf656',
+        value: surveyInfo.order.User.name
+      },
+      {
+        keyId: '25f3a94b-5415-4e39-8420-d1f626701953',
+        value: surveyInfo.order.User.address ? surveyInfo.order.User.address : 'Empty'
+      },
+      {
+        keyId: '27292812-30a6-464b-b930-d687ed316ee7',
+        value: surveyInfo.order.User.phoneNumber
+      },
+      {
+        keyId: 'b5c42fa3-6f5a-462f-ae34-ca9cfde430d1',
+        value: surveyInfo.order.User.email
+      },
+      {
+        keyId: '58a5f451-ca67-44de-9e5e-89cbfd675575',
+        value: 'Empty'
+      },
+      {
+        keyId: 'd1d3d832-08a3-4276-bf92-0982a729d9bd',
+        value: surveyInfo.order.User.addressWallet
+      },
+      //-----------
+      {
+        keyId: '28b2a95f-9d48-4261-bf38-68cf89cf6f31',
+        value: surveyInfo.supplier.name
+      },
+      {
+        keyId: '70b06a22-689b-46fd-9122-1fbd1f2f9b90',
+        value: surveyInfo.supplier.User.name
+      },
+      {
+        keyId: 'ac3e2efe-ae28-49a4-a5a7-a006efad6116',
+        value: surveyInfo.supplier.User.address ? surveyInfo.supplier.User.address : 'Empty'
+      },
+      {
+        keyId: 'e3ca49cc-3534-4739-a992-dd461fa6d4fb',
+        value: surveyInfo.supplier.phoneNumber
+      },
+      {
+        keyId: 'b08dbfdb-5ff0-4269-b831-d467e6ca7d84',
+        value: surveyInfo.supplier.email
+      },
+      {
+        keyId: '776acbb5-c407-4bc0-92b3-ac5baa27ab3a',
+        value: surveyInfo.supplier.taxCode
+      },
+      {
+        keyId: '6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2',
+        value: surveyInfo.supplier.User.addressWallet
+      },
+      {
+        keyId: '2e2f9b77-82ed-47fd-9b1d-9095b11a8a98',
+        value: String(sum)
+      }
+    ]
+
+    await this.createContractAttributeAndValueByTemplateId(
+      newContract.id,
+      '5828a8b5-0582-4f3a-83b3-e8b634d290f4',
+      user,
+      contractAttributeInfoArr
+    )
+    const participantCreates: ICreateParticipant[] = [
+      {
+        email: user.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: 'SENDER' as ERoleParticipant
+        },
+        userId: user.id,
+        status: ParticipantStatus.ACCEPTED
+      },
+      {
+        email: surveyInfo.supplier.User.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: 'RECEIVER' as ERoleParticipant
+        },
+        userId: surveyInfo.supplier.User.id,
+        status: ParticipantStatus.ACCEPTED
+      }
+    ]
+    participantCreates.map(async (item: any) => {
+      return await this.participantsService.create(item, user)
+    })
+    return { contract: newContract }
+  }
+
   async create(createContractDto: CreateContractDto, user: IUser) {
     const contractResponse: ICreateContractResponse = { contract: null, contractAttributes: [] }
-    const { invitation, templateId, orderId, rolesOfCreator, ...contractData } = createContractDto
+    const { invitation, templateId, rolesOfCreator, ...contractData } = createContractDto
     if (!(await this.usersService.findOne(contractData.addressWallet)))
       throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     const contractRecord = await this.createEmptyContract({ ...contractData }, user)
@@ -184,26 +305,6 @@ export class ContractsService {
         createContractDto.isCreateAttributeValue,
         user
       )
-      // if ((!userId && supplierId) || (userId && !supplierId))
-      //   throw new NotFoundException({ message: 'User or supplier information not provided' })
-      // else if (!userId && !supplierId)
-      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-      //     contractRecord.id,
-      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-      //     user
-      //   )
-      // else {
-      //   const _user = await this.usersService.findOneById(userId)
-      //   const supplier = await this.suppliersService.findOneById(supplierId)
-      //   if (!_user || !supplier) throw new NotFoundException({ message: 'User or supplier not found' })
-      //   contractResponse.contractAttributes = await this.createContractAttributesByTemplateId(
-      //     contractRecord.id,
-      //     templateId ? templateId : (await this.templateContractsService.findFirst()).id,
-      //     user,
-      //     _user,
-      //     supplier
-      //   )
-      // }
     }
 
     return contractResponse
@@ -269,7 +370,7 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    const { stage, stages, disputedContractId, ...rest } = updateContractDto
+    const { stage, stages, disputedContractId, winnerAddressWallet, ...rest } = updateContractDto
     const find = await this.findOneById(updateContractDto.id)
     if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const newStages: IStage[] = []
@@ -316,6 +417,7 @@ export class ContractsService {
         ...(rest as any),
         stages: stage || stages ? (stage && !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
         disputedContractId: disputedContractId ? disputedContractId : null,
+        winnerAddressWallet: winnerAddressWallet ? winnerAddressWallet : null,
         updatedBy
       }
     })
@@ -472,7 +574,7 @@ export class ContractsService {
         } else {
           await this.contractAttributeValuesService.create(
             {
-              value: data.ContractAttributeValue.value,
+              value: data.ContractAttributeValue ? data.ContractAttributeValue?.value : 'Empty',
               contractAttributeId: attributeId
             },
             user
@@ -640,14 +742,28 @@ export class ContractsService {
     return `This action removes a #${id} contract`
   }
 
-  //   async compareAttribute(contractId: string): Promise<boolean> {
-  //      const inContract = await this.getContractDetailsById(contractId)
-  //      const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({ where: { contractId }, include: { ContractAttributeValueInBlockchain: true } })
-  //      const
-  //      return true
-  //   }
+  async compareAttribute(contractId: string) {
+    const inContract = await this.getContractDetailsById(contractId).then((res: any) =>
+      this.commonService.convertToTypeContractAttributesResponse(res.contractAttributes)
+    );
 
-  //   async getContractDetailsInBlockchainById(contractId: string) {
-  //      const
-  //   }
+    const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({
+      where: { contractId },
+      include: { ContractAttributeValueInBlockchain: true }
+    });
+
+    const x = this.commonService.convertToTypeContractAttributesResponse(inBlockChain);
+
+    if (x.length !== inContract.length) return { result: false };
+
+    for (const item of x) {
+      const contractAttribute = inContract.find((attr) => attr.index === item.index);
+      if (!contractAttribute || contractAttribute.value !== item.value || contractAttribute.property !== item.property) {
+        console.log('contractAttribute', contractAttribute, '', item);
+        return { result: false };
+      }
+    }
+
+    return { result: true };
+  }
 }

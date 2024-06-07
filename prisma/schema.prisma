@@ -97,6 +97,7 @@ model Contract {
   stages                        Json[]
   disputedContractId            String?
   parentId                      String?
+  winnerAddressWallet           String?
   type                          String
   createdAt                     DateTime                        @default(now())
   updatedAt                     DateTime?                       @updatedAt
@@ -286,8 +287,6 @@ model Orders {
   suppliersId String    @db.Uuid
   userId      String    @db.Uuid
   User        User      @relation(fields: [userId], references: [id])
-  executeDate DateTime?
-  endDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   createdBy   Json?

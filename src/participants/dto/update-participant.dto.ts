@@ -43,9 +43,9 @@ export class UpdateParticipantDto {
   @IsUUID()
   readonly id?: string
 
+  @IsOptional()
   @ValidateIf((object: any) => object.id === undefined)
   @IsString()
-  @IsNotEmpty()
   @IsUUID()
   readonly userId?: string
 
@@ -63,4 +63,10 @@ export class UpdateParticipantDto {
   @IsString()
   @IsNotEmpty()
   readonly vote?: string
+
+  @IsOptional()
+  readonly individual?: {
+    receiver: string,
+    sender: string
+  }
 }

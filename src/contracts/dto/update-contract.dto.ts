@@ -142,6 +142,9 @@ export class UpdateContractDto {
   @IsOptional()
   @IsNotEmpty()
   readonly disputedContractId?: string
+
+  @IsOptional()
+  readonly winnerAddressWallet?: string
 }
 
 export class UpdateContractAttributeDto {

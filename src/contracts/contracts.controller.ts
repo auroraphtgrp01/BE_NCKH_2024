@@ -18,6 +18,11 @@ export class ContractsController {
     return await this.contractsService.createDisputeContract(createDisputeContractDto, user)
   }
 
+  @Post('create-by-survey')
+  async createContractBySurvey(@Body('surveyId') surveyId: string, @User() user: IUser) {
+    return await this.contractsService.createContractBySurveyId(surveyId, user)
+  }
+
   @Get('get-contract-details/:contractId')
   async getContractDetailsById(@Param('contractId') contractId: string, @User() user: IUser) {
     return await this.contractsService.getContractDetailsById(contractId, user)
@@ -58,8 +63,8 @@ export class ContractsController {
     return await this.contractsService.handleDeployContract(contractId)
   }
 
-  // @Get('/compare-attribute')
-  // async compareAttribute(contractId: string) {
-  //   return await this.contractsService.compareAttribute(contractId)
-  // }
+  @Get('/compare-attribute/:contractId')
+  async compareAttribute(@Param('contractId') contractId: string) {
+    return await this.contractsService.compareAttribute(contractId)
+  }
 }

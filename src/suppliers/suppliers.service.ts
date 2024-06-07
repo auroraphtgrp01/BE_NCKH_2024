@@ -6,6 +6,7 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IUser } from 'src/users/interfaces/IUser.interface'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { ERoles } from 'src/constants/enum.constant'
+import { Suppliers, User } from '@prisma/client'
 
 @Injectable()
 export class SuppliersService {
@@ -44,7 +45,7 @@ export class SuppliersService {
     return suppliers
   }
 
-  async findOneById(id: string) {
+  async findOneById(id: string): Promise<Suppliers & { images: string[]; User: User }> {
     const suppliers: any = await this.prismaService.client.suppliers.findUnique({
       where: { id },
       include: { User: true }
