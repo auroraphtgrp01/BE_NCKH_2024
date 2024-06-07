@@ -19,13 +19,14 @@ export class CommonService {
       ) {
         result.push({
           id: contractArribute.id,
-          property: contractArribute.value,
+          property: (contractArribute as any).property,
           value: (contractArribute as any)?.ContractAttributeValue
             ? (contractArribute as any)?.ContractAttributeValue?.value
             : (contractArribute as any)?.ContractAttributeInBlockchain?.value,
           type: contractArribute.type,
           createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy
+          updatedBy: contractArribute.updatedBy,
+          index: (contractArribute as any)?.index,
         })
       } else
         result.push({
@@ -33,7 +34,8 @@ export class CommonService {
           value: contractArribute.value,
           type: contractArribute.type,
           createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy
+          updatedBy: contractArribute.updatedBy,
+          index: (contractArribute as any)?.index,
         })
     }
     return result

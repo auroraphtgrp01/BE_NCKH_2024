@@ -16,6 +16,7 @@ export interface IContractAttributeResponse {
   type: string
   createdBy: any
   updatedBy?: any
+  index?: any
 }
 
 export interface IDataContractAttribute {
