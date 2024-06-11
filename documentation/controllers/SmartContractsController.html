@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -218,8 +209,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="12"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -281,7 +272,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deployContract(payload: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, supplier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>deployContract(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, supplier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: string[])</code>
                 </td>
             </tr>
 
@@ -295,8 +286,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="16"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:16</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="17"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -317,18 +308,6 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
                                                 <td>contractId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -344,6 +323,18 @@
                                                 <td>supplier</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                        <code>string[]</code>
                                             </td>
 
                                             <td>
@@ -395,8 +386,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="30"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:30</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -457,7 +448,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getABI(contractName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
+                    <code>getABI(typeContract)</code>
                 </td>
             </tr>
 
@@ -471,8 +462,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:27</a></div>
                         </td>
                     </tr>
 
@@ -487,16 +478,12 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
-                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>contractName</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-                                            </td>
+                                                <td>typeContract</td>
 
                                             <td>
                                                     No
@@ -547,8 +534,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:42</a></div>
                         </td>
                     </tr>
 
@@ -623,8 +610,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="35"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:35</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.controller.ts:37</a></div>
                         </td>
                     </tr>
 
@@ -690,6 +677,7 @@
 import { SmartContractsService } from &#x27;./smart-contracts.service&#x27;
 import { CreateSmartContractDto } from &#x27;./dto/create-smart-contract.dto&#x27;
 import { UpdateSmartContractDto } from &#x27;./dto/update-smart-contract.dto&#x27;
+import { IKeyValue, IStage } from &#x27;src/interfaces/smart-contract.interface&#x27;
 
 @Controller(&#x27;smart-contracts&#x27;)
 export class SmartContractsController {
@@ -702,16 +690,17 @@ export class SmartContractsController {
 
   @Post(&#x27;/deploy-contract&#x27;)
   async deployContract(
-    @Body() payload: any,
     @Body(&#x27;contractId&#x27;) contractId: string,
-    @Body(&#x27;supplier&#x27;) supplier: string
+    @Body(&#x27;supplier&#x27;) supplier: string,
+    @Body(&#x27;users&#x27;) user: string[]
   ) {
-    return this.smartContractsService.deployContract(payload, contractId, supplier)
+    // return this.smartContractsService.deployContract(payload, contractId, supplier, users, total)
+    return this.smartContractsService.deployContract(contractId, supplier, user)
   }
 
   @Get(&#x27;/abi&#x27;)
-  getABI(@Query() contractName: object) {
-    return this.smartContractsService.getABI(contractName)
+  getABI(@Query(&#x27;type&#x27;) typeContract: &#x27;disputed | supplyChain&#x27;) {
+    return this.smartContractsService.getABI(typeContract)
   }
 
   @Get(&#x27;:id&#x27;)
@@ -777,6 +766,19 @@ export class SmartContractsController {
             var COMPODOC_CURRENT_PAGE_URL = 'SmartContractsController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

@@ -49,7 +49,7 @@ export class ContractsService {
     private readonly participantsService: ParticipantsService,
     private readonly commonService: CommonService,
     private readonly ordersService: OrdersService
-  ) { }
+  ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -745,25 +745,29 @@ export class ContractsService {
   async compareAttribute(contractId: string) {
     const inContract = await this.getContractDetailsById(contractId).then((res: any) =>
       this.commonService.convertToTypeContractAttributesResponse(res.contractAttributes)
-    );
+    )
 
     const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({
       where: { contractId },
       include: { ContractAttributeValueInBlockchain: true }
-    });
+    })
 
-    const x = this.commonService.convertToTypeContractAttributesResponse(inBlockChain);
+    const x = this.commonService.convertToTypeContractAttributesResponse(inBlockChain)
 
-    if (x.length !== inContract.length) return { result: false };
+    if (x.length !== inContract.length) return { result: false }
 
     for (const item of x) {
-      const contractAttribute = inContract.find((attr) => attr.index === item.index);
-      if (!contractAttribute || contractAttribute.value !== item.value || contractAttribute.property !== item.property) {
-        console.log('contractAttribute', contractAttribute, '', item);
-        return { result: false };
+      const contractAttribute = inContract.find((attr) => attr.index === item.index)
+      if (
+        !contractAttribute ||
+        contractAttribute.value !== item.value ||
+        contractAttribute.property !== item.property
+      ) {
+        console.log('contractAttribute', contractAttribute, '', item)
+        return { result: false }
       }
     }
 
-    return { result: true };
+    return { result: true }
   }
 }

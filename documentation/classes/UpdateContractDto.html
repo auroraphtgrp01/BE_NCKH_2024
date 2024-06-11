@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -150,6 +141,8 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#addressWallet" >addressWallet</a>
                             </li>
                             <li>
@@ -157,30 +150,41 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#agreements" >agreements</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                <a href="#blockAddress" >blockAddress</a>
-                            </li>
-                            <li>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#contractAddress" >contractAddress</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#contractTitle" >contractTitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#disputedContractId" >disputedContractId</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#endDate" >endDate</a>
                             </li>
                             <li>
@@ -188,6 +192,10 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#executeDate" >executeDate</a>
                             </li>
                             <li>
@@ -196,19 +204,62 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#gasPrices" >gasPrices</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#id" >id</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#stage" >stage</a>
+                            </li>
+                            <li>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#stages" >stages</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#startDate" >startDate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#status" >status</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#votings" >votings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#winnerAddressWallet" >winnerAddressWallet</a>
                             </li>
                         </ul>
                     </td>
@@ -238,6 +289,8 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>addressWallet</b></span>
                         <a href="#addressWallet"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -260,7 +313,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -277,6 +330,8 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>agreements</b></span>
                         <a href="#agreements"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -299,44 +354,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:71</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="blockAddress"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                        <span ><b>blockAddress</b></span>
-                        <a href="#blockAddress"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />@Length(66, 66, {message: undefined})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:133</a></div>
                         </td>
                     </tr>
 
@@ -352,6 +370,8 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>contractAddress</b></span>
                         <a href="#contractAddress"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -374,7 +394,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:36</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:87</a></div>
                         </td>
                     </tr>
 
@@ -390,6 +410,8 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>contractTitle</b></span>
                         <a href="#contractTitle"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -412,7 +434,46 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disputedContractId"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>disputedContractId</b></span>
+                        <a href="#disputedContractId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@IsNotEmpty()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:144</a></div>
                         </td>
                     </tr>
 
@@ -429,6 +490,9 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>endDate</b></span>
                         <a href="#endDate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -445,13 +509,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@MinDate(new Date(), {message: undefined})<br />
+                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@IsAfterDate(&#x27;executeDate&#x27;)<br />@Type(undefined)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:116</a></div>
                         </td>
                     </tr>
 
@@ -468,6 +532,10 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>executeDate</b></span>
                         <a href="#executeDate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -484,13 +552,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@MinDate(new Date(), {message: undefined})<br />
+                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@IsAfterDate(&#x27;startDate&#x27;)<br />@IsBeforeDate(&#x27;endDate&#x27;)<br />@Type(undefined)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:109</a></div>
                         </td>
                     </tr>
 
@@ -508,6 +576,8 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>gasPrices</b></span>
                         <a href="#gasPrices"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -530,7 +600,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:94</a></div>
                         </td>
                     </tr>
 
@@ -545,6 +615,8 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
                         <span ><b>id</b></span>
                         <a href="#id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -561,13 +633,94 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsOptional()<br />@IsString()<br />
+                            @IsString()<br />@IsNotEmpty()<br />@IsUUID()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stage"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>stage</b></span>
+                        <a href="#stage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/StageDto.html" target="_self" >StageDto</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@ValidateNested()<br />@Type(undefined)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stages"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>stages</b></span>
+                        <a href="#stages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/StageDto.html" target="_self" >StageDto[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@IsArray()<br />@ValidateNested({each: true})<br />@Type(undefined)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:127</a></div>
                         </td>
                     </tr>
 
@@ -584,6 +737,9 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>startDate</b></span>
                         <a href="#startDate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -600,13 +756,128 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@MinDate(new Date(), {message: undefined})<br />
+                            @IsOptional()<br />@Transform( &#x3D;&gt; )<br />@IsDate({message: undefined})<br />@MinDate(new Date(), {message: undefined})<br />@Type(undefined)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="status"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>status</b></span>
+                        <a href="#status"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="votings"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>votings</b></span>
+                        <a href="#votings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@IsObject()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="winnerAddressWallet"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>winnerAddressWallet</b></span>
+                        <a href="#winnerAddressWallet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/contracts/dto/update-contract.dto.ts:147</a></div>
                         </td>
                     </tr>
 
@@ -626,76 +897,162 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDate,
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinDate,
+  ValidateIf,
   ValidateNested
 } from &#x27;class-validator&#x27;
 import { Transform, Type } from &#x27;class-transformer&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 import { GasPriceDto } from &#x27;./create-contract.dto&#x27;
-import { CreatePartyInfoDto } from &#x27;src/party-infos/dto/create-party-info.dto&#x27;
+import { IsAfterDate } from &#x27;src/decorators/is-after-Date.decorator&#x27;
+import { IsBeforeDate } from &#x27;src/decorators/is-before-date.decorator&#x27;
+import { EStageStatus } from &#x27;src/constants/enum.constant&#x27;
 
-export class UpdateContractDto {
+export class StageDto {
   @IsOptional()
   @IsString()
-  id: string
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id?: string
+
+  @IsOptional()
+  @IsNumber()
+  readonly percent?: number
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly description?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: EStageStatus
+}
+
+export class CreateContractAttributeDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id: string
+
+  @IsOptional()
+  @IsString()
+  readonly property: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly value: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+}
+
+export class UpdateContractDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet?: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle: string
+  readonly contractTitle?: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS })
-  contractAddress: string
-
-  @IsOptional()
-  @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
-  blockAddress: string
+  readonly contractAddress?: string
 
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() &#x3D;&gt; GasPriceDto)
-  gasPrices: GasPriceDto[]
+  readonly gasPrices?: GasPriceDto[]
 
   @IsOptional()
   @Transform(({ value }) &#x3D;&gt; new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
   @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  startDate: Date
+  @Type(() &#x3D;&gt; Date)
+  readonly startDate?: Date
 
   @IsOptional()
   @Transform(({ value }) &#x3D;&gt; new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  endDate: Date
+  @IsAfterDate(&#x27;startDate&#x27;)
+  @IsBeforeDate(&#x27;endDate&#x27;)
+  @Type(() &#x3D;&gt; Date)
+  readonly executeDate?: Date
 
   @IsOptional()
   @Transform(({ value }) &#x3D;&gt; new Date(value))
   @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  executeDate: Date
+  @IsAfterDate(&#x27;executeDate&#x27;)
+  @Type(() &#x3D;&gt; Date)
+  readonly endDate?: Date
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() &#x3D;&gt; StageDto)
+  readonly stage?: StageDto
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() &#x3D;&gt; StageDto)
+  readonly stages?: StageDto[]
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
-  agreements: string[]
+  readonly agreements?: string[]
+
+  @IsOptional()
+  readonly status?: string
+
+  @IsOptional()
+  @IsObject()
+  readonly votings?: object
+
+  @IsOptional()
+  @IsNotEmpty()
+  readonly disputedContractId?: string
+
+  @IsOptional()
+  readonly winnerAddressWallet?: string
+}
+
+export class UpdateContractAttributeDto {
+  @IsString()
+  id: string
+  @IsArray()
+  readonly updatedAttributes: any[]
+  @IsOptional()
+  @IsArray()
+  readonly deleteArray: any[]
 }
 </code></pre>
     </div>
@@ -738,6 +1095,19 @@ export class UpdateContractDto {
             var COMPODOC_CURRENT_PAGE_URL = 'UpdateContractDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

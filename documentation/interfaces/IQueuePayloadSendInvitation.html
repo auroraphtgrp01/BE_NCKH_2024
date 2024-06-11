@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -166,9 +157,9 @@
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#idInvitation" 
+                                        <a href="#idParticipant" 
 >
-                                            idInvitation
+                                            idParticipant
                                         </a>
                                 </li>
                                 <li>
@@ -309,9 +300,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="idInvitation"></a>
-                                        <span class="name "><b>idInvitation</b>
-                                            <a href="#idInvitation">
+                                        <a name="idParticipant"></a>
+                                        <span class="name "><b>idParticipant</b>
+                                            <a href="#idParticipant">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -319,7 +310,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>idInvitation:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>idParticipant:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -478,12 +469,15 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { InjectQueue } from &#x27;@nestjs/bullmq&#x27;
 import { Injectable } from &#x27;@nestjs/common&#x27;
 import { Queue } from &#x27;bullmq&#x27;
+import { IStage, IStageDeploy } from &#x27;src/interfaces/smart-contract.interface&#x27;
 
 @Injectable()
 export class QueueRedisService {
-  constructor(@InjectQueue(&#x27;deployContract&#x27;) private readonly deployContractQueue: Queue,
-            @InjectQueue(&#x27;sendInvitation&#x27;) private readonly sendInvitationQueue: Queue
-) { }
+  constructor(
+    @InjectQueue(&#x27;deployContract&#x27;) private readonly deployContractQueue: Queue,
+    @InjectQueue(&#x27;sendInvitation&#x27;) private readonly sendInvitationQueue: Queue,
+    @InjectQueue(&#x27;sendRequestSurvey&#x27;) private readonly sendRequestSurveyQueue: Queue
+  ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
     this.deployContractQueue.add(&#x27;deployContract&#x27;, job)
@@ -492,27 +486,40 @@ export class QueueRedisService {
   enqueueSendInvitation(job: IQueuePayloadSendInvitation) {
     this.sendInvitationQueue.add(&#x27;sendInvitation&#x27;, job)
   }
+
+  enqueueSendRequestSurvey(job: IQueuePayloadSendRequestSurvey) {
+    this.sendRequestSurveyQueue.add(&#x27;sendRequestSurvey&#x27;, job)
+  }
 }
 
 export interface IQueuePayloadDeployContract {
   contractId: string
-  _keys: string[]
-  _values: string[]
   _supplier: string
+  _users: string[]
+  _total: number
+  _stages: IStageDeploy[]
 }
-
 
 export interface IQueuePayloadSendInvitation {
-  to: string;
-  from: string;
-  receiver: string;
-  contractName: string;
-  addressWalletSender: string;
-  messages: string;
-  link: string;
-  idInvitation: string
+  to: string
+  from: string
+  receiver: string
+  contractName: string
+  addressWalletSender: string
+  messages: string
+  link: string
+  idParticipant: string
 }
 
+export interface IQueuePayloadSendRequestSurvey {
+  to: string
+  from: string
+  receiver: string
+  surveyCode: string
+  addressWalletSender: string
+  messages: string
+  link: string
+}
 </code></pre>
     </div>
 </div>
@@ -553,6 +560,19 @@ export interface IQueuePayloadSendInvitation {
             var COMPODOC_CURRENT_PAGE_URL = 'IQueuePayloadSendInvitation.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

@@ -66,7 +66,7 @@ export class UpdateParticipantDto {
 
   @IsOptional()
   readonly individual?: {
-    receiver: string,
+    receiver: string
     sender: string
   }
 }

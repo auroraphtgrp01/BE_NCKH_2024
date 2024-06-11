@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -151,51 +142,50 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#addressWallet" >addressWallet</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#dateOfBirth" >dateOfBirth</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#email" >email</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#gender" >gender</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#id" >id</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#indentifyNumber" >indentifyNumber</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#name" >name</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#phoneNumber" >phoneNumber</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#roleId" >roleId</a>
                             </li>
                         </ul>
                     </td>
@@ -226,7 +216,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
                         <span ><b>addressWallet</b></span>
                         <a href="#addressWallet"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -249,7 +238,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/users/dto/update-user.dto.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/users/dto/update-user.dto.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -264,7 +253,6 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
                         <span ><b>dateOfBirth</b></span>
                         <a href="#dateOfBirth"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -287,7 +275,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/users/dto/update-user.dto.ts:41</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/users/dto/update-user.dto.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -303,7 +291,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
                         <span ><b>email</b></span>
                         <a href="#email"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -326,7 +313,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/users/dto/update-user.dto.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/users/dto/update-user.dto.ts:35</a></div>
                         </td>
                     </tr>
 
@@ -340,162 +327,8 @@
                     <a name="gender"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
                         <span ><b>gender</b></span>
                         <a href="#gender"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/users/dto/update-user.dto.ts:37</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="id"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
-                        <span ><b>id</b></span>
-                        <a href="#id"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsNotEmpty({message: undefined})<br />@IsString({message: undefined})<br />@Length(36, 36, {message: undefined})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/users/dto/update-user.dto.ts:19</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="indentifyNumber"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
-                        <span ><b>indentifyNumber</b></span>
-                        <a href="#indentifyNumber"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />@MaxLength(12)<br />@MinLength(12)<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/users/dto/update-user.dto.ts:49</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="name"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
-                        <span ><b>name</b></span>
-                        <a href="#name"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />@IsString({message: undefined})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/users/dto/update-user.dto.ts:23</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="phoneNumber"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier">Readonly</span>
-                        <span ><b>phoneNumber</b></span>
-                        <a href="#phoneNumber"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -523,6 +356,194 @@
 
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="id"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>id</b></span>
+                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsNotEmpty({message: undefined})<br />@IsString({message: undefined})<br />@Length(36, 36, {message: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/users/dto/update-user.dto.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="indentifyNumber"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>indentifyNumber</b></span>
+                        <a href="#indentifyNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@MaxLength(12)<br />@MinLength(12)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/users/dto/update-user.dto.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="name"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>name</b></span>
+                        <a href="#name"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@IsString({message: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/users/dto/update-user.dto.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="phoneNumber"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>phoneNumber</b></span>
+                        <a href="#phoneNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/users/dto/update-user.dto.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roleId"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>roleId</b></span>
+                        <a href="#roleId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsOptional()<br />@IsString()<br />@IsNotEmpty()<br />@IsUUID()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/users/dto/update-user.dto.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
 </section>
 
 
@@ -543,47 +564,54 @@
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinLength
 } from &#x27;class-validator&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 
 export class UpdateUserDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })
   @IsString({ message: RESPONSE_MESSAGES.ID_MUST_BE_A_STRING })
   @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID })
-  readonly id: string
+  id: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })
-  readonly name: string
+  name: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   @MinLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  readonly addressWallet: string
+  addressWallet: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
-  readonly email: string
+  email: string
 
   @IsOptional()
-  readonly gender: string
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  roleId: string
+
+  @IsOptional()
+  gender: string
 
   @IsOptional()
   @IsDateString({}, { message: RESPONSE_MESSAGES.DATEOFBIRTH_MUST_BE_A_DATE })
-  readonly dateOfBirth: string
+  dateOfBirth: string
 
   @IsOptional()
-  readonly phoneNumber: string
+  phoneNumber: string
 
   @IsOptional()
   @MaxLength(12)
   @MinLength(12)
-  readonly indentifyNumber: string
+  indentifyNumber: string
 }
 
 export class UpdateUserPINDto {
@@ -633,6 +661,19 @@ export class UpdateUserPINDto {
             var COMPODOC_CURRENT_PAGE_URL = 'UpdateUserDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

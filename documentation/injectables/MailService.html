@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -146,6 +137,10 @@
                                     <span class="modifier">Async</span>
                                 <a href="#sendMail" >sendMail</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendRequestSurvey" >sendRequestSurvey</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -169,7 +164,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/mailer/mailer.service.ts:7</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/mailer/mailer.service.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -234,8 +229,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="9"
-                                    class="link-to-prism">src/mailer/mailer.service.ts:9</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="8"
+                                    class="link-to-prism">src/mailer/mailer.service.ts:8</a></div>
                         </td>
                     </tr>
 
@@ -281,36 +276,121 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendRequestSurvey"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>sendRequestSurvey</b></span>
+                        <a href="#sendRequestSurvey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendRequestSurvey(payload: <a href="../interfaces/RequestSurveyPayload.html" target="_self">RequestSurveyPayload</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="25"
+                                    class="link-to-prism">src/mailer/mailer.service.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/RequestSurveyPayload.html" target="_self" >RequestSurveyPayload</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MailerService } from &#x27;@nestjs-modules/mailer&#x27;;
-import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { log } from &#x27;console&#x27;;
-import { MailPayload } from &#x27;src/mailer/mail-payload.i&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MailerService } from &#x27;@nestjs-modules/mailer&#x27;
+import { Injectable } from &#x27;@nestjs/common&#x27;
+import { MailPayload, RequestSurveyPayload } from &#x27;src/mailer/mail-payload.i&#x27;
 
 @Injectable()
 export class MailService {
-    constructor(private readonly mailerService: MailerService) { }
-    async sendMail(payload: MailPayload) {
-        await this.mailerService.sendMail({
-            to: payload.to,
-            from: payload.from,
-            subject: &#x27;Invitation to enter into an electronic contract&#x27;,
-            template: &#x27;invitation&#x27;,
-            context: {
-                receiver: payload.receiver,
-                contractName: payload.contractName,
-                addressWalletSender: payload.addressWalletSender,
-                messages: payload.messages,
-                link: payload.link,
-            }
-        })
-        return true
-    }
+  constructor(private readonly mailerService: MailerService) {}
+  async sendMail(payload: MailPayload) {
+    await this.mailerService.sendMail({
+      to: payload.to,
+      from: payload.from,
+      subject: &#x27;Invitation to enter into an electronic contract&#x27;,
+      template: &#x27;invitation&#x27;,
+      context: {
+        receiver: payload.receiver,
+        contractName: payload.contractName,
+        addressWalletSender: payload.addressWalletSender,
+        messages: payload.messages,
+        link: payload.link
+      }
+    })
+    return true
+  }
+
+  async sendRequestSurvey(payload: RequestSurveyPayload) {
+    await this.mailerService.sendMail({
+      to: payload.to,
+      from: payload.from,
+      subject: &#x27;Request a Product Quote&#x27;,
+      template: &#x27;invitation&#x27;,
+      context: {
+        receiver: payload.receiver,
+        surveyCode: payload.surveyCode,
+        addressWalletSender: payload.addressWalletSender,
+        messages: payload.messages,
+        link: payload.link
+      }
+    })
+    return true
+  }
 }
 </code></pre>
     </div>
@@ -358,6 +438,19 @@ export class MailService {
             var COMPODOC_CURRENT_PAGE_URL = 'MailService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

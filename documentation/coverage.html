@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -170,7 +161,7 @@
             <td>AuthController</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+                <span class="coverage-count">(0/5)</span>
             </td>
         </tr>
         <tr class="low">
@@ -182,7 +173,7 @@
             <td>AuthService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
         <tr class="low">
@@ -236,19 +227,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/CommonService.html">src/common.service.ts</a>
+                <a href="./injectables/CommonService.html">src/commons/common.service.ts</a>
             </td>
             <td>injectable</td>
             <td>CommonService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+                <span class="coverage-count">(0/4)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#RESPONSE_MESSAGES">src/constants/responseMessage.ts</a>
+                <a href="./miscellaneous/variables.html#RESPONSE_MESSAGES">src/constants/responseMessage.constant.ts</a>
             </td>
             <td>variable</td>
             <td>RESPONSE_MESSAGES</td>
@@ -278,7 +269,7 @@
             <td>ContractAttributeValuesService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
         <tr class="low">
@@ -290,7 +281,7 @@
             <td>CreateContractAttributeValueDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -302,7 +293,7 @@
             <td>UpdateContractAttributeValueDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
+                <span class="coverage-count">(0/4)</span>
             </td>
         </tr>
         <tr class="low">
@@ -314,7 +305,7 @@
             <td>ContractAttributesController</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -326,7 +317,19 @@
             <td>ContractAttributesService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
+                <span class="coverage-count">(0/12)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/ContractAttributesDto.html">src/contract-attributes/dto/create-contract-attribute.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>ContractAttributesDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
             </td>
         </tr>
         <tr class="low">
@@ -338,7 +341,19 @@
             <td>CreateContractAttributeDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateContractAttributesDto.html">src/contract-attributes/dto/create-contract-attribute.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateContractAttributesDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -350,55 +365,7 @@
             <td>UpdateContractAttributeDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./controllers/ContractPartyInfosController.html">src/contract-party-infos/contract-party-infos.controller.ts</a>
-            </td>
-            <td>controller</td>
-            <td>ContractPartyInfosController</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/6)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./injectables/ContractPartyInfosService.html">src/contract-party-infos/contract-party-infos.service.ts</a>
-            </td>
-            <td>injectable</td>
-            <td>ContractPartyInfosService</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./classes/CreateContractPartyInfoDto.html">src/contract-party-infos/dto/create-contract-party-info.dto.ts</a>
-            </td>
-            <td>class</td>
-            <td>CreateContractPartyInfoDto</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./classes/UpdateContractPartyInfoDto.html">src/contract-party-infos/dto/update-contract-party-info.dto.ts</a>
-            </td>
-            <td>class</td>
-            <td>UpdateContractPartyInfoDto</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
+                <span class="coverage-count">(0/5)</span>
             </td>
         </tr>
         <tr class="low">
@@ -410,7 +377,7 @@
             <td>ContractsController</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/13)</span>
             </td>
         </tr>
         <tr class="low">
@@ -422,7 +389,19 @@
             <td>ContractsService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/18)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateContractAttributesDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateContractAttributesDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -434,7 +413,43 @@
             <td>CreateContractDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/11)</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateDisputeContractDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateDisputeContractDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateEmptyContractDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateEmptyContractDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DataUpdateContractAttributeDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>DataUpdateContractAttributeDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
             </td>
         </tr>
         <tr class="low">
@@ -452,13 +467,133 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./classes/InvitationsDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>InvitationsDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PermissionDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>PermissionDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/TemplateContractDto.html">src/contracts/dto/create-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>TemplateContractDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateContractAttributeDto.html">src/contracts/dto/update-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateContractAttributeDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/StageDto.html">src/contracts/dto/update-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>StageDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateContractAttributeDto.html">src/contracts/dto/update-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateContractAttributeDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./classes/UpdateContractDto.html">src/contracts/dto/update-contract.dto.ts</a>
             </td>
             <td>class</td>
             <td>UpdateContractDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/11)</span>
+                <span class="coverage-count">(0/16)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/DynamicType.html">src/decorators/Common.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DynamicType</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IConfigService.html">src/decorators/Common.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IConfigService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#IsAfterDate">src/decorators/is-after-Date.decorator.ts</a>
+            </td>
+            <td>function</td>
+            <td>IsAfterDate</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#IsBeforeDate">src/decorators/is-before-date.decorator.ts</a>
+            </td>
+            <td>function</td>
+            <td>IsBeforeDate</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
@@ -512,10 +647,154 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/IContractAttributeValue.html">src/interfaces/contract.interface.ts</a>
+                <a href="./classes/CreateImageDto.html">src/images/dto/create-image.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateImageDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateImageDto.html">src/images/dto/update-image.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateImageDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Image.html">src/images/entities/image.entity.ts</a>
+            </td>
+            <td>class</td>
+            <td>Image</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/ImagesController.html">src/images/images.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>ImagesController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ImagesService.html">src/images/images.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ImagesService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ErrorHandlingInterceptor.html">src/interceptors/error-handling.interceptor.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ErrorHandlingInterceptor</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ICreateContractAttributeValue.html">src/interfaces/contract-attribute-value.interface.ts</a>
             </td>
             <td>interface</td>
-            <td>IContractAttributeValue</td>
+            <td>ICreateContractAttributeValue</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IContractAttributeResponse.html">src/interfaces/contract-attribute.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IContractAttributeResponse</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ICreateContractAttributeRecord.html">src/interfaces/contract-attribute.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ICreateContractAttributeRecord</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IDataContractAttribute.html">src/interfaces/contract-attribute.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IDataContractAttribute</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IContractAttributeValueResponse.html">src/interfaces/contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IContractAttributeValueResponse</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IContractResponse.html">src/interfaces/contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IContractResponse</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ICreateContractResponse.html">src/interfaces/contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ICreateContractResponse</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/3)</span>
@@ -536,22 +815,58 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./interfaces/IStage.html">src/interfaces/contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IStage</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IVoting.html">src/interfaces/contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IVoting</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./interfaces/IExecutor.html">src/interfaces/executor.interface.ts</a>
             </td>
             <td>interface</td>
             <td>IExecutor</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/5)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./classes/CreateInvitationDto.html">src/invitations/dto/create-invitation.dto.ts</a>
+                <a href="./interfaces/IOrderProduct.html">src/interfaces/order-product.interface.ts</a>
             </td>
-            <td>class</td>
-            <td>CreateInvitationDto</td>
+            <td>interface</td>
+            <td>IOrderProduct</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/ICreateInvitation.html">src/interfaces/participant.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>ICreateInvitation</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/4)</span>
@@ -560,22 +875,10 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./classes/UpdateInvitationDto.html">src/invitations/dto/update-invitation.dto.ts</a>
+                <a href="./interfaces/ICreateParticipant.html">src/interfaces/participant.interface.ts</a>
             </td>
-            <td>class</td>
-            <td>UpdateInvitationDto</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/1)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./controllers/InvitationsController.html">src/invitations/invitations.controller.ts</a>
-            </td>
-            <td>controller</td>
-            <td>InvitationsController</td>
+            <td>interface</td>
+            <td>ICreateParticipant</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/6)</span>
@@ -584,13 +887,85 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/InvitationsService.html">src/invitations/invitations.service.ts</a>
+                <a href="./interfaces/IPermissionContract.html">src/interfaces/participant.interface.ts</a>
             </td>
-            <td>injectable</td>
-            <td>InvitationsService</td>
+            <td>interface</td>
+            <td>IPermissionContract</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IUpdateParticipant.html">src/interfaces/participant.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IUpdateParticipant</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IKeyValue.html">src/interfaces/smart-contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IKeyValue</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IKeyValueDeploy.html">src/interfaces/smart-contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IKeyValueDeploy</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IStage.html">src/interfaces/smart-contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IStage</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IStageDeploy.html">src/interfaces/smart-contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IStageDeploy</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IValueSmartContract.html">src/interfaces/smart-contract.interface.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IValueSmartContract</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -608,13 +983,25 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./interfaces/RequestSurveyPayload.html">src/mailer/mail-payload.i.ts</a>
+            </td>
+            <td>interface</td>
+            <td>RequestSurveyPayload</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./injectables/MailService.html">src/mailer/mailer.service.ts</a>
             </td>
             <td>injectable</td>
             <td>MailService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+                <span class="coverage-count">(0/4)</span>
             </td>
         </tr>
         <tr class="low">
@@ -632,10 +1019,22 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./classes/CreatePartyDto.html">src/parties/dto/create-party.dto.ts</a>
+                <a href="./classes/CreateOrderDto.html">src/orders/dto/create-order.dto.ts</a>
             </td>
             <td>class</td>
-            <td>CreatePartyDto</td>
+            <td>CreateOrderDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/OrderProductDto.html">src/orders/dto/update-order.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>OrderProductDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/6)</span>
@@ -644,10 +1043,142 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./classes/UpdatePartyDto.html">src/parties/dto/update-party.dto.ts</a>
+                <a href="./classes/UpdateOrderDto.html">src/orders/dto/update-order.dto.ts</a>
             </td>
             <td>class</td>
-            <td>UpdatePartyDto</td>
+            <td>UpdateOrderDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/OrdersController.html">src/orders/orders.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>OrdersController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/OrdersService.html">src/orders/orders.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>OrdersService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/13)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateParticipantDto.html">src/participants/dto/create-participant.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateParticipantDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/InvitationDto.html">src/participants/dto/create-participant.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>InvitationDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/SendInvitationsDto.html">src/participants/dto/create-participant.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>SendInvitationsDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/PermissionDto.html">src/participants/dto/update-participant.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>PermissionDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateParticipantDto.html">src/participants/dto/update-participant.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateParticipantDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/ParticipantsController.html">src/participants/participants.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>ParticipantsController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/ParticipantsService.html">src/participants/participants.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ParticipantsService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/11)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateProductDto.html">src/products/dto/create-product.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateProductDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateProductDto.html">src/products/dto/update-product.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateProductDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/1)</span>
@@ -656,73 +1187,37 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./controllers/PartiesController.html">src/parties/parties.controller.ts</a>
-            </td>
-            <td>controller</td>
-            <td>PartiesController</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./injectables/PartiesService.html">src/parties/parties.service.ts</a>
-            </td>
-            <td>injectable</td>
-            <td>PartiesService</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./classes/CreatePartyInfoDto.html">src/party-infos/dto/create-party-info.dto.ts</a>
+                <a href="./classes/Product.html">src/products/entities/product.entity.ts</a>
             </td>
             <td>class</td>
-            <td>CreatePartyInfoDto</td>
+            <td>Product</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./classes/UpdatePartyInfoDto.html">src/party-infos/dto/update-party-info.dto.ts</a>
-            </td>
-            <td>class</td>
-            <td>UpdatePartyInfoDto</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
-            </td>
-        </tr>
-        <tr class="low">
-            <td>
-                <!-- miscellaneous -->
-                <a href="./controllers/PartyInfosController.html">src/party-infos/party-infos.controller.ts</a>
+                <a href="./controllers/ProductsController.html">src/products/products.controller.ts</a>
             </td>
             <td>controller</td>
-            <td>PartyInfosController</td>
+            <td>ProductsController</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/6)</span>
+                <span class="coverage-count">(0/7)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/PartyInfosService.html">src/party-infos/party-infos.service.ts</a>
+                <a href="./injectables/ProductsService.html">src/products/products.service.ts</a>
             </td>
             <td>injectable</td>
-            <td>PartyInfosService</td>
+            <td>ProductsService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
         <tr class="low">
@@ -732,6 +1227,18 @@
             </td>
             <td>class</td>
             <td>QueueProcessorSendInvitation</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/QueueProcessorSendRequestSurvey.html">src/queues/queue-processor.service.ts</a>
+            </td>
+            <td>class</td>
+            <td>QueueProcessorSendRequestSurvey</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/8)</span>
@@ -758,7 +1265,7 @@
             <td>QueueRedisService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/5)</span>
             </td>
         </tr>
         <tr class="low">
@@ -770,7 +1277,7 @@
             <td>IQueuePayloadDeployContract</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
@@ -783,6 +1290,66 @@
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./interfaces/IQueuePayloadSendRequestSurvey.html">src/queues/queue-redis.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>IQueuePayloadSendRequestSurvey</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateRoleDto.html">src/roles/dto/create-role.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateRoleDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateRoleDto.html">src/roles/dto/update-role.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateRoleDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/RolesController.html">src/roles/roles.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>RolesController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/RolesService.html">src/roles/roles.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>RolesService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
@@ -836,13 +1403,121 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
+                <a href="./classes/CreateSupplierDto.html">src/suppliers/dto/create-supplier.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateSupplierDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateSupplierDto.html">src/suppliers/dto/update-supplier.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateSupplierDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/SuppliersController.html">src/suppliers/suppliers.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>SuppliersController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/SuppliersService.html">src/suppliers/suppliers.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SuppliersService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/9)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateContractAttributeDto.html">src/template-contracts/dto/create-template-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateContractAttributeDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/CreateTemplateContractDto.html">src/template-contracts/dto/create-template-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>CreateTemplateContractDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/UpdateTemplateContractDto.html">src/template-contracts/dto/update-template-contract.dto.ts</a>
+            </td>
+            <td>class</td>
+            <td>UpdateTemplateContractDto</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./controllers/TemplateContractsController.html">src/template-contracts/template-contracts.controller.ts</a>
+            </td>
+            <td>controller</td>
+            <td>TemplateContractsController</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/TemplateContractsService.html">src/template-contracts/template-contracts.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>TemplateContractsService</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
                 <a href="./classes/CreateUserDto.html">src/users/dto/create-user.dto.ts</a>
             </td>
             <td>class</td>
             <td>CreateUserDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
+                <span class="coverage-count">(0/10)</span>
             </td>
         </tr>
         <tr class="low">
@@ -854,7 +1529,7 @@
             <td>UpdateUserDto</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
+                <span class="coverage-count">(0/10)</span>
             </td>
         </tr>
         <tr class="low">
@@ -878,7 +1553,7 @@
             <td>IUser</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
@@ -890,7 +1565,7 @@
             <td>UsersController</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
+                <span class="coverage-count">(0/10)</span>
             </td>
         </tr>
         <tr class="low">
@@ -1063,6 +1738,19 @@
             var COMPODOC_CURRENT_PAGE_URL = 'coverage.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>

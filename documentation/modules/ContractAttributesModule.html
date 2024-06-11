@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -122,69 +113,45 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_ContractAttributesModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="35,-70 35,-268 461,-268 461,-70 35,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="120,-70 120,-268 376,-268 376,-70 120,-70"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_ContractAttributesModule_exports</title>
-<polygon fill="none" stroke="black" points="74,-208 74,-260 388,-260 388,-208 74,-208"/>
+<polygon fill="none" stroke="black" points="157,-208 157,-260 339,-260 339,-208 157,-208"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_ContractAttributesModule_providers</title>
-<polygon fill="none" stroke="black" points="43,-78 43,-130 453,-130 453,-78 43,-78"/>
-</g>
-<!-- CommonService  -->
-<g id="node1" class="node">
-<title>CommonService </title>
-<polygon fill="#fb8072" stroke="black" points="379.6,-252 266.4,-252 266.4,-216 379.6,-216 379.6,-252"/>
-<text text-anchor="middle" x="323" y="-229.8" font-family="Times,serif" font-size="14.00">CommonService </text>
+<polygon fill="none" stroke="black" points="128,-78 128,-130 368,-130 368,-78 128,-78"/>
 </g>
 <!-- ContractAttributesService  -->
-<g id="node2" class="node">
+<g id="node1" class="node">
 <title>ContractAttributesService </title>
-<polygon fill="#fb8072" stroke="black" points="247.67,-252 82.33,-252 82.33,-216 247.67,-216 247.67,-252"/>
-<text text-anchor="middle" x="165" y="-229.8" font-family="Times,serif" font-size="14.00">ContractAttributesService </text>
+<polygon fill="#fb8072" stroke="black" points="330.67,-252 165.33,-252 165.33,-216 330.67,-216 330.67,-252"/>
+<text text-anchor="middle" x="248" y="-229.8" font-family="Times,serif" font-size="14.00">ContractAttributesService </text>
 </g>
 <!-- ContractAttributesModule -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>ContractAttributesModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="277.75,-187 274.75,-191 253.75,-191 250.75,-187 114.25,-187 114.25,-151 277.75,-151 277.75,-187"/>
-<text text-anchor="middle" x="196" y="-164.8" font-family="Times,serif" font-size="14.00">ContractAttributesModule</text>
-</g>
-<!-- ContractAttributesModule&#45;&gt;CommonService  -->
-<g id="edge1" class="edge">
-<title>ContractAttributesModule&#45;&gt;CommonService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M272.04,-187.11C272.04,-187.11 272.04,-205.99 272.04,-205.99"/>
-<polygon fill="black" stroke="black" points="268.54,-205.99 272.04,-215.99 275.54,-205.99 268.54,-205.99"/>
+<polygon fill="#8dd3c7" stroke="black" points="329.75,-187 326.75,-191 305.75,-191 302.75,-187 166.25,-187 166.25,-151 329.75,-151 329.75,-187"/>
+<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">ContractAttributesModule</text>
 </g>
 <!-- ContractAttributesModule&#45;&gt;ContractAttributesService  -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>ContractAttributesModule&#45;&gt;ContractAttributesService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M180.98,-187.11C180.98,-187.11 180.98,-205.99 180.98,-205.99"/>
-<polygon fill="black" stroke="black" points="177.48,-205.99 180.98,-215.99 184.48,-205.99 177.48,-205.99"/>
-</g>
-<!-- CommonService -->
-<g id="node4" class="node">
-<title>CommonService</title>
-<ellipse fill="#fdb462" stroke="black" cx="369" cy="-104" rx="75.88" ry="18"/>
-<text text-anchor="middle" x="369" y="-99.8" font-family="Times,serif" font-size="14.00">CommonService</text>
-</g>
-<!-- CommonService&#45;&gt;ContractAttributesModule -->
-<g id="edge3" class="edge">
-<title>CommonService&#45;&gt;ContractAttributesModule</title>
-<path fill="none" stroke="black" d="M336.43,-120.4C336.43,-139.66 336.43,-169 336.43,-169 336.43,-169 288.09,-169 288.09,-169"/>
-<polygon fill="black" stroke="black" points="288.09,-165.5 278.09,-169 288.09,-172.5 288.09,-165.5"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M248,-187.11C248,-187.11 248,-205.99 248,-205.99"/>
+<polygon fill="black" stroke="black" points="244.5,-205.99 248,-215.99 251.5,-205.99 244.5,-205.99"/>
 </g>
 <!-- ContractAttributesService -->
-<g id="node5" class="node">
+<g id="node3" class="node">
 <title>ContractAttributesService</title>
-<ellipse fill="#fdb462" stroke="black" cx="163" cy="-104" rx="111.73" ry="18"/>
-<text text-anchor="middle" x="163" y="-99.8" font-family="Times,serif" font-size="14.00">ContractAttributesService</text>
+<ellipse fill="#fdb462" stroke="black" cx="248" cy="-104" rx="111.73" ry="18"/>
+<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">ContractAttributesService</text>
 </g>
 <!-- ContractAttributesService&#45;&gt;ContractAttributesModule -->
-<g id="edge4" class="edge">
+<g id="edge2" class="edge">
 <title>ContractAttributesService&#45;&gt;ContractAttributesModule</title>
-<path fill="none" stroke="black" d="M194.5,-121.42C194.5,-121.42 194.5,-140.62 194.5,-140.62"/>
-<polygon fill="black" stroke="black" points="191,-140.62 194.5,-150.62 198,-140.62 191,-140.62"/>
+<path fill="none" stroke="black" d="M248,-122.11C248,-122.11 248,-140.99 248,-140.99"/>
+<polygon fill="black" stroke="black" points="244.5,-140.99 248,-150.99 251.5,-140.99 244.5,-140.99"/>
 </g>
 </g>
 </svg>
@@ -236,9 +203,6 @@
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="../injectables/CommonService.html">CommonService</a>
-                        </li>
-                        <li class="list-group-item">
                             <a href="../injectables/ContractAttributesService.html">ContractAttributesService</a>
                         </li>
                     </ul>
@@ -259,9 +223,6 @@
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="../injectables/CommonService.html">CommonService</a>
-                        </li>
-                        <li class="list-group-item">
                             <a href="../injectables/ContractAttributesService.html">ContractAttributesService</a>
                         </li>
                     </ul>
@@ -277,11 +238,20 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module, forwardRef } from &#x27;@nestjs/common&#x27;
 import { ContractAttributesService } from &#x27;./contract-attributes.service&#x27;
 import { ContractAttributesController } from &#x27;./contract-attributes.controller&#x27;
-import { CommonService } from &#x27;src/common.service&#x27;
+import { CommonModule } from &#x27;src/commons/common.module&#x27;
+import { TemplateContractsModule } from &#x27;src/template-contracts/template-contracts.module&#x27;
+import { ContractAttributeValuesModule } from &#x27;src/contract-attribute-values/contract-attribute-values.module&#x27;
+import { ContractsModule } from &#x27;src/contracts/contracts.module&#x27;
 @Module({
+  imports: [
+    forwardRef(() &#x3D;&gt; CommonModule),
+    forwardRef(() &#x3D;&gt; TemplateContractsModule),
+    forwardRef(() &#x3D;&gt; ContractAttributeValuesModule),
+    forwardRef(() &#x3D;&gt; ContractsModule)
+  ],
   controllers: [ContractAttributesController],
-  providers: [ContractAttributesService, CommonService],
-  exports: [ContractAttributesService, CommonService]
+  providers: [ContractAttributesService],
+  exports: [ContractAttributesService]
 })
 export class ContractAttributesModule {}
 </code></pre>
@@ -333,6 +303,19 @@ export class ContractAttributesModule {}
             var COMPODOC_CURRENT_PAGE_URL = 'ContractAttributesModule.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

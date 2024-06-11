@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -180,12 +171,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(deloyContractService: <a href="../injectables/QueueRedisService.html" target="_self">QueueRedisService</a>)</code>
+<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, deloyContractService: <a href="../injectables/QueueRedisService.html" target="_self">QueueRedisService</a>, contractService: <a href="../injectables/ContractsService.html" target="_self">ContractsService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -203,10 +194,34 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/typealiases.html#ExtendedPrismaClient" target="_self" >CustomPrismaService&lt;ExtendedPrismaClient&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>deloyContractService</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/QueueRedisService.html" target="_self" >QueueRedisService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>contractService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractsService.html" target="_self" >ContractsService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -248,8 +263,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:22</a></div>
                         </td>
                     </tr>
 
@@ -310,15 +325,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deployContract(payload: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _supplier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>deployContract(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _supplier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _users: string[])</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="22"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:22</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="34"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:34</a></div>
                         </td>
                     </tr>
 
@@ -339,18 +354,6 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
                                                 <td>contractId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -366,6 +369,18 @@
                                                 <td>_supplier</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>_users</td>
+                                            <td>
+                                                        <code>string[]</code>
                                             </td>
 
                                             <td>
@@ -408,8 +423,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="41"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:41</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -470,15 +485,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getABI(contractName: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    <code>getABI(type)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -493,16 +508,12 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
-                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>contractName</td>
-                                            <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                            </td>
+                                                <td>type</td>
 
                                             <td>
                                                     No
@@ -514,7 +525,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                            <b>Returns : </b>    <code>unknown</code>
 
                         </div>
                             <div class="io-description">
@@ -544,8 +555,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="49"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:49</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:90</a></div>
                         </td>
                     </tr>
 
@@ -611,8 +622,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="45"
-                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:45</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/smart-contracts/smart-contracts.service.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -676,45 +687,86 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, NotFoundException, UnauthorizedException } from &#x27;@nestjs/common&#x27;
 import { CreateSmartContractDto } from &#x27;./dto/create-smart-contract.dto&#x27;
 import { UpdateSmartContractDto } from &#x27;./dto/update-smart-contract.dto&#x27;
 import { readContract } from &#x27;src/utils/readContract.utils&#x27;
-import { deployContract } from &#x27;src/utils/generateIgnition&#x27;
 import { IQueuePayloadDeployContract, QueueRedisService } from &#x27;src/queues/queue-redis.service&#x27;
+import { IKeyValue, IStage } from &#x27;src/interfaces/smart-contract.interface&#x27;
+import { ethers } from &#x27;ethers&#x27;
+import { ContractsService } from &#x27;src/contracts/contracts.service&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
+import { OrdersService } from &#x27;src/orders/orders.service&#x27;
+import { CustomPrismaService } from &#x27;nestjs-prisma&#x27;
+import { ExtendedPrismaClient } from &#x27;src/utils/prisma.extensions&#x27;
+import { ETypeContractAttribute } from &#x27;src/constants/enum.constant&#x27;
 
 @Injectable()
 export class SmartContractsService {
-  constructor(private readonly deloyContractService: QueueRedisService) {}
+  constructor(
+    @Inject(&#x27;PrismaService&#x27;) private readonly prismaService: CustomPrismaService&lt;ExtendedPrismaClient&gt;,
+    private readonly deloyContractService: QueueRedisService,
+    private readonly contractService: ContractsService
+  ) {}
   create(createSmartContractDto: CreateSmartContractDto) {
     return &#x27;This action adds a new smartContract&#x27;
   }
 
-  async getABI(contractName: any) {
-    // const abi &#x3D; readContract(&#x27;SupplyChain&#x27;).abi
-    // return {
-    //   abi
-    // }
+  async getABI(type: &#x27;disputed | supplyChain&#x27;) {
+    const abi &#x3D; readContract(type)
+    return {
+      abi,
+      type
+    }
   }
 
-  async deployContract(payload: any, contractId: string, _supplier: string) {
-    const _keys &#x3D; []
-    const _values &#x3D; []
+  async deployContract(contractId: string, _supplier: string, _users: string[]) {
+    const dataContract &#x3D; await this.contractService.getContractDetailsById(contractId)
+    if (!dataContract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
 
-    for (const key in payload) {
-      _keys.push(key)
-      _values.push(payload[key])
-    }
+    const _total &#x3D; Number(
+      dataContract.contractAttributes.find(
+        (contractAttribute) &#x3D;&gt; contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+      ).value
+    )
 
+    const { participants, ...payload } &#x3D; dataContract
+    const _stages &#x3D; payload.contract.stages.map((stage: any) &#x3D;&gt; {
+      const date &#x3D; new Date(stage.deliveryAt)
+      return {
+        percent: stage.percent,
+        deliveryAt: date.getTime() / 1000,
+        description: stage.description ? stage.description : &#x27;&#x27;
+      }
+    })
     const payloadData: IQueuePayloadDeployContract &#x3D; {
-      _keys,
-      _values,
       _supplier,
-      contractId
+      contractId,
+      _users,
+      _total,
+      _stages
     }
     this.deloyContractService.enqueueDeployContract(payloadData)
-    // await deployContract(_keys, _values, _supplier, contractId)
   }
+
+  // async deployContract(payload: any, contractId: string, _supplier: string) {
+  //   const _keys &#x3D; []
+  //   const _values &#x3D; []
+
+  //   for (const key in payload) {
+  //     _keys.push(key)
+  //     _values.push(payload[key])
+  //   }
+
+  //   const payloadData: IQueuePayloadDeployContract &#x3D; {
+  //     _keys,
+  //     _values,
+  //     _supplier,
+  //     contractId
+  //   }
+  //   this.deloyContractService.enqueueDeployContract(payloadData)
+  //   // await deployContract(_keys, _values, _supplier, contractId)
+  // }
 
   findOne(id: number) {
     return &#x60;This action returns a #${id} smartContract&#x60;
@@ -774,6 +826,19 @@ export class SmartContractsService {
             var COMPODOC_CURRENT_PAGE_URL = 'SmartContractsService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

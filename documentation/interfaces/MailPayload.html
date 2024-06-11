@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -437,14 +428,25 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface MailPayload {
-    to: string;
-    from: string;
-    receiver: string;
-    contractName: string;
-    addressWalletSender: string;
-    messages: string;
-    link: string;
-}</code></pre>
+  to: string
+  from: string
+  receiver: string
+  contractName: string
+  addressWalletSender: string
+  messages: string
+  link: string
+}
+
+export interface RequestSurveyPayload {
+  to: string
+  from: string
+  receiver: string
+  surveyCode: string
+  addressWalletSender: string
+  messages: string
+  link: string
+}
+</code></pre>
     </div>
 </div>
 
@@ -484,6 +486,19 @@
             var COMPODOC_CURRENT_PAGE_URL = 'MailPayload.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

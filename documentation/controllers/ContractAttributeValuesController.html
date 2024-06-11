@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -485,7 +476,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateContractAttributeValueDto: <a href="../classes/UpdateContractAttributeValueDto.html" target="_self">UpdateContractAttributeValueDto</a>)</code>
+                    <code>update(updateContractAttributeValueDto: <a href="../classes/UpdateContractAttributeValueDto.html" target="_self">UpdateContractAttributeValueDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -493,7 +484,7 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Patch(&#x27;:id&#x27;)<br /></code>
+                    <code>@Patch()<br /></code>
                 </td>
             </tr>
 
@@ -521,9 +512,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>id</td>
+                                                <td>updateContractAttributeValueDto</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../classes/UpdateContractAttributeValueDto.html" target="_self" >UpdateContractAttributeValueDto</a></code>
                                             </td>
 
                                             <td>
@@ -533,9 +524,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>updateContractAttributeValueDto</td>
+                                                <td>user</td>
                                             <td>
-                                                            <code><a href="../classes/UpdateContractAttributeValueDto.html" target="_self" >UpdateContractAttributeValueDto</a></code>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
@@ -588,9 +579,9 @@ export class ContractAttributeValuesController {
     return this.contractAttributeValuesService.findOne(+id)
   }
 
-  @Patch(&#x27;:id&#x27;)
-  update(@Param(&#x27;id&#x27;) id: string, @Body() updateContractAttributeValueDto: UpdateContractAttributeValueDto) {
-    return this.contractAttributeValuesService.update(+id, updateContractAttributeValueDto)
+  @Patch()
+  update(@Body() updateContractAttributeValueDto: UpdateContractAttributeValueDto, @User() user: IUser) {
+    return this.contractAttributeValuesService.update(updateContractAttributeValueDto, user)
   }
 
   @Delete(&#x27;:id&#x27;)
@@ -646,6 +637,19 @@ export class ContractAttributeValuesController {
             var COMPODOC_CURRENT_PAGE_URL = 'ContractAttributeValuesController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

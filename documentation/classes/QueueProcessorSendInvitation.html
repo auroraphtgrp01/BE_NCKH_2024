@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -205,7 +196,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/queues/queue-processor.service.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/queues/queue-processor.service.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -267,7 +258,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/queues/queue-processor.service.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/queues/queue-processor.service.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -310,8 +301,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="75"
-                                    class="link-to-prism">src/queues/queue-processor.service.ts:75</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/queues/queue-processor.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -386,8 +377,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="80"
-                                    class="link-to-prism">src/queues/queue-processor.service.ts:80</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/queues/queue-processor.service.ts:84</a></div>
                         </td>
                     </tr>
 
@@ -474,8 +465,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="91"
-                                    class="link-to-prism">src/queues/queue-processor.service.ts:91</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/queues/queue-processor.service.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -550,8 +541,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="85"
-                                    class="link-to-prism">src/queues/queue-processor.service.ts:85</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/queues/queue-processor.service.ts:89</a></div>
                         </td>
                     </tr>
 
@@ -631,8 +622,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="57"
-                                    class="link-to-prism">src/queues/queue-processor.service.ts:57</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/queues/queue-processor.service.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -700,101 +691,152 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { WorkerHost, Processor, OnWorkerEvent } from &quot;@nestjs/bullmq&quot;;
-import { Injectable, Logger } from &quot;@nestjs/common&quot;;
-import { Job } from &quot;bullmq&quot;;
-import { MailService } from &quot;src/mailer/mailer.service&quot;;
-import { IQueuePayloadDeployContract, IQueuePayloadSendInvitation } from &quot;src/queues/queue-redis.service&quot;;
-import { deployContract } from &quot;src/utils/generateIgnition&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { WorkerHost, Processor, OnWorkerEvent } from &#x27;@nestjs/bullmq&#x27;
+import { Injectable, Logger } from &#x27;@nestjs/common&#x27;
+import { Job } from &#x27;bullmq&#x27;
+import { MailService } from &#x27;src/mailer/mailer.service&#x27;
+import {
+  IQueuePayloadDeployContract,
+  IQueuePayloadSendInvitation,
+  IQueuePayloadSendRequestSurvey
+} from &#x27;src/queues/queue-redis.service&#x27;
+import { deployContract } from &#x27;src/utils/generateIgnition&#x27;
 
 @Processor(&#x27;deployContract&#x27;)
 export class QueueProcessorService extends WorkerHost {
-    private logger &#x3D; new Logger();
-    async process(job: Job&lt;IQueuePayloadDeployContract, string, string&gt;, token?: string): Promise&lt;string&gt; {
-        switch (job.name) {
-            case &#x27;deployContract&#x27;:
-                const { _keys, _values, _supplier, contractId } &#x3D; job.data
-                console.log(&#x27;Processing contract...&#x27;);
-                try {
-                    await deployContract(_keys, _values, _supplier, contractId)
-                    this.logger.log(&#x60;Contract id ${contractId} processed successfully&#x60;);
-                    return &#x60;Contract id ${contractId} processed successfully&#x60;;
-                } catch (error) {
-                    console.log(&#x27;Error processing contract...&#x27;, error);
-                }
-            default:
-                throw new Error(&#x27;No job name match&#x27;);
+  private logger &#x3D; new Logger()
+  async process(job: Job&lt;IQueuePayloadDeployContract, string, string&gt;, token?: string): Promise&lt;string&gt; {
+    switch (job.name) {
+      case &#x27;deployContract&#x27;:
+        const { _supplier, contractId, _users, _total, _stages } &#x3D; job.data
+
+        try {
+          await deployContract(_supplier, contractId, _users, _total, _stages)
+          this.logger.log(&#x60;Contract id ${contractId} processed successfully&#x60;)
+          return &#x60;Contract id ${contractId} processed successfully&#x60;
+        } catch (error) {
+          console.log(&#x27;Error processing contract...&#x27;, error)
         }
+      default:
+        throw new Error(&#x27;No job name match&#x27;)
     }
+  }
 
-    @OnWorkerEvent(&#x27;active&#x27;)
-    onQueueActive(job: Job) {
-        this.logger.log(&#x60;Job has been started: ${job.id}&#x60;);
-    }
+  @OnWorkerEvent(&#x27;active&#x27;)
+  onQueueActive(job: Job) {
+    this.logger.log(&#x60;Job has been started: ${job.id}&#x60;)
+  }
 
-    @OnWorkerEvent(&#x27;completed&#x27;)
-    onQueueComplete(job: Job, result: any) {
-        this.logger.log(&#x60;Job has been finished: ${job.id}&#x60;);
-    }
+  @OnWorkerEvent(&#x27;completed&#x27;)
+  onQueueComplete(job: Job, result: any) {
+    this.logger.log(&#x60;Job has been finished: ${job.id}&#x60;)
+  }
 
-    @OnWorkerEvent(&#x27;failed&#x27;)
-    onQueueFailed(job: Job, err: any) {
-        this.logger.log(&#x60;Job has been failed: ${job.id}&#x60;);
-        this.logger.log({ err });
-    }
+  @OnWorkerEvent(&#x27;failed&#x27;)
+  onQueueFailed(job: Job, err: any) {
+    this.logger.log(&#x60;Job has been failed: ${job.id}&#x60;)
+    this.logger.log({ err })
+  }
 
-    @OnWorkerEvent(&#x27;error&#x27;)
-    onQueueError(err: any) {
-        this.logger.log(&#x60;Job has got error: &#x60;);
-        this.logger.log({ err });
-    }
+  @OnWorkerEvent(&#x27;error&#x27;)
+  onQueueError(err: any) {
+    this.logger.log(&#x60;Job has got error: &#x60;)
+    this.logger.log({ err })
+  }
 }
 
 @Processor(&#x27;sendInvitation&#x27;)
 export class QueueProcessorSendInvitation extends WorkerHost {
-    constructor(private mailService: MailService) {
-        super();
-    }
-    private logger &#x3D; new Logger();
-    async process(job: Job&lt;IQueuePayloadSendInvitation, string, string&gt;, token?: string): Promise&lt;boolean&gt; {
-        switch (job.name) {
-            case &#x27;sendInvitation&#x27;:
-                try {
-                   const result &#x3D; this.mailService.sendMail(job.data)
-                   if(result) {
-                    this.logger.log(&#x60;Send Invitation id ${job.data.idInvitation} processed successfully&#x60;);
-                    return true
-                    } else return false
-                } catch (error) {
-                   this.logger.error(&#x27;Error processing send invitation...&#x27;, error)
-                }
-            default:
-                throw new Error(&#x27;No job name match&#x27;);
+  constructor(private mailService: MailService) {
+    super()
+  }
+  private logger &#x3D; new Logger()
+  async process(job: Job&lt;IQueuePayloadSendInvitation, string, string&gt;, token?: string): Promise&lt;boolean&gt; {
+    switch (job.name) {
+      case &#x27;sendInvitation&#x27;:
+        try {
+          const result &#x3D; this.mailService.sendMail(job.data)
+          if (result) {
+            this.logger.log(&#x60;Send Invitation id ${job.data.idParticipant} processed successfully&#x60;)
+            return true
+          } else return false
+        } catch (error) {
+          this.logger.error(&#x27;Error processing send invitation...&#x27;, error)
         }
+      default:
+        throw new Error(&#x27;No job name match&#x27;)
     }
+  }
 
-    @OnWorkerEvent(&#x27;active&#x27;)
-    onQueueActive(job: Job) {
-        this.logger.log(&#x60;Job has been started: ${job.id}&#x60;);
-    }
+  @OnWorkerEvent(&#x27;active&#x27;)
+  onQueueActive(job: Job) {
+    this.logger.log(&#x60;Job has been started: ${job.id}&#x60;)
+  }
 
-    @OnWorkerEvent(&#x27;completed&#x27;)
-    onQueueComplete(job: Job, result: any) {
-        this.logger.log(&#x60;Job has been finished: ${job.id}&#x60;);
-    }
+  @OnWorkerEvent(&#x27;completed&#x27;)
+  onQueueComplete(job: Job, result: any) {
+    this.logger.log(&#x60;Job has been finished: ${job.id}&#x60;)
+  }
 
-    @OnWorkerEvent(&#x27;failed&#x27;)
-    onQueueFailed(job: Job, err: any) {
-        this.logger.log(&#x60;Job has been failed: ${job.id}&#x60;);
-        this.logger.log({ err });
-    }
+  @OnWorkerEvent(&#x27;failed&#x27;)
+  onQueueFailed(job: Job, err: any) {
+    this.logger.log(&#x60;Job has been failed: ${job.id}&#x60;)
+    this.logger.log({ err })
+  }
 
-    @OnWorkerEvent(&#x27;error&#x27;)
-    onQueueError(err: any) {
-        this.logger.log(&#x60;Job has got error: &#x60;);
-        this.logger.log({ err });
+  @OnWorkerEvent(&#x27;error&#x27;)
+  onQueueError(err: any) {
+    this.logger.log(&#x60;Job has got error: &#x60;)
+    this.logger.log({ err })
+  }
+}
+
+@Processor(&#x27;sendRequestSurvey&#x27;)
+export class QueueProcessorSendRequestSurvey extends WorkerHost {
+  constructor(private mailService: MailService) {
+    super()
+  }
+  private logger &#x3D; new Logger()
+  async process(job: Job&lt;IQueuePayloadSendRequestSurvey, string, string&gt;, token?: string): Promise&lt;boolean&gt; {
+    switch (job.name) {
+      case &#x27;sendRequestSurvey&#x27;:
+        try {
+          const result &#x3D; this.mailService.sendRequestSurvey(job.data)
+          if (result) {
+            this.logger.log(&#x60;Send request survey code ${job.data.surveyCode} processed successfully&#x60;)
+            return true
+          } else return false
+        } catch (error) {
+          this.logger.error(&#x27;Error processing send request survey...&#x27;, error)
+        }
+      default:
+        throw new Error(&#x27;No job name match&#x27;)
     }
-}</code></pre>
+  }
+
+  @OnWorkerEvent(&#x27;active&#x27;)
+  onQueueActive(job: Job) {
+    this.logger.log(&#x60;Job has been started: ${job.id}&#x60;)
+  }
+
+  @OnWorkerEvent(&#x27;completed&#x27;)
+  onQueueComplete(job: Job, result: any) {
+    this.logger.log(&#x60;Job has been finished: ${job.id}&#x60;)
+  }
+
+  @OnWorkerEvent(&#x27;failed&#x27;)
+  onQueueFailed(job: Job, err: any) {
+    this.logger.log(&#x60;Job has been failed: ${job.id}&#x60;)
+    this.logger.log({ err })
+  }
+
+  @OnWorkerEvent(&#x27;error&#x27;)
+  onQueueError(err: any) {
+    this.logger.log(&#x60;Job has got error: &#x60;)
+    this.logger.log({ err })
+  }
+}
+</code></pre>
     </div>
 </div>
 
@@ -835,6 +877,19 @@ export class QueueProcessorSendInvitation extends WorkerHost {
             var COMPODOC_CURRENT_PAGE_URL = 'QueueProcessorSendInvitation.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

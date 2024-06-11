@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -149,14 +140,17 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#addressWallet" >addressWallet</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#price" >price</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#reason" >reason</a>
                             </li>
                         </ul>
@@ -186,6 +180,7 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
                         <span ><b>addressWallet</b></span>
                         <a href="#addressWallet"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -208,7 +203,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -222,6 +217,7 @@
                     <a name="price"></a>
                     <span class="name">
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
                         <span ><b>price</b></span>
                         <a href="#price"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -238,13 +234,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsNumberString()<br />
+                            @IsNumber()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -258,6 +254,7 @@
                     <a name="reason"></a>
                     <span class="name">
                             <span class="modifier"></span>
+                            <span class="modifier">Readonly</span>
                         <span ><b>reason</b></span>
                         <a href="#reason"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -280,7 +277,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/contracts/dto/create-contract.dto.ts:89</a></div>
                         </td>
                     </tr>
 
@@ -299,93 +296,240 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Transform, Type } from &#x27;class-transformer&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ParticipantStatus } from &#x27;@prisma/client&#x27;
+import { Transform, Type } from &#x27;class-transformer&#x27;
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDate,
+  IsDateString,
   IsEmail,
   IsNotEmpty,
-  IsNumberString,
+  IsNumber,
+  IsObject,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinDate,
+  MinLength,
+  Validate,
   ValidateIf,
   ValidateNested
 } from &#x27;class-validator&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { EContractType, ERoleParticipant, ETypeContractAttribute } from &#x27;src/constants/enum.constant&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
+
+export class CreateContractAttributesDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly contractId: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly templateContractId: string
+}
+
+export class TemplateContractDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly id: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly img: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string
+}
+
+export class PermissionDto {
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly CHANGE_STATUS_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly EDIT_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly INVITE_PARTICIPANT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly READ_CONTRACT: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly SET_OWNER_PARTY: boolean
+
+  @IsString()
+  @IsNotEmpty()
+  readonly ROLES: ERoleParticipant
+}
 
 export class GasPriceDto {
-  @IsNumberString()
-  price: string
+  @IsNumber()
+  readonly price: string
 
   @IsString()
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet: string
 
   @IsString()
-  reason: string
+  readonly reason: string
+}
+
+export class CreateEmptyContractDto {
+  @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  readonly addressWallet: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @Validate((object: any) &#x3D;&gt; object.type &#x3D;&#x3D;&#x3D; EContractType.DISPUTE)
+  type?: string
+
+  @ValidateIf((object: any) &#x3D;&gt; object.surveyId &#x3D;&#x3D;&#x3D; undefined)
+  @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
+  @IsNotEmpty()
+  @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
+  readonly name?: string
+
+  @IsString()
+  @IsOptional()
+  readonly parentId?: string
+
+  @IsString()
+  @IsOptional()
+  readonly status?: string
+
+  @IsString()
+  @IsOptional()
+  readonly contractAddress?: string
 }
 
 export class CreateContractDto {
-  @IsOptional()
-  @IsString()
-  id: string
-
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  addressWallet: string
+  readonly addressWallet: string
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
   @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
+  @IsNotEmpty()
   @MaxLength(100, { message: RESPONSE_MESSAGES.CONTRACT_TITLE_LENGTH })
-  contractTitle: string
+  readonly name: string
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @IsString({ message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_MUST_BE_STRING })
-  @Length(42, 42, { message: RESPONSE_MESSAGES.CONTRACT_ADDRESS_LENGTH_MUST_BE_42_CHARACTERS })
-  contractAddress: string
-
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @Length(66, 66, { message: RESPONSE_MESSAGES.BLOCK_ADDRESS_LENGTH_MUST_BE_66_CHARACTERS })
-  blockAddress: string
-
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
+  @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() &#x3D;&gt; GasPriceDto)
-  gasPrices: GasPriceDto[]
+  @Type(() &#x3D;&gt; InvitationsDto)
+  readonly invitation?: InvitationsDto[]
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @Transform(({ value }) &#x3D;&gt; new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() &#x3D;&gt; Date)
-  startDate: Date
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @Validate((object: any) &#x3D;&gt; object.type &#x3D;&#x3D;&#x3D; EContractType.DISPUTE)
+  type?: string
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @Transform(({ value }) &#x3D;&gt; new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() &#x3D;&gt; Date)
-  endDate: Date
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly templateId?: string
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @Transform(({ value }) &#x3D;&gt; new Date(value))
-  @IsDate({ message: RESPONSE_MESSAGES.START_DATE_MUST_BE_A_VALID_DATE })
-  @MinDate(new Date(), { message: RESPONSE_MESSAGES.THE_DATE_IS_INVALID })
-  @Type(() &#x3D;&gt; Date)
-  executeDate: Date
+  @IsString()
+  @IsNotEmpty()
+  readonly rolesOfCreator: ERoleParticipant
 
-  @ValidateIf((object) &#x3D;&gt; object.id !&#x3D;&#x3D; undefined)
-  @IsArray()
-  @IsString({ each: true })
-  @ArrayMinSize(1)
-  agreements: string[]
+  @ValidateIf((object: any) &#x3D;&gt; object.templateId !&#x3D;&#x3D; undefined)
+  @IsBoolean()
+  readonly isCreateAttributeValue?: boolean
+}
+
+export class DataUpdateContractAttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly idArea: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string
+
+  @ValidateIf((object) &#x3D;&gt; object.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE)
+  @IsString()
+  @IsNotEmpty()
+  readonly valueAttribute?: string
+
+  @IsBoolean()
+  readonly isCreated: boolean
+}
+
+export class InvitationsDto {
+  @IsString({ message: RESPONSE_MESSAGES.EMAIL_TO_MUST_BE_A_STRING })
+  @IsNotEmpty()
+  @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_TO_IS_INVALID })
+  readonly email: string
+
+  @IsOptional()
+  @IsString({ message: RESPONSE_MESSAGES.MESSAGE_MUST_BE_A_STRING })
+  @MinLength(10, { message: RESPONSE_MESSAGES.MESSAGE_TOO_SHORT })
+  readonly messages?: string
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() &#x3D;&gt; PermissionDto)
+  readonly permission: PermissionDto
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  readonly userId?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly status?: ParticipantStatus
+}
+
+export class CreateDisputeContractDto {
+  @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
+  @Length(42, 42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
+  readonly addressWallet: string
+
+  @IsNumber()
+  @IsNotEmpty()
+  readonly totalAmount: number
+
+  @IsString()
+  @IsNotEmpty()
+  readonly customer: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly supplier: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly parentId: string
 }
 </code></pre>
     </div>
@@ -428,6 +572,19 @@ export class CreateContractDto {
             var COMPODOC_CURRENT_PAGE_URL = 'GasPriceDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
