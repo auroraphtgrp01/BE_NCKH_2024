@@ -150,6 +150,7 @@ model ContractAttributeValue {
   deletedBy           Json?
   ContractAttribute   ContractAttribute @relation(fields: [contractAttributeId], references: [id])
   contractAttributeId String            @unique @db.Uuid
+  descriptionOfStage  String?
 }
 
 model ContractAttributeInBlockchain {

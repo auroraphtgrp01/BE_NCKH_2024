@@ -490,15 +490,14 @@ export class ContractsService {
             )
             await this.contractAttributeValuesService.create(
               {
-                value: `${item.value.endsWith('.') ? item.value : item.value + '.'} Giai đoạn này sẽ thanh toán ${
-                  item.percent
-                }% tổng giá trị hợp đồng.`,
+                value: item.value,
+                descriptionOfStage: item.description,
                 contractAttributeId: contractAttribute.id
               },
               user
             )
             const stageCreate: IStage[] = await this.handleStageDataToUpdate(contract, [
-              { percent: item.percent, description: item.value, stageHandleStatus: EStageHandleStatus.CREATE }
+              { percent: item.value, description: item.description, stageHandleStatus: EStageHandleStatus.CREATE }
             ])
             contract = await this.update({ id: contract.id, stages: stageCreate }, user)
           } else {
