@@ -1,5 +1,5 @@
 import { Contract } from '@prisma/client'
-import { IContractAttributeResponse } from './contract-attribute.interface'
+import { IContractAttribute } from './contract-attribute.interface'
 import { EStageStatus, EVoting } from 'src/constants/enum.constant'
 
 export interface IGasPrice {
@@ -10,14 +10,26 @@ export interface IGasPrice {
 }
 
 export interface IStage {
-  id: string
+  id?: string
   percent: number
   requestBy: string
   requestTo: string
   description?: string
   status: EStageStatus
   createdAt: Date
-  deliveryAt: Date
+}
+
+export interface IStageData {
+  id?: string
+  percent?: number
+  description?: string
+  status?: EStageStatus
+  stageHandleStatus?: EStageHandleStatus
+}
+export enum EStageHandleStatus {
+  CREATE = 'Create',
+  UPDATE = 'Update',
+  DELETE = 'Delete'
 }
 
 export interface IContractAttributeValueResponse {
@@ -27,12 +39,12 @@ export interface IContractAttributeValueResponse {
 
 export interface ICreateContractResponse {
   contract: Contract
-  contractAttributes: IContractAttributeResponse[]
+  contractAttributes: IContractAttribute[]
 }
 
 export interface IContractResponse {
   readonly contracts: Contract[]
-  readonly contractAttributes: IContractAttributeResponse[]
+  readonly contractAttributes: IContractAttribute[]
 }
 
 export interface IVoting {

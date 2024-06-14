@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import * as crypto from 'crypto'
-import { IContractAttributeResponse } from '../interfaces/contract-attribute.interface'
+import { IContractAttribute } from '../interfaces/contract-attribute.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
 import { ContractAttribute, ContractAttributeInBlockchain } from '@prisma/client'
 
 @Injectable()
 export class CommonService {
-  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttributeResponse[] {
-    const result: IContractAttributeResponse[] = []
+  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttribute[] {
+    const result: IContractAttribute[] = []
     for (const contractArribute of contractAttributes) {
       if (
         contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||

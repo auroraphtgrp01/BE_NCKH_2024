@@ -7,7 +7,7 @@ import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { IExecutor } from 'src/interfaces/executor.interface'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import {
-  IContractAttributeResponse,
+  IContractAttribute,
   ICreateContractAttributeRecord,
   IDataContractAttribute
 } from 'src/interfaces/contract-attribute.interface'
@@ -45,7 +45,7 @@ export class ContractAttributesService {
       }
     })
 
-    const result: IContractAttributeResponse = {
+    const result: IContractAttribute = {
       id: contractAttribute.id,
       value: contractAttribute.value,
       type: contractAttribute.type,
@@ -83,7 +83,7 @@ export class ContractAttributesService {
     index: number = 0
   ) {
     const { contractAttributes, contractId } = createContractAttributesDto
-    const contractAttributeRecords: IContractAttributeResponse[] = []
+    const contractAttributeRecords: IContractAttribute[] = []
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     if (contractId && !(await this.prismaService.client.contract.findUnique({ where: { id: contractId } })))
       throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_NOT_FOUND)
@@ -114,7 +114,7 @@ export class ContractAttributesService {
           },
           user
         )
-        const result: IContractAttributeResponse = {
+        const result: IContractAttribute = {
           id: contractAttributeRecord.id,
           property: contractAttributeRecord.value,
           value: contractAttributeValueRecord.value,
@@ -165,7 +165,7 @@ export class ContractAttributesService {
     }
   }
 
-  async findAllByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
+  async findAllByContractId(contractId: string): Promise<IContractAttribute[]> {
     const contractAttributes = await this.prismaService.client.contractAttribute
       .findMany({
         where: { contractId },
@@ -179,7 +179,7 @@ export class ContractAttributesService {
     return contractAttributes
   }
 
-  // async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttributeResponse[]> {
+  // async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttribute[]> {
   //    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
   //       .findMany({
   //          where: { contractId },

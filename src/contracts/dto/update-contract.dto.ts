@@ -116,11 +116,6 @@ export class UpdateContractDto {
   readonly endDate?: Date
 
   @IsOptional()
-  @ValidateNested()
-  @Type(() => StageDto)
-  readonly stage?: StageDto
-
-  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => StageDto)

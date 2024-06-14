@@ -12,7 +12,8 @@ export enum ETypeContractAttribute {
   CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE = 'Contract Attribute Address Wallet Receive',
   CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND = 'Contract Attribute Address Wallet Send',
   CONTRACT_PARTY_INFO = 'Contract Party Info',
-  TOTAL_AMOUNT = 'Total Amount'
+  TOTAL_AMOUNT = 'Total Amount',
+  CONTRACT_PAYMENT_STAGE = 'Contract payment stage'
 }
 
 export enum ERoles {
