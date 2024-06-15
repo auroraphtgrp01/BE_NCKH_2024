@@ -19,5 +19,10 @@ export class UpdateContractAttributeValueDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  value: string
+  value?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  descriptionOfStage?: string
 }

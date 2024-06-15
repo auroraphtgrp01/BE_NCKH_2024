@@ -47,7 +47,7 @@ export class ContractAttributesService {
 
     const result: IContractAttribute = {
       id: contractAttribute.id,
-      value: contractAttribute.value,
+      value: contractAttribute.value as string,
       type: contractAttribute.type,
       createdBy
     }
@@ -179,19 +179,19 @@ export class ContractAttributesService {
     return contractAttributes
   }
 
-  // async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttribute[]> {
-  //    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
-  //       .findMany({
-  //          where: { contractId },
-  //          include: { ContractAttributeValueInBlockchain: true },
-  //          orderBy: {
-  //             index: 'asc'
-  //          }
-  //       })
-  //       .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
+  async findAllInBlockchainByContractId(contractId: string): Promise<IContractAttribute[]> {
+    const contractAttributes = await this.prismaService.client.contractAttributeInBlockchain
+      .findMany({
+        where: { contractId },
+        include: { ContractAttributeValueInBlockchain: true },
+        orderBy: {
+          index: 'asc'
+        }
+      })
+      .then((contractAttributes) => this.commonService.convertToTypeContractAttributesResponse(contractAttributes))
 
-  //    return contractAttributes
-  // }
+    return contractAttributes
+  }
 
   async findAllByTemplateId(templateContractId: string) {
     const { templateContract } = await this.templateContractsService.findOneById(templateContractId)

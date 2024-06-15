@@ -355,28 +355,30 @@ export class ContractsService {
     stages.map((stage: any) => {
       if (stage.stageHandleStatus === 'Create') {
         updateStages.push({
-          id: this.commonService.uuidv4(),
           percent: stage.percent,
           requestBy: sender.User.addressWallet,
           requestTo: receiver.User.addressWallet,
-          description: stage.description,
+          descriptionOfStage: stage.descriptionOfStage,
           status: EStageStatus.ENFORCE,
-          createdAt: new Date()
+          createdAt: new Date(),
+          contractAttributeId: stage.contractAttributeId
         })
       }
       if (stage.stageHandleStatus === 'Update') {
-        const index = updateStages.findIndex((item) => item.id === stage.id)
+        const index = updateStages.findIndex((item) => item.contractAttributeId === stage.contractAttributeId)
         if (index !== -1) {
           updateStages[index] = {
             ...updateStages[index],
             percent: stage.percent ? stage.percent : updateStages[index].percent,
-            description: stage.description ? stage.description : updateStages[index].description,
+            descriptionOfStage: stage.descriptionOfStage
+              ? stage.descriptionOfStage
+              : updateStages[index].descriptionOfStage,
             status: stage.status ? stage.status : updateStages[index].status
           }
         }
       }
       if (stage.stageHandleStatus === 'Delete') {
-        const index = updateStages.findIndex((item) => item.id === stage.id)
+        const index = updateStages.findIndex((item) => item.contractAttributeId === stage.contractAttributeId)
         if (index !== -1) {
           updateStages.splice(index, 1)
         }
@@ -392,9 +394,9 @@ export class ContractsService {
         const now = new Date().getTime()
         const deliveryTime = new Date(stage.createdAt).getTime()
         const sub = Math.floor((now - deliveryTime) / 60000)
-        if (sub > 1) {
+        if (sub > 120) {
           response.push({
-            id: stage.id,
+            contractAttributeId: stage.contractAttributeId,
             status: EStageStatus.OUT_OF_DATE,
             stageHandleStatus: EStageHandleStatus.UPDATE
           })
@@ -473,7 +475,8 @@ export class ContractsService {
             )
             await this.contractAttributeValuesService.create(
               {
-                value: item.value,
+                value: item.value.toString(),
+                descriptionOfStage: item.descriptionOfStage,
                 contractAttributeId: contractAttribute.id
               },
               user
@@ -491,13 +494,18 @@ export class ContractsService {
             await this.contractAttributeValuesService.create(
               {
                 value: item.value,
-                descriptionOfStage: item.description,
+                descriptionOfStage: item.descriptionOfStage,
                 contractAttributeId: contractAttribute.id
               },
               user
             )
             const stageCreate: IStage[] = await this.handleStageDataToUpdate(contract, [
-              { percent: item.value, description: item.description, stageHandleStatus: EStageHandleStatus.CREATE }
+              {
+                percent: item.value,
+                descriptionOfStage: item.descriptionOfStage,
+                stageHandleStatus: EStageHandleStatus.CREATE,
+                contractAttributeId: contractAttribute.id
+              }
             ])
             contract = await this.update({ id: contract.id, stages: stageCreate }, user)
           } else {
@@ -537,6 +545,33 @@ export class ContractsService {
               },
               user
             )
+          } else if (item.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE) {
+            const contractAttribute = await this.contractAttributesService.update(
+              {
+                id: item.id,
+                value: item.property,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.update(
+              {
+                value: item.value.toString(),
+                descriptionOfStage: item.descriptionOfStage,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
+            const stageUpdate: IStage[] = await this.handleStageDataToUpdate(contract, [
+              {
+                contractAttributeId: item.id,
+                percent: item.value,
+                descriptionOfStage: item.descriptionOfStage,
+                stageHandleStatus: EStageHandleStatus.UPDATE
+              }
+            ])
+            contract = await this.update({ id: contract.id, stages: stageUpdate }, user)
           } else {
             await this.contractAttributesService.update(
               {

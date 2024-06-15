@@ -16,7 +16,7 @@ export interface IContractAttribute {
   createdBy: any
   updatedBy?: any
   index?: string
-  percent?: number
+  descriptionOfStage?: string
 }
 
 export interface IDataContractAttribute {

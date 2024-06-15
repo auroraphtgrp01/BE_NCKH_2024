@@ -2,40 +2,72 @@ import { Injectable } from '@nestjs/common'
 import * as crypto from 'crypto'
 import { IContractAttribute } from '../interfaces/contract-attribute.interface'
 import { ETypeContractAttribute } from 'src/constants/enum.constant'
-import { ContractAttribute, ContractAttributeInBlockchain } from '@prisma/client'
+import {
+  ContractAttribute,
+  ContractAttributeInBlockchain,
+  ContractAttributeValue,
+  ContractAttributeValueInBlockchain
+} from '@prisma/client'
 
 @Injectable()
 export class CommonService {
-  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttribute[] {
+  convertToTypeContractAttributesResponse(
+    contractAttributes:
+      | (ContractAttribute & { ContractAttributeValue: ContractAttributeValue })[]
+      | (ContractAttributeInBlockchain & { ContractAttributeValueInBlockchain: ContractAttributeValueInBlockchain })[]
+  ): IContractAttribute[] {
     const result: IContractAttribute[] = []
-    for (const contractArribute of contractAttributes) {
+    for (const contractAttribute of contractAttributes) {
       if (
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
-        contractArribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
-        contractArribute.type === ETypeContractAttribute.TOTAL_AMOUNT
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT
       ) {
         result.push({
-          id: contractArribute.id,
-          property: (contractArribute as any)?.property ? (contractArribute as any)?.property : contractArribute.value,
-          value: (contractArribute as any)?.ContractAttributeValue
-            ? (contractArribute as any)?.ContractAttributeValue?.value
-            : (contractArribute as any)?.ContractAttributeInBlockchain?.value,
-          type: contractArribute.type,
-          createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy,
-          index: (contractArribute as any)?.index
+          id: contractAttribute.id,
+          property: (contractAttribute as any)?.property
+            ? (contractAttribute as any)?.property
+            : contractAttribute.value,
+          value: (contractAttribute as any)?.ContractAttributeValue
+            ? (contractAttribute as any)?.ContractAttributeValue?.value
+            : (contractAttribute as any)?.ContractAttributeInBlockchain?.value,
+          type: contractAttribute.type,
+          createdBy: contractAttribute.createdBy,
+          updatedBy: contractAttribute.updatedBy,
+          index: (contractAttribute as any)?.index
+        })
+      } else if (contractAttribute.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE) {
+        result.push({
+          id: contractAttribute.id,
+          property: (contractAttribute as any)?.property
+            ? (contractAttribute as any)?.property
+            : contractAttribute.value,
+          value: (contractAttribute as any)?.ContractAttributeValue
+            ? (contractAttribute as any)?.ContractAttributeValue?.value
+            : (contractAttribute as any)?.ContractAttributeInBlockchain?.value,
+          descriptionOfStage: (contractAttribute as any)?.ContractAttributeValue
+            ? (contractAttribute as any)?.ContractAttributeValue?.descriptionOfStage
+              ? (contractAttribute as any)?.ContractAttributeValue?.descriptionOfStage
+              : ''
+            : (contractAttribute as any)?.ContractAttributeInBlockchain?.descriptionOfStage
+            ? (contractAttribute as any)?.ContractAttributeInBlockchain?.descriptionOfStage
+            : '',
+          type: contractAttribute.type,
+          createdBy: contractAttribute.createdBy,
+          updatedBy: contractAttribute.updatedBy,
+          index: (contractAttribute as any)?.index
         })
       } else
         result.push({
-          id: contractArribute.id,
-          value: contractArribute.value,
-          type: contractArribute.type,
-          createdBy: contractArribute.createdBy,
-          updatedBy: contractArribute.updatedBy,
-          index: (contractArribute as any)?.index
+          id: contractAttribute.id,
+          value: contractAttribute.value,
+          type: contractAttribute.type,
+          createdBy: contractAttribute.createdBy,
+          updatedBy: contractAttribute.updatedBy,
+          index: (contractAttribute as any)?.index
         })
     }
     return result

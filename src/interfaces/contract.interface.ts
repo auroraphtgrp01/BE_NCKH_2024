@@ -10,21 +10,21 @@ export interface IGasPrice {
 }
 
 export interface IStage {
-  id?: string
   percent: number
   requestBy: string
   requestTo: string
-  description?: string
+  descriptionOfStage?: string
   status: EStageStatus
   createdAt: Date
+  contractAttributeId?: string
 }
 
 export interface IStageData {
-  id?: string
   percent?: number
-  description?: string
+  descriptionOfStage?: string
   status?: EStageStatus
   stageHandleStatus?: EStageHandleStatus
+  contractAttributeId?: string
 }
 export enum EStageHandleStatus {
   CREATE = 'Create',

@@ -23,7 +23,7 @@ export class ContractAttributeValuesService {
       const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
         data: {
           value: value.toString(),
-          descriptionOfStage: descriptionOfStage || null,
+          descriptionOfStage: descriptionOfStage ? descriptionOfStage : null,
           ContractAttribute: { connect: { id: contractAttributeId } },
           createdBy,
           updatedAt: null
