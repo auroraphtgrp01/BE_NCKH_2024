@@ -73,7 +73,6 @@ export const RESPONSE_MESSAGES = {
   YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION: 'You are not allowed to perform this action',
   ROLE_IS_EXIST: 'Role is exist',
   ROLE_IS_INVALID: 'Role is invalid',
-  PERCENT_NOT_EQUAL_100: 'Percent not equal 100',
   ORDER_IS_NOT_FOUND: 'Order is not found',
   TOTAL_IS_REQUIRED: "If you don't have an order, you need to pass in the value of the contract",
   STAGE_IS_REQUIRED: 'Stage is required',
@@ -83,5 +82,6 @@ export const RESPONSE_MESSAGES = {
   ORDER_CODE_EXISTED: 'Order code existed',
   EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: 'Excute date or end date is not provided',
   SENDER_IS_NOT_FOUND: 'Sender is not found',
-  SENDER_IS_EXIST: 'Sender is exist'
+  SENDER_IS_EXIST: 'Sender is exist',
+  PERCENT_IS_NOT_EQUAL_100: 'Percent is not equal 100'
 }
