@@ -77,7 +77,13 @@ export class ContractAttributeValuesService {
     return contractAttributeValue
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contractAttributeValue`
+  async remove(id: string, user: IUser) {
+    const deletedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    await this.prismaService.client.contractAttributeValue.update({
+      where: { contractAttributeId: id },
+      data: { deletedBy }
+    })
+    await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: id } })
+    return { message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_VALUE_DELETED_SUCCESSFULLY }
   }
 }

@@ -236,7 +236,25 @@ export class ContractAttributesService {
     return contractAttribute
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contractAttribute`
+  async remove(id: string, user: IUser) {
+    const contractAttribute = await this.prismaService.client.contractAttribute.findUnique({ where: { id } })
+    if (!contractAttribute) throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
+
+    const deletedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+
+    await Promise.all([
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+      contractAttribute.type === ETypeContractAttribute.TOTAL_AMOUNT ||
+      contractAttribute.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE
+        ? this.contractAttributeValueService.remove(id, user)
+        : null,
+      this.prismaService.client.contractAttribute.update({ where: { id }, data: { deletedBy } }),
+      this.prismaService.client.contractAttribute.delete({ where: { id } })
+    ])
+    return { message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_DELETED_SUCCESSFULLY }
   }
 }

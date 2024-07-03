@@ -84,5 +84,8 @@ export const RESPONSE_MESSAGES = {
   SENDER_IS_NOT_FOUND: 'Sender is not found',
   SENDER_IS_EXIST: 'Sender is exist',
   PERCENT_IS_NOT_EQUAL_100: 'Percent is not equal 100',
-  USER_DELETED_SUCCESSFULLY: 'User deleted successfully'
+  USER_DELETED_SUCCESSFULLY: 'User deleted successfully',
+  TEMPLATE_CONTRACT_DELETED_SUCCESSFULLY: 'Template contract deleted successfully',
+  CONTRACT_ATTRIBUTE_VALUE_DELETED_SUCCESSFULLY: 'Contract attribute value deleted successfully',
+  CONTRACT_ATTRIBUTE_DELETED_SUCCESSFULLY: 'Contract attribute deleted successfully'
 }
