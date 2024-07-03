@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common'
 import { TemplateContractsService } from './template-contracts.service'
 import { CreateTemplateContractDto } from './dto/create-template-contract.dto'
 import { UpdateTemplateContractDto } from './dto/update-template-contract.dto'
@@ -16,8 +16,8 @@ export class TemplateContractsController {
   }
 
   @Get()
-  async findAll() {
-    return await this.templateContractsService.findAll()
+  async findAll(@Query('page') page: string, @Query('limit') limit: string) {
+    return await this.templateContractsService.findAll(+page, +limit)
   }
 
   @Get(':id/attributes')

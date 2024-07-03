@@ -23,10 +23,10 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(@Query('page') page: string, @Query('limit') limit: string, @Query('order') order: 'asc' | 'desc') {
+  async findAll(@Query('page') page: string, @Query('limit') limit: string) {
     if (!page || !limit) throw new BadRequestException({ message: RESPONSE_MESSAGES.PAGE_OR_LIMIT_NOT_PROVIDED })
 
-    return await this.usersService.findAll(+page, +limit, order)
+    return await this.usersService.findAll(+page, +limit)
   }
 
   @Get('/find-one-by-id/:id')

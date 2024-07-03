@@ -45,8 +45,14 @@ export class TemplateContractsService {
     return { templateContract }
   }
 
-  async findAll() {
-    return await this.prismaService.client.templateContract.findMany()
+  async findAll(page: number, limit: number) {
+    const totalItems = await this.prismaService.client.templateContract.count()
+    const totalPages = Math.ceil(totalItems / limit)
+    const templateContract = await this.prismaService.client.templateContract.findMany({
+      skip: (page - 1) * limit,
+      take: limit * 1
+    })
+    return { templateContract, totalItems, totalPages, currentPage: page, limit }
   }
 
   async findOneById(id: string) {

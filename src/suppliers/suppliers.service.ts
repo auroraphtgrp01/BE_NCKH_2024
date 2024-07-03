@@ -37,14 +37,20 @@ export class SuppliersService {
     return supplier
   }
 
-  async findAll() {
+  async findAll(page: number, limit: number) {
+    const totalItems = await this.prismaService.client.suppliers.count()
+    const totalPages = Math.ceil(totalItems / limit)
     const suppliers = []
-    const spl = await this.prismaService.client.suppliers.findMany({ include: { User: true } })
+    const spl = await this.prismaService.client.suppliers.findMany({
+      skip: (page - 1) * limit,
+      take: limit * 1,
+      include: { User: true }
+    })
     for (const supplier of spl) {
       const images = await this.prismaService.client.images.findMany({ where: { suppliersId: supplier.id } })
       suppliers.push({ ...supplier, images })
     }
-    return suppliers
+    return { suppliers, totalItems, totalPages, currentPage: page, limit }
   }
 
   async findOneByUniqueField(value: string, excludeId?: string) {

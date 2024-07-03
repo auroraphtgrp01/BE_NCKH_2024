@@ -68,15 +68,12 @@ export class UsersService {
     })
   }
 
-  async findAll(page: number, limit: number, order: 'asc' | 'desc') {
+  async findAll(page: number, limit: number) {
     const totalItems = await this.prismaService.client.user.count()
     const totalPages = Math.ceil(totalItems / limit)
     const users = await this.prismaService.client.user.findMany({
       skip: (page - 1) * limit,
-      take: limit * 1,
-      orderBy: {
-        id: order
-      }
+      take: limit * 1
     })
     return {
       users,
