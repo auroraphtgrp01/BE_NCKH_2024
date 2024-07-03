@@ -87,5 +87,9 @@ export const RESPONSE_MESSAGES = {
   USER_DELETED_SUCCESSFULLY: 'User deleted successfully',
   TEMPLATE_CONTRACT_DELETED_SUCCESSFULLY: 'Template contract deleted successfully',
   CONTRACT_ATTRIBUTE_VALUE_DELETED_SUCCESSFULLY: 'Contract attribute value deleted successfully',
-  CONTRACT_ATTRIBUTE_DELETED_SUCCESSFULLY: 'Contract attribute deleted successfully'
+  CONTRACT_ATTRIBUTE_DELETED_SUCCESSFULLY: 'Contract attribute deleted successfully',
+  SUPPLIER_IS_NOT_FOUND: 'Supplier is not found',
+  TAX_CODE_OR_EMAIL_OR_PHONE_NUMBER_IS_EXISTED: 'Tax code or email or phone number is existed',
+  PRODUCTS_REMOVED: 'Products removed',
+  SUPPLIER_REMOVED: 'Supplier removed'
 }

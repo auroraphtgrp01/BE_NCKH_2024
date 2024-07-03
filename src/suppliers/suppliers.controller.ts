@@ -24,13 +24,13 @@ export class SuppliersController {
     return this.suppliersService.findOneById(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.suppliersService.update(+id, updateSupplierDto)
+  @Patch()
+  update(@Body() updateSupplierDto: UpdateSupplierDto, @User() user: IUser) {
+    return this.suppliersService.update(updateSupplierDto, user)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.suppliersService.remove(+id)
+  remove(@Param('id') id: string, @User() user: IUser) {
+    return this.suppliersService.remove(id, user)
   }
 }

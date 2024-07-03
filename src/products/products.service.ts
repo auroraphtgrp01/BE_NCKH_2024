@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { IUser } from 'src/users/interfaces/IUser.interface'
@@ -12,7 +12,7 @@ import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 export class ProductsService {
   constructor(
     @Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>,
-    private readonly suppliersService: SuppliersService
+    @Inject(forwardRef(() => SuppliersService)) private readonly suppliersService: SuppliersService
   ) {}
   async create(createProductDto: CreateProductDto, user: IUser) {
     if (!(await this.suppliersService.findOneById(createProductDto.supplierId)))
@@ -61,5 +61,14 @@ export class ProductsService {
 
   remove(id: number) {
     return `This action removes a #${id} product`
+  }
+
+  async removeAllBySupplierId(idSupplier: string, user: IUser) {
+    const deletedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    await Promise.all([
+      this.prismaService.client.products.updateMany({ where: { supplierId: idSupplier }, data: { deletedBy } }),
+      this.prismaService.client.products.deleteMany({ where: { supplierId: idSupplier } })
+    ])
+    return { message: RESPONSE_MESSAGES.PRODUCTS_REMOVED }
   }
 }
