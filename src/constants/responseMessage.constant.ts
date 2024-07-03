@@ -83,5 +83,6 @@ export const RESPONSE_MESSAGES = {
   EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: 'Excute date or end date is not provided',
   SENDER_IS_NOT_FOUND: 'Sender is not found',
   SENDER_IS_EXIST: 'Sender is exist',
-  PERCENT_IS_NOT_EQUAL_100: 'Percent is not equal 100'
+  PERCENT_IS_NOT_EQUAL_100: 'Percent is not equal 100',
+  USER_DELETED_SUCCESSFULLY: 'User deleted successfully'
 }
