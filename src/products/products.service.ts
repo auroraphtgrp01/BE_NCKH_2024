@@ -24,16 +24,25 @@ export class ProductsService {
     })
   }
 
-  findAll() {
-    return `This action returns all products`
+  async findAll(page: number, limit: number) {
+    const totalItems = await this.prismaService.client.products.count()
+    const totalPages = Math.ceil(totalItems / limit)
+    const products = await this.prismaService.client.products.findMany({
+      skip: (page - 1) * limit,
+      take: limit
+    })
+    return { products, totalItems, totalPages, currentPage: page, limit }
   }
 
-  async findAllBySupplierId(supplierId: string) {
+  async findAllBySupplierId(supplierId: string, page: number, limit: number) {
     if (!(await this.suppliersService.findOneById(supplierId)))
       throw new NotFoundException(RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND)
-
+    const totalItems = await this.prismaService.client.products.count({ where: { supplierId } })
+    const totalPages = Math.ceil(totalItems / limit)
     const products = []
     const procs = await this.prismaService.client.products.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
       where: { supplierId }
     })
 
@@ -42,7 +51,7 @@ export class ProductsService {
       products.push({ ...product, images })
     }
 
-    return products
+    return { products, totalItems, totalPages, currentPage: page, limit }
   }
 
   async findOneById(id: string) {
@@ -51,16 +60,33 @@ export class ProductsService {
     return product
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`
+  async findOne(id: string) {
+    return await this.prismaService.client.products.findUnique({ where: { id } })
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`
+  async update(updateProductDto: UpdateProductDto, user: IUser) {
+    if (!(await this.findOne(updateProductDto.id)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.PRODUCT_NOT_FOUND })
+    const { id, images, supplierId } = updateProductDto
+    const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    const updateData: any = { ...updateProductDto, updatedBy }
+    if (images) console.log('Update images')
+    if (supplierId) {
+      if (!(await this.suppliersService.findOneById(supplierId)))
+        throw new NotFoundException(RESPONSE_MESSAGES.SUPPLIER_NOT_FOUND)
+      else updateData.Supplier = { connect: { id: supplierId } }
+    }
+
+    return await this.prismaService.client.products.update({ where: { id }, data: updateData })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`
+  async remove(id: string, user: IUser) {
+    const deletedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    await Promise.all([
+      this.prismaService.client.products.update({ where: { id }, data: { deletedBy } }),
+      this.prismaService.client.products.delete({ where: { id } })
+    ])
+    return { message: RESPONSE_MESSAGES.PRODUCT_REMOVED }
   }
 
   async removeAllBySupplierId(idSupplier: string, user: IUser) {

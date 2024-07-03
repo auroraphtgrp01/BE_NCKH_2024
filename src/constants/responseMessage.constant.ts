@@ -91,5 +91,6 @@ export const RESPONSE_MESSAGES = {
   SUPPLIER_IS_NOT_FOUND: 'Supplier is not found',
   TAX_CODE_OR_EMAIL_OR_PHONE_NUMBER_IS_EXISTED: 'Tax code or email or phone number is existed',
   PRODUCTS_REMOVED: 'Products removed',
-  SUPPLIER_REMOVED: 'Supplier removed'
+  SUPPLIER_REMOVED: 'Supplier removed',
+  PRODUCT_REMOVED: 'Product removed'
 }
