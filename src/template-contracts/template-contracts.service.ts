@@ -190,4 +190,8 @@ export class TemplateContractsService {
       throw error
     }
   }
+
+  async findAllForClient() {
+    return await this.prismaService.client.templateContract.findMany()
+  }
 }

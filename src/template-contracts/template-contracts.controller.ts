@@ -20,6 +20,11 @@ export class TemplateContractsController {
     return await this.templateContractsService.findAll(+page, +limit)
   }
 
+  @Get('/find-all-for-client')
+  async findAllForClient() {
+    return await this.templateContractsService.findAllForClient()
+  }
+
   @Get(':id/attributes')
   async getTemplateContractAttributes(@Param('id') id: string) {
     return { contractAttributes: await this.templateContractsService.getTemplateContractAttributes(id) }
