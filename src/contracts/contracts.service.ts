@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common'
 import { CreateContractDto, CreateDisputeContractDto, CreateEmptyContractDto } from './dto/create-contract.dto'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
 import { CustomPrismaService } from 'nestjs-prisma'
@@ -19,7 +19,13 @@ import { IExecutor } from 'src/interfaces/executor.interface'
 import { TemplateContractsService } from 'src/template-contracts/template-contracts.service'
 import { UsersService } from 'src/users/users.service'
 import { Exact } from '@prisma/client/runtime/library'
-import { ICreateContractResponse, IStage, IVoting } from 'src/interfaces/contract.interface'
+import {
+  EStageHandleStatus,
+  ICreateContractResponse,
+  IStage,
+  IStageData,
+  IVoting
+} from 'src/interfaces/contract.interface'
 import {
   EContractType,
   ERoleParticipant,
@@ -31,12 +37,11 @@ import {
 import { ContractAttributesService } from 'src/contract-attributes/contract-attributes.service'
 import { ParticipantsService } from 'src/participants/participants.service'
 import { ContractAttributeValuesService } from 'src/contract-attribute-values/contract-attribute-values.service'
-import { IContractAttributeResponse } from 'src/interfaces/contract-attribute.interface'
-import { ethers } from 'ethers'
-import { SuppliersService } from 'src/suppliers/suppliers.service'
-import { ICreateInvitation, ICreateParticipant } from 'src/interfaces/participant.interface'
+import { IContractAttribute } from 'src/interfaces/contract-attribute.interface'
+import { ICreateParticipant } from 'src/interfaces/participant.interface'
 import { CommonService } from 'src/commons/common.service'
 import { OrdersService } from 'src/orders/orders.service'
+import { isFutureThatSubmitsOnchainTransaction } from '@nomicfoundation/ignition-core'
 @Injectable()
 export class ContractsService {
   constructor(
@@ -49,7 +54,7 @@ export class ContractsService {
     private readonly participantsService: ParticipantsService,
     private readonly commonService: CommonService,
     private readonly ordersService: OrdersService
-  ) { }
+  ) {}
   async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
     const { addressWallet, name, type, parentId } = contractData
     const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
@@ -321,31 +326,83 @@ export class ContractsService {
       participants.map(async (participant) => await this.findOneById(participant.contractId))
     )
 
-    contracts = (
-      await Promise.all(
-        contracts.map(async (contract: Contract) => {
-          const result: Contract[] = []
-          let updated = contract
-          await Promise.all(
-            contract.stages.map(async (stage: any) => {
-              const now = new Date().getTime()
-              const deliveryTime = new Date(stage.deliveryAt).getTime()
-              const sub = Math.floor((now - deliveryTime) / 60000)
-              if (sub > 60) {
-                updated = await this.update(
-                  { id: contract.id, stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE } },
-                  user
-                )
-              }
-            })
-          )
-          result.push(updated)
-          return result
-        })
-      )
-    ).flat()
+    contracts = await Promise.all(
+      contracts.map(async (contract: Contract) => {
+        const contractHandled = await this.handleUpdateStageStatus(contract, user)
+        if (contractHandled.length > 0) {
+          const stageDataUpdate = await this.handleStageDataToUpdate(contract, contractHandled)
+          const contractUpdated = await this.update({ id: contract.id, stages: stageDataUpdate }, user)
+          return contractUpdated
+        } else return contract
+      })
+    )
 
     return { contracts, participants }
+  }
+
+  async handleStageDataToUpdate(contract: Contract, stages: IStageData[]): Promise<IStage[]> {
+    const updateStages = contract.stages as any
+    const participants = await this.participantsService.findAllByContractId(contract.id)
+
+    const sender = participants.find(
+      (item: any) =>
+        ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.SENDER
+    )
+    const receiver = participants.find(
+      (item: any) =>
+        ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.RECEIVER
+    )
+    stages.map((stage: any) => {
+      if (stage.stageHandleStatus === EStageHandleStatus.CREATE) {
+        updateStages.push({
+          percent: stage.percent,
+          requestBy: sender.User.addressWallet,
+          requestTo: receiver.User.addressWallet,
+          descriptionOfStage: stage.descriptionOfStage,
+          status: EStageStatus.ENFORCE,
+          createdAt: new Date(),
+          contractAttributeId: stage.contractAttributeId
+        })
+      } else if (stage.stageHandleStatus === EStageHandleStatus.UPDATE) {
+        const index = updateStages.findIndex((item) => item.contractAttributeId === stage.contractAttributeId)
+        if (index !== -1) {
+          updateStages[index] = {
+            ...updateStages[index],
+            percent: stage.percent ? stage.percent : updateStages[index].percent,
+            descriptionOfStage: stage.descriptionOfStage
+              ? stage.descriptionOfStage
+              : updateStages[index].descriptionOfStage,
+            status: stage.status ? stage.status : updateStages[index].status
+          }
+        }
+      } else {
+        const index = updateStages.findIndex((item) => item.contractAttributeId === stage.id)
+        if (index !== -1) {
+          updateStages.splice(index, 1)
+        }
+      }
+    })
+    return updateStages
+  }
+
+  async handleUpdateStageStatus(contract: Contract, user: IUser): Promise<IStageData[]> {
+    const response: IStageData[] = []
+    await Promise.all(
+      contract.stages.map(async (stage: any) => {
+        const now = new Date().getTime()
+        const deliveryTime = new Date(stage.createdAt).getTime()
+        const sub = Math.floor((now - deliveryTime) / 60000)
+        if (sub > 120) {
+          response.push({
+            contractAttributeId: stage.contractAttributeId,
+            status: EStageStatus.OUT_OF_DATE,
+            stageHandleStatus: EStageHandleStatus.UPDATE
+          })
+        }
+      })
+    )
+
+    return response
   }
 
   findAll() {
@@ -360,7 +417,7 @@ export class ContractsService {
   async getContractDetailsById(
     contractId: string,
     user?: IUser
-  ): Promise<{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }> {
+  ): Promise<{ contract: Contract; contractAttributes: IContractAttribute[]; participants: Participant[] }> {
     const contract = await this.findOneById(contractId)
     if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
     const contractAttributes = await this.contractAttributesService.findAllByContractId(contractId)
@@ -370,52 +427,16 @@ export class ContractsService {
   }
 
   async update(updateContractDto: UpdateContractDto, user: IUser) {
-    const { stage, stages, disputedContractId, winnerAddressWallet, ...rest } = updateContractDto
+    const { stages, disputedContractId, winnerAddressWallet, ...rest } = updateContractDto
     const find = await this.findOneById(updateContractDto.id)
     if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    const newStages: IStage[] = []
 
-    const participantOfcontract = await this.participantsService.findAllByContractId(updateContractDto.id)
-    if (stages && !stage) {
-      const sender = participantOfcontract.find(
-        (item: any) =>
-          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.SENDER
-      )
-      const receiver = participantOfcontract.find(
-        (item: any) =>
-          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] === ERoleParticipant.RECEIVER
-      )
-      if (!sender || sender.userId === null || sender.userId === '')
-        throw new NotFoundException({ message: 'The sender has not been invited or has not agreed to participate' })
-      if (!receiver || receiver.userId === null || receiver.userId === '')
-        throw new NotFoundException({ message: 'The receiver has not been invited or has not agreed to participate' })
-      stages.map((item: any) => {
-        newStages.push({
-          ...item,
-          id: this.commonService.uuidv4(),
-          requestBy: sender.User.addressWallet,
-          requestTo: receiver.User.addressWallet,
-          createdAt: new Date(),
-          status: EStageStatus.ENFORCE
-        })
-      })
-    } else if (!stages && stage)
-      find.stages.map((item: any) => {
-        if (item.id === stage.id)
-          newStages.push({
-            ...item,
-            description: stage.description ? stage.description : item.description,
-            status: stage.status ? stage.status : item.status,
-            percent: stage.percent ? stage.percent : item.percent
-          })
-        else newStages.push(item)
-      })
     const updatedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract = await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
       data: {
         ...(rest as any),
-        stages: stage || stages ? (stage && !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
+        stages: stages ? stages : find.stages,
         disputedContractId: disputedContractId ? disputedContractId : null,
         winnerAddressWallet: winnerAddressWallet ? winnerAddressWallet : null,
         updatedBy
@@ -426,95 +447,161 @@ export class ContractsService {
   }
 
   async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
-    const isContractExist = await this.prismaService.client.contract.findUnique({
-      where: { id: updateContractAttribute.id }
-    })
-    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-
-    await Promise.all([
-      updateContractAttribute.updatedAttributes.map(async (item) => {
-        if (item.statusAttribute === 'Create') {
-          if (
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
-            item.type === ETypeContractAttribute.TOTAL_AMOUNT
-          ) {
-            const contractAttribute = await this.contractAttributesService.create(
-              {
-                contractId: updateContractAttribute.id,
-                value: item.property,
-                type: item.type,
-                index: item.index
-              },
-              user
-            )
-            await this.contractAttributeValuesService.create(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
-          } else {
-            await this.contractAttributesService.create(
-              {
-                contractId: updateContractAttribute.id,
-                value: item.value,
-                type: item.type,
-                index: item.index
-              },
-              user
-            )
+    try {
+      const contract = await this.prismaService.client.contract.findUnique({
+        where: { id: updateContractAttribute.id }
+      })
+      if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+      const stageAttributes = updateContractAttribute.updatedAttributes.filter(
+        (item) => item.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE
+      )
+      if (stageAttributes.length > 0) {
+        if (stageAttributes.reduce((acc: number, item) => acc + Number(item.value), 0) !== 100)
+          throw new BadRequestException({ message: RESPONSE_MESSAGES.PERCENT_IS_NOT_EQUAL_100 })
+      }
+      let stageAttributeUpdates: IStageData[] = [...stageAttributes]
+        .filter((item) => item.statusAttribute)
+        .map((item) => {
+          return {
+            percent: item.value,
+            descriptionOfStage: item.descriptionOfStage,
+            stageHandleStatus: item.statusAttribute,
+            contractAttributeId: item.id
           }
-        }
-        if (item.statusAttribute === 'Update') {
-          if (
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
-            item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
-            item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
-            item.type === ETypeContractAttribute.TOTAL_AMOUNT
-          ) {
-            const contractAttribute = await this.contractAttributesService.update(
-              {
-                id: item.id,
-                value: item.property,
-                type: item.type,
-                index: item.index
-              },
-              user
-            )
-            await this.contractAttributeValuesService.update(
-              {
-                value: item.value,
-                contractAttributeId: contractAttribute.id
-              },
-              user
-            )
-          } else {
-            await this.contractAttributesService.update(
-              {
-                id: item.id,
-                value: item.value,
-                type: item.type,
-                index: item.index
-              },
-              user
-            )
-          }
-        }
-      }),
-      Promise.all([
-        updateContractAttribute.deleteArray.map(async (item) => {
-          await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: item } })
-          await this.prismaService.client.contractAttribute.delete({ where: { id: item } })
         })
+      stageAttributeUpdates = [
+        ...stageAttributeUpdates,
+        ...updateContractAttribute.deleteArray.map((item) => {
+          return {
+            stageHandleStatus: EStageHandleStatus.DELETE,
+            contractAttributeId: item.id
+          }
+        })
+      ]
+      const dataStageUpdates = await this.handleStageDataToUpdate(contract, stageAttributeUpdates)
+      Promise.all([
+        updateContractAttribute.updatedAttributes.map(async (item) => {
+          if (item.statusAttribute === 'Create') {
+            if (
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+              item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+              item.type === ETypeContractAttribute.TOTAL_AMOUNT
+            ) {
+              const contractAttribute = await this.contractAttributesService.create(
+                {
+                  contractId: updateContractAttribute.id,
+                  value: item.property,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+              await this.contractAttributeValuesService.create(
+                {
+                  value: item.value.toString(),
+                  descriptionOfStage: item.descriptionOfStage,
+                  contractAttributeId: contractAttribute.id
+                },
+                user
+              )
+            } else if (item.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE) {
+              const contractAttribute = await this.contractAttributesService.create(
+                {
+                  contractId: updateContractAttribute.id,
+                  value: item.property,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+              await this.contractAttributeValuesService.create(
+                {
+                  value: item.value,
+                  descriptionOfStage: item.descriptionOfStage,
+                  contractAttributeId: contractAttribute.id
+                },
+                user
+              )
+            } else {
+              await this.contractAttributesService.create(
+                {
+                  contractId: updateContractAttribute.id,
+                  value: item.value,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+            }
+          } else if (item.statusAttribute === 'Update') {
+            if (
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+              item.type === ETypeContractAttribute.CONTRACT_SIGNATURE ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+              item.type === ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+              item.type === ETypeContractAttribute.TOTAL_AMOUNT
+            ) {
+              const contractAttribute = await this.contractAttributesService.update(
+                {
+                  id: item.id,
+                  value: item.property,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+              await this.contractAttributeValuesService.update(
+                {
+                  value: item.value,
+                  contractAttributeId: contractAttribute.id
+                },
+                user
+              )
+            } else if (item.type === ETypeContractAttribute.CONTRACT_PAYMENT_STAGE) {
+              const contractAttribute = await this.contractAttributesService.update(
+                {
+                  id: item.id,
+                  value: item.property,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+              await this.contractAttributeValuesService.update(
+                {
+                  value: item.value.toString(),
+                  descriptionOfStage: item.descriptionOfStage,
+                  contractAttributeId: contractAttribute.id
+                },
+                user
+              )
+            } else {
+              await this.contractAttributesService.update(
+                {
+                  id: item.id,
+                  value: item.value,
+                  type: item.type,
+                  index: item.index
+                },
+                user
+              )
+            }
+          }
+        }),
+        updateContractAttribute.deleteArray.map(async (item) => {
+          await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: item.id } })
+          await this.prismaService.client.contractAttribute.delete({ where: { id: item.id } })
+        }),
+        this.update({ id: updateContractAttribute.id, stages: dataStageUpdates }, user)
       ])
-    ])
+    } catch (error) {
+      throw error
+    }
+
     return {
       message: RESPONSE_MESSAGES.UPDATE_CONTRACT_ATTRIBUTE_SUCCESS
     }
@@ -591,7 +678,7 @@ export class ContractsService {
     user: IUser,
     _user?: User,
     supplier?: Suppliers & { User: User }
-  ): Promise<IContractAttributeResponse[]> {
+  ): Promise<IContractAttribute[]> {
     const template = await this.templateContractsService.findOneById(templateContractId)
     if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
     const getAllContractAttributes: ContractAttribute[] = await Promise.all(
@@ -745,25 +832,29 @@ export class ContractsService {
   async compareAttribute(contractId: string) {
     const inContract = await this.getContractDetailsById(contractId).then((res: any) =>
       this.commonService.convertToTypeContractAttributesResponse(res.contractAttributes)
-    );
+    )
 
     const inBlockChain = await this.prismaService.client.contractAttributeInBlockchain.findMany({
       where: { contractId },
       include: { ContractAttributeValueInBlockchain: true }
-    });
+    })
 
-    const x = this.commonService.convertToTypeContractAttributesResponse(inBlockChain);
+    const x = this.commonService.convertToTypeContractAttributesResponse(inBlockChain)
 
-    if (x.length !== inContract.length) return { result: false };
+    if (x.length !== inContract.length) return { result: false }
 
     for (const item of x) {
-      const contractAttribute = inContract.find((attr) => attr.index === item.index);
-      if (!contractAttribute || contractAttribute.value !== item.value || contractAttribute.property !== item.property) {
-        console.log('contractAttribute', contractAttribute, '', item);
-        return { result: false };
+      const contractAttribute = inContract.find((attr) => attr.index === item.index)
+      if (
+        !contractAttribute ||
+        contractAttribute.value !== item.value ||
+        contractAttribute.property !== item.property
+      ) {
+        console.log('contractAttribute', contractAttribute, '', item)
+        return { result: false }
       }
     }
 
-    return { result: true };
+    return { result: true }
   }
 }

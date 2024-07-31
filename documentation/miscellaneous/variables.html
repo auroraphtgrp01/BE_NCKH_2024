@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -149,7 +140,7 @@
                             <a href="#readContract" title="src/utils/readContract.utils.ts" ><b>readContract</b>&nbsp;&nbsp;&nbsp;(src/.../readContract.utils.ts)</a>
                         </li>
                         <li>
-                            <a href="#RESPONSE_MESSAGES" title="src/constants/responseMessage.ts" ><b>RESPONSE_MESSAGES</b>&nbsp;&nbsp;&nbsp;(src/.../responseMessage.ts)</a>
+                            <a href="#RESPONSE_MESSAGES" title="src/constants/responseMessage.constant.ts" ><b>RESPONSE_MESSAGES</b>&nbsp;&nbsp;&nbsp;(src/.../responseMessage.constant.ts)</a>
                         </li>
                         <li>
                             <a href="#User" title="src/decorators/user.decorator.ts" ><b>User</b>&nbsp;&nbsp;&nbsp;(src/.../user.decorator.ts)</a>
@@ -177,8 +168,8 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>(password: string, hashedPassword: string): boolean &#x3D;&gt; {
-    const isMatch &#x3D; compareSync(password, hashedPassword)
-    return isMatch
+  const isMatch &#x3D; compareSync(password, hashedPassword)
+  return isMatch
 }</code>
                     </td>
                 </tr>
@@ -200,9 +191,9 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>async (password: string) &#x3D;&gt; {
-    const salt &#x3D; await genSalt(10)
-    const hashedPassword &#x3D; await hash(password, salt as string)
-    return hashedPassword
+  const salt &#x3D; await genSalt(10)
+  const hashedPassword &#x3D; await hash(password, salt as string)
+  return hashedPassword
 }</code>
                     </td>
                 </tr>
@@ -239,7 +230,7 @@
   networks: {
     localganache: {
       url: &#x27;HTTP://127.0.0.1:7545&#x27;,
-      accounts: [&#x27;0x378ea284d8f6661c558156c7b6b9d8849645959037c2064835dea5fcc2f0ba57&#x27;]
+      accounts: [&#x27;0x2ad77ad7026360cc5836893cdfd3aa4354224b8220c98b995c77324f87d8b4fa&#x27;]
     }
   },
   typechain: {
@@ -271,32 +262,32 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>(): Promise&lt;string&gt; &#x3D;&gt; {
-    return new Promise((resolve, reject) &#x3D;&gt; {
-        const command &#x3D; &#x60;npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache&#x60;;
-        const childProcess &#x3D; exec(command);
-        let outputData &#x3D; &#x27;&#x27;;
+  return new Promise((resolve, reject) &#x3D;&gt; {
+    const command &#x3D; &#x60;npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache&#x60;
+    const childProcess &#x3D; exec(command)
+    let outputData &#x3D; &#x27;&#x27;
 
-        childProcess.stdout.on(&#x27;data&#x27;, (data) &#x3D;&gt; {
-            const output &#x3D; data.toString();
-            console.log(output);
-            outputData +&#x3D; output;
-            childProcess.stdin.write(&#x27;y\n&#x27;);
-        });
+    childProcess.stdout.on(&#x27;data&#x27;, (data) &#x3D;&gt; {
+      const output &#x3D; data.toString()
+      console.log(output)
+      outputData +&#x3D; output
+      childProcess.stdin.write(&#x27;y\n&#x27;)
+    })
 
-        childProcess.on(&#x27;close&#x27;, (code) &#x3D;&gt; {
-            console.log(&#x60;Quá trình đã kết thúc với mã trạng thái ${code}&#x60;)
-            if (code &#x3D;&#x3D;&#x3D; 0) {
-                resolve(outputData)
-            } else {
-                reject(new Error(&#x60;Quá trình kết thúc với mã trạng thái ${code}&#x60;))
-            }
-        });
+    childProcess.on(&#x27;close&#x27;, (code) &#x3D;&gt; {
+      console.log(&#x60;Quá trình đã kết thúc với mã trạng thái ${code}&#x60;)
+      if (code &#x3D;&#x3D;&#x3D; 0) {
+        resolve(outputData)
+      } else {
+        reject(new Error(&#x60;Quá trình kết thúc với mã trạng thái ${code}&#x60;))
+      }
+    })
 
-        childProcess.on(&#x27;error&#x27;, (error) &#x3D;&gt; {
-            console.error(&#x27;Lỗi khi thực thi lệnh:&#x27;, error);
-            reject(error)
-        });
-    });
+    childProcess.on(&#x27;error&#x27;, (error) &#x3D;&gt; {
+      console.error(&#x27;Lỗi khi thực thi lệnh:&#x27;, error)
+      reject(error)
+    })
+  })
 }</code>
                     </td>
                 </tr>
@@ -321,31 +312,31 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>(): Promise&lt;string&gt; &#x3D;&gt; {
-    return new Promise((resolve, reject) &#x3D;&gt; {
-        const command &#x3D; &#x60;npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache&#x60;;
-        const childProcess &#x3D; exec(command);
-        let outputData &#x3D; &#x27;&#x27;;
+  return new Promise((resolve, reject) &#x3D;&gt; {
+    const command &#x3D; &#x60;npx hardhat ignition deploy ./ignition/modules/SupplyChain.ignition.ts --network localganache&#x60;
+    const childProcess &#x3D; exec(command)
+    let outputData &#x3D; &#x27;&#x27;
 
-        childProcess.stdout.on(&#x27;data&#x27;, (data) &#x3D;&gt; {
-            const output &#x3D; data.toString();
-            console.log(output);
-            outputData +&#x3D; output;
-            childProcess.stdin.write(&#x27;y\n&#x27;);
-        });
+    childProcess.stdout.on(&#x27;data&#x27;, (data) &#x3D;&gt; {
+      const output &#x3D; data.toString()
+      console.log(output)
+      outputData +&#x3D; output
+      childProcess.stdin.write(&#x27;y\n&#x27;)
+    })
 
-        childProcess.on(&#x27;close&#x27;, (code) &#x3D;&gt; {
-            console.log(&#x60;Quá trình đã kết thúc với mã trạng thái ${code}&#x60;)
-            if (code &#x3D;&#x3D;&#x3D; 0) {
-                resolve(outputData)
-            } else {
-                reject(new Error(&#x60;Quá trình kết thúc với mã trạng thái ${code}&#x60;))
-            }
-        });
-        childProcess.on(&#x27;error&#x27;, (error) &#x3D;&gt; {
-            console.error(&#x27;Lỗi khi thực thi lệnh:&#x27;, error);
-            reject(error)
-        });
-    });
+    childProcess.on(&#x27;close&#x27;, (code) &#x3D;&gt; {
+      console.log(&#x60;Quá trình đã kết thúc với mã trạng thái ${code}&#x60;)
+      if (code &#x3D;&#x3D;&#x3D; 0) {
+        resolve(outputData)
+      } else {
+        reject(new Error(&#x60;Quá trình kết thúc với mã trạng thái ${code}&#x60;))
+      }
+    })
+    childProcess.on(&#x27;error&#x27;, (error) &#x3D;&gt; {
+      console.error(&#x27;Lỗi khi thực thi lệnh:&#x27;, error)
+      reject(error)
+    })
+  })
 }</code>
                     </td>
                 </tr>
@@ -477,11 +468,13 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>(fileName: string): IContractJSON &#x3D;&gt; {
+                        <i>Default value : </i><code>(type: &#x27;disputed | supplyChain&#x27;): IContractJSON &#x3D;&gt; {
   try {
-    const filePath &#x3D; resolve(process.cwd(), &#x60;artifacts/contracts/${fileName}.sol/${fileName}.json&#x60;)
-    console.log(filePath)
-    const data &#x3D; fs.readFileSync(filePath, &#x27;utf8&#x27;)
+    const filePath &#x3D; {
+      supplyChain: resolve(process.cwd(), &#x60;artifacts/contracts/SupplyChain.sol/SupplyChain.json&#x60;),
+      disputed: resolve(process.cwd(), &#x60;artifacts/contracts/DisputeSmartContract.sol/DisputeSmartContract.json&#x60;)
+    }
+    const data &#x3D; fs.readFileSync(filePath[type], &#x27;utf8&#x27;)
     const jsonData &#x3D; JSON.parse(data)
     return jsonData
   } catch (error) {
@@ -497,7 +490,7 @@
         </tbody>
     </table>
 </section>
-    <h3>src/constants/responseMessage.ts</h3>
+    <h3>src/constants/responseMessage.constant.ts</h3>
     <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
@@ -564,14 +557,46 @@
   CONTRACT_ATTRIBUTE_VALUES_IS_NOT_PROVIDED: &#x27;Contract attribute values is not provided or incomplete&#x27;,
   VALUE_IS_REQUIRED: &#x27;Value is required&#x27;,
   CONTRACT_ATTRIBUTE_IS_NOT_FOUND: &#x27;Contract attribute is not found&#x27;,
-  CONTRACT_TEMPLATE_IS_NOT_FOUND: &#x27;Contract template is not found&#x27;,
+  TEMPLATE_CONTRACT_IS_NOT_FOUND: &#x27;Template contract is not found&#x27;,
   PARTY_INFO_IS_NOT_FOUND: &#x27;Party info is not found&#x27;,
   ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND: &#x27;One of the party info is not found&#x27;,
+  ONE_OF_THE_CONTRACT_ATTRIBUTE_IS_NOT_FOUND: &#x27;One of the contract attribute is not found&#x27;,
   PIN_MUST_BE_A_NUMBER: &#x27;PIN must be a number&#x27;,
   PIN_IS_REQUIRED: &#x27;PIN is required&#x27;,
   PIN_IS_INVALID: &#x27;PIN is invalid&#x27;,
   PARTY_IS_NOT_FOUND: &#x27;Party is not found&#x27;,
-  PARTY_INFO_IS_EXIST: &#x27;Party info is exist&#x27;
+  PARTY_INFO_IS_EXIST: &#x27;Party info is exist&#x27;,
+  CONTRACT_ATTRIBUTE_VALUES_MUST_BE_PROVIDED: &#x27;Contract attribute values must be provided&#x27;,
+  VALUE_MUST_BE_STRING: &#x27;Value must be a string&#x27;,
+  CONTRACT_TITLE_MUST_BE_STRING: &#x27;Contract title must be a string&#x27;,
+  EMAIL_TO_MUST_BE_A_STRING: &#x27;Email to must be a string&#x27;,
+  EMAIL_TO_IS_INVALID: &#x27;Email to is invalid&#x27;,
+  ONE_OF_THE_EMAILS_SENT_TO_DID_NOT_HAVE_AN_ACCOUNT: &#x27;One of the emails sent did not have an account&#x27;,
+  TYPE_CONTRACT_ATTRIBUTE_IS_NOT_VALID: &#x27;Type contract attribute is not valid&#x27;,
+  CONTRACT_ATTRIBUTE_NOT_FOUND: &#x27;Contract attribute not found&#x27;,
+  CONTRACT_NOT_FOUND: &#x27;Contract not found&#x27;,
+  THE_CONTRACT_OR_CONTRACT_TEMPLATE_IS_UNDEFINED: &#x27;The contract or contract template is undefined&#x27;,
+  INVITATION_NOT_FOUND: &#x27;Invitation not found&#x27;,
+  PARTICIPANT_STATUS_INVALID: &#x27;Participant status invalid&#x27;,
+  USER_EMAIL_AND_INVITED_EMAIL_DO_NOT_MATCH: &#x27;User email and invited email do not match&#x27;,
+  PARTICIPANT_RESPONDED: &#x27;Participant responded&#x27;,
+  PARTICIPANT_NOT_FOUND: &#x27;Participant not found&#x27;,
+  CONTRACT_ATTRIBUTE_VALUE_NOT_FOUND: &#x27;Contract attribute value not found&#x27;,
+  UPDATE_CONTRACT_ATTRIBUTE_SUCCESS: &#x27;Update contract attribute success&#x27;,
+  YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION: &#x27;You are not allowed to perform this action&#x27;,
+  ROLE_IS_EXIST: &#x27;Role is exist&#x27;,
+  ROLE_IS_INVALID: &#x27;Role is invalid&#x27;,
+  PERCENT_NOT_EQUAL_100: &#x27;Percent not equal 100&#x27;,
+  ORDER_IS_NOT_FOUND: &#x27;Order is not found&#x27;,
+  TOTAL_IS_REQUIRED: &quot;If you don&#x27;t have an order, you need to pass in the value of the contract&quot;,
+  STAGE_IS_REQUIRED: &#x27;Stage is required&#x27;,
+  ONE_OF_THE_CONATRACT_ATTRIBUTES_DOES_NOT_EXIST: &#x27;One of the contract attributes does not exist&#x27;,
+  SUPPLIER_NOT_FOUND: &#x27;Supplier not found&#x27;,
+  PRODUCT_NOT_FOUND: &#x27;Product not found&#x27;,
+  ORDER_CODE_EXISTED: &#x27;Order code existed&#x27;,
+  EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: &#x27;Excute date or end date is not provided&#x27;,
+  SENDER_IS_NOT_FOUND: &#x27;Sender is not found&#x27;,
+  SENDER_IS_EXIST: &#x27;Sender is exist&#x27;
 }</code>
                     </td>
                 </tr>
@@ -640,6 +665,19 @@
             var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

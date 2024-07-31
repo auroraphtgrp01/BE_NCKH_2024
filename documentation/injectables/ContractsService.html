@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -144,7 +135,27 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#compareAttribute" >compareAttribute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#create" >create</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createContractAttributeAndValueByTemplateId" >createContractAttributeAndValueByTemplateId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createContractAttributesByTemplateId" >createContractAttributesByTemplateId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createContractBySurveyId" >createContractBySurveyId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createDisputeContract" >createDisputeContract</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -154,11 +165,35 @@
                                 <a href="#findAll" >findAll</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getContractDetailsById" >getContractDetailsById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getContractsByUserId" >getContractsByUserId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleDeployContract" >handleDeployContract</a>
+                            </li>
+                            <li>
                                 <a href="#remove" >remove</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#removeContractAttributesByContractId" >removeContractAttributesByContractId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateContractAttribute" >updateContractAttribute</a>
                             </li>
                         </ul>
                     </td>
@@ -178,12 +213,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, invitationService: <a href="../injectables/InvitationsService.html" target="_self">InvitationsService</a>, contractPartyInfoService: <a href="../injectables/ContractPartyInfosService.html" target="_self">ContractPartyInfosService</a>, contractAttributeValueService: <a href="../injectables/ContractAttributeValuesService.html" target="_self">ContractAttributeValuesService</a>, commonService: <a href="../injectables/CommonService.html" target="_self">CommonService</a>, partyInfosService: <a href="../injectables/PartyInfosService.html" target="_self">PartyInfosService</a>)</code>
+<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, templateContractsService: <a href="../injectables/TemplateContractsService.html" target="_self">TemplateContractsService</a>, usersService: <a href="../injectables/UsersService.html" target="_self">UsersService</a>, contractAttributesService: <a href="../injectables/ContractAttributesService.html" target="_self">ContractAttributesService</a>, contractAttributeValuesService: <a href="../injectables/ContractAttributeValuesService.html" target="_self">ContractAttributeValuesService</a>, participantsService: <a href="../injectables/ParticipantsService.html" target="_self">ParticipantsService</a>, commonService: <a href="../injectables/CommonService.html" target="_self">CommonService</a>, ordersService: <a href="../injectables/OrdersService.html" target="_self">OrdersService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/contracts/contracts.service.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/contracts/contracts.service.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -213,10 +248,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>invitationService</td>
+                                                        <td>templateContractsService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/InvitationsService.html" target="_self" >InvitationsService</a></code>
+                                                                        <code><a href="../injectables/TemplateContractsService.html" target="_self" >TemplateContractsService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -225,10 +260,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>contractPartyInfoService</td>
+                                                        <td>usersService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/ContractPartyInfosService.html" target="_self" >ContractPartyInfosService</a></code>
+                                                                        <code><a href="../injectables/UsersService.html" target="_self" >UsersService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -237,10 +272,34 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>contractAttributeValueService</td>
+                                                        <td>contractAttributesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractAttributesService.html" target="_self" >ContractAttributesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>contractAttributeValuesService</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/ContractAttributeValuesService.html" target="_self" >ContractAttributeValuesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>participantsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ParticipantsService.html" target="_self" >ParticipantsService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -261,10 +320,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>partyInfosService</td>
+                                                        <td>ordersService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/PartyInfosService.html" target="_self" >PartyInfosService</a></code>
+                                                                        <code><a href="../injectables/OrdersService.html" target="_self" >OrdersService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -290,26 +349,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="create"></a>
+                    <a name="compareAttribute"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
-                        <span ><b>create</b></span>
-                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>compareAttribute</b></span>
+                        <a href="#compareAttribute"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(contractData: <a href="../classes/CreateContractDto.html" target="_self">CreateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, templateId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, partyInfoIds?: string[])</code>
+                    <code>compareAttribute(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/contracts/contracts.service.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="745"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:745</a></div>
                         </td>
                     </tr>
 
@@ -330,7 +389,76 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>contractData</td>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(createContractDto: <a href="../classes/CreateContractDto.html" target="_self">CreateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="272"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:272</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createContractDto</td>
                                             <td>
                                                             <code><a href="../classes/CreateContractDto.html" target="_self" >CreateContractDto</a></code>
                                             </td>
@@ -353,10 +481,220 @@
 
 
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createContractAttributeAndValueByTemplateId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createContractAttributeAndValueByTemplateId</b></span>
+                        <a href="#createContractAttributeAndValueByTemplateId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createContractAttributeAndValueByTemplateId(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, templateContractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, modifiedAttributes: literal type[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="523"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:523</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
                                         <tr>
-                                                <td>templateId</td>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>templateContractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>modifiedAttributes</td>
+                                            <td>
+                                                        <code>literal type[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createContractAttributesByTemplateId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createContractAttributesByTemplateId</b></span>
+                        <a href="#createContractAttributesByTemplateId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createContractAttributesByTemplateId(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, templateContractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, isCreateAttributeValue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, _user?: <a href="../s/User.html" target="_self">User</a>, supplier?)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="587"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:587</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>templateContractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>isCreateAttributeValue</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>_user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >User</a></code>
                                             </td>
 
                                             <td>
@@ -366,13 +704,174 @@
 
                                         </tr>
                                         <tr>
-                                                <td>partyInfoIds</td>
+                                                <td>supplier</td>
                                             <td>
-                                                        <code>string[]</code>
                                             </td>
 
                                             <td>
                                                     Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IContractAttributeResponse.html" target="_self" >Promise&lt;IContractAttributeResponse[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createContractBySurveyId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createContractBySurveyId</b></span>
+                        <a href="#createContractBySurveyId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createContractBySurveyId(surveyId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>surveyId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDisputeContract"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createDisputeContract</b></span>
+                        <a href="#createDisputeContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDisputeContract(createDisputeContractDto: <a href="../classes/CreateDisputeContractDto.html" target="_self">CreateDisputeContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="75"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createDisputeContractDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateDisputeContractDto.html" target="_self" >CreateDisputeContractDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
                                             </td>
 
 
@@ -406,15 +905,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createEmptyContract(contractData: <a href="../classes/CreateContractDto.html" target="_self">CreateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                    <code>createEmptyContract(contractData: <a href="../classes/CreateEmptyContractDto.html" target="_self">CreateEmptyContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/contracts/contracts.service.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -437,7 +936,7 @@
                                         <tr>
                                                 <td>contractData</td>
                                             <td>
-                                                            <code><a href="../classes/CreateContractDto.html" target="_self" >CreateContractDto</a></code>
+                                                            <code><a href="../classes/CreateEmptyContractDto.html" target="_self" >CreateEmptyContractDto</a></code>
                                             </td>
 
                                             <td>
@@ -492,8 +991,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="108"
-                                    class="link-to-prism">src/contracts/contracts.service.ts:108</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="351"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:351</a></div>
                         </td>
                     </tr>
 
@@ -505,6 +1004,294 @@
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="355"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:355</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContractDetailsById"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getContractDetailsById</b></span>
+                        <a href="#getContractDetailsById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getContractDetailsById(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user?: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="360"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:360</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContractsByUserId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getContractsByUserId</b></span>
+                        <a href="#getContractsByUserId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getContractsByUserId(user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="318"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:318</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleDeployContract"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>handleDeployContract</b></span>
+                        <a href="#handleDeployContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleDeployContract(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="313"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:313</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -529,8 +1316,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="131"
-                                    class="link-to-prism">src/contracts/contracts.service.ts:131</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="741"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:741</a></div>
                         </td>
                     </tr>
 
@@ -580,6 +1367,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="removeContractAttributesByContractId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>removeContractAttributesByContractId</b></span>
+                        <a href="#removeContractAttributesByContractId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeContractAttributesByContractId(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="707"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:707</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="update"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -591,15 +1447,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(updateContractDto: <a href="../classes/UpdateContractDto.html" target="_self">UpdateContractDto</a>, partyInfoIds?: string[])</code>
+                    <code>update(updateContractDto: <a href="../classes/UpdateContractDto.html" target="_self">UpdateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="112"
-                                    class="link-to-prism">src/contracts/contracts.service.ts:112</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="372"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:372</a></div>
                         </td>
                     </tr>
 
@@ -632,13 +1488,94 @@
 
                                         </tr>
                                         <tr>
-                                                <td>partyInfoIds</td>
+                                                <td>user</td>
                                             <td>
-                                                        <code>string[]</code>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
-                                                    Yes
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateContractAttribute"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateContractAttribute</b></span>
+                        <a href="#updateContractAttribute"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateContractAttribute(updateContractAttribute: <a href="../classes/UpdateContractAttributeDto.html" target="_self">UpdateContractAttributeDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="428"
+                                    class="link-to-prism">src/contracts/contracts.service.ts:428</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>updateContractAttribute</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateContractAttributeDto.html" target="_self" >UpdateContractAttributeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
                                             </td>
 
 
@@ -663,143 +1600,774 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, NotFoundException, UnauthorizedException } from &#x27;@nestjs/common&#x27;
-import { CreateContractDto } from &#x27;./dto/create-contract.dto&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, NotFoundException, forwardRef } from &#x27;@nestjs/common&#x27;
+import { CreateContractDto, CreateDisputeContractDto, CreateEmptyContractDto } from &#x27;./dto/create-contract.dto&#x27;
 import { ExtendedPrismaClient } from &#x27;src/utils/prisma.extensions&#x27;
 import { CustomPrismaService } from &#x27;nestjs-prisma&#x27;
-import { contractStatus } from &#x27;@prisma/client&#x27;
-import { CreateInvitationDto } from &#x27;src/invitations/dto/create-invitation.dto&#x27;
-import { InvitationsService } from &#x27;src/invitations/invitations.service&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
-import { UpdateContractDto } from &#x27;./dto/update-contract.dto&#x27;
-import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
-import { ContractPartyInfosService } from &#x27;src/contract-party-infos/contract-party-infos.service&#x27;
-import { IContractAttributeValue } from &#x27;src/interfaces/contract.interface&#x27;
-import { ContractAttributeValuesService } from &#x27;src/contract-attribute-values/contract-attribute-values.service&#x27;
-import { CommonService } from &#x27;src/common.service&#x27;
-import { IExecutor } from &#x27;src/interfaces/executor.interface&#x27;
-import { PartyInfosService } from &#x27;src/party-infos/party-infos.service&#x27;
-import { MailService } from &#x27;src/mailer/mailer.service&#x27;
-import { MailPayload } from &#x27;src/mailer/mail-payload.i&#x27;
+import {
+  Contract,
+  ContractAttribute,
+  Participant,
+  ParticipantStatus,
+  Suppliers,
+  User,
+  contractStatus
+} from &#x27;@prisma/client&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
+import { UpdateContractAttributeDto, UpdateContractDto } from &#x27;./dto/update-contract.dto&#x27;
 
+import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
+import { IExecutor } from &#x27;src/interfaces/executor.interface&#x27;
+import { TemplateContractsService } from &#x27;src/template-contracts/template-contracts.service&#x27;
+import { UsersService } from &#x27;src/users/users.service&#x27;
+import { Exact } from &#x27;@prisma/client/runtime/library&#x27;
+import { ICreateContractResponse, IStage, IVoting } from &#x27;src/interfaces/contract.interface&#x27;
+import {
+  EContractType,
+  ERoleParticipant,
+  ERoles,
+  EStageStatus,
+  ETypeContractAttribute,
+  EVoting
+} from &#x27;src/constants/enum.constant&#x27;
+import { ContractAttributesService } from &#x27;src/contract-attributes/contract-attributes.service&#x27;
+import { ParticipantsService } from &#x27;src/participants/participants.service&#x27;
+import { ContractAttributeValuesService } from &#x27;src/contract-attribute-values/contract-attribute-values.service&#x27;
+import { IContractAttributeResponse } from &#x27;src/interfaces/contract-attribute.interface&#x27;
+import { ethers } from &#x27;ethers&#x27;
+import { SuppliersService } from &#x27;src/suppliers/suppliers.service&#x27;
+import { ICreateInvitation, ICreateParticipant } from &#x27;src/interfaces/participant.interface&#x27;
+import { CommonService } from &#x27;src/commons/common.service&#x27;
+import { OrdersService } from &#x27;src/orders/orders.service&#x27;
 @Injectable()
 export class ContractsService {
   constructor(
     @Inject(&#x27;PrismaService&#x27;) private readonly prismaService: CustomPrismaService&lt;ExtendedPrismaClient&gt;,
-    private invitationService: InvitationsService,
-    private contractPartyInfoService: ContractPartyInfosService,
-    private contractAttributeValueService: ContractAttributeValuesService,
-    private commonService: CommonService,
-    private partyInfosService: PartyInfosService,
-
+    private readonly templateContractsService: TemplateContractsService,
+    private readonly usersService: UsersService,
+    @Inject(forwardRef(() &#x3D;&gt; ContractAttributesService))
+    private readonly contractAttributesService: ContractAttributesService,
+    private readonly contractAttributeValuesService: ContractAttributeValuesService,
+    private readonly participantsService: ParticipantsService,
+    private readonly commonService: CommonService,
+    private readonly ordersService: OrdersService
   ) { }
+  async createEmptyContract(contractData: CreateEmptyContractDto, user: IUser) {
+    const { addressWallet, name, type, parentId } &#x3D; contractData
+    const createdBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email, role: user.role }
 
-  async createEmptyContract(contractData: CreateContractDto, user: IUser) {
-    const createdBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email }
     const contract &#x3D; await this.prismaService.client.contract.create({
       data: {
-        contractTitle: contractData.contractTitle ? contractData.contractTitle : &#x27;&#x27;,
-        addressWallet: contractData.addressWallet ? contractData.addressWallet : &#x27;&#x27;,
-        contractAddress: contractData.contractAddress ? contractData.contractAddress : &#x27;&#x27;,
-        blockAddress: contractData.blockAddress ? contractData.blockAddress : &#x27;&#x27;,
-        status: contractStatus.PENDING,
-        startDate: new Date(),
+        addressWallet,
+        contractTitle: name,
+        status: contractData.status
+          ? (contractData.status as Exact&lt;contractStatus, contractStatus&gt;)
+          : (contractStatus.PENDING as Exact&lt;contractStatus, contractStatus&gt;),
+        type: type ? type : EContractType.CONTRACT,
         createdBy,
-        updatedAt: null
+        updatedAt: null,
+        parentId: parentId ? parentId : null,
+        contractAddress: contractData.contractAddress ? contractData.contractAddress : null
       }
     })
 
     return contract
   }
 
-  async create(contractData: CreateContractDto, user: IUser, templateId?: string, partyInfoIds?: string[]) {
-    if (contractData.id) {
-      if (!(await this.commonService.findOneContractById(contractData.id)))
-        throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-      if (!partyInfoIds || partyInfoIds.length &lt; 2)
-        throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
-      const handlePartyInfoIds &#x3D; await Promise.all(
-        partyInfoIds.map(async (partyInfoId) &#x3D;&gt; await this.partyInfosService.findOneById(partyInfoId))
-      )
-      if (handlePartyInfoIds.includes(null))
-        throw new NotFoundException({ message: RESPONSE_MESSAGES.ONE_OF_THE_PARTY_INFO_IS_NOT_FOUND })
+  async createDisputeContract(createDisputeContractDto: CreateDisputeContractDto, user: IUser) {
+    const { totalAmount, customer, supplier, ...rest } &#x3D; createDisputeContractDto
+    const userSender: User &#x3D; await this.usersService.findOneByAddressWallet(customer)
+    const userReceiver: User &#x3D; await this.usersService.findOneByAddressWallet(supplier)
+    const newContract &#x3D; await this.createEmptyContract(
+      { ...rest, name: &#x27;HỢP ĐỒNG TRANH CHẤP&#x27;, type: EContractType.DISPUTE, status: &#x27;PARTICIPATED&#x27; },
+      user
+    )
+    const contractAttributeInfoArr &#x3D; [
+      {
+        keyId: &#x27;169e82db-94ae-4843-b462-51044fef55e3&#x27;,
+        value: userSender.name
+      },
+      {
+        keyId: &#x27;26bf8d25-d040-410f-8fb4-60093c66007c&#x27;,
+        value: userSender.phoneNumber
+      },
+      {
+        keyId: &#x27;71475e26-b680-48d7-9ec2-736116f3df16&#x27;,
+        value: userSender.addressWallet
+      },
+      {
+        keyId: &#x27;cdee2a3b-19b7-4140-8240-17114a2ba467&#x27;,
+        value: userReceiver.name
+      },
+      {
+        keyId: &#x27;bc38a62d-bed7-49d8-855f-05927f0e1fa9&#x27;,
+        value: userReceiver.phoneNumber
+      },
+      {
+        keyId: &#x27;c97fa3aa-b7da-492c-8275-0f92bb90f4a8&#x27;,
+        value: userReceiver.addressWallet
+      }
+    ]
+    this.createContractAttributeAndValueByTemplateId(
+      newContract.id,
+      &#x27;bfaff943-4890-41f4-b6fc-41792307fb80&#x27;,
+      user,
+      contractAttributeInfoArr
+    )
 
-      const newPartyInfoIds: string[] &#x3D; await Promise.all(
-        partyInfoIds.map(async (partyInfoId) &#x3D;&gt; {
-          const newPartyInfoId &#x3D; await this.contractPartyInfoService.create(
-            { partyInfoId, contractId: contractData.id },
-            user
-          )
-          return newPartyInfoId.id
-        })
-      )
+    const participantCreates: ICreateParticipant[] &#x3D; [
+      {
+        email: userSender.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: &#x27;SENDER&#x27; as ERoleParticipant
+        },
+        userId: userSender.id,
+        status: ParticipantStatus.ACCEPTED
+      },
+      {
+        email: userReceiver.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: &#x27;RECEIVER&#x27; as ERoleParticipant
+        },
+        userId: userReceiver.id,
+        status: ParticipantStatus.ACCEPTED
+      }
+    ]
+    participantCreates.map(async (item: any) &#x3D;&gt; {
+      return await this.participantsService.create(item, user)
+    })
+    return newContract
+  }
 
-      const contract &#x3D; await this.update(contractData, newPartyInfoIds)
+  async createContractBySurveyId(surveyId: string, user: IUser) {
+    const newContract &#x3D; await this.createEmptyContract(
+      {
+        name: &#x27;HỢP ĐỒNG GIAO DỊCH&#x27;,
+        addressWallet: user.addressWallet,
+        status: &#x27;PARTICIPATED&#x27;
+      },
+      user
+    )
+    const surveyInfo &#x3D; await this.ordersService.findOneById(surveyId)
 
-      return contract
-    }
-    const contract &#x3D; await this.createEmptyContract(contractData, user)
-    if (templateId) {
-      if (!(await this.commonService.findOneContractById(templateId)))
-        throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_TEMPLATE_IS_NOT_FOUND })
-      const findcontractAttributeValues &#x3D; await this.prismaService.client.contractAttributeValue.findMany({
-        where: { contractId: templateId }
+    const sum &#x3D; surveyInfo.order.products.reduce((acc: number, item: any) &#x3D;&gt; {
+      return acc + (item.price + item.taxPrice) * item.quantity - item.discount
+    }, 0)
+    const contractAttributeInfoArr &#x3D; [
+      {
+        keyId: &#x27;28b2a95f-9d48-4261-bf38-68cf89cf6f31&#x27;,
+        value: &#x27;Empty&#x27;
+      },
+      {
+        keyId: &#x27;15b3b476-3b64-4f28-b8e3-b3dab50bf656&#x27;,
+        value: surveyInfo.order.User.name
+      },
+      {
+        keyId: &#x27;25f3a94b-5415-4e39-8420-d1f626701953&#x27;,
+        value: surveyInfo.order.User.address ? surveyInfo.order.User.address : &#x27;Empty&#x27;
+      },
+      {
+        keyId: &#x27;27292812-30a6-464b-b930-d687ed316ee7&#x27;,
+        value: surveyInfo.order.User.phoneNumber
+      },
+      {
+        keyId: &#x27;b5c42fa3-6f5a-462f-ae34-ca9cfde430d1&#x27;,
+        value: surveyInfo.order.User.email
+      },
+      {
+        keyId: &#x27;58a5f451-ca67-44de-9e5e-89cbfd675575&#x27;,
+        value: &#x27;Empty&#x27;
+      },
+      {
+        keyId: &#x27;d1d3d832-08a3-4276-bf92-0982a729d9bd&#x27;,
+        value: surveyInfo.order.User.addressWallet
+      },
+      //-----------
+      {
+        keyId: &#x27;28b2a95f-9d48-4261-bf38-68cf89cf6f31&#x27;,
+        value: surveyInfo.supplier.name
+      },
+      {
+        keyId: &#x27;70b06a22-689b-46fd-9122-1fbd1f2f9b90&#x27;,
+        value: surveyInfo.supplier.User.name
+      },
+      {
+        keyId: &#x27;ac3e2efe-ae28-49a4-a5a7-a006efad6116&#x27;,
+        value: surveyInfo.supplier.User.address ? surveyInfo.supplier.User.address : &#x27;Empty&#x27;
+      },
+      {
+        keyId: &#x27;e3ca49cc-3534-4739-a992-dd461fa6d4fb&#x27;,
+        value: surveyInfo.supplier.phoneNumber
+      },
+      {
+        keyId: &#x27;b08dbfdb-5ff0-4269-b831-d467e6ca7d84&#x27;,
+        value: surveyInfo.supplier.email
+      },
+      {
+        keyId: &#x27;776acbb5-c407-4bc0-92b3-ac5baa27ab3a&#x27;,
+        value: surveyInfo.supplier.taxCode
+      },
+      {
+        keyId: &#x27;6ed5eec4-a4c5-4f88-b008-d8c0bf35e5d2&#x27;,
+        value: surveyInfo.supplier.User.addressWallet
+      },
+      {
+        keyId: &#x27;2e2f9b77-82ed-47fd-9b1d-9095b11a8a98&#x27;,
+        value: String(sum)
+      }
+    ]
+
+    await this.createContractAttributeAndValueByTemplateId(
+      newContract.id,
+      &#x27;5828a8b5-0582-4f3a-83b3-e8b634d290f4&#x27;,
+      user,
+      contractAttributeInfoArr
+    )
+    const participantCreates: ICreateParticipant[] &#x3D; [
+      {
+        email: user.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: &#x27;SENDER&#x27; as ERoleParticipant
+        },
+        userId: user.id,
+        status: ParticipantStatus.ACCEPTED
+      },
+      {
+        email: surveyInfo.supplier.User.email,
+        contractId: newContract.id,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: false,
+          ROLES: &#x27;RECEIVER&#x27; as ERoleParticipant
+        },
+        userId: surveyInfo.supplier.User.id,
+        status: ParticipantStatus.ACCEPTED
+      }
+    ]
+    participantCreates.map(async (item: any) &#x3D;&gt; {
+      return await this.participantsService.create(item, user)
+    })
+    return { contract: newContract }
+  }
+
+  async create(createContractDto: CreateContractDto, user: IUser) {
+    const contractResponse: ICreateContractResponse &#x3D; { contract: null, contractAttributes: [] }
+    const { invitation, templateId, rolesOfCreator, ...contractData } &#x3D; createContractDto
+    if (!(await this.usersService.findOne(contractData.addressWallet)))
+      throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
+    const contractRecord &#x3D; await this.createEmptyContract({ ...contractData }, user)
+    if (invitation &amp;&amp; invitation.length &gt; 0) {
+      invitation.push({
+        email: user.email,
+        permission: {
+          CHANGE_STATUS_CONTRACT: true,
+          EDIT_CONTRACT: true,
+          INVITE_PARTICIPANT: true,
+          READ_CONTRACT: true,
+          SET_OWNER_PARTY: true,
+          ROLES: rolesOfCreator
+        },
+        messages: invitation[0].messages ? invitation[0].messages : &#x27;&#x27;,
+        userId: user.id,
+        status: ParticipantStatus.ACCEPTED
       })
-
-      const contractAttributeValues: IContractAttributeValue[] &#x3D; await Promise.all(
-        findcontractAttributeValues.map(async (contractAttributeValue) &#x3D;&gt; {
-          const newContractAttributeValue &#x3D; await this.contractAttributeValueService.create(
-            {
-              contractId: contract.id,
-              contractAttributeId: contractAttributeValue.contractAttributeId,
-              value: &#x27;&#x27;
-            },
-            user,
-            true
-          )
-          return {
-            id: newContractAttributeValue.id,
-            value: newContractAttributeValue.value
-          }
-        })
+      await this.participantsService.sendInvitation(
+        { invitation, contractName: contractRecord.contractTitle, contractId: contractRecord.id },
+        user
       )
-
-      return { contract, contractAttributeValues }
+    }
+    contractResponse.contract &#x3D; contractRecord
+    if (templateId) {
+      if (!(await this.templateContractsService.findOneById(templateId)))
+        throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+      contractResponse.contractAttributes &#x3D; await this.createContractAttributesByTemplateId(
+        contractRecord.id,
+        templateId,
+        createContractDto.isCreateAttributeValue,
+        user
+      )
     }
 
-    return contract
+    return contractResponse
+  }
+
+  async handleDeployContract(contractId: string) {
+    const contractAttributes &#x3D; await this.contractAttributesService.findAllByContractId(contractId)
+    await this.contractAttributesService.createContractAttributesInBlockchain({ contractId, contractAttributes })
+  }
+
+  async getContractsByUserId(user: IUser) {
+    const participants &#x3D; await this.participantsService.findAllByUserId(user.id)
+    let contracts: Contract[] &#x3D; await Promise.all(
+      participants.map(async (participant) &#x3D;&gt; await this.findOneById(participant.contractId))
+    )
+
+    contracts &#x3D; (
+      await Promise.all(
+        contracts.map(async (contract: Contract) &#x3D;&gt; {
+          const result: Contract[] &#x3D; []
+          let updated &#x3D; contract
+          await Promise.all(
+            contract.stages.map(async (stage: any) &#x3D;&gt; {
+              const now &#x3D; new Date().getTime()
+              const deliveryTime &#x3D; new Date(stage.deliveryAt).getTime()
+              const sub &#x3D; Math.floor((now - deliveryTime) / 60000)
+              if (sub &gt; 60) {
+                updated &#x3D; await this.update(
+                  { id: contract.id, stage: { id: stage.id, status: EStageStatus.OUT_OF_DATE } },
+                  user
+                )
+              }
+            })
+          )
+          result.push(updated)
+          return result
+        })
+      )
+    ).flat()
+
+    return { contracts, participants }
   }
 
   findAll() {
     return &#x60;This action returns all contracts&#x60;
   }
 
-  async update(updateContractDto: UpdateContractDto, partyInfoIds?: string[]) {
-    const { id, ...rest } &#x3D; updateContractDto
-    const isContractExist &#x3D; await this.prismaService.client.contract.findUnique({ where: { id } })
-    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
-    const gasPrice &#x3D; await updateContractDto.gasPrices.map((gasPrice) &#x3D;&gt; {
-      return { ...gasPrice }
-    })
-    if (partyInfoIds &amp;&amp; partyInfoIds.length &lt; 2)
-      throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PARTY_INFO_IS_NOT_PROVIDED })
+  async findOneById(id: string) {
+    const contract &#x3D; await this.prismaService.client.contract.findFirst({ where: { id } })
+    return contract
+  }
+
+  async getContractDetailsById(
+    contractId: string,
+    user?: IUser
+  ): Promise&lt;{ contract: Contract; contractAttributes: IContractAttributeResponse[]; participants: Participant[] }&gt; {
+    const contract &#x3D; await this.findOneById(contractId)
+    if (!contract) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const contractAttributes &#x3D; await this.contractAttributesService.findAllByContractId(contractId)
+    const participants &#x3D; await this.participantsService.findAllByContractId(contractId, user)
+
+    return { contract, contractAttributes, participants }
+  }
+
+  async update(updateContractDto: UpdateContractDto, user: IUser) {
+    const { stage, stages, disputedContractId, winnerAddressWallet, ...rest } &#x3D; updateContractDto
+    const find &#x3D; await this.findOneById(updateContractDto.id)
+    if (!find) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+    const newStages: IStage[] &#x3D; []
+
+    const participantOfcontract &#x3D; await this.participantsService.findAllByContractId(updateContractDto.id)
+    if (stages &amp;&amp; !stage) {
+      const sender &#x3D; participantOfcontract.find(
+        (item: any) &#x3D;&gt;
+          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] &#x3D;&#x3D;&#x3D; ERoleParticipant.SENDER
+      )
+      const receiver &#x3D; participantOfcontract.find(
+        (item: any) &#x3D;&gt;
+          ERoleParticipant[item.permission.ROLES as keyof typeof ERoleParticipant] &#x3D;&#x3D;&#x3D; ERoleParticipant.RECEIVER
+      )
+      if (!sender || sender.userId &#x3D;&#x3D;&#x3D; null || sender.userId &#x3D;&#x3D;&#x3D; &#x27;&#x27;)
+        throw new NotFoundException({ message: &#x27;The sender has not been invited or has not agreed to participate&#x27; })
+      if (!receiver || receiver.userId &#x3D;&#x3D;&#x3D; null || receiver.userId &#x3D;&#x3D;&#x3D; &#x27;&#x27;)
+        throw new NotFoundException({ message: &#x27;The receiver has not been invited or has not agreed to participate&#x27; })
+      stages.map((item: any) &#x3D;&gt; {
+        newStages.push({
+          ...item,
+          id: this.commonService.uuidv4(),
+          requestBy: sender.User.addressWallet,
+          requestTo: receiver.User.addressWallet,
+          createdAt: new Date(),
+          status: EStageStatus.ENFORCE
+        })
+      })
+    } else if (!stages &amp;&amp; stage)
+      find.stages.map((item: any) &#x3D;&gt; {
+        if (item.id &#x3D;&#x3D;&#x3D; stage.id)
+          newStages.push({
+            ...item,
+            description: stage.description ? stage.description : item.description,
+            status: stage.status ? stage.status : item.status,
+            percent: stage.percent ? stage.percent : item.percent
+          })
+        else newStages.push(item)
+      })
+    const updatedBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email, role: user.role }
     const contract &#x3D; await this.prismaService.client.contract.update({
       where: { id: updateContractDto.id },
       data: {
-        ...rest,
-        gasPrices: { set: [...isContractExist.gasPrices, gasPrice] }
+        ...(rest as any),
+        stages: stage || stages ? (stage &amp;&amp; !stages ? newStages : [...find.stages, ...newStages]) : find.stages,
+        disputedContractId: disputedContractId ? disputedContractId : null,
+        winnerAddressWallet: winnerAddressWallet ? winnerAddressWallet : null,
+        updatedBy
       }
     })
+
     return contract
+  }
+
+  async updateContractAttribute(updateContractAttribute: UpdateContractAttributeDto, user: IUser) {
+    const isContractExist &#x3D; await this.prismaService.client.contract.findUnique({
+      where: { id: updateContractAttribute.id }
+    })
+    if (!isContractExist) throw new NotFoundException({ message: RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND })
+
+    await Promise.all([
+      updateContractAttribute.updatedAttributes.map(async (item) &#x3D;&gt; {
+        if (item.statusAttribute &#x3D;&#x3D;&#x3D; &#x27;Create&#x27;) {
+          if (
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+          ) {
+            const contractAttribute &#x3D; await this.contractAttributesService.create(
+              {
+                contractId: updateContractAttribute.id,
+                value: item.property,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.create(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
+          } else {
+            await this.contractAttributesService.create(
+              {
+                contractId: updateContractAttribute.id,
+                value: item.value,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+          }
+        }
+        if (item.statusAttribute &#x3D;&#x3D;&#x3D; &#x27;Update&#x27;) {
+          if (
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+            item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+          ) {
+            const contractAttribute &#x3D; await this.contractAttributesService.update(
+              {
+                id: item.id,
+                value: item.property,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+            await this.contractAttributeValuesService.update(
+              {
+                value: item.value,
+                contractAttributeId: contractAttribute.id
+              },
+              user
+            )
+          } else {
+            await this.contractAttributesService.update(
+              {
+                id: item.id,
+                value: item.value,
+                type: item.type,
+                index: item.index
+              },
+              user
+            )
+          }
+        }
+      }),
+      Promise.all([
+        updateContractAttribute.deleteArray.map(async (item) &#x3D;&gt; {
+          await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: item } })
+          await this.prismaService.client.contractAttribute.delete({ where: { id: item } })
+        })
+      ])
+    ])
+    return {
+      message: RESPONSE_MESSAGES.UPDATE_CONTRACT_ATTRIBUTE_SUCCESS
+    }
+  }
+
+  async createContractAttributeAndValueByTemplateId(
+    contractId: string,
+    templateContractId: string,
+    user: IUser,
+    modifiedAttributes: {
+      keyId: string
+      value: string
+    }[]
+  ) {
+    const contractAttributes &#x3D; await this.prismaService.client.templateContract.findFirst({
+      where: {
+        id: templateContractId
+      },
+      select: {
+        contractAttributes: true
+      }
+    })
+
+    const contractAttributeIds &#x3D; contractAttributes?.contractAttributes || []
+
+    await Promise.all(
+      contractAttributeIds.map(async (itemId: any) &#x3D;&gt; {
+        const data &#x3D; await this.prismaService.client.contractAttribute.findFirst({
+          where: {
+            id: itemId
+          },
+          include: { ContractAttributeValue: true }
+        })
+
+        const attributeId &#x3D; (
+          await this.contractAttributesService.create(
+            {
+              type: data.type,
+              value: data.value,
+              contractId,
+              index: data.index
+            },
+            user
+          )
+        ).id
+
+        const modifiedItem &#x3D; modifiedAttributes.find((attr) &#x3D;&gt; attr.keyId &#x3D;&#x3D;&#x3D; itemId)
+
+        if (modifiedItem) {
+          await this.contractAttributeValuesService.create(
+            {
+              value: modifiedItem.value,
+              contractAttributeId: attributeId
+            },
+            user
+          )
+        } else {
+          await this.contractAttributeValuesService.create(
+            {
+              value: data.ContractAttributeValue ? data.ContractAttributeValue?.value : &#x27;Empty&#x27;,
+              contractAttributeId: attributeId
+            },
+            user
+          )
+        }
+      })
+    )
+  }
+
+  async createContractAttributesByTemplateId(
+    contractId: string,
+    templateContractId: string,
+    isCreateAttributeValue: boolean,
+    user: IUser,
+    _user?: User,
+    supplier?: Suppliers &amp; { User: User }
+  ): Promise&lt;IContractAttributeResponse[]&gt; {
+    const template &#x3D; await this.templateContractsService.findOneById(templateContractId)
+    if (!template) throw new NotFoundException({ message: RESPONSE_MESSAGES.TEMPLATE_CONTRACT_IS_NOT_FOUND })
+    const getAllContractAttributes: ContractAttribute[] &#x3D; await Promise.all(
+      template.contractAttributes.map(async (element) &#x3D;&gt; {
+        return await this.prismaService.client.contractAttribute.findUnique({
+          where: { id: element.id },
+          include: { ContractAttributeValue: true }
+        })
+      })
+    )
+    const allContractAttributes: any &#x3D; getAllContractAttributes.sort((a, b) &#x3D;&gt; a.index - b.index)
+
+    const contractAttributes: any[] &#x3D; []
+    const isInfoParty &#x3D; { index: -1, role: &#x27;&#x27; }
+
+    allContractAttributes.forEach((contractAttribute: any, index: number) &#x3D;&gt; {
+      if (
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+      ) {
+        if (isInfoParty.index !&#x3D;&#x3D; -1) {
+          switch (index) {
+            case isInfoParty.index + 1:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value: _user &amp;&amp; supplier ? (isInfoParty.role &#x3D;&#x3D;&#x3D; &#x27;Customer&#x27; ? &#x27;Empty&#x27; : supplier.name) : &#x27;Empty&#x27;,
+                type: contractAttribute.type
+              })
+              break
+            case isInfoParty.index + 2:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value:
+                  _user &amp;&amp; supplier ? (isInfoParty.role &#x3D;&#x3D;&#x3D; &#x27;Customer&#x27; ? _user.name : supplier.User.name) : &#x27;Empty&#x27;,
+                type: contractAttribute.type
+              })
+              break
+            case isInfoParty.index + 3:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value:
+                  _user &amp;&amp; supplier
+                    ? isInfoParty.role &#x3D;&#x3D;&#x3D; &#x27;Customer&#x27;
+                      ? _user.address
+                        ? _user.address
+                        : &#x27;Empty&#x27;
+                      : supplier.address
+                    : &#x27;Empty&#x27;,
+                type: contractAttribute.type
+              })
+              break
+            default:
+              contractAttributes.push({
+                property: contractAttribute.value,
+                value:
+                  _user || supplier
+                    ? isInfoParty.role &#x3D;&#x3D;&#x3D; &#x27;Customer&#x27;
+                      ? _user.phoneNumber
+                      : supplier.User.phoneNumber
+                    : &#x27;Empty&#x27;,
+                type: contractAttribute.type
+              })
+              isInfoParty.index &#x3D; -1
+              isInfoParty.role &#x3D; &#x27;&#x27;
+              break
+          }
+        } else {
+          if (contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND)
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: _user ? _user.addressWallet : &#x27;Empty&#x27;,
+              type: contractAttribute.type
+            })
+          else if (contractAttribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE)
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: supplier ? supplier.User.addressWallet : &#x27;Empty&#x27;,
+              type: contractAttribute.type
+            })
+          else
+            contractAttributes.push({
+              property: contractAttribute.value,
+              value: isCreateAttributeValue &#x3D;&#x3D;&#x3D; true ? contractAttribute.ContractAttributeValue.value : &#x27;Empty&#x27;,
+              type: contractAttribute.type
+            })
+        }
+      } else {
+        if (contractAttribute.value &#x3D;&#x3D;&#x3D; &#x27;Bên A&#x27;) {
+          isInfoParty.index &#x3D; index
+          isInfoParty.role &#x3D; &#x27;Customer&#x27;
+        } else if (contractAttribute.value &#x3D;&#x3D;&#x3D; &#x27;Bên B&#x27;) {
+          isInfoParty.index &#x3D; index
+          isInfoParty.role &#x3D; &#x27;Supplier&#x27;
+        }
+        contractAttributes.push({
+          value: contractAttribute.value,
+          type: contractAttribute.type
+        })
+      }
+    })
+
+    const [contractAttributeRecords] &#x3D; await Promise.all([
+      this.contractAttributesService.createContractAttributes({ contractAttributes, contractId: contractId }, user)
+    ])
+
+    return contractAttributeRecords
+  }
+
+  async removeContractAttributesByContractId(contractId: string) {
+    const contractAttributes &#x3D; await this.contractAttributesService.findAllByContractId(contractId)
+    const contractTypeTitles &#x3D; contractAttributes.filter(
+      (item) &#x3D;&gt;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE &amp;&amp;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE &amp;&amp;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED &amp;&amp;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE &amp;&amp;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND &amp;&amp;
+        item.type !&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+    )
+    const contractTypeAttributes &#x3D; contractAttributes.filter(
+      (item) &#x3D;&gt;
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        item.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+    )
+
+    await Promise.all([
+      contractTypeTitles.map(async (item) &#x3D;&gt; {
+        await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
+      }),
+      contractTypeAttributes.map(async (item) &#x3D;&gt; {
+        await this.prismaService.client.contractAttributeValue.deleteMany({
+          where: { contractAttributeId: item.id }
+        })
+        await this.prismaService.client.contractAttribute.deleteMany({ where: { id: item.id } })
+      })
+    ])
   }
 
   remove(id: number) {
     return &#x60;This action removes a #${id} contract&#x60;
   }
 
-  // async sendInvitation(sendInvitationDto: CreateInvitationDto, user: IUser) {
-  //   const invitation &#x3D; await this.invitationService.create(sendInvitationDto, user)
-  // }
+  async compareAttribute(contractId: string) {
+    const inContract &#x3D; await this.getContractDetailsById(contractId).then((res: any) &#x3D;&gt;
+      this.commonService.convertToTypeContractAttributesResponse(res.contractAttributes)
+    );
+
+    const inBlockChain &#x3D; await this.prismaService.client.contractAttributeInBlockchain.findMany({
+      where: { contractId },
+      include: { ContractAttributeValueInBlockchain: true }
+    });
+
+    const x &#x3D; this.commonService.convertToTypeContractAttributesResponse(inBlockChain);
+
+    if (x.length !&#x3D;&#x3D; inContract.length) return { result: false };
+
+    for (const item of x) {
+      const contractAttribute &#x3D; inContract.find((attr) &#x3D;&gt; attr.index &#x3D;&#x3D;&#x3D; item.index);
+      if (!contractAttribute || contractAttribute.value !&#x3D;&#x3D; item.value || contractAttribute.property !&#x3D;&#x3D; item.property) {
+        console.log(&#x27;contractAttribute&#x27;, contractAttribute, &#x27;&#x27;, item);
+        return { result: false };
+      }
+    }
+
+    return { result: true };
+  }
 }
 </code></pre>
     </div>
@@ -847,6 +2415,19 @@ export class ContractsService {
             var COMPODOC_CURRENT_PAGE_URL = 'ContractsService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

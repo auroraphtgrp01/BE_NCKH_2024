@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -148,6 +139,9 @@
                             <li>
                                 <a href="#enqueueSendInvitation" >enqueueSendInvitation</a>
                             </li>
+                            <li>
+                                <a href="#enqueueSendRequestSurvey" >enqueueSendRequestSurvey</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -166,12 +160,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(deployContractQueue: Queue, sendInvitationQueue: Queue)</code>
+<code>constructor(deployContractQueue: Queue, sendInvitationQueue: Queue, sendRequestSurveyQueue: Queue)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/queues/queue-redis.service.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/queues/queue-redis.service.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -202,6 +196,18 @@
                                                 </tr>
                                                 <tr>
                                                         <td>sendInvitationQueue</td>
+                                                  
+                                                        <td>
+                                                                    <code>Queue</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>sendRequestSurveyQueue</td>
                                                   
                                                         <td>
                                                                     <code>Queue</code>
@@ -246,8 +252,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">src/queues/queue-redis.service.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="14"
+                                    class="link-to-prism">src/queues/queue-redis.service.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -313,8 +319,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/queues/queue-redis.service.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/queues/queue-redis.service.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -360,6 +366,73 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enqueueSendRequestSurvey"></a>
+                    <span class="name">
+                        <span ><b>enqueueSendRequestSurvey</b></span>
+                        <a href="#enqueueSendRequestSurvey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>enqueueSendRequestSurvey(job: <a href="../interfaces/IQueuePayloadSendRequestSurvey.html" target="_self">IQueuePayloadSendRequestSurvey</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/queues/queue-redis.service.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>job</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IQueuePayloadSendRequestSurvey.html" target="_self" >IQueuePayloadSendRequestSurvey</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
@@ -369,12 +442,15 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { InjectQueue } from &#x27;@nestjs/bullmq&#x27;
 import { Injectable } from &#x27;@nestjs/common&#x27;
 import { Queue } from &#x27;bullmq&#x27;
+import { IStage, IStageDeploy } from &#x27;src/interfaces/smart-contract.interface&#x27;
 
 @Injectable()
 export class QueueRedisService {
-  constructor(@InjectQueue(&#x27;deployContract&#x27;) private readonly deployContractQueue: Queue,
-            @InjectQueue(&#x27;sendInvitation&#x27;) private readonly sendInvitationQueue: Queue
-) { }
+  constructor(
+    @InjectQueue(&#x27;deployContract&#x27;) private readonly deployContractQueue: Queue,
+    @InjectQueue(&#x27;sendInvitation&#x27;) private readonly sendInvitationQueue: Queue,
+    @InjectQueue(&#x27;sendRequestSurvey&#x27;) private readonly sendRequestSurveyQueue: Queue
+  ) {}
 
   enqueueDeployContract(job: IQueuePayloadDeployContract) {
     this.deployContractQueue.add(&#x27;deployContract&#x27;, job)
@@ -383,27 +459,40 @@ export class QueueRedisService {
   enqueueSendInvitation(job: IQueuePayloadSendInvitation) {
     this.sendInvitationQueue.add(&#x27;sendInvitation&#x27;, job)
   }
+
+  enqueueSendRequestSurvey(job: IQueuePayloadSendRequestSurvey) {
+    this.sendRequestSurveyQueue.add(&#x27;sendRequestSurvey&#x27;, job)
+  }
 }
 
 export interface IQueuePayloadDeployContract {
   contractId: string
-  _keys: string[]
-  _values: string[]
   _supplier: string
+  _users: string[]
+  _total: number
+  _stages: IStageDeploy[]
 }
-
 
 export interface IQueuePayloadSendInvitation {
-  to: string;
-  from: string;
-  receiver: string;
-  contractName: string;
-  addressWalletSender: string;
-  messages: string;
-  link: string;
-  idInvitation: string
+  to: string
+  from: string
+  receiver: string
+  contractName: string
+  addressWalletSender: string
+  messages: string
+  link: string
+  idParticipant: string
 }
 
+export interface IQueuePayloadSendRequestSurvey {
+  to: string
+  from: string
+  receiver: string
+  surveyCode: string
+  addressWalletSender: string
+  messages: string
+  link: string
+}
 </code></pre>
     </div>
 
@@ -450,6 +539,19 @@ export interface IQueuePayloadSendInvitation {
             var COMPODOC_CURRENT_PAGE_URL = 'QueueRedisService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

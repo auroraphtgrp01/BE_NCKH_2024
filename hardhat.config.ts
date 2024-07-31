@@ -8,7 +8,7 @@ const config: HardhatUserConfig = {
   networks: {
     localganache: {
       url: 'HTTP://127.0.0.1:7545',
-      accounts: ['0x89951a4b328ba0263aa6375aaf15257b411b6085040dd8008c9b43444f19fa93']
+      accounts: ['0x2ad77ad7026360cc5836893cdfd3aa4354224b8220c98b995c77324f87d8b4fa']
     }
   },
   typechain: {

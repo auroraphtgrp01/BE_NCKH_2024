@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -122,7 +113,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common.service.ts</code>
+            <code>src/commons/common.service.ts</code>
         </p>
 
 
@@ -143,8 +134,13 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#findOneContractById" >findOneContractById</a>
+                                <a href="#convertToTypeContractAttributesResponse" >convertToTypeContractAttributesResponse</a>
+                            </li>
+                            <li>
+                                <a href="#createRandomString" >createRandomString</a>
+                            </li>
+                            <li>
+                                <a href="#uuidv4" >uuidv4</a>
                             </li>
                         </ul>
                     </td>
@@ -158,54 +154,6 @@
     </table>
 </section>
 
-            <section data-compodoc="block-constructor">
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/common.service.ts:6</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>prismaService</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../miscellaneous/typealiases.html#ExtendedPrismaClient" target="_self" >CustomPrismaService&lt;ExtendedPrismaClient&gt;</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</section>
 
             <section data-compodoc="block-methods">
     
@@ -216,26 +164,24 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findOneContractById"></a>
+                    <a name="convertToTypeContractAttributesResponse"></a>
                     <span class="name">
-                            <span class="modifier">Async</span>
-                        <span ><b>findOneContractById</b></span>
-                        <a href="#findOneContractById"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>convertToTypeContractAttributesResponse</b></span>
+                        <a href="#convertToTypeContractAttributesResponse"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneContractById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[])</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="8"
-                                    class="link-to-prism">src/common.service.ts:8</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="9"
+                                    class="link-to-prism">src/commons/common.service.ts:9</a></div>
                         </td>
                     </tr>
 
@@ -256,9 +202,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>id</td>
+                                                <td>contractAttributes</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>ContractAttribute[]</code>
                                             </td>
 
                                             <td>
@@ -271,12 +217,116 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>unknown</code>
+                            <b>Returns : </b>        <code><a href="../interfaces/IContractAttributeResponse.html" target="_self" >IContractAttributeResponse[]</a></code>
 
                         </div>
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createRandomString"></a>
+                    <span class="name">
+                        <span ><b>createRandomString</b></span>
+                        <a href="#createRandomString"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createRandomString(length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/commons/common.service.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>length</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uuidv4"></a>
+                    <span class="name">
+                        <span ><b>uuidv4</b></span>
+                        <a href="#uuidv4"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>uuidv4()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/commons/common.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -287,16 +337,62 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable } from &#x27;@nestjs/common&#x27;
-import { CustomPrismaService } from &#x27;nestjs-prisma&#x27;
-import { ExtendedPrismaClient } from &#x27;./utils/prisma.extensions&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;
+import * as crypto from &#x27;crypto&#x27;
+import { IContractAttributeResponse } from &#x27;../interfaces/contract-attribute.interface&#x27;
+import { ETypeContractAttribute } from &#x27;src/constants/enum.constant&#x27;
+import { ContractAttribute, ContractAttributeInBlockchain } from &#x27;@prisma/client&#x27;
 
 @Injectable()
 export class CommonService {
-  constructor(@Inject(&#x27;PrismaService&#x27;) private readonly prismaService: CustomPrismaService&lt;ExtendedPrismaClient&gt;) {}
-  async findOneContractById(id: string) {
-    const contract &#x3D; await this.prismaService.client.contract.findUnique({ where: { id } })
-    return contract
+  convertToTypeContractAttributesResponse(contractAttributes: ContractAttribute[]): IContractAttributeResponse[] {
+    const result: IContractAttributeResponse[] &#x3D; []
+    for (const contractArribute of contractAttributes) {
+      if (
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE ||
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_SIGNATURE ||
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_JOINED ||
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_RECEIVE ||
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.CONTRACT_ATTRIBUTE_PARTY_ADDRESS_WALLET_SEND ||
+        contractArribute.type &#x3D;&#x3D;&#x3D; ETypeContractAttribute.TOTAL_AMOUNT
+      ) {
+        result.push({
+          id: contractArribute.id,
+          property: (contractArribute as any)?.property ? (contractArribute as any)?.property : contractArribute.value,
+          value: (contractArribute as any)?.ContractAttributeValue
+            ? (contractArribute as any)?.ContractAttributeValue?.value
+            : (contractArribute as any)?.ContractAttributeInBlockchain?.value,
+          type: contractArribute.type,
+          createdBy: contractArribute.createdBy,
+          updatedBy: contractArribute.updatedBy,
+          index: (contractArribute as any)?.index,
+        })
+      } else
+        result.push({
+          id: contractArribute.id,
+          value: contractArribute.value,
+          type: contractArribute.type,
+          createdBy: contractArribute.createdBy,
+          updatedBy: contractArribute.updatedBy,
+          index: (contractArribute as any)?.index,
+        })
+    }
+    return result
+  }
+
+  uuidv4() {
+    return &#x27;10000000-1000-4000-8000-100000000000&#x27;.replace(/[018]/g, (c) &#x3D;&gt;
+      (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] &amp; (15 &gt;&gt; (+c / 4)))).toString(16)
+    )
+  }
+
+  createRandomString(length: number): string {
+    const chars &#x3D; &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#x27;
+    let result &#x3D; &#x27;&#x27;
+    for (let i &#x3D; 0; i &lt; length; i++) {
+      result +&#x3D; chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return result
   }
 }
 </code></pre>
@@ -345,6 +441,19 @@ export class CommonService {
             var COMPODOC_CURRENT_PAGE_URL = 'CommonService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

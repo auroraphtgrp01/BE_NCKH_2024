@@ -1,0 +1,1267 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>NCKH2024 documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">NCKH2024 documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ParticipantsService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/participants/participants.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#calculateVoteRatio" >calculateVoteRatio</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#create" >create</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllByContractId" >findAllByContractId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllByUserId" >findAllByUserId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOne" >findOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                <a href="#remove" >remove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendInvitation" >sendInvitation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#update" >update</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, configService: ConfigService, contractService: <a href="../injectables/ContractsService.html" target="_self">ContractsService</a>, queueService: <a href="../injectables/QueueRedisService.html" target="_self">QueueRedisService</a>, commonService: <a href="../injectables/CommonService.html" target="_self">CommonService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/participants/participants.service.ts:27</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/typealiases.html#ExtendedPrismaClient" target="_self" >CustomPrismaService&lt;ExtendedPrismaClient&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>contractService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ContractsService.html" target="_self" >ContractsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>queueService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QueueRedisService.html" target="_self" >QueueRedisService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>commonService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CommonService.html" target="_self" >CommonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculateVoteRatio"></a>
+                    <span class="name">
+                        <span ><b>calculateVoteRatio</b></span>
+                        <a href="#calculateVoteRatio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculateVoteRatio(votes: any[], individual: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="177"
+                                    class="link-to-prism">src/participants/participants.service.ts:177</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>votes</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>individual</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ result: boolean; personWinner?: undefined; addressWallet?: undefined; } | { result: boolean; personWinner: string; addressWallet: any; }</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(createParticipantDto: <a href="../classes/CreateParticipantDto.html" target="_self">CreateParticipantDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="35"
+                                    class="link-to-prism">src/participants/participants.service.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createParticipantDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateParticipantDto.html" target="_self" >CreateParticipantDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllByContractId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllByContractId</b></span>
+                        <a href="#findAllByContractId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllByContractId(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user?: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/participants/participants.service.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllByUserId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllByUserId</b></span>
+                        <a href="#findAllByUserId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllByUserId(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/participants/participants.service.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOne"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findOne</b></span>
+                        <a href="#findOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOne(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/participants/participants.service.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/participants/participants.service.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="remove"></a>
+                    <span class="name">
+                        <span ><b>remove</b></span>
+                        <a href="#remove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="173"
+                                    class="link-to-prism">src/participants/participants.service.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendInvitation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>sendInvitation</b></span>
+                        <a href="#sendInvitation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendInvitation(sendInvitationDto: <a href="../classes/SendInvitationsDto.html" target="_self">SendInvitationsDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/participants/participants.service.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sendInvitationDto</td>
+                                            <td>
+                                                            <code><a href="../classes/SendInvitationsDto.html" target="_self" >SendInvitationsDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(updateParticipantDto: <a href="../classes/UpdateParticipantDto.html" target="_self">UpdateParticipantDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/participants/participants.service.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>updateParticipantDto</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateParticipantDto.html" target="_self" >UpdateParticipantDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  forwardRef
+} from &#x27;@nestjs/common&#x27;
+import { CreateParticipantDto, InvitationDto, SendInvitationsDto } from &#x27;./dto/create-participant.dto&#x27;
+import { UpdateParticipantDto } from &#x27;./dto/update-participant.dto&#x27;
+import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
+import { CustomPrismaService } from &#x27;nestjs-prisma&#x27;
+import { ExtendedPrismaClient } from &#x27;src/utils/prisma.extensions&#x27;
+import { ContractsService } from &#x27;src/contracts/contracts.service&#x27;
+import { UsersService } from &#x27;src/users/users.service&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
+import { IExecutor } from &#x27;src/interfaces/executor.interface&#x27;
+import { ConfigService } from &#x27;@nestjs/config&#x27;
+import { Participant, ParticipantStatus, contractStatus } from &#x27;@prisma/client&#x27;
+import { Exact } from &#x27;@prisma/client/runtime/library&#x27;
+import { IQueuePayloadSendInvitation, QueueRedisService } from &#x27;src/queues/queue-redis.service&#x27;
+import { ERoleParticipant, EStageStatus } from &#x27;src/constants/enum.constant&#x27;
+import { CommonService } from &#x27;src/commons/common.service&#x27;
+import { map } from &#x27;rxjs&#x27;
+
+@Injectable()
+export class ParticipantsService {
+  constructor(
+    @Inject(&#x27;PrismaService&#x27;) private readonly prismaService: CustomPrismaService&lt;ExtendedPrismaClient&gt;,
+    private readonly configService: ConfigService,
+    @Inject(forwardRef(() &#x3D;&gt; ContractsService)) private readonly contractService: ContractsService,
+    private queueService: QueueRedisService,
+    private commonService: CommonService
+  ) { }
+  async create(createParticipantDto: CreateParticipantDto, user: IUser) {
+    const { contractId, permission, email, userId, status } &#x3D; createParticipantDto
+    const createdBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email, role: user.role }
+    const participantRecord &#x3D; await this.prismaService.client.participant.create({
+      data: {
+        email,
+        permission,
+        Contract: { connect: { id: contractId } },
+        User: userId ? { connect: { id: userId } } : undefined,
+        status,
+        updatedAt: null,
+        createdBy
+      }
+    })
+
+    return participantRecord
+  }
+
+  async sendInvitation(sendInvitationDto: SendInvitationsDto, user: IUser) {
+    const participants: Participant[] &#x3D; []
+    const findParticipants &#x3D; await this.prismaService.client.participant.findMany({
+      where: { contractId: sendInvitationDto.contractId }
+    })
+
+    const hasSender &#x3D; findParticipants.find((item: any) &#x3D;&gt; {
+      item.permission.ROLES &#x3D;&#x3D;&#x3D; ERoleParticipant.SENDER
+    })
+
+    const invitationSender &#x3D; sendInvitationDto.invitation.find((item: any) &#x3D;&gt; item.permission.ROLES &#x3D;&#x3D;&#x3D; &#x27;SENDER&#x27;)
+    if (hasSender &amp;&amp; invitationSender) throw new BadRequestException({ message: RESPONSE_MESSAGES.SENDER_IS_EXIST })
+    sendInvitationDto.invitation.map(async (invitation: InvitationDto) &#x3D;&gt; {
+      const participantRecord &#x3D; await this.create({ ...invitation, contractId: sendInvitationDto.contractId }, user)
+      participants.push(participantRecord)
+      const payload: IQueuePayloadSendInvitation &#x3D; {
+        to: invitation.email,
+        from: user.email,
+        messages: invitation.messages,
+        link: &#x60;${this.configService.get&lt;string&gt;(&#x27;FRONTEND_HOST&#x27;)}/contract/${sendInvitationDto.contractId}/invitation&#x60;,
+        receiver: user.name,
+        addressWalletSender: user.addressWallet,
+        contractName: sendInvitationDto.contractName ? sendInvitationDto.contractName : &#x27;&#x27;,
+        idParticipant: participantRecord.id
+      }
+
+      this.queueService.enqueueSendInvitation(payload)
+    })
+
+    return participants
+  }
+
+  async findAllByUserId(userId: string) {
+    const participants &#x3D; await this.prismaService.client.participant.findMany({
+      where: { userId },
+      include: { User: true }
+    })
+    return participants
+  }
+
+  async findOne(email: string, contractId: string) {
+    const participant &#x3D; await this.prismaService.client.participant.findFirst({
+      where: { email, contractId }
+    })
+
+    return participant
+  }
+
+  async findAllByContractId(contractId: string, user?: IUser) {
+    const participants &#x3D; await this.prismaService.client.participant.findMany({
+      where: { contractId },
+      include: { User: true }
+    })
+
+    return participants
+  }
+
+  async findOneById(id: string) {
+    const participant &#x3D; await this.prismaService.client.participant.findUnique({
+      where: { id },
+      include: { User: true }
+    })
+    return participant
+  }
+
+  async update(updateParticipantDto: UpdateParticipantDto, user: IUser) {
+    const { id, userId, vote, individual, ...rest } &#x3D; updateParticipantDto
+    console.log(&#x27;individual&#x27;, individual);
+
+    const find &#x3D;
+      id &amp;&amp; !userId
+        ? await this.findOneById(id)
+        : await this.prismaService.client.participant.findFirst({ where: { userId }, include: { User: true } })
+    if (!find) throw new NotFoundException(RESPONSE_MESSAGES.PARTICIPANT_NOT_FOUND)
+
+    const participant &#x3D; await this.prismaService.client.participant.update({
+      where: { id },
+      data: {
+        ...rest,
+        vote: vote ? vote : find.vote,
+        User:
+          updateParticipantDto.status &#x3D;&#x3D;&#x3D; ParticipantStatus.ACCEPTED &amp;&amp; find.status &#x3D;&#x3D;&#x3D; ParticipantStatus.PENDING
+            ? { connect: { id: user.id } }
+            : undefined,
+        status: updateParticipantDto.status
+          ? (updateParticipantDto.status as Exact&lt;ParticipantStatus, ParticipantStatus&gt;)
+          : find.status,
+        updatedBy: { id: user.id, name: user.name, email: user.email }
+      }
+    })
+    let isVotedAll
+    if (vote) {
+      const arbitrations &#x3D; (
+        await this.prismaService.client.participant.findMany({
+          where: { contractId: find.contractId }
+        })
+      ).filter((item: any) &#x3D;&gt; ERoleParticipant[item.permission.ROLES] &#x3D;&#x3D;&#x3D; ERoleParticipant.ARBITRATION)
+      isVotedAll &#x3D; this.calculateVoteRatio(arbitrations, individual)
+      if (isVotedAll.result) await this.contractService.update({ id: find.contractId, status: contractStatus.VOTED, winnerAddressWallet: isVotedAll.addressWallet }, user)
+    }
+
+    if (updateParticipantDto.status) {
+      const participants &#x3D; await this.findAllByContractId(find.contractId, user)
+      if (
+        updateParticipantDto.status &#x3D;&#x3D;&#x3D; ParticipantStatus.ACCEPTED &amp;&amp;
+        participants.filter((item) &#x3D;&gt; item.status !&#x3D;&#x3D; ParticipantStatus.ACCEPTED).length &#x3D;&#x3D;&#x3D; 0
+      )
+        await this.contractService.update({ id: participant.contractId, status: contractStatus.PARTICIPATED }, user)
+      else if (
+        updateParticipantDto.status &#x3D;&#x3D;&#x3D; ParticipantStatus.SIGNED &amp;&amp;
+        participants.filter((item) &#x3D;&gt; item.status !&#x3D;&#x3D; ParticipantStatus.SIGNED).length &#x3D;&#x3D;&#x3D; 0
+      )
+        await this.contractService.update({ id: participant.contractId, status: contractStatus.SIGNED }, user)
+    }
+
+    const status &#x3D; (await this.contractService.findOneById(participant.contractId)).status
+
+    return { participant, contractStatus: status, isVotedAll }
+  }
+
+  remove(id: number) {
+    return &#x60;This action removes a #${id} participant&#x60;
+  }
+
+  calculateVoteRatio(votes: any[], individual: any) {
+    if (!votes || !individual) return { result: false };
+
+    const countVotes &#x3D; (voteType: &#x27;A&#x27; | &#x27;B&#x27; | null): number &#x3D;&gt;
+      votes.filter((item) &#x3D;&gt; item.vote &#x3D;&#x3D;&#x3D; voteType).length;
+
+    const countA &#x3D; countVotes(&#x27;A&#x27;);
+    const countB &#x3D; countVotes(&#x27;B&#x27;);
+    const countUnd &#x3D; countVotes(null);
+
+    if (countA !&#x3D;&#x3D; countB &amp;&amp; countUnd &#x3D;&#x3D;&#x3D; 0) {
+      const personWinner &#x3D; countA &gt; countB ? &#x27;Customer&#x27; : &#x27;Supplier&#x27;;
+      const addressWallet &#x3D; countA &gt; countB ? individual.sender : individual.receiver;
+
+      return {
+        result: true,
+        personWinner,
+        addressWallet
+      };
+    }
+
+    return { result: false };
+  };
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ParticipantsService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

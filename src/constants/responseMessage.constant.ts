@@ -73,7 +73,6 @@ export const RESPONSE_MESSAGES = {
   YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION: 'You are not allowed to perform this action',
   ROLE_IS_EXIST: 'Role is exist',
   ROLE_IS_INVALID: 'Role is invalid',
-  PERCENT_NOT_EQUAL_100: 'Percent not equal 100',
   ORDER_IS_NOT_FOUND: 'Order is not found',
   TOTAL_IS_REQUIRED: "If you don't have an order, you need to pass in the value of the contract",
   STAGE_IS_REQUIRED: 'Stage is required',
@@ -83,5 +82,15 @@ export const RESPONSE_MESSAGES = {
   ORDER_CODE_EXISTED: 'Order code existed',
   EXCUTE_DATE_OR_END_DATE_IS_NOT_PROVIDED: 'Excute date or end date is not provided',
   SENDER_IS_NOT_FOUND: 'Sender is not found',
-  SENDER_IS_EXIST: 'Sender is exist'
+  SENDER_IS_EXIST: 'Sender is exist',
+  PERCENT_IS_NOT_EQUAL_100: 'Percent is not equal 100',
+  USER_DELETED_SUCCESSFULLY: 'User deleted successfully',
+  TEMPLATE_CONTRACT_DELETED_SUCCESSFULLY: 'Template contract deleted successfully',
+  CONTRACT_ATTRIBUTE_VALUE_DELETED_SUCCESSFULLY: 'Contract attribute value deleted successfully',
+  CONTRACT_ATTRIBUTE_DELETED_SUCCESSFULLY: 'Contract attribute deleted successfully',
+  SUPPLIER_IS_NOT_FOUND: 'Supplier is not found',
+  TAX_CODE_OR_EMAIL_OR_PHONE_NUMBER_IS_EXISTED: 'Tax code or email or phone number is existed',
+  PRODUCTS_REMOVED: 'Products removed',
+  SUPPLIER_REMOVED: 'Supplier removed',
+  PRODUCT_REMOVED: 'Product removed'
 }

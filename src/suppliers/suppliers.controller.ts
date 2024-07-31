@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common'
 import { SuppliersService } from './suppliers.service'
 import { CreateSupplierDto } from './dto/create-supplier.dto'
 import { UpdateSupplierDto } from './dto/update-supplier.dto'
@@ -15,8 +15,8 @@ export class SuppliersController {
   }
 
   @Get()
-  async findAll() {
-    return await this.suppliersService.findAll()
+  async findAll(@Query('page') page: string, @Query('limit') limit: string) {
+    return await this.suppliersService.findAll(+page, +limit)
   }
 
   @Get(':id')
@@ -24,13 +24,13 @@ export class SuppliersController {
     return this.suppliersService.findOneById(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.suppliersService.update(+id, updateSupplierDto)
+  @Patch()
+  update(@Body() updateSupplierDto: UpdateSupplierDto, @User() user: IUser) {
+    return this.suppliersService.update(updateSupplierDto, user)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.suppliersService.remove(+id)
+  remove(@Param('id') id: string, @User() user: IUser) {
+    return this.suppliersService.remove(id, user)
   }
 }

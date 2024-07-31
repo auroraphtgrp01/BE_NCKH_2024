@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -165,6 +156,11 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
+                                <a href="#findOneByAddress" >findOneByAddress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
                                 <a href="#findOneById" >findOneById</a>
                             </li>
                             <li>
@@ -220,7 +216,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(createUserDto: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                    <code>create(createUserDto: <a href="../classes/CreateUserDto.html" target="_self">CreateUserDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -258,7 +254,7 @@
                                         <tr>
                                                 <td>createUserDto</td>
                                             <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                            <code><a href="../classes/CreateUserDto.html" target="_self" >CreateUserDto</a></code>
                                             </td>
 
                                             <td>
@@ -424,6 +420,83 @@
 
                     <tr>
                         <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/users/users.controller.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneByAddress"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findOneByAddress</b></span>
+                        <a href="#findOneByAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneByAddress(addressWallet: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;/find-one-by-address/:addressWallet&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
                             <div class="io-line">Defined in <a href="" data-line="38"
                                     class="link-to-prism">src/users/users.controller.ts:38</a></div>
                         </td>
@@ -446,7 +519,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>payload</td>
+                                                <td>addressWallet</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -579,8 +652,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/users/users.controller.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/users/users.controller.ts:59</a></div>
                         </td>
                     </tr>
 
@@ -655,8 +728,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/users/users.controller.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/users/users.controller.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -743,8 +816,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="43"
-                                    class="link-to-prism">src/users/users.controller.ts:43</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/users/users.controller.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -900,17 +973,17 @@
 import { UsersService } from &#x27;./users.service&#x27;
 import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;
 import { UpdateUserDto, UpdateUserPINDto } from &#x27;./dto/update-user.dto&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 import { Public } from &#x27;src/decorators/is-public.decorator&#x27;
 import { IUser } from &#x27;./interfaces/IUser.interface&#x27;
 import { User } from &#x27;src/decorators/user.decorator&#x27;
 
 @Controller(&#x27;users&#x27;)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
-  async create(@Body() createUserDto: any, @User() user: IUser) {
+  async create(@Body() createUserDto: CreateUserDto, @User() user: IUser) {
     return await this.usersService.create(createUserDto, user)
   }
 
@@ -932,9 +1005,14 @@ export class UsersController {
     return await this.usersService.findOneById(id)
   }
 
+  @Get(&#x27;/find-one-by-address/:addressWallet&#x27;)
+  async findOneByAddress(@Param(&#x27;addressWallet&#x27;) addressWallet: string) {
+    return await this.usersService.findOneByAddressWallet(addressWallet)
+  }
+
   @Get(&#x27;:payload&#x27;)
   async findOne(@Param(&#x27;payload&#x27;) payload: string) {
-    return await this.usersService.findOne(payload)
+    return { user: await this.usersService.findOne(payload) }
   }
 
   @Patch()
@@ -1002,6 +1080,19 @@ export class UsersController {
             var COMPODOC_CURRENT_PAGE_URL = 'UsersController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

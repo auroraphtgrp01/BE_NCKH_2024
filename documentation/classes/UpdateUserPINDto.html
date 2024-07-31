@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -202,7 +193,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/users/dto/update-user.dto.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/users/dto/update-user.dto.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -229,47 +220,54 @@
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MaxLength,
   MinLength
 } from &#x27;class-validator&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 
 export class UpdateUserDto {
   @IsNotEmpty({ message: RESPONSE_MESSAGES.FIELD_IS_REQUIRED })
   @IsString({ message: RESPONSE_MESSAGES.ID_MUST_BE_A_STRING })
   @Length(36, 36, { message: RESPONSE_MESSAGES.INVALID_ID })
-  readonly id: string
+  id: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.NAME_MUST_BE_A_STRING })
-  readonly name: string
+  name: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.ADDRESS_WALLET_MUST_BE_A_STRING })
   @MaxLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
   @MinLength(42, { message: RESPONSE_MESSAGES.ADDRESS_WALLET_LENGTH })
-  readonly addressWallet: string
+  addressWallet: string
 
   @IsOptional()
   @IsString({ message: RESPONSE_MESSAGES.EMAIL_MUST_BE_A_STRING })
   @IsEmail({}, { message: RESPONSE_MESSAGES.EMAIL_IS_INVALID })
-  readonly email: string
+  email: string
 
   @IsOptional()
-  readonly gender: string
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  roleId: string
+
+  @IsOptional()
+  gender: string
 
   @IsOptional()
   @IsDateString({}, { message: RESPONSE_MESSAGES.DATEOFBIRTH_MUST_BE_A_DATE })
-  readonly dateOfBirth: string
+  dateOfBirth: string
 
   @IsOptional()
-  readonly phoneNumber: string
+  phoneNumber: string
 
   @IsOptional()
   @MaxLength(12)
   @MinLength(12)
-  readonly indentifyNumber: string
+  indentifyNumber: string
 }
 
 export class UpdateUserPINDto {
@@ -319,6 +317,19 @@ export class UpdateUserPINDto {
             var COMPODOC_CURRENT_PAGE_URL = 'UpdateUserPINDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

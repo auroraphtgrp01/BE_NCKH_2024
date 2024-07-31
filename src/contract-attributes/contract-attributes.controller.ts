@@ -38,9 +38,4 @@ export class ContractAttributesController {
   update(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
     return this.contractAttributesService.update(updateContractAttributeDto, user)
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contractAttributesService.remove(+id)
-  }
 }

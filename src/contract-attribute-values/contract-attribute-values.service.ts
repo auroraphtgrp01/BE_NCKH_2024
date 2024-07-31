@@ -16,13 +16,14 @@ export class ContractAttributeValuesService {
   ) {}
   async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
     try {
-      const { contractAttributeId, value } = createContractAttributeValueDto
+      const { contractAttributeId, value, descriptionOfStage } = createContractAttributeValueDto
       const createdBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
       if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
         throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
       const contractAttributeValue = await this.prismaService.client.contractAttributeValue.create({
         data: {
-          value,
+          value: value.toString(),
+          descriptionOfStage: descriptionOfStage ? descriptionOfStage : null,
           ContractAttribute: { connect: { id: contractAttributeId } },
           createdBy,
           updatedAt: null
@@ -76,7 +77,13 @@ export class ContractAttributeValuesService {
     return contractAttributeValue
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contractAttributeValue`
+  async remove(id: string, user: IUser) {
+    const deletedBy: IExecutor = { id: user.id, name: user.name, email: user.email, role: user.role }
+    await this.prismaService.client.contractAttributeValue.update({
+      where: { contractAttributeId: id },
+      data: { deletedBy }
+    })
+    await this.prismaService.client.contractAttributeValue.delete({ where: { contractAttributeId: id } })
+    return { message: RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_VALUE_DELETED_SUCCESSFULLY }
   }
 }

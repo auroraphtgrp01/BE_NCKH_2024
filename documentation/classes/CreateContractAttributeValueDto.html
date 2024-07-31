@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -149,22 +140,10 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                 <a href="#contractAttributeId" >contractAttributeId</a>
                             </li>
                             <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                <a href="#contractId" >contractId</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier">Optional</span>
-                                <a href="#description" >description</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                 <a href="#value" >value</a>
@@ -196,6 +175,7 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
                         <span ><b>contractAttributeId</b></span>
                         <a href="#contractAttributeId"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -212,89 +192,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsUUID()<br />@IsNotEmpty()<br />
+                            @IsString()<br />@IsNotEmpty()<br />@IsUUID()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:10</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="contractId"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                        <span ><b>contractId</b></span>
-                        <a href="#contractId"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsUUID()<br />@IsNotEmpty()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:6</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="description"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Optional</span>
-                        <span ><b>description</b></span>
-                        <a href="#description"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />@IsString()<br />@IsNotEmpty()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:7</a></div>
                         </td>
                     </tr>
 
@@ -307,7 +211,6 @@
                 <td class="col-md-4">
                     <a name="value"></a>
                     <span class="name">
-                            <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                         <span ><b>value</b></span>
@@ -326,13 +229,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsOptional()<br />@IsString()<br />@IsNotEmpty()<br />
+                            @IsString()<br />@IsNotEmpty()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/contract-attribute-values/dto/create-contract-attribute-value.dto.ts:11</a></div>
                         </td>
                     </tr>
 
@@ -351,26 +254,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsNotEmpty, IsOptional, IsString, IsUUID } from &#x27;class-validator&#x27;
-
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Type } from &#x27;class-transformer&#x27;
+import { IsNotEmpty, IsObject, IsString, IsUUID, ValidateIf } from &#x27;class-validator&#x27;
 export class CreateContractAttributeValueDto {
-  @IsUUID()
+  @IsString()
   @IsNotEmpty()
-  contractId: string
-
   @IsUUID()
-  @IsNotEmpty()
   contractAttributeId: string
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
   value: string
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  description?: string
 }
 </code></pre>
     </div>
@@ -413,6 +307,19 @@ export class CreateContractAttributeValueDto {
             var COMPODOC_CURRENT_PAGE_URL = 'CreateContractAttributeValueDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

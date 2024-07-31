@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -479,11 +470,13 @@
 import * as fs from &#x27;fs&#x27;
 import { resolve } from &#x27;path&#x27;
 
-export const readContract &#x3D; (fileName: string): IContractJSON &#x3D;&gt; {
+export const readContract &#x3D; (type: &#x27;disputed | supplyChain&#x27;): IContractJSON &#x3D;&gt; {
   try {
-    const filePath &#x3D; resolve(process.cwd(), &#x60;artifacts/contracts/${fileName}.sol/${fileName}.json&#x60;)
-    console.log(filePath)
-    const data &#x3D; fs.readFileSync(filePath, &#x27;utf8&#x27;)
+    const filePath &#x3D; {
+      supplyChain: resolve(process.cwd(), &#x60;artifacts/contracts/SupplyChain.sol/SupplyChain.json&#x60;),
+      disputed: resolve(process.cwd(), &#x60;artifacts/contracts/DisputeSmartContract.sol/DisputeSmartContract.json&#x60;)
+    }
+    const data &#x3D; fs.readFileSync(filePath[type], &#x27;utf8&#x27;)
     const jsonData &#x3D; JSON.parse(data)
     return jsonData
   } catch (error) {
@@ -543,6 +536,19 @@ export interface IContractJSON {
             var COMPODOC_CURRENT_PAGE_URL = 'IContractJSON.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

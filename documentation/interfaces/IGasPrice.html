@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -319,16 +310,47 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface IGasPrice {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Contract } from &#x27;@prisma/client&#x27;
+import { IContractAttributeResponse } from &#x27;./contract-attribute.interface&#x27;
+import { EStageStatus, EVoting } from &#x27;src/constants/enum.constant&#x27;
+
+export interface IGasPrice {
   addressWallet: string
   price: string
   reason: string
   createdAt: Date
 }
 
-export interface IContractAttributeValue {
+export interface IStage {
+  id: string
+  percent: number
+  requestBy: string
+  requestTo: string
+  description?: string
+  status: EStageStatus
+  createdAt: Date
+  deliveryAt: Date
+}
+
+export interface IContractAttributeValueResponse {
   id: string
   value: string
+}
+
+export interface ICreateContractResponse {
+  contract: Contract
+  contractAttributes: IContractAttributeResponse[]
+}
+
+export interface IContractResponse {
+  readonly contracts: Contract[]
+  readonly contractAttributes: IContractAttributeResponse[]
+}
+
+export interface IVoting {
+  userId: string
+  contractId: string
+  vote: EVoting
 }
 </code></pre>
     </div>
@@ -370,6 +392,19 @@ export interface IContractAttributeValue {
             var COMPODOC_CURRENT_PAGE_URL = 'IGasPrice.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

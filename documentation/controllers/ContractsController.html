@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -150,7 +141,22 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
+                                <a href="#compareAttribute" >compareAttribute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
                                 <a href="#create" >create</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createContractBySurvey" >createContractBySurvey</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createDisputeContract" >createDisputeContract</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -162,16 +168,30 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#remove" >remove</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllContractDetails" >getAllContractDetails</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#sendInvitation" >sendInvitation</a>
+                                <a href="#getContractDetailsById" >getContractDetailsById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleDeploy" >handleDeploy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#remove" >remove</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                 <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#updateContractAttribute" >updateContractAttribute</a>
                             </li>
                         </ul>
                     </td>
@@ -194,19 +214,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="create"></a>
+                    <a name="compareAttribute"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier">Async</span>
-                        <span ><b>create</b></span>
-                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>compareAttribute</b></span>
+                        <a href="#compareAttribute"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(contractData: <a href="../classes/CreateContractDto.html" target="_self">CreateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, templateId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, partyInfoIds?: string[])</code>
+                    <code>compareAttribute(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -214,14 +234,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post()<br /></code>
+                    <code>@Get(&#x27;/compare-attribute/:contractId&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="23"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:23</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -242,7 +262,84 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>contractData</td>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(createContractDto: <a href="../classes/CreateContractDto.html" target="_self">CreateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post()<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="12"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:12</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createContractDto</td>
                                             <td>
                                                             <code><a href="../classes/CreateContractDto.html" target="_self" >CreateContractDto</a></code>
                                             </td>
@@ -265,26 +362,180 @@
 
 
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createContractBySurvey"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createContractBySurvey</b></span>
+                        <a href="#createContractBySurvey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createContractBySurvey(surveyId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;create-by-survey&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
                                         <tr>
-                                                <td>templateId</td>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>surveyId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
 
                                             <td>
-                                                    Yes
+                                                    No
                                             </td>
 
 
                                         </tr>
                                         <tr>
-                                                <td>partyInfoIds</td>
+                                                <td>user</td>
                                             <td>
-                                                        <code>string[]</code>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
-                                                    Yes
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDisputeContract"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createDisputeContract</b></span>
+                        <a href="#createDisputeContract"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDisputeContract(createDisputeContractDto: <a href="../classes/CreateDisputeContractDto.html" target="_self">CreateDisputeContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;dispute-contract&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="17"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createDisputeContractDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateDisputeContractDto.html" target="_self" >CreateDisputeContractDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
                                             </td>
 
 
@@ -332,8 +583,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="33"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:33</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -378,8 +629,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="38"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:38</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:42</a></div>
                         </td>
                     </tr>
 
@@ -416,6 +667,249 @@
                             </div>
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllContractDetails"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllContractDetails</b></span>
+                        <a href="#getAllContractDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllContractDetails(user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;get-all-contract-details&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContractDetailsById"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>getContractDetailsById</b></span>
+                        <a href="#getContractDetailsById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getContractDetailsById(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;get-contract-details/:contractId&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleDeploy"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>handleDeploy</b></span>
+                        <a href="#handleDeploy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleDeploy(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;/handle-deploy&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
 
                         </div>
                             <div class="io-description">
@@ -454,8 +948,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:57</a></div>
                         </td>
                     </tr>
 
@@ -505,19 +999,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sendInvitation"></a>
+                    <a name="update"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                            <span class="modifier">Async</span>
-                        <span ><b>sendInvitation</b></span>
-                        <a href="#sendInvitation"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendInvitation(sendInvitationDto: <a href="../classes/CreateInvitationDto.html" target="_self">CreateInvitationDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                    <code>update(updateContractDto: <a href="../classes/UpdateContractDto.html" target="_self">UpdateContractDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -525,14 +1018,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;send-invitation&#x27;)<br /></code>
+                    <code>@Patch()<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="18"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:18</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -553,9 +1046,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>sendInvitationDto</td>
+                                                <td>updateContractDto</td>
                                             <td>
-                                                            <code><a href="../classes/CreateInvitationDto.html" target="_self" >CreateInvitationDto</a></code>
+                                                            <code><a href="../classes/UpdateContractDto.html" target="_self" >UpdateContractDto</a></code>
                                             </td>
 
                                             <td>
@@ -594,18 +1087,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="update"></a>
+                    <a name="updateContractAttribute"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>update</b></span>
-                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>updateContractAttribute</b></span>
+                        <a href="#updateContractAttribute"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(updateContractDto: <a href="../classes/UpdateContractDto.html" target="_self">UpdateContractDto</a>)</code>
+                    <code>updateContractAttribute(updateContractAttributeDto: <a href="../classes/UpdateContractAttributeDto.html" target="_self">UpdateContractAttributeDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -613,14 +1106,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Patch()<br /></code>
+                    <code>@Patch(&#x27;attribute&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="43"
-                                    class="link-to-prism">src/contracts/contracts.controller.ts:43</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/contracts/contracts.controller.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -641,9 +1134,21 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>updateContractDto</td>
+                                                <td>updateContractAttributeDto</td>
                                             <td>
-                                                            <code><a href="../classes/UpdateContractDto.html" target="_self" >UpdateContractDto</a></code>
+                                                            <code><a href="../classes/UpdateContractAttributeDto.html" target="_self" >UpdateContractAttributeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
@@ -670,35 +1175,34 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from &#x27;@nestjs/common&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef } from &#x27;@nestjs/common&#x27;
 import { ContractsService } from &#x27;./contracts.service&#x27;
-import { CreateContractDto } from &#x27;./dto/create-contract.dto&#x27;
-import { CreateInvitationDto } from &#x27;src/invitations/dto/create-invitation.dto&#x27;
-import { UpdateContractDto } from &#x27;./dto/update-contract.dto&#x27;
+import { CreateContractAttributesDto, CreateContractDto, CreateDisputeContractDto } from &#x27;./dto/create-contract.dto&#x27;
+import { UpdateContractAttributeDto, UpdateContractDto } from &#x27;./dto/update-contract.dto&#x27;
 import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
 import { User } from &#x27;src/decorators/user.decorator&#x27;
-import { CommonService } from &#x27;src/common.service&#x27;
-
 @Controller(&#x27;contracts&#x27;)
 export class ContractsController {
-  constructor(
-    private readonly contractsService: ContractsService,
-    private readonly commonService: CommonService
-  ) {}
-
-  @Post(&#x27;send-invitation&#x27;)
-  async sendInvitation(@Body() sendInvitationDto: CreateInvitationDto, @User() user: IUser) {
-    // return await this.contractsService.sendInvitation(sendInvitationDto, user)
-  }
+  constructor(private readonly contractsService: ContractsService) {}
 
   @Post()
-  async create(
-    @Body(&#x27;contractData&#x27;) contractData: CreateContractDto,
-    @User() user: IUser,
-    @Body(&#x27;templateId&#x27;) templateId?: string,
-    @Body(&#x27;partyInfoIds&#x27;) partyInfoIds?: string[]
-  ) {
-    return await this.contractsService.create(contractData, user, templateId, partyInfoIds)
+  async create(@Body() createContractDto: CreateContractDto, @User() user: IUser) {
+    return await this.contractsService.create(createContractDto, user)
+  }
+
+  @Post(&#x27;dispute-contract&#x27;)
+  async createDisputeContract(@Body() createDisputeContractDto: CreateDisputeContractDto, @User() user: IUser) {
+    return await this.contractsService.createDisputeContract(createDisputeContractDto, user)
+  }
+
+  @Post(&#x27;create-by-survey&#x27;)
+  async createContractBySurvey(@Body(&#x27;surveyId&#x27;) surveyId: string, @User() user: IUser) {
+    return await this.contractsService.createContractBySurveyId(surveyId, user)
+  }
+
+  @Get(&#x27;get-contract-details/:contractId&#x27;)
+  async getContractDetailsById(@Param(&#x27;contractId&#x27;) contractId: string, @User() user: IUser) {
+    return await this.contractsService.getContractDetailsById(contractId, user)
   }
 
   @Get()
@@ -706,19 +1210,39 @@ export class ContractsController {
     return this.contractsService.findAll()
   }
 
+  @Get(&#x27;get-all-contract-details&#x27;)
+  async getAllContractDetails(@User() user: IUser) {
+    return await this.contractsService.getContractsByUserId(user)
+  }
+
   @Get(&#x27;:id&#x27;)
   findOne(@Param(&#x27;id&#x27;) id: string) {
-    return this.commonService.findOneContractById(id)
+    return this.contractsService.findOneById(id)
   }
 
   @Patch()
-  update(@Body() updateContractDto: UpdateContractDto) {
-    return this.contractsService.update(updateContractDto)
+  update(@Body() updateContractDto: UpdateContractDto, @User() user: IUser) {
+    return this.contractsService.update(updateContractDto, user)
+  }
+
+  @Patch(&#x27;attribute&#x27;)
+  updateContractAttribute(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
+    return this.contractsService.updateContractAttribute(updateContractAttributeDto, user)
   }
 
   @Delete(&#x27;:id&#x27;)
   remove(@Param(&#x27;id&#x27;) id: string) {
     return this.contractsService.remove(+id)
+  }
+
+  @Post(&#x27;/handle-deploy&#x27;)
+  async handleDeploy(@Body(&#x27;contractId&#x27;) contractId: string) {
+    return await this.contractsService.handleDeployContract(contractId)
+  }
+
+  @Get(&#x27;/compare-attribute/:contractId&#x27;)
+  async compareAttribute(@Param(&#x27;contractId&#x27;) contractId: string) {
+    return await this.contractsService.compareAttribute(contractId)
   }
 }
 </code></pre>
@@ -769,6 +1293,19 @@ export class ContractsController {
             var COMPODOC_CURRENT_PAGE_URL = 'ContractsController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

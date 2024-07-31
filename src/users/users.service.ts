@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
+import { ForbiddenException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { CustomPrismaService } from 'nestjs-prisma'
 import { RESPONSE_MESSAGES } from 'src/constants/responseMessage.constant'
 import { ExtendedPrismaClient } from 'src/utils/prisma.extensions'
@@ -14,13 +14,16 @@ import { isNumeric } from 'src/decorators/is-nummeric.decorator'
 import { ERoles } from 'src/constants/enum.constant'
 import * as fs from 'fs'
 import * as path from 'path'
+import { isBuffer } from 'util'
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('PrismaService') private readonly prismaService: CustomPrismaService<ExtendedPrismaClient>) {}
   async create(createUserDto: CreateUserDto, user?: IUser) {
+    if (user && user.role !== ERoles.ADMIN) throw new ForbiddenException()
     if (Object.values(ERoles).some((role) => role === createUserDto.role) == false)
       throw new NotFoundException(RESPONSE_MESSAGES.ROLE_IS_INVALID)
+
     const isUserExist = await this.prismaService.client.user.findFirst({
       where: {
         OR: [
@@ -65,15 +68,12 @@ export class UsersService {
     })
   }
 
-  async findAll(page: number, limit: number, order: 'asc' | 'desc') {
+  async findAll(page: number, limit: number) {
     const totalItems = await this.prismaService.client.user.count()
     const totalPages = Math.ceil(totalItems / limit)
     const users = await this.prismaService.client.user.findMany({
       skip: (page - 1) * limit,
-      take: limit * 1,
-      orderBy: {
-        id: order
-      }
+      take: limit * 1
     })
     return {
       users,
@@ -120,9 +120,11 @@ export class UsersService {
 
   async remove(id: string, _user: IUser) {
     const deletedBy: IExecutor = { id: _user.id, name: _user.name, email: _user.email, role: _user.role }
-    await this.prismaService.client.user.update({ where: { id }, data: { deletedBy } })
-    const user = await this.prismaService.client.user.delete({ where: { id } })
-    return user
+    await Promise.all([
+      this.prismaService.client.user.update({ where: { id }, data: { deletedBy } }),
+      this.prismaService.client.user.delete({ where: { id } })
+    ])
+    return { message: RESPONSE_MESSAGES.USER_DELETED_SUCCESSFULLY }
   }
 
   getABI() {

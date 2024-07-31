@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -153,7 +144,12 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#findAll" >findAll</a>
+                                <a href="#createContractAttributes" >createContractAttributes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllByContractId" >findAllByContractId</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -217,8 +213,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="14"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:14</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="13"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -280,18 +276,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findAll"></a>
+                    <a name="createContractAttributes"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>findAll</b></span>
-                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>createContractAttributes</b></span>
+                        <a href="#createContractAttributes"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findAll()</code>
+                    <code>createContractAttributes(createContractAttributeDto: <a href="../classes/CreateContractAttributesDto.html" target="_self">CreateContractAttributesDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -299,14 +295,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get()<br /></code>
+                    <code>@Post(&#x27;/create-contract-attributes&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="19"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:19</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -314,10 +310,129 @@
             <tr>
                 <td class="col-md-4">
 
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createContractAttributeDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateContractAttributesDto.html" target="_self" >CreateContractAttributesDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllByContractId"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllByContractId</b></span>
+                        <a href="#findAllByContractId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllByContractId(contractId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;:contractId&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contractId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -351,8 +466,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="29"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:29</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -427,8 +542,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="24"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:24</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="28"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:28</a></div>
                         </td>
                     </tr>
 
@@ -503,8 +618,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="39"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:39</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -565,7 +680,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateContractAttributeDto: <a href="../classes/UpdateContractAttributeDto.html" target="_self">UpdateContractAttributeDto</a>)</code>
+                    <code>update(updateContractAttributeDto: <a href="../classes/UpdateContractAttributeDto.html" target="_self">UpdateContractAttributeDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
@@ -573,14 +688,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Patch(&#x27;:id&#x27;)<br /></code>
+                    <code>@Patch()<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="38"
+                                    class="link-to-prism">src/contract-attributes/contract-attributes.controller.ts:38</a></div>
                         </td>
                     </tr>
 
@@ -601,9 +716,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>id</td>
+                                                <td>updateContractAttributeDto</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../classes/UpdateContractAttributeDto.html" target="_self" >UpdateContractAttributeDto</a></code>
                                             </td>
 
                                             <td>
@@ -613,9 +728,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>updateContractAttributeDto</td>
+                                                <td>user</td>
                                             <td>
-                                                            <code><a href="../classes/UpdateContractAttributeDto.html" target="_self" >UpdateContractAttributeDto</a></code>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
@@ -644,9 +759,8 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from &#x27;@nestjs/common&#x27;
 import { ContractAttributesService } from &#x27;./contract-attributes.service&#x27;
-import { CreateContractAttributeDto } from &#x27;./dto/create-contract-attribute.dto&#x27;
+import { CreateContractAttributeDto, CreateContractAttributesDto } from &#x27;./dto/create-contract-attribute.dto&#x27;
 import { UpdateContractAttributeDto } from &#x27;./dto/update-contract-attribute.dto&#x27;
-import { Request } from &#x27;express&#x27;
 import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
 import { User } from &#x27;src/decorators/user.decorator&#x27;
 
@@ -659,9 +773,14 @@ export class ContractAttributesController {
     return this.contractAttributesService.create(createContractAttributeDto, user)
   }
 
-  @Get()
-  findAll() {
-    return this.contractAttributesService.findAll()
+  @Post(&#x27;/create-contract-attributes&#x27;)
+  createContractAttributes(@Body() createContractAttributeDto: CreateContractAttributesDto, @User() user: IUser) {
+    return this.contractAttributesService.createContractAttributes(createContractAttributeDto, user)
+  }
+
+  @Get(&#x27;:contractId&#x27;)
+  async findAllByContractId(@Param(&#x27;contractId&#x27;) contractId: string) {
+    return await this.contractAttributesService.findAllByContractId(contractId)
   }
 
   @Get(&#x27;/find-one-by-id/:id&#x27;)
@@ -674,9 +793,9 @@ export class ContractAttributesController {
     return this.contractAttributesService.findOne(payload)
   }
 
-  @Patch(&#x27;:id&#x27;)
-  update(@Param(&#x27;id&#x27;) id: string, @Body() updateContractAttributeDto: UpdateContractAttributeDto) {
-    return this.contractAttributesService.update(+id, updateContractAttributeDto)
+  @Patch()
+  update(@Body() updateContractAttributeDto: UpdateContractAttributeDto, @User() user: IUser) {
+    return this.contractAttributesService.update(updateContractAttributeDto, user)
   }
 
   @Delete(&#x27;:id&#x27;)
@@ -732,6 +851,19 @@ export class ContractAttributesController {
             var COMPODOC_CURRENT_PAGE_URL = 'ContractAttributesController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

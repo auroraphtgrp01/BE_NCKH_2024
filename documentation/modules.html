@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -133,6 +124,23 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
+                        <h4 class="card-title">CommonModule</h4>
+                    </div>
+                    <div class="card-block">
+                                <p>
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/CommonModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                        Your browser does not support SVG
+                                    </object>
+                                </p>
+                        <footer class="text-center">
+                            <a href="./modules/CommonModule.html" class="btn btn-default">Browse</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-module">
+                    <div class="card-header">
                         <h4 class="card-title">ContractAttributesModule</h4>
                     </div>
                     <div class="card-block">
@@ -167,23 +175,6 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
-                        <h4 class="card-title">ContractPartyInfosModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/ContractPartyInfosModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/ContractPartyInfosModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card card-module">
-                    <div class="card-header">
                         <h4 class="card-title">ContractsModule</h4>
                     </div>
                     <div class="card-block">
@@ -201,16 +192,16 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
-                        <h4 class="card-title">InvitationsModule</h4>
+                        <h4 class="card-title">ImagesModule</h4>
                     </div>
                     <div class="card-block">
                                 <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/InvitationsModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/ImagesModule/dependencies.svg" style="width: 100%; height: 175px;">
                                         Your browser does not support SVG
                                     </object>
                                 </p>
                         <footer class="text-center">
-                            <a href="./modules/InvitationsModule.html" class="btn btn-default">Browse</a>
+                            <a href="./modules/ImagesModule.html" class="btn btn-default">Browse</a>
                         </footer>
                     </div>
                 </div>
@@ -235,16 +226,16 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
-                        <h4 class="card-title">PartiesModule</h4>
+                        <h4 class="card-title">OrdersModule</h4>
                     </div>
                     <div class="card-block">
                                 <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/PartiesModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/OrdersModule/dependencies.svg" style="width: 100%; height: 175px;">
                                         Your browser does not support SVG
                                     </object>
                                 </p>
                         <footer class="text-center">
-                            <a href="./modules/PartiesModule.html" class="btn btn-default">Browse</a>
+                            <a href="./modules/OrdersModule.html" class="btn btn-default">Browse</a>
                         </footer>
                     </div>
                 </div>
@@ -252,16 +243,33 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
-                        <h4 class="card-title">PartyInfosModule</h4>
+                        <h4 class="card-title">ParticipantsModule</h4>
                     </div>
                     <div class="card-block">
                                 <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/PartyInfosModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/ParticipantsModule/dependencies.svg" style="width: 100%; height: 175px;">
                                         Your browser does not support SVG
                                     </object>
                                 </p>
                         <footer class="text-center">
-                            <a href="./modules/PartyInfosModule.html" class="btn btn-default">Browse</a>
+                            <a href="./modules/ParticipantsModule.html" class="btn btn-default">Browse</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-module">
+                    <div class="card-header">
+                        <h4 class="card-title">ProductsModule</h4>
+                    </div>
+                    <div class="card-block">
+                                <p>
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/ProductsModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                        Your browser does not support SVG
+                                    </object>
+                                </p>
+                        <footer class="text-center">
+                            <a href="./modules/ProductsModule.html" class="btn btn-default">Browse</a>
                         </footer>
                     </div>
                 </div>
@@ -286,6 +294,23 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card card-module">
                     <div class="card-header">
+                        <h4 class="card-title">RolesModule</h4>
+                    </div>
+                    <div class="card-block">
+                                <p>
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/RolesModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                        Your browser does not support SVG
+                                    </object>
+                                </p>
+                        <footer class="text-center">
+                            <a href="./modules/RolesModule.html" class="btn btn-default">Browse</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-module">
+                    <div class="card-header">
                         <h4 class="card-title">SmartContractsModule</h4>
                     </div>
                     <div class="card-block">
@@ -296,6 +321,40 @@
                                 </p>
                         <footer class="text-center">
                             <a href="./modules/SmartContractsModule.html" class="btn btn-default">Browse</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-module">
+                    <div class="card-header">
+                        <h4 class="card-title">SuppliersModule</h4>
+                    </div>
+                    <div class="card-block">
+                                <p>
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/SuppliersModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                        Your browser does not support SVG
+                                    </object>
+                                </p>
+                        <footer class="text-center">
+                            <a href="./modules/SuppliersModule.html" class="btn btn-default">Browse</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-module">
+                    <div class="card-header">
+                        <h4 class="card-title">TemplateContractsModule</h4>
+                    </div>
+                    <div class="card-block">
+                                <p>
+                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/TemplateContractsModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                        Your browser does not support SVG
+                                    </object>
+                                </p>
+                        <footer class="text-center">
+                            <a href="./modules/TemplateContractsModule.html" class="btn btn-default">Browse</a>
                         </footer>
                     </div>
                 </div>
@@ -366,6 +425,19 @@
             var COMPODOC_CURRENT_PAGE_URL = 'modules.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>

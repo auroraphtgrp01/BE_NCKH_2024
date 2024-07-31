@@ -6,17 +6,17 @@ export interface ICreateContractAttributeRecord {
   property?: string
   Contract?: any
   TemplateContract?: any
-  oldcontractAttributeId?: string
 }
 
-export interface IContractAttributeResponse {
+export interface IContractAttribute {
   id: string
   property?: string
   value: string
   type: string
   createdBy: any
   updatedBy?: any
-  index?: any
+  index?: string
+  descriptionOfStage?: string
 }
 
 export interface IDataContractAttribute {
@@ -27,5 +27,4 @@ export interface IDataContractAttribute {
   contractId?: string
   index?: number
   contractAttributeId?: string
-  oldcontractAttributeId?: string
 }

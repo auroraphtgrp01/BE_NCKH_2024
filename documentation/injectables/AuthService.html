@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -149,6 +140,13 @@
                                 <a href="#createRefreshToken" >createRefreshToken</a>
                             </li>
                             <li>
+                                <a href="#getUserInfoLogin" >getUserInfoLogin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleAddressWallet" >handleAddressWallet</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#login" >login</a>
                             </li>
@@ -183,7 +181,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/auth/auth.service.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/auth/auth.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -282,8 +280,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="47"
-                                    class="link-to-prism">src/auth/auth.service.ts:47</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/auth/auth.service.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -349,8 +347,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/auth/auth.service.ts:60</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/auth/auth.service.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -400,6 +398,142 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getUserInfoLogin"></a>
+                    <span class="name">
+                        <span ><b>getUserInfoLogin</b></span>
+                        <a href="#getUserInfoLogin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserInfoLogin(user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/auth/auth.service.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleAddressWallet"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>handleAddressWallet</b></span>
+                        <a href="#handleAddressWallet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleAddressWallet(addressWallet: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/auth/auth.service.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>addressWallet</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="login"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -418,8 +552,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="22"
-                                    class="link-to-prism">src/auth/auth.service.ts:22</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/auth/auth.service.ts:23</a></div>
                         </td>
                     </tr>
 
@@ -499,8 +633,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="45"
-                                    class="link-to-prism">src/auth/auth.service.ts:45</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/auth/auth.service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -568,8 +702,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="76"
-                                    class="link-to-prism">src/auth/auth.service.ts:76</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/auth/auth.service.ts:80</a></div>
                         </td>
                     </tr>
 
@@ -642,8 +776,9 @@ import { Response } from &#x27;express&#x27;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
 import { convertMany } from &#x27;convert&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 import { compare } from &#x27;bcryptjs&#x27;
+import { ERoles } from &#x27;src/constants/enum.constant&#x27;
 
 @Injectable()
 export class AuthService {
@@ -673,7 +808,8 @@ export class AuthService {
       id: user.id,
       name: user.name,
       addressWallet: user.addressWallet,
-      email: user.email
+      email: user.email,
+      role: user.role
     }
   }
 
@@ -686,7 +822,8 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      name: user.name
+      name: user.name,
+      role: user.role
     }
 
     return this.jwtService.sign(payload)
@@ -699,7 +836,8 @@ export class AuthService {
       id: user.id,
       addressWallet: user.addressWallet,
       email: user.email,
-      name: user.name
+      name: user.name,
+      role: user.role
     }
 
     return this.jwtService.sign(payload, {
@@ -714,10 +852,21 @@ export class AuthService {
     if (!user) throw new NotFoundException({ message: RESPONSE_MESSAGES.USER_NOT_FOUND })
     if (user.PIN &#x3D;&#x3D;&#x3D; null) throw new UnauthorizedException({ message: RESPONSE_MESSAGES.PIN_NOT_SET })
     if (user &amp;&amp; (await compare(PIN, user.PIN)) &#x3D;&#x3D;&#x3D; true) {
-      const { PIN, ...result } &#x3D; user
+      const { PIN, ...rest } &#x3D; user
+      const result: IUser &#x3D; { ...rest, role: user.role as ERoles }
       return result
     }
     return null
+  }
+
+  async handleAddressWallet(addressWallet: string): Promise&lt;boolean&gt; {
+    const user &#x3D; await this.usersService.findOneByAddressWallet(addressWallet)
+    if (!user) return false
+    return true
+  }
+
+  getUserInfoLogin(user: IUser) {
+    return user
   }
 }
 </code></pre>
@@ -766,6 +915,19 @@ export class AuthService {
             var COMPODOC_CURRENT_PAGE_URL = 'AuthService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

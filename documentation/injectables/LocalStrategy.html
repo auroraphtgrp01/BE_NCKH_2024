@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -308,7 +299,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Strategy } from &#x27;passport-local&#x27;
 import { PassportStrategy } from &#x27;@nestjs/passport&#x27;
 import { Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 import { AuthService } from &#x27;../auth.service&#x27;
 
 @Injectable()
@@ -322,7 +313,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException(RESPONSE_MESSAGES.ADDRESS_WALLET_OR_PIN_IS_INVALID)
     }
-
     return user
   }
 }
@@ -372,6 +362,19 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
             var COMPODOC_CURRENT_PAGE_URL = 'LocalStrategy.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

@@ -60,15 +60,6 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
@@ -147,15 +138,24 @@
                                 <a href="#create" >create</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createInBlockchain" >createInBlockchain</a>
+                            </li>
+                            <li>
                                 <a href="#findAll" >findAll</a>
                             </li>
                             <li>
                                 <a href="#findOne" >findOne</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
                                 <a href="#remove" >remove</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#update" >update</a>
                             </li>
                         </ul>
@@ -176,12 +176,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, contractAttributesService: <a href="../injectables/ContractAttributesService.html" target="_self">ContractAttributesService</a>, commonService: <a href="../injectables/CommonService.html" target="_self">CommonService</a>)</code>
+<code>constructor(prismaService: <a href="../undefineds/ExtendedPrismaClient.html" target="_self">CustomPrismaService&lt;ExtendedPrismaClient&gt;</a>, contractAttributeService: <a href="../injectables/ContractAttributesService.html" target="_self">ContractAttributesService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -211,22 +211,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>contractAttributesService</td>
+                                                        <td>contractAttributeService</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/ContractAttributesService.html" target="_self" >ContractAttributesService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>commonService</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/CommonService.html" target="_self" >CommonService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -263,15 +251,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(createContractAttributeValueDto: <a href="../classes/CreateContractAttributeValueDto.html" target="_self">CreateContractAttributeValueDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, isEmpty?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                    <code>create(createContractAttributeValueDto: <a href="../classes/CreateContractAttributeValueDto.html" target="_self">CreateContractAttributeValueDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="19"
-                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:19</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="17"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -315,14 +303,71 @@
 
 
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createInBlockchain"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createInBlockchain</b></span>
+                        <a href="#createInBlockchain"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createInBlockchain(createContractAttributeValueDto: <a href="../classes/CreateContractAttributeValueDto.html" target="_self">CreateContractAttributeValueDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
                                         <tr>
-                                                <td>isEmpty</td>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createContractAttributeValueDto</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            <code><a href="../classes/CreateContractAttributeValueDto.html" target="_self" >CreateContractAttributeValueDto</a></code>
                                             </td>
 
                                             <td>
-                                                    Yes
+                                                    No
                                             </td>
 
 
@@ -361,8 +406,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="42"
-                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:42</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -398,8 +443,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="46"
-                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:46</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:62</a></div>
                         </td>
                     </tr>
 
@@ -449,6 +494,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="remove"></a>
                     <span class="name">
                         <span ><b>remove</b></span>
@@ -465,8 +579,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -518,6 +632,7 @@
                 <td class="col-md-4">
                     <a name="update"></a>
                     <span class="name">
+                            <span class="modifier">Async</span>
                         <span ><b>update</b></span>
                         <a href="#update"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -525,15 +640,16 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, updateContractAttributeValueDto: <a href="../classes/UpdateContractAttributeValueDto.html" target="_self">UpdateContractAttributeValueDto</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(updateContractAttributeValueDto: <a href="../classes/UpdateContractAttributeValueDto.html" target="_self">UpdateContractAttributeValueDto</a>, user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/contract-attribute-values/contract-attribute-values.service.ts:66</a></div>
                         </td>
                     </tr>
 
@@ -554,9 +670,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>id</td>
+                                                <td>updateContractAttributeValueDto</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../classes/UpdateContractAttributeValueDto.html" target="_self" >UpdateContractAttributeValueDto</a></code>
                                             </td>
 
                                             <td>
@@ -566,9 +682,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>updateContractAttributeValueDto</td>
+                                                <td>user</td>
                                             <td>
-                                                            <code><a href="../classes/UpdateContractAttributeValueDto.html" target="_self" >UpdateContractAttributeValueDto</a></code>
+                                                            <code><a href="../interfaces/IUser.html" target="_self" >IUser</a></code>
                                             </td>
 
                                             <td>
@@ -581,7 +697,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                            <b>Returns : </b>    <code>unknown</code>
 
                         </div>
                             <div class="io-description">
@@ -597,57 +713,82 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException, Inject, Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, NotFoundException, forwardRef } from &#x27;@nestjs/common&#x27;
 import { CreateContractAttributeValueDto } from &#x27;./dto/create-contract-attribute-value.dto&#x27;
 import { UpdateContractAttributeValueDto } from &#x27;./dto/update-contract-attribute-value.dto&#x27;
 import { IUser } from &#x27;src/users/interfaces/IUser.interface&#x27;
 import { CustomPrismaService } from &#x27;nestjs-prisma&#x27;
 import { ExtendedPrismaClient } from &#x27;src/utils/prisma.extensions&#x27;
 import { IExecutor } from &#x27;src/interfaces/executor.interface&#x27;
-import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage&#x27;
+import { RESPONSE_MESSAGES } from &#x27;src/constants/responseMessage.constant&#x27;
 import { ContractAttributesService } from &#x27;src/contract-attributes/contract-attributes.service&#x27;
-import { CommonService } from &#x27;src/common.service&#x27;
 
 @Injectable()
 export class ContractAttributeValuesService {
   constructor(
     @Inject(&#x27;PrismaService&#x27;) private prismaService: CustomPrismaService&lt;ExtendedPrismaClient&gt;,
-    private contractAttributesService: ContractAttributesService,
-    private commonService: CommonService
+    @Inject(forwardRef(() &#x3D;&gt; ContractAttributesService)) private contractAttributeService: ContractAttributesService
   ) {}
-  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser, isEmpty?: boolean) {
-    const { contractId, contractAttributeId, value, description } &#x3D; createContractAttributeValueDto
-    if ((await this.contractAttributesService.findOneById(contractAttributeId)) &#x3D;&#x3D;&#x3D; null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_IS_NOT_FOUND)
-    if ((await this.commonService.findOneContractById(contractId)) &#x3D;&#x3D;&#x3D; null)
-      throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_IS_NOT_FOUND)
-    if (!isEmpty &amp;&amp; (value &#x3D;&#x3D;&#x3D; null || value &#x3D;&#x3D;&#x3D; undefined || value &#x3D;&#x3D;&#x3D; &#x27;&#x27;))
-      throw new BadRequestException(RESPONSE_MESSAGES.VALUE_IS_REQUIRED)
+  async create(createContractAttributeValueDto: CreateContractAttributeValueDto, user: IUser) {
+    try {
+      const { contractAttributeId, value } &#x3D; createContractAttributeValueDto
+      const createdBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email, role: user.role }
+      if (!(await this.contractAttributeService.findOneById(contractAttributeId)))
+        throw new NotFoundException(RESPONSE_MESSAGES.CONTRACT_ATTRIBUTE_NOT_FOUND)
+      const contractAttributeValue &#x3D; await this.prismaService.client.contractAttributeValue.create({
+        data: {
+          value,
+          ContractAttribute: { connect: { id: contractAttributeId } },
+          createdBy,
+          updatedAt: null
+        }
+      })
+      return contractAttributeValue
+    } catch (error) {
+      console.log(&#x27;error&#x27;, error)
+    }
+  }
 
-    const createdBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email }
-
-    return await this.prismaService.client.contractAttributeValue.create({
+  async createInBlockchain(createContractAttributeValueDto: CreateContractAttributeValueDto) {
+    const { contractAttributeId, value } &#x3D; createContractAttributeValueDto
+    const contractAttributeValue &#x3D; await this.prismaService.client.contractAttributeValueInBlockchain.create({
       data: {
-        value: value,
-        description: description ? description : null,
-        createdBy,
-        updatedAt: null,
-        contractAttribute: { connect: { id: contractAttributeId } },
-        contract: { connect: { id: contractId } }
+        value,
+        ContractAttribute: { connect: { id: contractAttributeId } }
       }
     })
+    return contractAttributeValue
   }
 
   findAll() {
     return &#x60;This action returns all contractAttributeValues&#x60;
   }
 
+  async findOneById(id: string) {
+    const contractAttributeValue &#x3D; await this.prismaService.client.contractAttributeValue.findUnique({
+      where: { id: id },
+      include: {
+        ContractAttribute: true
+      }
+    })
+    return contractAttributeValue
+  }
+
   findOne(id: number) {
     return &#x60;This action returns a #${id} contractAttributeValue&#x60;
   }
 
-  update(id: number, updateContractAttributeValueDto: UpdateContractAttributeValueDto) {
-    return &#x60;This action updates a #${id} contractAttributeValue&#x60;
+  async update(updateContractAttributeValueDto: UpdateContractAttributeValueDto, user: IUser) {
+    const { contractAttributeId, ...data } &#x3D; updateContractAttributeValueDto
+    const updatedBy: IExecutor &#x3D; { id: user.id, name: user.name, email: user.email, role: user.role }
+    const contractAttributeValue &#x3D; await this.prismaService.client.contractAttributeValue.update({
+      where: { contractAttributeId },
+      data: {
+        ...data,
+        updatedBy
+      }
+    })
+    return contractAttributeValue
   }
 
   remove(id: number) {
@@ -700,6 +841,19 @@ export class ContractAttributeValuesService {
             var COMPODOC_CURRENT_PAGE_URL = 'ContractAttributeValuesService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
